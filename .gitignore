@@ -1,0 +1,14 @@
+# Mac resource forks
+._*
+.DS_Store
+
+# Claude Code local settings
+.claude/
+
+# PowerShell utility scripts
+*.ps1
+
+# Backup and draft files
+*-backup-*.html
+*-research-done.html
+assets/test.txt

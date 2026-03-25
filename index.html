@@ -4154,69 +4154,74 @@
     observer.observe(heroContainer);
   })();
 
-  /* ── Lottie: service discovery animation (scroll-triggered) ───── */
+  /* ── Lottie: service discovery — lazy-load JSON until 400px away ── */
   (() => {
     const container = document.getElementById('lottie-service');
     if (!container || typeof lottie === 'undefined') return;
+    const wrapper = container.closest('.lottie-wrap');
 
-    const anim = lottie.loadAnimation({
-      container,
-      renderer: 'svg',
-      loop: false,
-      autoplay: false,
-      path: 'assets/lottie/scollective-casestudy-service-wireframe-animation.json'
-    });
+    const loadObs = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting) return;
+      loadObs.unobserve(container);
 
-    const { setPlaying } = attachLottieControls(container.closest('.lottie-wrap'), anim);
-
-    anim.addEventListener('complete', () => {
-      setPlaying(false);
-      setTimeout(() => { anim.goToAndPlay(0, true); setPlaying(true); }, 4000);
-    });
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          anim.goToAndPlay(0, true); setPlaying(true);
-          observer.unobserve(entry.target);
-        }
+      const anim = lottie.loadAnimation({
+        container, renderer: 'svg', loop: false, autoplay: false,
+        path: 'assets/lottie/scollective-casestudy-service-wireframe-animation.json'
       });
-    }, { threshold: 0.3 });
+      const { setPlaying } = attachLottieControls(wrapper, anim);
+      anim.addEventListener('complete', () => {
+        setPlaying(false);
+        setTimeout(() => { anim.goToAndPlay(0, true); setPlaying(true); }, 4000);
+      });
+      const playObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) { anim.goToAndPlay(0, true); setPlaying(true); playObs.unobserve(entry.target); }
+        });
+      }, { threshold: 0.3 });
+      playObs.observe(container);
+    }, { rootMargin: '400px 0px' });
 
-    observer.observe(container);
+    loadObs.observe(container);
   })();
 
-  /* ── Lottie: site map animation — Wireframes section (scroll-triggered) ── */
+  /* ── Lottie: site map — lazy-load JSON until 400px away ─────────── */
   (() => {
     const container = document.getElementById('lottie-sitemap');
     if (!container || typeof lottie === 'undefined') return;
+    const wrapper = container.closest('.lottie-wrap');
 
-    const anim = lottie.loadAnimation({
-      container,
-      renderer: 'svg',
-      loop: false,
-      autoplay: false,
-      path: 'assets/lottie/case-study-site-map.json'
-    });
+    const loadObs = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting) return;
+      loadObs.unobserve(container);
 
-    const { setPlaying } = attachLottieControls(container.closest('.lottie-wrap'), anim);
-
-    anim.addEventListener('complete', () => {
-      setPlaying(false);
-      setTimeout(() => { anim.goToAndPlay(0, true); setPlaying(true); }, 4000);
-    });
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          anim.goToAndPlay(0, true); setPlaying(true);
-          observer.unobserve(entry.target);
-        }
+      const anim = lottie.loadAnimation({
+        container, renderer: 'svg', loop: false, autoplay: false,
+        path: 'assets/lottie/case-study-site-map.json'
       });
-    }, { threshold: 0.3 });
+      const { setPlaying } = attachLottieControls(wrapper, anim);
+      anim.addEventListener('complete', () => {
+        setPlaying(false);
+        setTimeout(() => { anim.goToAndPlay(0, true); setPlaying(true); }, 4000);
+      });
+      const playObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) { anim.goToAndPlay(0, true); setPlaying(true); playObs.unobserve(entry.target); }
+        });
+      }, { threshold: 0.3 });
+      playObs.observe(container);
+    }, { rootMargin: '400px 0px' });
 
-    observer.observe(container);
+    loadObs.observe(container);
   })();
+
+  /* ── Global image lazy loading ───────────────────────────────────── */
+  /* Sets loading="lazy" + decoding="async" on every image that        */
+  /* doesn't already have an explicit loading attribute.               */
+  document.querySelectorAll('img:not([loading])').forEach(img => {
+    img.loading  = 'lazy';
+    img.decoding = 'async';
+  });
+
 </script>
 
 </body>

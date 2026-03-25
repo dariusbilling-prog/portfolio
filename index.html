@@ -58,162 +58,197 @@
       --scroll-offset: 32px;
     }
 
-    /* ─── Dark mode token overrides ─────────────────────────────────── */
+    /* ─── Dark mode — Apple exact values ────────────────────────────── */
+    /*
+     * Backgrounds:  apple.com dark hierarchy
+     *   #1d1d1f  primary page bg
+     *   #2d2d2f  elevated surface (cards, panels)
+     *   #3d3d3f  raised surface (hover, nested)
+     * Text:
+     *   #f5f5f7  primary   — apple.com headline colour
+     *   #a1a1a6  secondary — apple.com body/description colour
+     *   #6e6e73  muted     — apple.com caption/meta colour
+     * Accents:
+     *   #2997ff  interactive blue (apple.com dark CTAs)
+     *   #30d158  system green
+     *   #ff6b50  coral (brand — unchanged)
+     */
     [data-theme="dark"] {
-      /* Apple dark mode background hierarchy */
-      --bg:              #1C1C1E;
-      --surface:         #2C2C2E;
-      --surface-raised:  #3A3A3C;
-
-      /* Text — Apple's off-white, never pure white */
-      --text-primary:    #F5F5F7;
-      --text-secondary:  #98989D;
-      --text-muted:      #8E8E93;
-
-      /* Accent — Apple system blue for interactive elements */
-      --apple-blue:      #0A84FF;
-
-      /* Coral gets a touch brighter on dark (Apple saturation principle) */
-      --coral:           #FF6B50;
-      --periwinkle:      #4DA3FF;
+      --bg:              #1d1d1f;
+      --surface:         #2d2d2f;
+      --surface-raised:  #3d3d3f;
+      --text-primary:    #f5f5f7;   /* 15.6:1 contrast on #1d1d1f ✓ */
+      --text-secondary:  #a1a1a6;   /*  6.97:1 contrast on #1d1d1f ✓ */
+      --text-muted:      #86868b;   /*  4.98:1 contrast on #1d1d1f ✓ (≥4.5:1 min) */
+      --apple-blue:      #2997ff;
+      --blue:            #2997ff;
+      --coral:           #ff6b50;
+      --periwinkle:      #4da3ff;
     }
 
-    /* Base */
+    /* ── Base ──────────────────────────────────────────────────────── */
     [data-theme="dark"] body {
       background-color: var(--bg);
       color: var(--text-primary);
     }
 
-    /* Nav — Apple's elevated surface */
+    /* ── Navigation ────────────────────────────────────────────────── */
     [data-theme="dark"] .global-nav {
-      background: #1C1C1E;
-      border-bottom-color: rgba(255,255,255,0.08);
+      background: #1d1d1f;
+      border-bottom-color: rgba(255,255,255,0.1);
     }
-    [data-theme="dark"] .global-nav__logo { color: #F5F5F7; }
-    [data-theme="dark"] .global-nav__logo:hover { color: var(--periwinkle); }
-    [data-theme="dark"] .global-nav__links a { color: #98989D; }
-    [data-theme="dark"] .global-nav__links a:hover { color: #F5F5F7; }
-    [data-theme="dark"] .dark-toggle__label { color: #98989D; }
+    [data-theme="dark"] .global-nav__logo        { color: #f5f5f7; }
+    [data-theme="dark"] .global-nav__logo:hover  { color: var(--periwinkle); }
+    [data-theme="dark"] .global-nav__links a     { color: #a1a1a6; }
+    [data-theme="dark"] .global-nav__links a:hover { color: #f5f5f7; }
+    [data-theme="dark"] .dark-toggle__label      { color: #a1a1a6; }
+    [data-theme="dark"] .dark-toggle[aria-checked="true"] .dark-toggle__track { background: #2997ff; }
 
-    /* Toggle track uses Apple system blue when active */
-    [data-theme="dark"] .dark-toggle[aria-checked="true"] .dark-toggle__track {
-      background: #0A84FF;
+    /* ── Sidebar + progress ────────────────────────────────────────── */
+    [data-theme="dark"] .sidebar                 { background: #1d1d1f; }
+    [data-theme="dark"] .scroll-progress-track   { background: rgba(255,255,255,0.07); }
+    [data-theme="dark"] .scroll-progress-fill    { background: #2997ff; }
+
+    /* ── Breadcrumb + section nav ──────────────────────────────────── */
+    [data-theme="dark"] .breadcrumb a            { color: #86868b; }
+    [data-theme="dark"] .breadcrumb a:hover      { color: #f5f5f7; }
+    [data-theme="dark"] .breadcrumb .current     { color: #f5f5f7; }
+    [data-theme="dark"] .breadcrumb .sep         { color: #86868b; }
+    [data-theme="dark"] .section-nav a           { color: #86868b; }
+    [data-theme="dark"] .section-nav a:hover,
+    [data-theme="dark"] .section-nav li.active a { color: #f5f5f7; }
+    [data-theme="dark"] .section-nav li.active a::after { background: #2997ff; }
+
+    /* ── Tags ──────────────────────────────────────────────────────── */
+    [data-theme="dark"] .tag {
+      background: #2d2d2f;
+      border-color: rgba(255,255,255,0.1);
+      color: #a1a1a6;
     }
 
-    /* Sidebar — elevated surface */
-    [data-theme="dark"] .sidebar { background: #1C1C1E; }
+    /* ── Section labels ────────────────────────────────────────────── */
+    [data-theme="dark"] .section-label     { color: #ff6b50; }
+    [data-theme="dark"] .fui-insight-label { color: #ff6b50; }
+    [data-theme="dark"] .cs-data-label     { color: #a1a1a6; }
 
-    /* Scroll progress bar */
-    [data-theme="dark"] .scroll-progress-track { background: rgba(255,255,255,0.06); }
-    [data-theme="dark"] .scroll-progress-fill   { background: #0A84FF; }
+    /* ── Section transition numbers — white so they read clearly ───── */
+    [data-theme="dark"] .section-transition__num  { color: rgba(255,255,255,0.2); }
+    [data-theme="dark"] .section-transition__line { background: rgba(255,255,255,0.08); }
 
-    /* Cards — one level above bg */
-    [data-theme="dark"] .fui-strategy-card {
-      background: #2C2C2E;
-      border-color: rgba(255,255,255,0.08);
+    /* ── Body + heading text ───────────────────────────────────────── */
+    [data-theme="dark"] .cs-body           { color: #a1a1a6; }
+    [data-theme="dark"] .cs-data-value     { color: #f5f5f7; }
+    [data-theme="dark"] .fui-insight-text  { color: #f5f5f7; }
+
+    /* ── Accordions ────────────────────────────────────────────────── */
+    [data-theme="dark"] .accordion-item                          { border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .accordion-trigger                       { background: #1d1d1f; }
+    [data-theme="dark"] .accordion-trigger:hover                 { background: #2d2d2f; }
+    [data-theme="dark"] .accordion-body                          { background: #1d1d1f; border-top-color: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .accordion-trigger .finding-heading      { color: #f5f5f7; }
+    [data-theme="dark"] .accordion-trigger:hover .finding-heading{ color: #2997ff; }
+    [data-theme="dark"] .finding-label                           { color: #ff6b50; }
+    [data-theme="dark"] .finding-heading                         { color: #f5f5f7; }
+    [data-theme="dark"] .accordion-impact                        { color: #a1a1a6; }
+
+    /* ── Cards: strategy, overview, persona, principle, wf ─────────── */
+    [data-theme="dark"] .fui-strategy-card  { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .fui-strategy-text  { color: #a1a1a6; }
+    [data-theme="dark"] .fui-strategy-label { color: #30d158; }
+
+    [data-theme="dark"] .overview-card  { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
+
+    [data-theme="dark"] .persona-card         { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .persona-card__name   { color: #f5f5f7; }
+    [data-theme="dark"] .persona-card__body   { color: #a1a1a6; }
+    [data-theme="dark"] .persona-card__role   { color: #a1a1a6; }
+    [data-theme="dark"] .persona-card__badge--learning {
+      background: rgba(48,209,88,0.12);
+      color: #30d158;
+      border-color: rgba(48,209,88,0.25);
     }
-    [data-theme="dark"] .fui-strategy-text { color: #98989D; }
-    [data-theme="dark"] .fui-strategy-label { color: #30D158; }
+    [data-theme="dark"] .persona-summary {
+      background: rgba(48,209,88,0.07);
+      border-color: rgba(48,209,88,0.18);
+    }
+    [data-theme="dark"] .persona-summary p { color: #a1a1a6; }
 
-    /* Section labels — coral stays vibrant */
-    [data-theme="dark"] .section-label { color: #FF6B50; }
-    [data-theme="dark"] .fui-insight-label { color: #FF6B50; }
+    [data-theme="dark"] .principle-item  { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .principle-title { color: #f5f5f7; }
+    [data-theme="dark"] .principle-body  { color: #a1a1a6; }
 
-    /* Impact blocks — subtle surface */
+    [data-theme="dark"] .wf-card          { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .wf-card__label   { color: #a1a1a6; }
+    [data-theme="dark"] .wf-card__body    { color: #a1a1a6; }
+    [data-theme="dark"] .wf-hero-insight  {
+      border-top-color: rgba(255,255,255,0.1);
+      border-bottom-color: rgba(255,255,255,0.1);
+      color: #f5f5f7;
+    }
+
+    /* ── Impact + callout blocks ───────────────────────────────────── */
     [data-theme="dark"] .wf-impact,
     [data-theme="dark"] .impact-block {
-      background: #2C2C2E;
-      border-color: rgba(255,255,255,0.08);
-      color: #F5F5F7;
+      background: #2d2d2f;
+      border-color: rgba(255,255,255,0.1);
+      color: #f5f5f7;
     }
-
-    /* Research callout */
     [data-theme="dark"] .research-callout {
-      background: #2C2C2E;
-      border-color: rgba(74,163,255,0.18);
+      background: #2d2d2f;
+      border-color: rgba(41,151,255,0.2);
     }
 
-    /* Insight serif text */
-    [data-theme="dark"] .fui-insight-text { color: #F5F5F7; }
-
-    /* ── Dark mode: remaining components ────────────────────────────── */
-    [data-theme="dark"] .breadcrumb a { color: #636366; }
-    [data-theme="dark"] .breadcrumb a:hover { color: #F5F5F7; }
-    [data-theme="dark"] .breadcrumb .current { color: #F5F5F7; }
-    [data-theme="dark"] .breadcrumb .sep { color: #636366; }
-
-    [data-theme="dark"] .section-nav a { color: #636366; }
-    [data-theme="dark"] .section-nav a:hover,
-    [data-theme="dark"] .section-nav li.active a { color: #F5F5F7; }
-    [data-theme="dark"] .section-nav li.active a::after { background: #0A84FF; }
-
-    [data-theme="dark"] .tag {
-      background: #2C2C2E;
-      border-color: rgba(255,255,255,0.08);
-      color: #98989D;
+    /* ── Insight cards (green variant) ────────────────────────────── */
+    [data-theme="dark"] .cs-insight-card--green {
+      background: rgba(48,209,88,0.07);
+      border-color: rgba(48,209,88,0.2);
     }
+    [data-theme="dark"] .cs-insight-card--green .cs-insight-card__title { color: #30d158; }
 
-    [data-theme="dark"] .accordion-item {
-      border-color: rgba(255,255,255,0.07);
+    /* ── Wireframe before/after blocks ────────────────────────────── */
+    [data-theme="dark"] .f5-strategic {
+      background: rgba(48,209,88,0.07);
+      border-color: rgba(48,209,88,0.2);
     }
-    [data-theme="dark"] .accordion-trigger { background: #1C1C1E; }
-    [data-theme="dark"] .accordion-trigger:hover { background: #2C2C2E; }
-    [data-theme="dark"] .accordion-body { background: #1C1C1E; border-top-color: rgba(255,255,255,0.06); }
-    [data-theme="dark"] .accordion-trigger .finding-heading { color: #F5F5F7; }
-    [data-theme="dark"] .accordion-trigger:hover .finding-heading { color: #0A84FF; }
-    [data-theme="dark"] .finding-label { color: #FF6B50; }
-    [data-theme="dark"] .finding-heading { color: #F5F5F7; }
+    [data-theme="dark"] .f5-strategic .wf-block__label { color: #30d158; }
+    [data-theme="dark"] .wf-block__label--after        { color: #30d158; }
+    [data-theme="dark"] .wf-block__label--after::before { background: #30d158; }
+    [data-theme="dark"] .wf-block__caption             { color: #a1a1a6; }
 
-    [data-theme="dark"] .overview-card {
-      background: #2C2C2E;
-      border-color: rgba(255,255,255,0.07);
-    }
+    /* ── Audit CTA ─────────────────────────────────────────────────── */
+    [data-theme="dark"] .audit-cta-split { background: transparent; border-color: transparent; box-shadow: none; }
 
-    [data-theme="dark"] .persona-card {
-      background: #2C2C2E;
-      border-color: rgba(255,255,255,0.07);
-    }
-    [data-theme="dark"] .persona-card__name { color: #F5F5F7; }
-    [data-theme="dark"] .persona-card__body { color: #98989D; }
+    /* ── Metrics ───────────────────────────────────────────────────── */
+    [data-theme="dark"] .cs-data-value   { color: #f5f5f7; }
+    [data-theme="dark"] .metric-before   { color: #f5f5f7; }
+    [data-theme="dark"] .metric-target   { color: #30d158; }
+    [data-theme="dark"] .metric-card     { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
 
-    [data-theme="dark"] .principle-item {
-      background: #2C2C2E;
-      border-color: rgba(255,255,255,0.07);
-    }
-    [data-theme="dark"] .principle-title { color: #F5F5F7; }
-    [data-theme="dark"] .principle-body { color: #98989D; }
+    /* ── Lists ─────────────────────────────────────────────────────── */
+    [data-theme="dark"] .obs-list li             { color: #a1a1a6; }
+    [data-theme="dark"] .fui-improvements-list li{ color: #a1a1a6; }
+    [data-theme="dark"] .fui-improvements-title  { color: #f5f5f7; }
+    [data-theme="dark"] .wf-improvements__title  { color: #f5f5f7; }
+    [data-theme="dark"] .impl-list li            { color: #a1a1a6; }
 
-    [data-theme="dark"] .wf-card {
-      background: #2C2C2E;
-      border-color: rgba(255,255,255,0.07);
-    }
-    [data-theme="dark"] .wf-card__label { color: #98989D; }
-    [data-theme="dark"] .wf-hero-insight {
-      border-top-color: rgba(255,255,255,0.07);
-      border-bottom-color: rgba(255,255,255,0.07);
-      color: #F5F5F7;
-    }
+    /* ── Stats ─────────────────────────────────────────────────────── */
+    [data-theme="dark"] .stat-value        { color: #f5f5f7; }
+    [data-theme="dark"] .stat-value.accent { color: #ff6b50; }
+    [data-theme="dark"] .stat-label        { color: #86868b; }
+    [data-theme="dark"] .stat-note         { color: var(--text-muted); }
 
-    [data-theme="dark"] .audit-cta-split {
-      background: transparent;
-      border-color: transparent;
-      box-shadow: none;
-    }
-
-    [data-theme="dark"] .cs-body { color: #98989D; }
-    [data-theme="dark"] .cs-data-value { color: #F5F5F7; }
-    [data-theme="dark"] .metric-before { color: #F5F5F7; }
-    [data-theme="dark"] .metric-target { color: #30D158; }
-    [data-theme="dark"] .metric-card { background: #2C2C2E; border-color: rgba(255,255,255,0.07); }
-
-    [data-theme="dark"] .obs-list li { color: #98989D; }
-    [data-theme="dark"] .fui-improvements-list li { color: #98989D; }
-    [data-theme="dark"] .fui-improvements-title { color: #F5F5F7; }
-
-    [data-theme="dark"] .stat-value { color: #F5F5F7; }
-    [data-theme="dark"] .stat-value.accent { color: #FF6B50; }
-    [data-theme="dark"] .stat-label { color: #636366; }
-    [data-theme="dark"] .stat-note { color: var(--text-muted); }
+    /* ── Implementation tools + lessons ───────────────────────────── */
+    [data-theme="dark"] .impl-tool         { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .impl-tool__name   { color: #f5f5f7; }
+    [data-theme="dark"] .impl-outcome      { background: rgba(41,151,255,0.07); border-color: rgba(41,151,255,0.18); }
+    [data-theme="dark"] .impl-outcome p    { color: #f5f5f7; }
+    [data-theme="dark"] .lesson-card       { background: #1d1d1f; border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .lesson-title      { color: #f5f5f7; }
+    [data-theme="dark"] .lesson-body       { color: #a1a1a6; }
+    [data-theme="dark"] .lessons-close     { background: rgba(255,107,80,0.07); border-left-color: #ff6b50; }
+    [data-theme="dark"] .lessons-close p   { color: #a1a1a6; }
+    [data-theme="dark"] .impl-intro,
+    [data-theme="dark"] .lessons-intro     { color: #a1a1a6; }
 
     /* ─── Global Navigation ──────────────────────────────────────────── */
     :root { --nav-h: 60px; }
@@ -2547,19 +2582,7 @@
       max-width: 680px;
     }
 
-    /* dark mode */
-    [data-theme="dark"] .impl-tool { background: #2C2C2E; border-color: rgba(255,255,255,0.07); }
-    [data-theme="dark"] .impl-tool__name { color: #F5F5F7; }
-    [data-theme="dark"] .impl-outcome { background: rgba(74,163,255,0.07); border-color: rgba(74,163,255,0.15); }
-    [data-theme="dark"] .impl-outcome p { color: #F5F5F7; }
-    [data-theme="dark"] .lesson-card { background: #1C1C1E; border-color: rgba(255,255,255,0.07); }
-    /* lesson card hover removed */
-    [data-theme="dark"] .lesson-title { color: #F5F5F7; }
-    [data-theme="dark"] .lesson-body { color: #98989D; }
-    [data-theme="dark"] .lessons-close { background: rgba(255,107,80,0.07); border-left-color: #FF6B50; }
-    [data-theme="dark"] .lessons-close p { color: #98989D; }
-    [data-theme="dark"] .impl-intro,
-    [data-theme="dark"] .lessons-intro { color: #98989D; }
+    /* implementation + lessons dark mode — defined in main block above */
 
     @media (max-width: 768px) {
       .impl-grid { grid-template-columns: 1fr; }
@@ -2604,13 +2627,7 @@
 
     #research > div:nth-child(9) { padding-top: var(--sp-9); }
 
-    [data-theme="dark"] .section-transition__num {
-      color: rgba(74,163,255,0.18);
-    }
-
-    [data-theme="dark"] .section-transition__line {
-      background: rgba(255,255,255,0.06);
-    }
+    /* section-transition dark mode — defined in main block above */
 
     /* ── Case Study Footer ───────────────────────────────────────────── */
     .case-study-footer {

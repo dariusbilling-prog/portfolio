@@ -361,7 +361,10 @@
     }
 
     /* ─── Custom cursor: pointer devices only ────────────────────────── */
-    @media (pointer: fine) { * { cursor: none !important; } }
+    @media (pointer: fine) {
+      html, body, * { cursor: none !important; }
+      *::before, *::after { cursor: none !important; }
+    }
     @media (pointer: coarse) { .cursor { display: none; } }
 
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -2032,6 +2035,7 @@
       pointer-events: none;
       z-index: 99999;
       transform: translate(-50%, -50%);
+      opacity: 0; /* hidden until first mousemove — prevents flash on load */
       transition: width 0.35s cubic-bezier(0.22,1,0.36,1), height 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease;
       will-change: transform, width, height;
       overflow: hidden;
@@ -3811,16 +3815,31 @@
     /* ── Custom cursor ────────────────────────────────────────────── */
     if (window.matchMedia('(pointer: fine)').matches) {
       const cursor = document.getElementById('cursor');
+      let cursorVisible = false;
+
       document.addEventListener('mousemove', e => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top  = e.clientY + 'px';
+        /* Reveal on first move — avoids flash before position is set */
+        if (!cursorVisible) {
+          cursor.style.opacity = '1';
+          cursorVisible = true;
+        }
       });
+
       document.querySelectorAll('a, button, [role="button"], .wf-slider').forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
       });
-      document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
-      document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+
+      /* Hide when mouse leaves browser window, restore when it re-enters */
+      document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; cursorVisible = false; });
+      document.addEventListener('mouseenter', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        cursor.style.opacity = '1';
+        cursorVisible = true;
+      });
     }
   })();
 

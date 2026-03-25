@@ -834,14 +834,21 @@
     }
     .finding-label::before { display: none; }
 
+    /* Global design system: section/wireframe headings sit tight to their body copy */
     .finding-heading {
       font-family: 'PÃ³Å‚tawski Nowy', Georgia, serif;
       font-size: var(--text-2xl);
       font-weight: 700;
       color: #2b4a7a;
       letter-spacing: -0.02em;
-      margin-bottom: var(--sp-5);
+      margin-bottom: var(--sp-1);
     }
+
+    /* ─── Global: section heading → body copy spacing ─────────────── */
+    /* Keeps any heading immediately close to the paragraph that follows */
+    .finding-heading + p,
+    h3 + .wf-intro,
+    h2 + .wf-intro { margin-top: 8px; }
 
     /* Two-col: observations + visual */
     .finding-layout {
@@ -1009,6 +1016,361 @@
       margin: 0;
     }
 
+    /* ── Wireframes Section ─────────────────────────────────────────── */
+    .wf-section { margin-bottom: var(--sp-9); }
+    .wf-article { display: flex; flex-direction: column; }
+    .wf-intro { font-size: var(--text-base); color: var(--text-secondary); line-height: 1.7; max-width: 780px; margin: 0 0 var(--sp-5) 0; }
+
+    /* Before / After blocks */
+    .wf-block { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .wf-block__label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .wf-block__label--before { color: var(--coral); }
+    .wf-block__label--before::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--coral);
+      display: inline-block;
+    }
+    .wf-block__label--after { color: #4a7c59; }
+    .wf-block__label--after::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #4a7c59;
+      display: inline-block;
+    }
+    .wf-block__img-wrap {
+      width: 100%;
+      border-radius: var(--sp-3);
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+      box-shadow: 0 4px 20px color-mix(in srgb, var(--text-primary) 8%, transparent);
+    }
+    .wf-block__img-wrap--before { }
+    .wf-block__img-wrap--after {
+      box-shadow: 0 8px 32px color-mix(in srgb, #4a7c59 18%, transparent);
+      border-color: color-mix(in srgb, #4a7c59 20%, transparent);
+    }
+    .wf-block__img-wrap img { width: 100%; height: auto; display: block; }
+    .wf-block__caption {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .wf-block__caption strong { font-weight: 600; color: var(--text-primary); }
+
+    /* Transformation connector */
+    .wf-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      margin-bottom: 32px;
+    }
+    .wf-connector__line {
+      width: 1px;
+      height: 24px;
+      background: color-mix(in srgb, var(--text-primary) 15%, transparent);
+    }
+    .wf-connector__label {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+    }
+    .wf-connector__arrow { font-size: 20px; color: var(--text-muted); }
+
+    /* Hero insight */
+    .wf-hero-insight {
+      text-align: center;
+      font-family: 'Półtawski Nowy', Georgia, serif;
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      padding: 40px 48px;
+      margin-bottom: 48px;
+      border-top: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+    }
+
+    /* Key improvements */
+    .wf-improvements { margin-bottom: 32px; }
+    .wf-improvements__title {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    .wf-improvements__list {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+      border-radius: var(--sp-3);
+      overflow: hidden;
+    }
+    .wf-improvements__list li {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      padding: var(--sp-4) var(--sp-5);
+      position: relative;
+    }
+    .wf-improvements__list li + li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; height: 60%; width: 1px;
+      background: color-mix(in srgb, var(--text-primary) 10%, transparent);
+    }
+    .wf-improvements__list li::after {
+      content: '';
+      width: 7px; height: 7px;
+      min-width: 7px;
+      border-radius: 50%;
+      background: var(--coral);
+      flex-shrink: 0;
+      order: -1;
+      margin-top: 5px;
+    }
+    @media (max-width: 768px) {
+      .wf-improvements__list { flex-direction: column; }
+      .wf-improvements__list li + li::before {
+        top: 0; left: 10%; width: 80%; height: 1px;
+      }
+    }
+
+    /* Impact box */
+    .wf-impact {
+      background: color-mix(in srgb, #4a7c59 8%, var(--bg));
+      border: 1px solid color-mix(in srgb, #4a7c59 20%, transparent);
+      border-radius: var(--sp-3);
+      padding: var(--sp-5) var(--sp-6);
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    @media (max-width: 768px) {
+      .wf-hero-insight { padding: var(--sp-5) var(--sp-3); }
+    }
+
+    /* ── Wireframe Cards Grid ────────────────────────────────────────── */
+    .wf-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-5);
+      margin-bottom: var(--sp-7);
+    }
+    .wf-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--bg);
+      border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+      border-radius: var(--sp-3);
+      padding: var(--sp-5);
+    }
+    .wf-card__label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--periwinkle);
+    }
+    .wf-card__img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      border: 1px solid color-mix(in srgb, var(--text-primary) 6%, transparent);
+    }
+    .wf-card__caption {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ── Strategic Bullets Title ─────────────────────────────────────── */
+    .wf-bullets-title {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    /* ── Before/After Slider ─────────────────────────────────────────── */
+    .wf-slider-wrap {
+      margin-bottom: var(--sp-7);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .wf-slider {
+      position: relative;
+      width: 100%;
+      border-radius: var(--sp-3);
+      overflow: hidden;
+      cursor: col-resize;
+      user-select: none;
+      box-shadow: 0 8px 32px color-mix(in srgb, var(--text-primary) 12%, transparent);
+      touch-action: none;
+    }
+    .wf-slider__after {
+      display: block;
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+    }
+    .wf-slider__before {
+      position: absolute;
+      top: 0; left: 0;
+      width: 35%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .wf-slider__before img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: left top;
+      pointer-events: none;
+    }
+    /* Divider line */
+    .wf-slider__handle {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 35%;
+      width: 2px;
+      background: var(--periwinkle);
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px color-mix(in srgb, var(--periwinkle) 70%, transparent),
+                  0 0 24px color-mix(in srgb, var(--periwinkle) 35%, transparent);
+      pointer-events: none;
+      z-index: 3;
+    }
+    /* Circle knob */
+    .wf-slider__handle::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--periwinkle);
+      box-shadow:
+        0 0 0 4px color-mix(in srgb, var(--periwinkle) 20%, transparent),
+        0 0 16px color-mix(in srgb, var(--periwinkle) 50%, transparent),
+        0 2px 10px rgba(0,0,0,0.18);
+    }
+    /* Arrow icon inside knob */
+    .wf-slider__handle::before {
+      content: '⇐  ⇒';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--periwinkle);
+      z-index: 4;
+      white-space: nowrap;
+      letter-spacing: 0px;
+      line-height: 1;
+    }
+    /* Labels — bottom corners, white pill */
+    .wf-slider__label {
+      position: absolute;
+      bottom: var(--sp-4);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 7px 18px;
+      border-radius: 100px;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: var(--text-primary);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .wf-slider__label--before {
+      left: var(--sp-4);
+    }
+    .wf-slider__label--after {
+      right: var(--sp-4);
+    }
+    @media (max-width: 768px) {
+      .wf-cards-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Audit CTA Split ───────────────────────────────────────────── */
+    .audit-cta-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-8);
+      align-items: center;
+      margin-bottom: var(--sp-7);
+    }
+    .audit-cta-split__text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .audit-cta-split__text .cs-body {
+      font-weight: 500;
+    }
+    .audit-cta-split__image {
+      border-radius: var(--sp-3);
+      overflow: hidden;
+    }
+    .audit-cta-split__image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--sp-3);
+    }
+    @media (max-width: 768px) {
+      .audit-cta-split {
+        grid-template-columns: 1fr;
+        padding: var(--sp-5);
+      }
+      .audit-cta-split__image { order: -1; }
+    }
+
     /* ── Strategy Section ──────────────────────────────────────────── */
     .strategy-section {
       margin-top: var(--sp-9);
@@ -1024,30 +1386,45 @@
     .strategy-principles {
       list-style: none;
       counter-reset: principle-counter;
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-5);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-4);
       margin-top: var(--sp-5);
       padding: 0;
     }
-    .principle-item { counter-increment: principle-counter; }
+    .principle-item {
+      counter-increment: principle-counter;
+      background: color-mix(in srgb, var(--text-primary) 3%, var(--bg));
+      border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+      border-radius: var(--sp-3);
+      padding: var(--sp-4) var(--sp-5);
+    }
+    .principle-item::before {
+      content: "0" counter(principle-counter);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--coral);
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: var(--sp-2);
+    }
     .principle-title {
       font-family: 'Inter', sans-serif;
       font-size: var(--text-base);
       font-weight: 700;
       color: var(--text-primary);
       display: block;
-      margin-bottom: var(--sp-1);
-    }
-    .principle-title::before {
-      content: counter(principle-counter) ". ";
-      color: var(--coral);
+      margin-bottom: var(--sp-2);
     }
     .principle-body {
       font-size: var(--text-base);
       color: var(--text-secondary);
       line-height: 1.7;
       margin: 0;
+    }
+    @media (max-width: 768px) {
+      .strategy-principles { grid-template-columns: 1fr; }
     }
 
     /* ── User Intent Profiles / Personas ───────────────────────────── */
@@ -1138,7 +1515,7 @@
       border: 1px solid color-mix(in srgb, #4a7c59 25%, transparent);
     }
     .persona-card__body {
-      padding: var(--sp-7) var(--sp-5) var(--sp-5);
+      padding: var(--sp-4) var(--sp-5) var(--sp-5);
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -1584,11 +1961,6 @@
 
       <h2 class="section-label reveal reveal-d1" id="research-heading">Research &amp; Audit</h2>
 
-      <!-- Visual: Replace src with your kanban image path e.g. images/kanban.jpg -->
-      <figure class="cs-visual reveal reveal-d2">
-        <img src="assets/images/kanban.jpg" alt="S Collective project kanban board showing work-in-progress across blog, racing/coaching, and plugin sections" />
-        <figcaption>Organizing audit findings to map scope across all site sections</figcaption>
-      </figure>
 
       <!-- Intro body text -->
       <p class="cs-body reveal reveal-d2">I conducted a UX and conversion audit to identify opportunities to improve clarity, trust, and conversion performance.</p>
@@ -1613,16 +1985,27 @@
         </p>
       </blockquote>
 
-      <!-- Closing body text -->
-      <p class="cs-body reveal reveal-d2">The homepage created a strong visual impression. We identified an opportunity to pair that with clearer messaging around what S Collective offers, who it serves, and what visitors should do next.</p>
+      <!-- Audit CTA — two column -->
+      <div class="audit-cta-split reveal reveal-d2">
 
-      <!-- Download CTA -->
-      <a href="assets/files/S-Collective%20Website%20Audit%2012_22_25%20v1.1.pdf" target="_blank" rel="noopener noreferrer" class="cs-btn reveal reveal-d3" aria-label="Download the full website audit PDF">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Download Full UX Audit (PDF)
-      </a>
+        <!-- Left: text + button vertically centred -->
+        <div class="audit-cta-split__text">
+          <p class="cs-body">The homepage created a strong visual impression. We identified an opportunity to pair that with clearer messaging around what S Collective offers, who it serves, and what visitors should do next.</p>
+          <p class="cs-body" style="margin-top: var(--sp-4);">This lack of clarity introduced early friction, forcing users to interpret the offering and reducing engagement.</p>
+          <a href="assets/files/S-Collective%20Website%20Audit%2012_22_25%20v1.1.pdf" target="_blank" rel="noopener noreferrer" class="cs-btn" style="margin-top: var(--sp-5); display: inline-flex; width: fit-content; align-self: flex-start;" aria-label="Download the full website audit PDF">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Download Full UX Audit (PDF)
+          </a>
+        </div>
+
+        <!-- Right: audit mockup image -->
+        <div class="audit-cta-split__image">
+          <img src="assets/images/audit-mockup 1.jpg" alt="S Collective Website Audit document mockup" />
+        </div>
+
+      </div>
 
       <!-- ── ACCORDION WRAP ────────────────────────────────────────── -->
       <div class="accordion-wrap">
@@ -1922,7 +2305,12 @@
 
         <h2 class="section-label reveal reveal-d1">Strategy</h2>
 
-        <p class="cs-body reveal reveal-d2">The redesign focused on three levers: clarifying the value proposition, surfacing trust earlier, and reducing friction across the conversion path.</p>
+        <figure class="cs-visual reveal reveal-d2">
+          <img src="assets/images/kanban.jpg" alt="S Collective project kanban board showing work-in-progress across blog, racing/coaching, and plugin sections" />
+          <figcaption>Organizing audit findings to map scope across all site sections</figcaption>
+        </figure>
+
+        <p class="cs-body reveal reveal-d3">The redesign focused on three levers: clarifying the value proposition, surfacing trust earlier, and reducing friction across the conversion path.</p>
 
         <!-- Key Observations -->
         <div class="cs-insight-card cs-insight-card--green reveal reveal-d3">
@@ -1967,6 +2355,136 @@
             <p class="principle-body">Load speed is a UX decision—optimised for mobile first.</p>
           </li>
         </ol>
+        </ol>
+
+      </section>
+
+      <!-- ══ WIREFRAMES ════════════════════════════════════════════════ -->
+      <section class="wf-section reveal reveal-d1" id="wireframes" aria-label="Wireframes">
+
+        <h2 class="section-label reveal reveal-d1">Wireframes</h2>
+
+        <!-- ── Wireframe #1 — Navigation ──────────────────────────── -->
+        <article class="wf-article reveal reveal-d2">
+
+          <h3 class="finding-heading">Navigation</h3>
+
+          <p class="wf-intro">The navigation was redesigned around user intent, prioritizing core services and reducing ambiguity in category structure. The logo was repositioned to strengthen brand recognition, and both primary and secondary CTAs were introduced to support immediate action and concierge-style engagement.</p>
+
+          <!-- BEFORE -->
+          <div class="wf-block">
+            <span class="wf-block__label wf-block__label--before">Before — Friction</span>
+            <div class="wf-block__img-wrap wf-block__img-wrap--before">
+              <img src="assets/images/wireframe-desktop-nav-before.svg" alt="Navigation before redesign — unclear hierarchy and generic labels" />
+            </div>
+            <p class="wf-block__caption"><strong>Unclear hierarchy and generic labels</strong> &rarr; Requires interpretation before action</p>
+          </div>
+
+          <!-- Transformation connector -->
+          <div class="wf-connector">
+            <div class="wf-connector__line"></div>
+            <span class="wf-connector__label">
+              <span class="wf-connector__arrow">↑</span>
+              Before &mdash; After
+              <span class="wf-connector__arrow">↓</span>
+            </span>
+            <div class="wf-connector__line"></div>
+          </div>
+
+          <!-- AFTER -->
+          <div class="wf-block">
+            <span class="wf-block__label wf-block__label--after">After — Optimized</span>
+            <div class="wf-block__img-wrap wf-block__img-wrap--after">
+              <img src="assets/images/wireframe-desktop-nav-after.svg" alt="Navigation after redesign — clear service grouping and elevated CTA" />
+            </div>
+            <p class="wf-block__caption"><strong>Clear service grouping and elevated CTA</strong> &rarr; Enables fast scanning and immediate action</p>
+          </div>
+
+          <!-- Key Improvements -->
+          <div class="wf-improvements">
+            <p class="wf-improvements__title">Key Improvements</p>
+            <ul class="wf-improvements__list">
+              <li>Structured navigation around user intent</li>
+              <li>Replaced ambiguous labels with clear categories</li>
+              <li>Elevated primary CTA to capture high-intent users</li>
+            </ul>
+          </div>
+
+          <!-- Hero insight -->
+          <p class="wf-hero-insight">The revised navigation reduces friction and enables users to move from discovery to action without hesitation.</p>
+
+        </article>
+
+        <!-- ── Wireframe #2 — Hero Direction ───────────────────────── -->
+        <article class="wf-article reveal reveal-d2" style="margin-top: var(--sp-9);">
+
+          <h3 class="finding-heading">Hero Direction</h3>
+
+          <p class="wf-intro">The hero was redesigned to prioritize clarity before visual styling, using wireframe exploration to define structure, messaging, and conversion hierarchy. Early concepting focused on making the value proposition, trust cues, and primary actions easier to understand at first glance.</p>
+
+          <!-- Side-by-side wireframe cards -->
+          <div class="wf-cards-grid">
+            <div class="wf-card">
+              <span class="wf-card__label">Component Planning</span>
+              <img class="wf-card__img" src="assets/images/hand-wire-frame-2.jpg" alt="Component planning wireframe for hero section" />
+              <p class="wf-card__caption">Component-first planning helped define the information hierarchy before visual design began.</p>
+            </div>
+            <div class="wf-card">
+              <span class="wf-card__label">Wireframe Iteration</span>
+              <img class="wf-card__img" src="assets/images/hand-wire-frame-1.jpg" alt="Wireframe iteration for hero layout and CTA placement" />
+              <p class="wf-card__caption">Rapid iteration refined layout, messaging, and CTA placement before moving into final UI.</p>
+            </div>
+          </div>
+
+          <!-- Strategic bullets -->
+          <div class="wf-improvements" style="margin-bottom: var(--sp-7);">
+            <p class="wf-bullets-title">A more effective structure would:</p>
+            <ul class="wf-improvements__list">
+              <li>Clarify what S-Collective does and who it serves</li>
+              <li>Balance luxury presentation with performance credibility</li>
+              <li>Introduce a clear primary action early</li>
+              <li>Support both high-intent users and exploratory visitors</li>
+              <li>Support immediate visit intent for local mobile users</li>
+            </ul>
+          </div>
+
+          <!-- Before / After slider -->
+          <div class="wf-slider-wrap">
+            <div class="wf-slider" id="heroSlider">
+              <!-- After image — base layer -->
+              <img class="wf-slider__after" src="assets/images/hero-after.jpg" alt="Hero section after redesign" />
+              <!-- Before image — clipped overlay -->
+              <div class="wf-slider__before">
+                <img src="assets/images/hero-before.jpg" alt="Hero section before redesign" />
+              </div>
+              <!-- Labels -->
+              <span class="wf-slider__label wf-slider__label--before">Before</span>
+              <span class="wf-slider__label wf-slider__label--after">After</span>
+              <!-- Handle -->
+              <div class="wf-slider__handle" id="heroSliderHandle"></div>
+            </div>
+          </div>
+
+          <!-- Key Improvements -->
+          <div class="wf-improvements">
+            <p class="wf-improvements__title">Key Improvements</p>
+            <ul class="wf-improvements__list">
+              <li>Clarified the value proposition at first glance</li>
+              <li>Introduced trust earlier in the experience</li>
+              <li>Strengthened the primary path to action</li>
+              <li>Added a direct map link for mobile visit intent</li>
+            </ul>
+          </div>
+
+          <!-- Insight line -->
+          <p class="wf-hero-insight">The final hero translates early wireframe decisions into a clearer, trust-building first impression with a stronger path to action.</p>
+
+          <!-- Impact box -->
+          <div class="wf-impact reveal reveal-d3">
+            The revised hero reduces first-impression friction and supports both inquiry intent and immediate visit intent for local users.
+          </div>
+
+        </article>
 
       </section>
 
@@ -2082,6 +2600,41 @@
       document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
       document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
     }
+  })();
+
+  /* ── Before/After Hero Slider ──────────────────────────────────── */
+  (() => {
+    const slider   = document.getElementById('heroSlider');
+    if (!slider) return;
+    const before   = slider.querySelector('.wf-slider__before');
+    const handle   = document.getElementById('heroSliderHandle');
+    let dragging   = false;
+
+    function setPos(clientX) {
+      const rect = slider.getBoundingClientRect();
+      let pct = (clientX - rect.left) / rect.width;
+      pct = Math.max(0.02, Math.min(0.98, pct));
+      before.style.width  = (pct * 100) + '%';
+      handle.style.left   = (pct * 100) + '%';
+    }
+
+    /* Default — 35% before, 65% after */
+    const init = () => {
+      const rect = slider.getBoundingClientRect();
+      setPos(rect.left + rect.width * 0.35);
+    };
+    window.addEventListener('load', init);
+    setTimeout(init, 100);
+
+    /* Mouse */
+    slider.addEventListener('mousedown', e => { dragging = true; setPos(e.clientX); });
+    window.addEventListener('mousemove', e => { if (dragging) setPos(e.clientX); });
+    window.addEventListener('mouseup',   () => { dragging = false; });
+
+    /* Touch */
+    slider.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('touchmove',  e => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('touchend',   () => { dragging = false; });
   })();
 </script>
 

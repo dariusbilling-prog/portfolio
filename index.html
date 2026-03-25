@@ -397,28 +397,6 @@
       }
     }
 
-    /* ─── Custom cursor: hide ALL native cursors on pointer devices ───── */
-    /* cursor:none alone has browser bugs on SVG/text nodes.              */
-    /* A 1×1 transparent GIF forces the OS cursor off at the system level */
-    /* Fixed/sticky elements get explicit high-specificity rules because  */
-    /* composited layers in Chrome resolve cursor before * applies.       */
-    @media (pointer: fine) {
-      :root, html, body, *,
-      *::before, *::after {
-        cursor: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"), none !important;
-      }
-      /* Explicit overrides for fixed/composited layers */
-      .global-nav,
-      .global-nav *,
-      .global-nav *::before,
-      .global-nav *::after,
-      .section-nav,
-      .section-nav *,
-      #backToTop,
-      .cursor {
-        cursor: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"), none !important;
-      }
-    }
     @media (pointer: coarse) { .cursor { display: none; } }
 
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -2832,6 +2810,27 @@
       background: var(--periwinkle);
       border-radius: 0 0 4px 4px;
       transition: height 80ms linear;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       CURSOR OVERRIDE — must be LAST in the stylesheet so it wins every
+       cursor:pointer / cursor:default / cursor:col-resize above.
+       The 1×1 transparent GIF forces the OS cursor off at system level,
+       fixing Chrome/Safari bugs where cursor:none leaks on composited
+       layers (position:fixed, backdrop-filter, SVG, text nodes).
+    ═══════════════════════════════════════════════════════════════════ */
+    @media (pointer: fine) {
+      html, body, :root,
+      *, *::before, *::after {
+        cursor: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"), none !important;
+      }
+      /* Extra specificity for fixed/composited layers */
+      .global-nav, .global-nav *, .global-nav *::before, .global-nav *::after,
+      .section-nav, .section-nav *, #backToTop,
+      .ba-handle, .ba-handle *, .ba-wrap, .ba-wrap *,
+      .cursor, .cursor::before, .cursor::after {
+        cursor: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"), none !important;
+      }
     }
 
   </style>

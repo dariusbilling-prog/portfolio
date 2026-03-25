@@ -132,9 +132,9 @@
     [data-theme="dark"] .cs-data-label     { color: #a1a1a6; }
 
     /* ── Section transition — white in dark mode ──────────────────── */
-    [data-theme="dark"] .section-transition__num   { color: rgba(255,255,255,0.6); }
-    [data-theme="dark"] .section-transition__line  { background: rgba(255,255,255,0.28); }
-    [data-theme="dark"] .section-transition__label { color: rgba(255,255,255,0.6); }
+    [data-theme="dark"] .section-transition__num   { color: rgba(255,255,255,0.82); }
+    [data-theme="dark"] .section-transition__line  { background: rgba(255,255,255,0.42); }
+    [data-theme="dark"] .section-transition__label { color: rgba(255,255,255,0.82); }
 
     /* ── Body + heading text ───────────────────────────────────────── */
     [data-theme="dark"] .cs-body           { color: #a1a1a6; }
@@ -2606,7 +2606,7 @@
       font-weight: 700;
       line-height: 1;
       letter-spacing: -0.04em;
-      color: color-mix(in srgb, var(--periwinkle) 38%, transparent);
+      color: color-mix(in srgb, var(--periwinkle) 72%, transparent);
       flex-shrink: 0;
       transition: color 0.3s ease;
     }
@@ -2614,7 +2614,7 @@
     .section-transition__line {
       flex: 1;
       height: 1px;
-      background: color-mix(in srgb, var(--periwinkle) 28%, transparent);
+      background: color-mix(in srgb, var(--periwinkle) 55%, transparent);
     }
 
     .section-transition__label {
@@ -2622,7 +2622,7 @@
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: color-mix(in srgb, var(--text-secondary) 80%, transparent);
+      color: var(--text-secondary);
       flex-shrink: 0;
     }
 

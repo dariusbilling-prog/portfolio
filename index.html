@@ -3906,8 +3906,13 @@
         el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
       });
 
-      /* Hide when mouse leaves browser window, restore when it re-enters */
-      document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; cursorVisible = false; });
+      /* Hide only when mouse truly exits the viewport — not between stacking layers */
+      document.addEventListener('mouseleave', e => {
+        if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+          cursor.style.opacity = '0';
+          cursorVisible = false;
+        }
+      });
       document.addEventListener('mouseenter', e => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top  = e.clientY + 'px';

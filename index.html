@@ -325,7 +325,10 @@
       /* Smooth scroll + offset for sticky nav */
       scroll-behavior: smooth;
       scroll-padding-top: var(--scroll-offset);
+      /* Hide native scrollbar — custom progress bar replaces it */
+      scrollbar-width: none; /* Firefox */
     }
+    html::-webkit-scrollbar { display: none; } /* Chrome / Safari */
 
     body {
       font-family: 'Inter', sans-serif;
@@ -3773,12 +3776,17 @@
     }
 
     // Init: set accurate heights on already-open accordions
-    document.querySelectorAll('.accordion-item[data-open="true"]').forEach(item => {
-      const body = item.querySelector('.accordion-body');
-      body.style.maxHeight = body.scrollHeight + 'px';
-      body.style.opacity = '1';
-      body.style.paddingBottom = 'var(--sp-7)';
-    });
+    function initOpenAccordions() {
+      document.querySelectorAll('.accordion-item[data-open="true"]').forEach(item => {
+        const body = item.querySelector('.accordion-body');
+        body.style.maxHeight = 'none'; // release height so content shows fully
+        body.style.opacity = '1';
+        body.style.paddingBottom = 'var(--sp-7)';
+      });
+    }
+    // Run on DOM ready and again after images/lotties load
+    initOpenAccordions();
+    window.addEventListener('load', initOpenAccordions);
 
     document.querySelectorAll('.accordion-trigger').forEach(trigger => {
       trigger.addEventListener('click', () => {

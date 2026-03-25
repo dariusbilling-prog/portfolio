@@ -1051,6 +1051,53 @@
       transform: translateY(-1px);
     }
 
+    /* Hero "View Website" secondary CTA */
+    .hero-view-site-wrap {
+      margin-top: var(--sp-5);
+    }
+    .hero-view-site-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: 1.5px solid color-mix(in srgb, var(--text-primary) 20%, transparent);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.22s ease, border-color 0.22s ease, background 0.22s ease, transform 0.15s ease;
+    }
+    .hero-view-site-btn:hover {
+      color: var(--text-primary);
+      border-color: color-mix(in srgb, var(--text-primary) 50%, transparent);
+      background: color-mix(in srgb, var(--text-primary) 4%, transparent);
+      transform: translateY(-1px);
+    }
+    [data-theme="dark"] .hero-view-site-btn {
+      border-color: rgba(255,255,255,0.15);
+      color: rgba(245,245,247,0.6);
+    }
+    [data-theme="dark"] .hero-view-site-btn:hover {
+      color: #F5F5F7;
+      border-color: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* Footer "View Website" link accent */
+    .footer-link--view-site {
+      color: var(--periwinkle);
+      border-color: color-mix(in srgb, var(--periwinkle) 30%, transparent);
+    }
+    .footer-link--view-site:hover {
+      color: var(--periwinkle);
+      background: color-mix(in srgb, var(--periwinkle) 8%, transparent);
+      border-color: color-mix(in srgb, var(--periwinkle) 50%, transparent);
+    }
+
     /* ─── RESEARCH SECTION ───────────────────────────────────────────── */
     .research-section { padding-top: var(--sp-9); }
 
@@ -2001,6 +2048,7 @@
     .anim-d3 { animation-delay: 0.2s; }
     .anim-d4 { animation-delay: 0.28s; }
     .anim-d5 { animation-delay: 0.38s; }
+    .anim-d6 { animation-delay: 0.48s; }
 
     @keyframes fadeSlideIn { to { opacity: 1; transform: translateY(0); } }
 
@@ -2816,6 +2864,15 @@
         <span class="tag">UI Art</span>
       </div>
 
+      <div class="hero-view-site-wrap anim anim-d6">
+        <a href="#" aria-disabled="true" class="hero-view-site-btn" aria-label="View S Collective website — coming soon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M5.5 2.5H2.5a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V8.5M8.5 1.5h4m0 0v4m0-4L6 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          View Website
+        </a>
+      </div>
+
     </section>
 
     <!-- â•â• OVERVIEW & RESULTS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
@@ -3621,6 +3678,12 @@
               <path d="M9 6.5H4M4 6.5L7 3.5M4 6.5L7 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             Back to Portfolio
+          </a>
+          <a href="#" aria-disabled="true" class="footer-link footer-link--view-site" aria-label="View S Collective website — coming soon">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+              <path d="M4.5 2H2a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75V8.5M7.5 1.5H11m0 0v3.5m0-3.5L5.5 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            View Website
           </a>
         </div>
       </footer>

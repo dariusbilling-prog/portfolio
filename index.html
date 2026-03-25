@@ -289,7 +289,7 @@
       gap: var(--sp-2);
       background: none;
       border: none;
-      cursor: pointer;
+      cursor: none;
       padding: 4px;
     }
 
@@ -366,6 +366,14 @@
     @media (pointer: fine) {
       html, body, * { cursor: none !important; }
       *::before, *::after { cursor: none !important; }
+      .global-nav,
+      .global-nav *,
+      .global-nav *::before,
+      .global-nav *::after,
+      a, a:hover, a:focus, a:active,
+      button, button:hover, button:focus,
+      input, select, textarea,
+      [role="button"] { cursor: none !important; }
     }
     @media (pointer: coarse) { .cursor { display: none; } }
 
@@ -479,7 +487,7 @@
       font-family: 'Inter', sans-serif;
       font-size: var(--text-sm);
       color: var(--text-secondary);
-      cursor: pointer;
+      cursor: none;
       margin-bottom: var(--sp-4);
       transition: color 0.2s ease, border-color 0.2s ease;
     }
@@ -784,7 +792,7 @@
       background: none;
       border: none;
       padding: var(--sp-5) 0;
-      cursor: pointer;
+      cursor: none;
       text-align: left;
     }
     .accordion-trigger:hover .accordion-trigger__labels .finding-heading {
@@ -2643,7 +2651,7 @@
       background: var(--surface-raised);
       border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
       color: var(--text-secondary);
-      cursor: pointer;
+      cursor: none;
       display: flex;
       align-items: center;
       justify-content: center;

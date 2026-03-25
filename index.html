@@ -399,10 +399,12 @@
     }
 
     /* ─── Custom cursor: hide ALL native cursors on pointer devices ───── */
+    /* cursor:none alone has browser bugs on SVG/text nodes.              */
+    /* A 1×1 transparent GIF forces the OS cursor off at the system level */
     @media (pointer: fine) {
       :root, html, body, *,
       *::before, *::after {
-        cursor: none !important;
+        cursor: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"), none !important;
       }
     }
     @media (pointer: coarse) { .cursor { display: none; } }

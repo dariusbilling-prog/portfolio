@@ -289,7 +289,7 @@
       gap: var(--sp-2);
       background: none;
       border: none;
-      cursor: none;
+      cursor: auto;
       padding: 4px;
     }
 
@@ -362,11 +362,7 @@
       }
     }
 
-    /* ─── Custom cursor: pointer devices only ────────────────────────── */
-    @media (pointer: fine) {
-      html { cursor: none !important; }
-      html *, html *::before, html *::after { cursor: none !important; }
-    }
+    /* ─── Custom cursor: trailing ring (pointer devices only) ─────────── */
     @media (pointer: coarse) { .cursor { display: none; } }
 
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -479,7 +475,7 @@
       font-family: 'Inter', sans-serif;
       font-size: var(--text-sm);
       color: var(--text-secondary);
-      cursor: none;
+      cursor: pointer;
       margin-bottom: var(--sp-4);
       transition: color 0.2s ease, border-color 0.2s ease;
     }
@@ -784,7 +780,7 @@
       background: none;
       border: none;
       padding: var(--sp-5) 0;
-      cursor: none;
+      cursor: pointer;
       text-align: left;
     }
     .accordion-trigger:hover .accordion-trigger__labels .finding-heading {
@@ -1160,7 +1156,7 @@
       font-weight: 500;
       color: var(--blue);
       text-decoration: none;
-      cursor: none;
+      cursor: pointer;
       transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
       margin-bottom: var(--sp-9);
     }
@@ -2076,40 +2072,27 @@
       transform: translateX(0);
     }
 
-    /* ─── Custom cursor ──────────────────────────────────────────────── */
+    /* ─── Custom cursor — trailing ring ─────────────────────────────── */
     .cursor {
       position: fixed; top: 0; left: 0;
-      width: 12px; height: 12px;
-      background: var(--coral);
+      width: 28px; height: 28px;
+      border: 2px solid var(--coral);
+      background: transparent;
       border-radius: 50%;
       pointer-events: none;
       z-index: 99999;
       transform: translate(-50%, -50%);
-      opacity: 0; /* hidden until first mousemove — prevents flash on load */
-      transition: width 0.35s cubic-bezier(0.22,1,0.36,1), height 0.35s cubic-bezier(0.22,1,0.36,1);
-      will-change: transform, width, height;
-      overflow: hidden;
-    }
-    .cursor.expanded { width: 24px; height: 24px; }
-
-    .cursor::after {
-      content: '';
-      position: absolute; inset: -100%; width: 300%; height: 300%;
-      background:
-        radial-gradient(ellipse at 30% 50%, var(--coral) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 30%, var(--periwinkle) 0%, transparent 55%),
-        radial-gradient(ellipse at 60% 80%, var(--blue) 0%, transparent 50%);
       opacity: 0;
-      transition: opacity 0.35s ease;
-      animation: meshDrift 4s ease-in-out infinite alternate;
+      transition: width 0.3s cubic-bezier(0.22,1,0.36,1),
+                  height 0.3s cubic-bezier(0.22,1,0.36,1),
+                  border-color 0.3s ease,
+                  opacity 0.3s ease;
+      will-change: left, top, width, height;
     }
-    .cursor.expanded::after { opacity: 1; }
-
-    @keyframes meshDrift {
-      0%   { transform: translate(0%,0%)    scale(1); }
-      33%  { transform: translate(10%,-8%)  scale(1.05); }
-      66%  { transform: translate(-8%,10%)  scale(0.97); }
-      100% { transform: translate(6%,5%)    scale(1.03); }
+    .cursor.expanded {
+      width: 44px; height: 44px;
+      border-color: var(--periwinkle);
+      background: color-mix(in srgb, var(--periwinkle) 8%, transparent);
     }
 
     /* ─── Grain overlay ──────────────────────────────────────────────── */
@@ -2643,7 +2626,7 @@
       background: var(--surface-raised);
       border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
       color: var(--text-secondary);
-      cursor: none;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -3880,40 +3863,50 @@
 
     /* ── Custom cursor ────────────────────────────────────────────── */
     if (window.matchMedia('(pointer: fine)').matches) {
-      /* Inject cursor:none as a late stylesheet — wins over all other CSS including UA */
-      const cursorStyle = document.createElement('style');
-      cursorStyle.textContent = '*, *::before, *::after { cursor: none !important; }';
-      document.head.appendChild(cursorStyle);
-
       const cursor = document.getElementById('cursor');
-      let cursorVisible = false;
+      let mouseX = 0, mouseY = 0;
+      let ringX  = 0, ringY  = 0;
+      let visible = false;
+      const LERP = 0.1; /* 0 = frozen, 1 = instant — 0.1 gives a nice dog-tail lag */
 
+      /* Track real mouse position */
       document.addEventListener('mousemove', e => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top  = e.clientY + 'px';
-        if (!cursorVisible) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!visible) {
+          /* Snap ring to cursor on first move so it doesn't slide in from 0,0 */
+          ringX = mouseX;
+          ringY = mouseY;
           cursor.style.opacity = '1';
-          cursorVisible = true;
+          visible = true;
         }
       }, { passive: true });
 
+      /* Lerp animation loop — ring lazily chases the pointer */
+      (function loop() {
+        ringX += (mouseX - ringX) * LERP;
+        ringY += (mouseY - ringY) * LERP;
+        cursor.style.left = ringX + 'px';
+        cursor.style.top  = ringY + 'px';
+        requestAnimationFrame(loop);
+      })();
+
+      /* Expand ring over interactive elements */
       document.querySelectorAll('a, button, [role="button"], .wf-slider').forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
       });
 
-      /* Only hide when mouse genuinely exits the viewport */
+      /* Hide only when mouse leaves the viewport */
       document.addEventListener('mouseleave', e => {
         if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
           cursor.style.opacity = '0';
-          cursorVisible = false;
+          visible = false;
         }
       });
-      document.addEventListener('mouseenter', e => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top  = e.clientY + 'px';
+      document.addEventListener('mouseenter', () => {
         cursor.style.opacity = '1';
-        cursorVisible = true;
+        visible = true;
       });
     }
   })();

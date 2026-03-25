@@ -364,16 +364,8 @@
 
     /* ─── Custom cursor: pointer devices only ────────────────────────── */
     @media (pointer: fine) {
-      html, body, * { cursor: none !important; }
-      *::before, *::after { cursor: none !important; }
-      .global-nav,
-      .global-nav *,
-      .global-nav *::before,
-      .global-nav *::after,
-      a, a:hover, a:focus, a:active,
-      button, button:hover, button:focus,
-      input, select, textarea,
-      [role="button"] { cursor: none !important; }
+      html { cursor: none !important; }
+      html *, html *::before, html *::after { cursor: none !important; }
     }
     @media (pointer: coarse) { .cursor { display: none; } }
 
@@ -2094,7 +2086,7 @@
       z-index: 99999;
       transform: translate(-50%, -50%);
       opacity: 0; /* hidden until first mousemove — prevents flash on load */
-      transition: width 0.35s cubic-bezier(0.22,1,0.36,1), height 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease;
+      transition: width 0.35s cubic-bezier(0.22,1,0.36,1), height 0.35s cubic-bezier(0.22,1,0.36,1);
       will-change: transform, width, height;
       overflow: hidden;
     }
@@ -3888,25 +3880,29 @@
 
     /* ── Custom cursor ────────────────────────────────────────────── */
     if (window.matchMedia('(pointer: fine)').matches) {
+      /* Inject cursor:none as a late stylesheet — wins over all other CSS including UA */
+      const cursorStyle = document.createElement('style');
+      cursorStyle.textContent = '*, *::before, *::after { cursor: none !important; }';
+      document.head.appendChild(cursorStyle);
+
       const cursor = document.getElementById('cursor');
       let cursorVisible = false;
 
       document.addEventListener('mousemove', e => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top  = e.clientY + 'px';
-        /* Reveal on first move — avoids flash before position is set */
         if (!cursorVisible) {
           cursor.style.opacity = '1';
           cursorVisible = true;
         }
-      });
+      }, { passive: true });
 
       document.querySelectorAll('a, button, [role="button"], .wf-slider').forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
       });
 
-      /* Hide only when mouse truly exits the viewport — not between stacking layers */
+      /* Only hide when mouse genuinely exits the viewport */
       document.addEventListener('mouseleave', e => {
         if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
           cursor.style.opacity = '0';

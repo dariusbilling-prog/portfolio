@@ -398,7 +398,13 @@
       }
     }
 
-    /* ─── Custom cursor: trailing ring (pointer devices only) ─────────── */
+    /* ─── Custom cursor: hide ALL native cursors on pointer devices ───── */
+    @media (pointer: fine) {
+      :root, html, body, *,
+      *::before, *::after {
+        cursor: none !important;
+      }
+    }
     @media (pointer: coarse) { .cursor { display: none; } }
 
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -2108,7 +2114,7 @@
       transform: translateX(0);
     }
 
-    /* ─── Custom cursor — trailing filled circle ─────────────────────── */
+    /* ─── Custom cursor — 1:1 filled circle ──────────────────────────── */
     .cursor {
       position: fixed; top: 0; left: 0;
       width: 20px; height: 20px;
@@ -2120,10 +2126,10 @@
       transform: translate(-50%, -50%);
       opacity: 0;
       overflow: hidden;
-      transition: width 0.35s cubic-bezier(0.22,1,0.36,1),
-                  height 0.35s cubic-bezier(0.22,1,0.36,1),
-                  opacity 0.3s ease;
-      will-change: left, top, width, height;
+      transition: width 0.3s cubic-bezier(0.22,1,0.36,1),
+                  height 0.3s cubic-bezier(0.22,1,0.36,1),
+                  opacity 0.2s ease;
+      will-change: transform, width, height;
     }
     .cursor.expanded {
       width: 48px;
@@ -4002,50 +4008,38 @@
       backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
-    /* ── Custom cursor ────────────────────────────────────────────── */
+    /* ── Custom cursor — true 1:1 tracking, no lag ───────────────── */
     if (window.matchMedia('(pointer: fine)').matches) {
       const cursor = document.getElementById('cursor');
-      let mouseX = 0, mouseY = 0;
-      let ringX  = 0, ringY  = 0;
       let visible = false;
-      const LERP = 0.1; /* 0 = frozen, 1 = instant — 0.1 gives a nice dog-tail lag */
 
-      /* Track real mouse position */
+      /* 1:1 — position set directly from every mousemove, no rAF lag */
       document.addEventListener('mousemove', e => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
         if (!visible) {
-          /* Snap ring to cursor on first move so it doesn't slide in from 0,0 */
-          ringX = mouseX;
-          ringY = mouseY;
           cursor.style.opacity = '1';
           visible = true;
         }
       }, { passive: true });
 
-      /* Lerp animation loop — ring lazily chases the pointer */
-      (function loop() {
-        ringX += (mouseX - ringX) * LERP;
-        ringY += (mouseY - ringY) * LERP;
-        cursor.style.left = ringX + 'px';
-        cursor.style.top  = ringY + 'px';
-        requestAnimationFrame(loop);
-      })();
-
-      /* Expand ring over interactive elements */
-      document.querySelectorAll('a, button, [role="button"], .wf-slider').forEach(el => {
+      /* Expand on interactive elements */
+      document.querySelectorAll('a, button, [role="button"], .wf-slider, .lottie-btn').forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
       });
 
-      /* Hide only when mouse leaves the viewport */
+      /* Hide ONLY when mouse physically exits the browser viewport */
       document.addEventListener('mouseleave', e => {
-        if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+        if (e.clientY <= 0 || e.clientX <= 0 ||
+            e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
           cursor.style.opacity = '0';
           visible = false;
         }
       });
-      document.addEventListener('mouseenter', () => {
+      document.addEventListener('mouseenter', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
         cursor.style.opacity = '1';
         visible = true;
       });

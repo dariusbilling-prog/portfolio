@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Darius Billing — UX / CRO Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Polтawski+Nowy:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── White border frame: html is white, body has margin ─── */
+    html {
+      background: #ffffff;
+      height: 100%;
+      overflow: hidden; /* scroll happens on .scroll-root */
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      margin: 12px;
+      height: calc(100vh - 24px);
+      border-radius: 18px;
+      overflow: hidden;
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-primary);
+    }
+
+    /* ─── Scroll container ─── */
+    .scroll-root {
+      height: 100%;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scrollbar-width: none;
+    }
+    .scroll-root::-webkit-scrollbar { display: none; }
+
+    /* ─── Sections ─── */
+    .page-section {
+      height: calc(100vh - 24px);
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ─── Section colours ─── */
+    .section--hero  { background: var(--periwinkle); }
+    .section--work  { background: var(--bg); }
+    .section--about { background: #1a1a1f; }
+
+    /* ─── Nav ─── */
+    .global-nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .global-nav__inner {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--sp-7);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: var(--sp-6);
+    }
+    .global-nav__logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .global-nav__logo:hover { opacity: 0.7; }
+    .global-nav__links {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-6);
+      list-style: none;
+    }
+    .global-nav__links a {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: opacity 0.2s;
+    }
+    .global-nav__links a:hover { opacity: 0.6; }
+    .global-nav__actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      justify-content: flex-end;
+    }
+
+    /* Nav light (hero + about: dark/coloured sections) */
+    .nav--light {
+      background: rgba(0,0,0,0.18);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .nav--light .global-nav__logo,
+    .nav--light .global-nav__links a,
+    .nav--light .dark-toggle__label { color: rgba(255,255,255,0.95); }
+
+    /* Nav dark (work: cream section) */
+    .nav--dark {
+      background: rgba(242,237,228,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .nav--dark .global-nav__logo,
+    .nav--dark .global-nav__links a { color: var(--text-primary); }
+    .nav--dark .dark-toggle__label { color: var(--text-muted); }
+
+    /* ─── Dark toggle ─── */
+    .dark-toggle__label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; user-select: none; }
+    .dark-toggle { display: flex; align-items: center; gap: var(--sp-2); background: none; border: none; padding: 4px; cursor: pointer; }
+    .dark-toggle__track { width: 40px; height: 24px; background: rgba(255,255,255,0.25); border-radius: 100px; position: relative; transition: background 0.3s ease; flex-shrink: 0; }
+    .nav--dark .dark-toggle__track { background: #d8d8d8; }
+    .dark-toggle__thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: #fff; border-radius: 50%; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 1px 4px rgba(0,0,0,0.22); }
+    .dark-toggle[aria-checked="true"] .dark-toggle__track { background: #0A84FF !important; }
+    .dark-toggle[aria-checked="true"] .dark-toggle__thumb { transform: translateX(16px); }
+
+    /* ─── Hero section content ─── */
+    .hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 56px var(--sp-7) var(--sp-7);
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: var(--sp-4);
+    }
+    .hero-eyebrow span { display: inline-block; width: 20px; height: 1px; background: rgba(255,255,255,0.5); }
+    .hero-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 6vw + 0.5rem, 6.5rem);
+      font-weight: 700;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      max-width: 860px;
+      margin-bottom: var(--sp-5);
+    }
+    .hero-heading em {
+      font-style: italic;
+      color: rgba(255,255,255,0.65);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      color: rgba(255,255,255,0.72);
+      max-width: 480px;
+      line-height: 1.65;
+      margin-bottom: var(--sp-6);
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      color: var(--periwinkle);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.15s, opacity 0.2s;
+    }
+    .btn-white:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn-outline-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 11px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.35);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-outline-white:hover { border-color: rgba(255,255,255,0.8); color: #fff; transform: translateY(-2px); }
+
+    /* Hero tags row */
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+      margin-top: auto;
+      padding-top: var(--sp-5);
+      border-top: 1px solid rgba(255,255,255,0.18);
+    }
+    .hero-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: var(--sp-5);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: nudge 2.4s ease-in-out infinite;
+    }
+    @keyframes nudge {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── Work section ─── */
+    .work-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 56px var(--sp-7) var(--sp-7);
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .section-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: var(--sp-3);
+    }
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: var(--sp-6);
+    }
+
+    /* Case study card */
+    .cs-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+      transition: transform 0.2s, box-shadow 0.2s;
+      max-height: calc(100vh - 24px - 56px - 120px);
+    }
+    .cs-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px color-mix(in srgb, var(--periwinkle) 16%, transparent);
+    }
+    .cs-card__media {
+      background: color-mix(in srgb, var(--periwinkle) 14%, var(--bg));
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 260px;
+    }
+    .cs-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cs-card__media.placeholder {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .cs-card__body {
+      padding: var(--sp-6) var(--sp-7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--sp-3);
+    }
+    .cs-card__tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--periwinkle);
+    }
+    .cs-card__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 1.8vw, 1.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text-primary);
+    }
+    .cs-card__desc {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .cs-card__stats {
+      display: flex;
+      gap: var(--sp-5);
+      padding-top: var(--sp-3);
+      border-top: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+    }
+    .cs-card__stat-val {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .cs-card__stat-lbl {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .cs-card__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .cs-card__cta svg { transition: transform 0.2s; }
+    .cs-card:hover .cs-card__cta svg { transform: translateX(4px); }
+
+    /* ─── About section ─── */
+    .about-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 56px var(--sp-7) var(--sp-7);
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      gap: var(--sp-9);
+    }
+    .about-text { flex: 1; }
+    .about-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--periwinkle);
+      margin-bottom: var(--sp-3);
+    }
+    .about-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: #ffffff;
+      margin-bottom: var(--sp-5);
+    }
+    .about-heading em { font-style: italic; color: rgba(103,141,198,0.85); }
+    .about-body {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      margin-bottom: var(--sp-5);
+      max-width: 460px;
+    }
+    .about-skills { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+    .about-pill {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+    .about-image {
+      flex: 0 0 420px;
+      height: 480px;
+      background: rgba(103,141,198,0.12);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Footer inside about section */
+    .about-footer {
+      position: absolute;
+      bottom: var(--sp-5);
+      left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--sp-7);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .about-footer__name {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.3);
+      font-family: 'Inter', sans-serif;
+    }
+    .about-footer__links { display: flex; gap: var(--sp-5); list-style: none; }
+    .about-footer__links a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .about-footer__links a:hover { color: rgba(255,255,255,0.8); }
+
+    /* ─── Custom cursor ─── */
+    .cursor {
+      position: fixed; top: 0; left: 0;
+      width: 20px; height: 20px;
+      background: var(--coral);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      overflow: hidden;
+      transition: width 0.3s cubic-bezier(0.22,1,0.36,1),
+                  height 0.3s cubic-bezier(0.22,1,0.36,1),
+                  opacity 0.2s ease;
+      will-change: transform, width, height;
+    }
+    .cursor.expanded { width: 48px; height: 48px; }
+    .cursor::after {
+      content: '';
+      position: absolute; inset: -100%; width: 300%; height: 300%;
+      background:
+        radial-gradient(ellipse at 30% 50%, var(--coral) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, var(--periwinkle) 0%, transparent 55%),
+        radial-gradient(ellipse at 60% 80%, var(--blue) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      animation: meshDrift 4s ease-in-out infinite alternate;
+    }
+    .cursor.expanded::after { opacity: 1; }
+    @keyframes meshDrift {
+      0%   { transform: translate(0%,0%)   scale(1); }
+      33%  { transform: translate(10%,-8%) scale(1.05); }
+      66%  { transform: translate(-8%,10%) scale(0.97); }
+      100% { transform: translate(6%,5%)   scale(1.03); }
+    }
+    @media (pointer: coarse) { .cursor { display: none; } }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      body { margin: 8px; height: calc(100vh - 16px); border-radius: 12px; }
+      .scroll-root > .page-section { height: calc(100vh - 16px); }
+      .cs-card { grid-template-columns: 1fr; max-height: none; }
+      .cs-card__media { min-height: 180px; }
+      .about-content { flex-direction: column; gap: var(--sp-6); }
+      .about-image { flex: none; width: 100%; height: 200px; }
+      .global-nav__inner { padding: 0 var(--sp-4); }
+      .hero-content, .work-content, .about-content { padding-left: var(--sp-4); padding-right: var(--sp-4); }
+    }
+    @media (max-width: 600px) {
+      .global-nav__links { gap: var(--sp-3); }
+      .hero-heading { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <!-- ─── Scrollable root ─── -->
+  <div class="scroll-root" id="scrollRoot">
+
+    <!-- ══════════════════════════════════════
+         SECTION 1 — HERO (Periwinkle)
+    ══════════════════════════════════════ -->
+    <section class="page-section section--hero" id="home" data-nav="light">
+
+      <header class="global-nav nav--light" role="banner">
+        <div class="global-nav__inner">
+          <a href="/" class="global-nav__logo">Darius Billing</a>
+          <nav aria-label="Main navigation">
+            <ul class="global-nav__links">
+              <li><a href="/">Home</a></li>
+              <li><a href="#work">Work</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="mailto:hello@dariusbilling.com">Contact</a></li>
+            </ul>
+          </nav>
+          <div class="global-nav__actions">
+            <span class="dark-toggle__label" id="darkToggleLabel">Dark Mode</span>
+            <button class="dark-toggle" id="darkToggle" role="switch" aria-checked="false" aria-label="Toggle dark mode">
+              <span class="dark-toggle__track"><span class="dark-toggle__thumb"></span></span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow"><span></span> UX / CRO Designer</p>
+        <h1 class="hero-heading">Designing experiences that <em>convert</em> and retain</h1>
+        <p class="hero-sub">I combine user research, conversion strategy, and interface craft to build digital products that perform — not just look good.</p>
+        <div class="hero-actions">
+          <a href="#work" class="btn-white">
+            View my work
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="mailto:hello@dariusbilling.com" class="btn-outline-white">Say hello</a>
+        </div>
+        <div class="hero-tags">
+          <span class="hero-tag">UX Audit</span>
+          <span class="hero-tag">CRO Design</span>
+          <span class="hero-tag">User Research</span>
+          <span class="hero-tag">Information Architecture</span>
+          <span class="hero-tag">Figma</span>
+          <span class="hero-tag">UI Art Direction</span>
+          <span class="hero-tag">Conversion Strategy</span>
+        </div>
+      </div>
+
+      <div class="scroll-cue" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        scroll
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SECTION 2 — WORK (Cream)
+    ══════════════════════════════════════ -->
+    <section class="page-section section--work" id="work" data-nav="dark">
+
+      <header class="global-nav nav--dark" role="banner">
+        <div class="global-nav__inner">
+          <a href="/" class="global-nav__logo">Darius Billing</a>
+          <nav aria-label="Main navigation">
+            <ul class="global-nav__links">
+              <li><a href="/">Home</a></li>
+              <li><a href="#work">Work</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="mailto:hello@dariusbilling.com">Contact</a></li>
+            </ul>
+          </nav>
+          <div class="global-nav__actions">
+            <span class="dark-toggle__label">Dark Mode</span>
+            <button class="dark-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode">
+              <span class="dark-toggle__track"><span class="dark-toggle__thumb"></span></span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="work-content">
+        <p class="section-eyebrow">Selected Work</p>
+        <h2 class="section-heading">Case Studies</h2>
+
+        <a class="cs-card" href="case-studies/s-collective/">
+          <div class="cs-card__media placeholder">Preview image coming soon</div>
+          <div class="cs-card__body">
+            <p class="cs-card__tag">UX Audit &middot; CRO &middot; UI Design</p>
+            <h3 class="cs-card__title">S Collective — Luxury Automotive Services</h3>
+            <p class="cs-card__desc">A full UX audit and CRO redesign for a luxury motorsport brand — turning a beautiful site into one that converts.</p>
+            <div class="cs-card__stats">
+              <div>
+                <div class="cs-card__stat-val">40%</div>
+                <div class="cs-card__stat-lbl">CRO Increase</div>
+              </div>
+              <div>
+                <div class="cs-card__stat-val">90</div>
+                <div class="cs-card__stat-lbl">Days to deliver</div>
+              </div>
+              <div>
+                <div class="cs-card__stat-val">5</div>
+                <div class="cs-card__stat-lbl">Audit findings</div>
+              </div>
+            </div>
+            <span class="cs-card__cta">
+              View case study
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </a>
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SECTION 3 — ABOUT (Dark)
+    ══════════════════════════════════════ -->
+    <section class="page-section section--about" id="about" data-nav="light">
+
+      <header class="global-nav nav--light" role="banner">
+        <div class="global-nav__inner">
+          <a href="/" class="global-nav__logo">Darius Billing</a>
+          <nav aria-label="Main navigation">
+            <ul class="global-nav__links">
+              <li><a href="/">Home</a></li>
+              <li><a href="#work">Work</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="mailto:hello@dariusbilling.com">Contact</a></li>
+            </ul>
+          </nav>
+          <div class="global-nav__actions">
+            <span class="dark-toggle__label">Dark Mode</span>
+            <button class="dark-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode">
+              <span class="dark-toggle__track"><span class="dark-toggle__thumb"></span></span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="about-content">
+        <div class="about-text">
+          <p class="about-eyebrow">About</p>
+          <h2 class="about-heading">I design with <em>intent</em> — every decision earns its place</h2>
+          <p class="about-body">I'm a UX and CRO designer working at the intersection of user psychology and business performance. I research deeply, audit honestly, and design systems that scale.</p>
+          <div class="about-skills">
+            <span class="about-pill">UX Research</span>
+            <span class="about-pill">CRO Strategy</span>
+            <span class="about-pill">Wireframing</span>
+            <span class="about-pill">Design Systems</span>
+            <span class="about-pill">Figma</span>
+            <span class="about-pill">Information Architecture</span>
+            <span class="about-pill">UI Art Direction</span>
+          </div>
+        </div>
+        <div class="about-image">Photo placeholder</div>
+      </div>
+
+      <div class="about-footer" style="position:absolute;bottom:var(--sp-5);left:0;right:0;padding:0 var(--sp-7);display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-size:0.8rem;color:rgba(255,255,255,0.25);font-family:'Inter',sans-serif;">© 2026 Darius Billing</span>
+        <ul style="display:flex;gap:var(--sp-5);list-style:none;">
+          <li><a href="https://linkedin.com" target="_blank" style="font-size:0.8rem;color:rgba(255,255,255,0.3);text-decoration:none;">LinkedIn</a></li>
+          <li><a href="mailto:hello@dariusbilling.com" style="font-size:0.8rem;color:rgba(255,255,255,0.3);text-decoration:none;">Email</a></li>
+          <li><a href="case-studies/s-collective/" style="font-size:0.8rem;color:rgba(255,255,255,0.3);text-decoration:none;">S Collective</a></li>
+        </ul>
+      </div>
+
+    </section>
+
+  </div><!-- /scroll-root -->
+
+  <script>
+    /* ── Custom cursor ───────────────────────────────────────────── */
+    (() => {
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+      const cursor = document.getElementById('cursor');
+      let visible = false;
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        if (!visible) { cursor.style.opacity = '1'; visible = true; }
+      }, { passive: true });
+      document.querySelectorAll('a, button, [role="button"]').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
+      });
+      document.addEventListener('mouseleave', e => {
+        if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+          cursor.style.opacity = '0'; visible = false;
+        }
+      });
+      document.addEventListener('mouseenter', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        cursor.style.opacity = '1'; visible = true;
+      });
+    })();
+
+    /* ── Dark mode — sync all 3 toggles ─────────────────────────── */
+    (() => {
+      const toggles = document.querySelectorAll('.dark-toggle');
+      const label   = document.getElementById('darkToggleLabel');
+      const applyTheme = dark => {
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+        toggles.forEach(t => t.setAttribute('aria-checked', dark ? 'true' : 'false'));
+        if (label) label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+      };
+      applyTheme(localStorage.getItem('theme') === 'dark');
+      toggles.forEach(t => t.addEventListener('click', () => {
+        const isDark = t.getAttribute('aria-checked') === 'true';
+        applyTheme(!isDark);
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      }));
+    })();
+
+    /* ── Smooth anchor scrolling inside scroll-root ──────────────── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

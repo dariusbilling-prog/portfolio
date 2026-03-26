@@ -4105,6 +4105,12 @@
         el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
       });
 
+      /* Hide cursor over cross-origin iframes — dot cant follow inside */
+      document.querySelectorAll('.cs-jolt__device').forEach(el => {
+        el.addEventListener('mouseenter', () => { cursor.style.opacity = '0'; });
+        el.addEventListener('mouseleave', () => { if (visible) cursor.style.opacity = '1'; });
+      });
+
       /* Hide ONLY when mouse physically exits the browser viewport */
       document.addEventListener('mouseleave', e => {
         if (e.clientY <= 0 || e.clientX <= 0 ||

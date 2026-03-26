@@ -22,11 +22,11 @@
       --text-secondary: #5a6270;
       --text-muted:     #6b7584;
 
-      --text-xs:   0.75rem;    /* 12px */
-      --text-sm:   0.875rem;   /* 14px — clearly one step above xs */
-      --text-md:   1.125rem;   /* 18px — intentional label/subtitle size */
-      --text-base: 16px;
-      --text-lg:   1.25rem;    /* 20px    */
+      --text-xs:   12px;         /* labels, captions — intentionally small */
+      --text-sm:   14px;         /* nav, sidebar, secondary text */
+      --text-md:   20px;         /* subtitles, project labels */
+      --text-base: 18px;        /* body copy — new base */
+      --text-lg:   22px;         /* impact blocks, pull quotes */
       --text-xl:   1.563rem;   /* 25px    */
       --text-2xl:  1.953rem;   /* 31px    */
       --text-3xl:  2.441rem;   /* 39px    */
@@ -358,7 +358,7 @@
     h2, h3 { margin-bottom: clamp(8px, 1vw + 4px, 15px); }
 
     html {
-      font-size: 16px;
+      font-size: 18px;
       /* Smooth scroll + offset for sticky nav */
       scroll-behavior: smooth;
       scroll-padding-top: var(--scroll-offset);

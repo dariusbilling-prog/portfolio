@@ -1576,6 +1576,150 @@
       .wf-hero-insight { padding: var(--sp-5) var(--sp-3); }
     }
 
+    /* ── Hero Video Annotation Module ─────────────────────────────── */
+    .wf-video-section { margin-top: var(--sp-9); }
+    .wf-video-wrap {
+      width: 100%;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin: var(--sp-5) 0;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    }
+    .wf-video-wrap video { width: 100%; display: block; }
+    .wf-annotations {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-4);
+      margin: var(--sp-5) 0;
+    }
+    .wf-annotation {
+      background: color-mix(in srgb, var(--blue) 6%, var(--bg));
+      border: 1px solid color-mix(in srgb, var(--blue) 15%, transparent);
+      border-radius: var(--radius-md);
+      padding: var(--sp-4) var(--sp-5);
+    }
+    .wf-annotation__num {
+      font-family: 'Półtawski Nowy', Georgia, serif;
+      font-size: var(--text-md);
+      font-weight: 700;
+      color: var(--blue-heading);
+      display: block;
+      margin-bottom: var(--sp-2);
+    }
+    .wf-annotation__title {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 var(--sp-2) 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .wf-annotation__body {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .wf-friction-note {
+      background: color-mix(in srgb, var(--coral) 8%, var(--bg));
+      border-left: 3px solid var(--coral);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: var(--sp-4) var(--sp-5);
+      margin-top: var(--sp-5);
+    }
+    .wf-friction-note p {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .wf-friction-note strong { color: var(--text-primary); }
+    [data-theme="dark"] .wf-annotation { background: color-mix(in srgb, var(--blue) 10%, #2d2d2f); border-color: rgba(133,206,255,0.15); }
+    [data-theme="dark"] .wf-annotation__num { color: #85ceff; }
+    [data-theme="dark"] .wf-annotation__title { color: #f5f5f7; }
+    [data-theme="dark"] .wf-annotation__body { color: #a1a1a6; }
+    [data-theme="dark"] .wf-friction-note { background: rgba(255,107,80,0.08); border-left-color: #ff6b50; }
+    [data-theme="dark"] .wf-friction-note p { color: #a1a1a6; }
+    @media (max-width: 768px) { .wf-annotations { grid-template-columns: 1fr; } }
+
+    /* ── Mobile Wireframes ─────────────────────────────────────────── */
+    .mobile-wf-section {
+      margin-top: var(--sp-9);
+      padding-top: var(--sp-7);
+      border-top: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+    }
+    .mobile-wf-intro {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 780px;
+      margin: var(--sp-4) 0 var(--sp-7);
+    }
+    .mobile-wf-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--sp-4);
+      align-items: start;
+    }
+    .phone-mockup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-3);
+    }
+    .phone-mockup__frame {
+      width: 100%;
+      background: #1a1a1f;
+      border-radius: 28px;
+      padding: 10px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.1),
+        0 8px 24px rgba(0,0,0,0.24),
+        0 24px 48px rgba(0,0,0,0.16);
+      position: relative;
+    }
+    .phone-mockup__frame::before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 5px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 3px;
+      z-index: 2;
+    }
+    .phone-mockup__screen {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 9/19;
+      background: #2d2d2f;
+      margin-top: 12px;
+    }
+    .phone-mockup__screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .phone-mockup__label {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    [data-theme="dark"] .mobile-wf-section { border-top-color: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .mobile-wf-grid .phone-mockup__frame { background: #2d2d2f; box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 8px 24px rgba(0,0,0,0.4); }
+    @media (max-width: 900px) { .mobile-wf-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .mobile-wf-grid { grid-template-columns: repeat(2, 1fr); } }
+
     /* ── Wireframe Cards Grid ────────────────────────────────────────── */
     .wf-cards-grid {
       display: grid;
@@ -1759,6 +1903,95 @@
       line-height: 1.65;
       margin-bottom: var(--sp-2);
     }
+
+    /* ── Section 6 — Homepage Preview ─────────────────────────────── */
+    .hp-preview-section {
+      padding-top: var(--sp-7);
+      margin-bottom: var(--sp-8);
+    }
+    .hp-preview-container {
+      background: color-mix(in srgb, var(--periwinkle) 14%, var(--bg));
+      border: 1px solid color-mix(in srgb, var(--periwinkle) 25%, transparent);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-7) var(--sp-7) var(--sp-6);
+      margin-top: var(--sp-5);
+    }
+    .hp-preview-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--periwinkle);
+      display: block;
+      margin-bottom: var(--sp-3);
+    }
+    .hp-preview-heading {
+      font-family: 'Półtawski Nowy', Georgia, serif;
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--blue-heading);
+      margin: 0 0 var(--sp-3) 0;
+      line-height: 1.15;
+    }
+    .hp-preview-sub {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin: 0 0 var(--sp-5) 0;
+      max-width: 680px;
+    }
+    .hp-preview-device {
+      width: 100%;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #f0f0f0;
+      box-shadow:
+        0 2px 8px rgba(0,0,0,0.06),
+        0 12px 32px rgba(0,0,0,0.10),
+        0 32px 64px rgba(0,0,0,0.07);
+      cursor: pointer;
+      position: relative;
+    }
+    .hp-preview-device__screen {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+    }
+    .hp-preview-device__screen iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: calc(100% + 96px);
+      border: none;
+      display: block;
+    }
+    .hp-preview-cta {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-5);
+      margin-top: var(--sp-5);
+      flex-wrap: wrap;
+    }
+    .hp-preview-direction {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+    }
+    .hp-preview-direction svg { opacity: 0.6; flex-shrink: 0; }
+    [data-theme="dark"] .hp-preview-container {
+      background: color-mix(in srgb, var(--periwinkle) 8%, #2d2d2f);
+      border-color: rgba(144,212,255,0.2);
+    }
+    [data-theme="dark"] .hp-preview-label { color: #90d4ff; }
+    [data-theme="dark"] .hp-preview-heading { color: #85ceff; }
+    [data-theme="dark"] .hp-preview-sub { color: #a1a1a6; }
+    [data-theme="dark"] .hp-preview-device { background: #2d2d2f; }
+    [data-theme="dark"] .hp-preview-direction { color: #6e6e73; }
+
     /* Figma embed — full-width, device frame handled by Figma */
     .cs-jolt__device {
       width: 100%;
@@ -2470,6 +2703,75 @@
       .fui-two-col { grid-template-columns: 1fr; }
     }
 
+    /* ── Brand Authority A/B Module Cards ─────────────────────────── */
+    .ba-modules-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-5);
+      margin-top: var(--sp-7);
+    }
+    .ba-module-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+      background: var(--surface-raised);
+    }
+    .ba-module-card__header {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: var(--sp-4) var(--sp-5);
+      border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+    }
+    .ba-module-card__label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+    }
+    .ba-module-card__label--a {
+      background: color-mix(in srgb, var(--blue) 12%, var(--bg));
+      color: var(--blue);
+      border: 1px solid color-mix(in srgb, var(--blue) 20%, transparent);
+    }
+    .ba-module-card__label--b {
+      background: color-mix(in srgb, var(--coral) 10%, var(--bg));
+      color: var(--coral);
+      border: 1px solid color-mix(in srgb, var(--coral) 20%, transparent);
+    }
+    .ba-module-card__name {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .ba-module-card__img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      object-position: top;
+    }
+    .ba-module-card__body {
+      padding: var(--sp-4) var(--sp-5);
+    }
+    .ba-module-card__note {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+    [data-theme="dark"] .ba-module-card { background: #2d2d2f; border-color: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .ba-module-card__header { border-bottom-color: rgba(255,255,255,0.06); }
+    [data-theme="dark"] .ba-module-card__name { color: #f5f5f7; }
+    [data-theme="dark"] .ba-module-card__note { color: #a1a1a6; }
+    [data-theme="dark"] .ba-module-card__label--a { background: rgba(133,206,255,0.1); color: #85ceff; border-color: rgba(133,206,255,0.2); }
+    [data-theme="dark"] .ba-module-card__label--b { background: rgba(255,107,80,0.1); color: #ff6b50; border-color: rgba(255,107,80,0.2); }
+    @media (max-width: 768px) { .ba-modules-grid { grid-template-columns: 1fr; } }
+
     /* ── Implementation Section ──────────────────────────────────────── */
     .impl-section { padding-top: var(--sp-7); margin-bottom: var(--sp-9); }
 
@@ -2958,6 +3260,7 @@
       <li><a href="#strategy">Strategy</a></li>
       <li><a href="#wireframes">Wireframes</a></li>
       <li><a href="#final-ui">Final User Interface</a></li>
+      <li><a href="#homepage-preview">Homepage Preview</a></li>
       <li><a href="#implementation">Implementation</a></li>
       <li><a href="#lessons">Lessons Learned</a></li>
     </ul>
@@ -3619,6 +3922,105 @@
 
         </article>
 
+        <!-- ── Wireframe #3 — Hero Video Direction ─────────────────── -->
+        <article class="wf-video-section reveal reveal-d1" style="margin-top: var(--sp-9);">
+
+          <h3 class="finding-heading">Hero Video — Service Storytelling Without Friction</h3>
+
+          <p class="wf-intro">The original hero required users to interact with a video carousel to discover what S Collective does — creating a layer of friction before any value was communicated. The redesigned hero auto-plays a contextual video, surfacing services immediately and eliminating the need to click before understanding the offering.</p>
+
+          <!-- Video preview -->
+          <div class="wf-video-wrap reveal reveal-d2">
+            <video
+              class="cs-scroll-video"
+              src="../../assets/videos/case-study-scollevtive-hero-video2.mp4"
+              muted
+              playsinline
+              preload="auto"
+              data-replay-delay="8000"
+              aria-label="Redesigned hero video showing each service section"
+            ></video>
+          </div>
+
+          <!-- Annotation breakdown -->
+          <div class="wf-annotations reveal reveal-d3">
+            <div class="wf-annotation">
+              <span class="wf-annotation__num">01</span>
+              <h4 class="wf-annotation__title">Brand Statement</h4>
+              <p class="wf-annotation__body">Opens with a clear declaration of what S Collective does — premium automotive services — so users understand the offering in under 3 seconds.</p>
+            </div>
+            <div class="wf-annotation">
+              <span class="wf-annotation__num">02</span>
+              <h4 class="wf-annotation__title">Service Showcase</h4>
+              <p class="wf-annotation__body">Each service is shown in context — detailing, ceramic coating, and performance — giving users immediate visual proof of capability without clicking.</p>
+            </div>
+            <div class="wf-annotation">
+              <span class="wf-annotation__num">03</span>
+              <h4 class="wf-annotation__title">Trust Signals</h4>
+              <p class="wf-annotation__body">Real work is surfaced during the video scroll, building credibility for high-value services before users are asked to enquire.</p>
+            </div>
+            <div class="wf-annotation">
+              <span class="wf-annotation__num">04</span>
+              <h4 class="wf-annotation__title">Conversion Pathway</h4>
+              <p class="wf-annotation__body">A persistent primary CTA sits above the fold throughout — capturing high-intent users at the moment interest peaks, not after it decays.</p>
+            </div>
+          </div>
+
+          <!-- Friction note -->
+          <div class="wf-friction-note reveal reveal-d4">
+            <p><strong>Friction reduction by design:</strong> The previous hero required users to manually click a video carousel to discover available services. The redesigned hero removes this dependency entirely — the video plays automatically on scroll, communicating the full service range passively. Removing the interaction requirement reduced the effort-to-understanding ratio and contributed directly to the 40% CVR improvement.</p>
+          </div>
+
+        </article>
+
+        <!-- ── Mobile Wireframes ──────────────────────────────────────── -->
+        <div class="mobile-wf-section reveal reveal-d1">
+
+          <h3 class="finding-heading">Mobile Wireframes</h3>
+          <p class="mobile-wf-intro">Three device sizes were considered throughout the wireframe process. Mobile-first thinking shaped the information hierarchy — if content couldn't communicate clearly on a 390px screen, the structure was revised before moving to desktop.</p>
+
+          <div class="mobile-wf-grid">
+
+            <div class="phone-mockup reveal reveal-d2">
+              <div class="phone-mockup__frame">
+                <div class="phone-mockup__screen">
+                  <img src="../../assets/images/hand-wire-frame-1.jpg" alt="Mobile wireframe — Homepage layout and component planning" />
+                </div>
+              </div>
+              <span class="phone-mockup__label">Homepage</span>
+            </div>
+
+            <div class="phone-mockup reveal reveal-d3">
+              <div class="phone-mockup__frame">
+                <div class="phone-mockup__screen">
+                  <img src="../../assets/images/hand-wire-frame-2.jpg" alt="Mobile wireframe — Racing page with dual-audience layout" />
+                </div>
+              </div>
+              <span class="phone-mockup__label">Racing Page</span>
+            </div>
+
+            <div class="phone-mockup reveal reveal-d2">
+              <div class="phone-mockup__frame">
+                <div class="phone-mockup__screen">
+                  <img src="../../assets/images/hero-after.jpg" alt="Mobile wireframe — Service discovery grid" />
+                </div>
+              </div>
+              <span class="phone-mockup__label">Services</span>
+            </div>
+
+            <div class="phone-mockup reveal reveal-d3">
+              <div class="phone-mockup__frame">
+                <div class="phone-mockup__screen">
+                  <img src="../../assets/images/cro-form-page-fullscreen.jpg" alt="Mobile wireframe — Conversion form and enquiry pathway" />
+                </div>
+              </div>
+              <span class="phone-mockup__label">Enquiry</span>
+            </div>
+
+          </div>
+
+        </div>
+
       </section>
 
       <!-- Section transition -->
@@ -3728,11 +4130,115 @@
           </p>
         </blockquote>
 
+        <!-- Brand Authority Module A/B Wireframes ─────────────────── -->
+        <h3 class="cs-data-label reveal reveal-d1" style="margin-top: var(--sp-8);">Module Direction — A/B Concepts</h3>
+        <p class="cs-body reveal reveal-d2" style="margin-bottom: var(--sp-5);">Two wireframe directions were explored for each mid-page module — one focused on social proof density, one on hierarchical clarity. Placement and sequencing were tested against user scroll patterns to identify which structure better supported conversion intent.</p>
+
+        <div class="ba-modules-grid">
+
+          <div class="ba-module-card reveal reveal-d2">
+            <div class="ba-module-card__header">
+              <span class="ba-module-card__label ba-module-card__label--a">Direction A</span>
+              <span class="ba-module-card__name">Social Proof First</span>
+            </div>
+            <img class="ba-module-card__img" src="../../assets/images/Social%20Proof%20%26%20Hierarchy.png" alt="Direction A — Social proof and hierarchy wireframe showing testimonials above service modules" />
+            <div class="ba-module-card__body">
+              <p class="ba-module-card__note">Leads with client results and trust markers before presenting services. Reduces skepticism early by anchoring brand authority through social evidence before asking for conversion.</p>
+            </div>
+          </div>
+
+          <div class="ba-module-card reveal reveal-d3">
+            <div class="ba-module-card__header">
+              <span class="ba-module-card__label ba-module-card__label--b">Direction B</span>
+              <span class="ba-module-card__name">Service-Led with CRO Overlay</span>
+            </div>
+            <img class="ba-module-card__img" src="../../assets/images/cro-form-page-fullscreen.jpg" alt="Direction B — Service-led wireframe with conversion form overlaid mid-page" />
+            <div class="ba-module-card__body">
+              <p class="ba-module-card__note">Surfaces service options immediately with a persistent form CTA overlaid. Designed to capture high-intent users who arrived knowing what they want — reducing path length to inquiry.</p>
+            </div>
+          </div>
+
+          <div class="ba-module-card reveal reveal-d2">
+            <div class="ba-module-card__header">
+              <span class="ba-module-card__label ba-module-card__label--a">Direction A</span>
+              <span class="ba-module-card__name">Racing Page — Authority Focus</span>
+            </div>
+            <img class="ba-module-card__img" src="../../assets/images/racing-page-fullscreen.jpg" alt="Racing page wireframe focused on brand authority" />
+            <div class="ba-module-card__body">
+              <p class="ba-module-card__note">The Racing page uses a performance-first layout — leading with track credentials and driver testimonials to establish authority before surfacing booking pathways for both first-time and experienced drivers.</p>
+            </div>
+          </div>
+
+          <div class="ba-module-card reveal reveal-d3">
+            <div class="ba-module-card__header">
+              <span class="ba-module-card__label ba-module-card__label--b">Direction B</span>
+              <span class="ba-module-card__name">Findings — Dual-Intent Structure</span>
+            </div>
+            <img class="ba-module-card__img" src="../../assets/images/findings-1-diagram.png" alt="Findings diagram showing dual-intent user flow structure" />
+            <div class="ba-module-card__body">
+              <p class="ba-module-card__note">Audit findings shaped a dual-intent layout — serving both curious explorers and committed bookers without either group needing to scroll past irrelevant content to find their path forward.</p>
+            </div>
+          </div>
+
+        </div>
+
       </section>
 
       <!-- Section transition -->
+      <!-- Section transition -->
       <div class="section-transition reveal reveal-from-right" aria-hidden="true">
         <span class="section-transition__num">06</span>
+        <span class="section-transition__line"></span>
+        <span class="section-transition__label">Homepage</span>
+      </div>
+
+      <!-- ══ HOMEPAGE PREVIEW ══════════════════════════════════════════ -->
+      <section class="hp-preview-section reveal reveal-d1" id="homepage-preview" aria-label="Homepage Preview">
+
+        <h2 class="section-label reveal reveal-d1">Homepage — Before &amp; After</h2>
+        <p class="cs-body reveal reveal-d2">The redesigned homepage shifts from a visually rich but structurally ambiguous layout to a conversion-optimised experience — clearer hierarchy, surfaces key services immediately, and guides users to action at every stage of the page.</p>
+
+        <div class="hp-preview-container reveal reveal-d2">
+          <span class="hp-preview-label">Interactive Prototype</span>
+          <h3 class="hp-preview-heading">Wireframe → High Fidelity</h3>
+          <p class="hp-preview-sub">Explore the final homepage design below — from initial wireframe structure through to the high-fidelity version with the redesigned GIF hero and service grid.</p>
+
+          <div class="hp-preview-device cs-jolt__device">
+            <div class="hp-preview-device__screen cs-jolt__screen">
+              <iframe
+                src="https://embed.figma.com/proto/qmPSXw4ULTsVKI2nyT7flK/Portfolio-Website?node-id=226-389&viewport=571%2C152%2C0.11&scaling=scale-down&content-scaling=fixed&page-id=3%3A7&embed-host=share"
+                allowfullscreen
+                title="S Collective Homepage — Wireframe to High Fidelity"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+
+          <div class="hp-preview-cta">
+            <div class="hp-preview-direction">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 3v10M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Click into the prototype to interact — use the arrow keys to navigate between screens
+            </div>
+            <div class="hp-preview-direction">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M6 8h4M8 6v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              Toggle the before/after wireframe view inside the prototype to compare directions
+            </div>
+          </div>
+        </div>
+
+        <blockquote class="impact-block reveal reveal-d4" style="margin-top: var(--sp-7);">
+          <p>The homepage redesign removed four sources of friction identified in the audit — ambiguous navigation, a hidden service grid, no above-fold CTA, and a hero that required user interaction to communicate the brand's offering.</p>
+        </blockquote>
+
+      </section>
+
+      <div class="section-transition reveal reveal-from-right" aria-hidden="true">
+        <span class="section-transition__num">07</span>
         <span class="section-transition__line"></span>
         <span class="section-transition__label">Implementation</span>
       </div>
@@ -3801,7 +4307,7 @@
 
       <!-- Section transition -->
       <div class="section-transition reveal reveal-from-right" aria-hidden="true">
-        <span class="section-transition__num">07</span>
+        <span class="section-transition__num">08</span>
         <span class="section-transition__line"></span>
         <span class="section-transition__label">Lessons Learned</span>
       </div>
@@ -3969,9 +4475,10 @@
       { id: 'personas',       li: navItems[2] },
       { id: 'strategy',       li: navItems[3] },
       { id: 'wireframes',     li: navItems[4] },
-      { id: 'final-ui',       li: navItems[5] },
-      { id: 'implementation', li: navItems[6] },
-      { id: 'lessons',        li: navItems[7] },
+      { id: 'final-ui',         li: navItems[5] },
+      { id: 'homepage-preview', li: navItems[6] },
+      { id: 'implementation',   li: navItems[7] },
+      { id: 'lessons',          li: navItems[8] },
     ];
 
     const scrollObserver = new IntersectionObserver(entries => {
@@ -3988,6 +4495,32 @@
     sectionMap.forEach(s => {
       const el = document.getElementById(s.id);
       if (el) scrollObserver.observe(el);
+    });
+
+    /* ── Nav links → scroll to preceding section-transition ─────── */
+    document.querySelectorAll('.section-nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        const href = link.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+        const targetEl = document.getElementById(href.slice(1));
+        if (!targetEl) return;
+
+        // Walk backwards through siblings to find a section-transition
+        let scrollTarget = targetEl;
+        let prev = targetEl.previousElementSibling;
+        while (prev) {
+          if (prev.classList && prev.classList.contains('section-transition')) {
+            scrollTarget = prev;
+            break;
+          }
+          prev = prev.previousElementSibling;
+        }
+
+        e.preventDefault();
+        scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Keep URL in sync
+        history.pushState(null, null, href);
+      });
     });
 
     /* ── Scroll reveal ────────────────────────────────────────────── */

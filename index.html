@@ -1757,17 +1757,52 @@
       line-height: 1.65;
       margin-bottom: var(--sp-2);
     }
-    .cs-jolt__embed {
+    /* Tablet device frame */
+    .cs-jolt__device {
+      position: relative;
+      width: 100%;
+      background: #1c1c1e;
+      border-radius: 28px;
+      padding: 18px 18px 22px;
+      margin: var(--sp-5) 0;
+      box-shadow:
+        0 2px 4px  rgba(0,0,0,0.12),
+        0 8px 20px rgba(0,0,0,0.18),
+        0 24px 48px rgba(0,0,0,0.20),
+        0 48px 80px rgba(0,0,0,0.10);
+    }
+    /* Camera dot */
+    .cs-jolt__device::before {
+      content: '';
+      position: absolute;
+      top: 9px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 7px; height: 7px;
+      background: #3a3a3c;
+      border-radius: 50%;
+    }
+    /* Home bar */
+    .cs-jolt__device::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px; height: 4px;
+      background: #3a3a3c;
+      border-radius: 999px;
+    }
+    /* Screen */
+    .cs-jolt__screen {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      border-radius: var(--radius-lg);
+      border-radius: 14px;
       overflow: hidden;
-      border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
-      margin: var(--sp-5) 0;
-      background: color-mix(in srgb, var(--periwinkle) 6%, var(--bg));
+      background: #fff;
     }
-    .cs-jolt__embed iframe {
+    .cs-jolt__screen iframe {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
@@ -1786,7 +1821,7 @@
       font-style: normal;
     }
     [data-theme="dark"] .cs-jolt__heading { color: #f5f5f7; }
-    [data-theme="dark"] .cs-jolt__embed { border-color: rgba(255,255,255,0.1); background: #1d1d1f; }
+    [data-theme="dark"] .cs-jolt__device { background: #0a0a0a; }
 
     /* ── Audit CTA Split ───────────────────────────────────────────── */
     .audit-cta-split {
@@ -3126,13 +3161,15 @@
         <h3 class="cs-jolt__heading">Preview the Racing Page Wireframe</h3>
         <p class="cs-jolt__body">Explore the high-fidelity wireframe for the Racing page, designed to guide both new and experienced drivers through a clear, structured experience.</p>
         <p class="cs-jolt__body">Built around user intent, the page balances approachability for first-time drivers with credibility for experienced track enthusiasts.</p>
-        <div class="cs-jolt__embed">
-          <iframe
-            src="https://embed.figma.com/proto/qmPSXw4ULTsVKI2nyT7flK/Portfolio-Website?node-id=226-389&viewport=571%2C152%2C0.11&scaling=scale-down&content-scaling=fixed&page-id=3%3A7&embed-host=share"
-            allowfullscreen
-            title="S Collective Racing Page — High Fidelity Wireframe"
-            loading="lazy"
-          ></iframe>
+        <div class="cs-jolt__device">
+          <div class="cs-jolt__screen">
+            <iframe
+              src="https://embed.figma.com/proto/qmPSXw4ULTsVKI2nyT7flK/Portfolio-Website?node-id=226-389&viewport=571%2C152%2C0.11&scaling=scale-down&content-scaling=fixed&page-id=3%3A7&embed-host=share"
+              allowfullscreen
+              title="S Collective Racing Page — High Fidelity Wireframe"
+              loading="lazy"
+            ></iframe>
+          </div>
         </div>
         <blockquote class="cs-jolt__quote">
           <p>The Racing page was designed to support multiple levels of user experience — reducing intimidation for new drivers while reinforcing credibility for experienced enthusiasts.</p>

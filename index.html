@@ -1,4 +1,4 @@
-<!-- No builders were harmed in the making of this layout. -->
+﻿<!-- No builders were harmed in the making of this layout. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Space+Grotesk:wght@500;600&family=Pol%C5%82tawski+Nowy:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Pol%C5%82tawski+Nowy:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     /* ─── Design Tokens ─────────────────────────────────────────────── */
@@ -277,7 +277,7 @@
     }
 
     .global-nav__logo {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1.05rem;
       font-weight: 600;
       letter-spacing: -0.02em;
@@ -584,7 +584,7 @@
     }
 
     .hero-headline {
-      font-family: 'PÃ³Å‚tawski Nowy', Georgia, serif;
+      font-family: 'Półtawski Nowy', Georgia, serif;
       font-size: clamp(2rem, 5vw, var(--text-5xl));
       font-weight: 700;
       line-height: 1.08;
@@ -616,7 +616,7 @@
       background: color-mix(in srgb, var(--blue) 15%, transparent);
     }
     .stat-value {
-      font-family: 'PÃ³Å‚tawski Nowy', Georgia, serif;
+      font-family: 'Półtawski Nowy', Georgia, serif;
       font-size: var(--text-2xl);
       font-weight: 700;
       color: var(--blue);
@@ -637,21 +637,20 @@
       position: relative;
       width: 100%;
       max-width: 100%;
-      aspect-ratio: 16 / 8;
-      background: linear-gradient(135deg,
-        color-mix(in srgb, var(--blue) 25%, var(--bg)),
-        var(--periwinkle)
-      );
-      border-radius: 17px;
+      /* no forced aspect-ratio — video drives its own height */
+      border-radius: 14px;
       overflow: hidden;
       margin-bottom: var(--sp-5);
-      border: 1px solid color-mix(in srgb, var(--blue) 12%, transparent);
-      box-shadow:
-        0 2px 4px color-mix(in srgb, var(--blue) 4%, transparent),
-        0 8px 24px color-mix(in srgb, var(--blue) 8%, transparent),
-        0 24px 64px color-mix(in srgb, var(--blue) 6%, transparent);
     }
-    .hero-media img.hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-media img.hero-img { width: 100%; height: auto; display: block; }
+    .hero-media .hero-video  {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: inherit;
+      /* show full frame — no cropping */
+      object-fit: contain;
+    }
     #lottie-hero { width: 100%; height: 100%; display: block; }
     #lottie-hero svg { width: 100% !important; height: 100% !important; display: block; }
 
@@ -885,7 +884,7 @@
       box-shadow: 0 4px 24px color-mix(in srgb, var(--blue) 6%, transparent);
     }
     .card h2 {
-      font-family: 'PÃ³Å‚tawski Nowy', Georgia, serif;
+      font-family: 'Półtawski Nowy', Georgia, serif;
       font-size: var(--text-2xl); /* 31px — clearly larger than section label */
       font-weight: 700;
       color: #2b4a7a; /* WCAG AA compliant on gradient bg */
@@ -1009,7 +1008,7 @@
       margin-bottom: var(--sp-2);
     }
     .cs-insight-card__subtitle {
-      font-family: 'PÃ³Å‚tawski Nowy', Georgia, serif;
+      font-family: 'Półtawski Nowy', Georgia, serif;
       font-size: var(--text-lg);
       font-weight: 700;
       color: #2b4a7a;
@@ -1218,7 +1217,7 @@
 
     /* Global design system: section/wireframe headings sit tight to their body copy */
     .finding-heading {
-      font-family: 'PÃ³Å‚tawski Nowy', Georgia, serif;
+      font-family: 'Półtawski Nowy', Georgia, serif;
       font-size: var(--text-2xl);
       font-weight: 700;
       color: #2b4a7a;
@@ -2053,7 +2052,7 @@
       line-height: 1.4;
     }
     .metric-before {
-      font-family: 'PÃ³Å‚tawski Nowy', Georgia, serif;
+      font-family: 'Półtawski Nowy', Georgia, serif;
       font-size: var(--text-2xl);
       font-weight: 700;
       color: var(--coral);
@@ -2644,7 +2643,7 @@
       margin-bottom: var(--sp-3);
     }
     .footer-heading {
-      font-family: 'Dancing Script', cursive;
+      font-family: 'Półtawski Nowy', Georgia, serif;
       font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 700;
       color: var(--text-primary);
@@ -2776,7 +2775,7 @@
     }
 
     .mobile-coming-soon__heading {
-      font-family: 'Dancing Script', cursive;
+      font-family: 'Półtawski Nowy', Georgia, serif;
       font-size: clamp(2.5rem, 10vw, 3.5rem);
       font-weight: 700;
       color: #fff;
@@ -2943,23 +2942,15 @@
       </div>
 
       <div class="hero-media anim anim-d4">
-        <div id="lottie-hero" aria-label="S Collective redesigned website walkthrough"></div>
-        <div class="lottie-controls" role="group" aria-label="Animation controls">
-          <button class="lottie-btn" data-lottie-action="rewind" aria-label="Restart animation" title="Restart">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M2.5 2.5v9M11.5 2.5L5 7l6.5 4.5V2.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button class="lottie-btn" data-lottie-action="playpause" aria-label="Pause animation" title="Pause">
-            <svg class="icon-pause" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <rect x="3" y="2.5" width="2.5" height="9" rx="0.5" fill="currentColor"/>
-              <rect x="8.5" y="2.5" width="2.5" height="9" rx="0.5" fill="currentColor"/>
-            </svg>
-            <svg class="icon-play" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="display:none">
-              <path d="M4 2.5l8 4.5-8 4.5V2.5z" fill="currentColor"/>
-            </svg>
-          </button>
-        </div>
+        <video
+          class="cs-scroll-video hero-video"
+          src="assets/videos/case-study-scollevtive-hero-video2.mp4"
+          muted
+          playsinline
+          preload="auto"
+          data-replay-delay="5000"
+          aria-label="S Collective redesigned website walkthrough"
+        ></video>
       </div>
 
       <div class="tags anim anim-d5" aria-label="Project disciplines">

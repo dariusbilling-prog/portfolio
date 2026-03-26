@@ -21,50 +21,120 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── Nav ─── */
-    .hp-nav {
+    /* ─── Global nav (shared with case studies) ─── */
+    .global-nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      height: 56px;
+      background: #faf8f4;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      z-index: 9000;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: var(--sp-3) var(--sp-6);
-      background: color-mix(in srgb, var(--bg) 85%, transparent);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
     }
-    .hp-nav__logo {
-      font-family: var(--font-heading);
-      font-size: 1.1rem;
-      font-weight: 700;
+    .global-nav__inner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--sp-8);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: var(--sp-6);
+    }
+    .global-nav__logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
       color: var(--text-primary);
       text-decoration: none;
-      letter-spacing: -0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: color 0.2s ease;
     }
-    .hp-nav__links {
+    .global-nav__logo:hover { color: var(--blue); }
+    .global-nav__links {
       display: flex;
       align-items: center;
-      gap: var(--sp-5);
+      gap: var(--sp-6);
       list-style: none;
+      margin: 0; padding: 0;
     }
-    .hp-nav__links a {
+    .global-nav__links a {
+      font-family: 'Inter', sans-serif;
       font-size: 0.875rem;
       font-weight: 500;
       color: var(--text-secondary);
       text-decoration: none;
-      transition: color 0.2s;
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
     }
-    .hp-nav__links a:hover { color: var(--text-primary); }
-    .hp-nav__links .nav-cta {
-      background: var(--text-primary);
-      color: var(--bg);
-      padding: var(--sp-1) var(--sp-3);
-      border-radius: 999px;
-      font-size: 0.8125rem;
+    .global-nav__links a:hover { color: var(--text-primary); }
+    .global-nav__actions { margin-left: auto; display: flex; align-items: center; gap: var(--sp-3); justify-content: flex-end; }
+    .dark-toggle__label { font-size: 0.72rem; font-weight: 500; color: var(--text-muted); letter-spacing: 0.04em; user-select: none; }
+    .dark-toggle { display: flex; align-items: center; gap: var(--sp-2); background: none; border: none; padding: 4px; cursor: pointer; }
+    .dark-toggle__track { width: 44px; height: 26px; background: #d8d8d8; border-radius: 100px; position: relative; transition: background 0.3s ease; flex-shrink: 0; }
+    .dark-toggle__thumb { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: #fff; border-radius: 50%; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 1px 4px rgba(0,0,0,0.22); }
+    .dark-toggle[aria-checked="true"] .dark-toggle__track { background: #0A84FF; }
+    .dark-toggle[aria-checked="true"] .dark-toggle__thumb { transform: translateX(18px); }
+
+    /* dark mode overrides */
+    [data-theme="dark"] body { background: #111; color: #f5f5f7; }
+    [data-theme="dark"] .global-nav { background: #1d1d1f; border-color: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .global-nav__logo { color: #f5f5f7; }
+    [data-theme="dark"] .global-nav__logo:hover { color: var(--periwinkle); }
+    [data-theme="dark"] .global-nav__links a { color: #a1a1a6; }
+    [data-theme="dark"] .global-nav__links a:hover { color: #f5f5f7; }
+    [data-theme="dark"] .dark-toggle__label { color: #a1a1a6; }
+    [data-theme="dark"] .hp-case-card { background: #1d1d1f; border-color: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .hp-about__image { background: #1d1d1f; border-color: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .hp-tag { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: #a1a1a6; }
+    [data-theme="dark"] .hp-skill-pill { background: rgba(103,141,198,0.15); border-color: rgba(103,141,198,0.25); color: #f5f5f7; }
+    [data-theme="dark"] .hp-hero__heading { color: #f5f5f7; }
+    [data-theme="dark"] .hp-work__heading, [data-theme="dark"] .hp-about__heading { color: #f5f5f7; }
+    [data-theme="dark"] .hp-case-card__title { color: #f5f5f7; }
+    [data-theme="dark"] .hp-footer { border-color: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .hp-footer__name { color: #f5f5f7; }
+    [data-theme="dark"] .btn-primary { background: #f5f5f7; color: #111; }
+
+    /* ─── Custom cursor ─── */
+    .cursor {
+      position: fixed; top: 0; left: 0;
+      width: 20px; height: 20px;
+      background: var(--coral);
+      border: none;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      overflow: hidden;
+      transition: width 0.3s cubic-bezier(0.22,1,0.36,1),
+                  height 0.3s cubic-bezier(0.22,1,0.36,1),
+                  opacity 0.2s ease;
+      will-change: transform, width, height;
     }
-    .hp-nav__links .nav-cta:hover { background: var(--periwinkle); color: #fff; }
+    .cursor.expanded { width: 48px; height: 48px; }
+    .cursor::after {
+      content: '';
+      position: absolute; inset: -100%; width: 300%; height: 300%;
+      background:
+        radial-gradient(ellipse at 30% 50%, var(--coral) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, var(--periwinkle) 0%, transparent 55%),
+        radial-gradient(ellipse at 60% 80%, var(--blue) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      animation: meshDrift 4s ease-in-out infinite alternate;
+    }
+    .cursor.expanded::after { opacity: 1; }
+    @keyframes meshDrift {
+      0%   { transform: translate(0%,0%)   scale(1); }
+      33%  { transform: translate(10%,-8%) scale(1.05); }
+      66%  { transform: translate(-8%,10%) scale(0.97); }
+      100% { transform: translate(6%,5%)   scale(1.03); }
+    }
+    @media (pointer: coarse) { .cursor { display: none; } }
 
     /* ─── Hero ─── */
     .hp-hero {
@@ -72,7 +142,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: calc(var(--sp-9) + 60px) var(--sp-6) var(--sp-9);
+      padding: calc(var(--sp-9) + 56px) var(--sp-6) var(--sp-9);
       max-width: 1100px;
       margin: 0 auto;
     }
@@ -384,15 +454,31 @@
 </head>
 <body>
 
-  <!-- ─── Nav ─── -->
-  <nav class="hp-nav">
-    <a class="hp-nav__logo" href="/">Darius Billing</a>
-    <ul class="hp-nav__links">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="mailto:hello@dariusbilling.com" class="nav-cta">Get in touch</a></li>
-    </ul>
-  </nav>
+  <!-- ─── Global Nav ─── -->
+  <header class="global-nav" role="banner">
+    <div class="global-nav__inner">
+      <a href="/" class="global-nav__logo" aria-label="Darius Billing Portfolio">Darius Billing</a>
+      <nav aria-label="Main navigation">
+        <ul class="global-nav__links">
+          <li><a href="/">Home</a></li>
+          <li><a href="case-studies/s-collective/">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="mailto:hello@dariusbilling.com">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="global-nav__actions">
+        <span class="dark-toggle__label" id="darkToggleLabel">Dark Mode</span>
+        <button class="dark-toggle" id="darkToggle" role="switch" aria-checked="false" aria-label="Toggle dark mode">
+          <span class="dark-toggle__track">
+            <span class="dark-toggle__thumb"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
 
   <!-- ─── Hero ─── -->
   <section class="hp-hero">
@@ -400,7 +486,7 @@
     <h1 class="hp-hero__heading">Designing experiences that <em>convert</em> and <em>retain</em></h1>
     <p class="hp-hero__sub">I combine user research, conversion strategy, and interface craft to build digital experiences that perform — not just look good.</p>
     <div class="hp-hero__actions">
-      <a href="#work" class="btn-primary">
+      <a href="case-studies/s-collective/" class="btn-primary">
         View my work
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -491,17 +577,67 @@
       <ul class="hp-footer__links">
         <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
         <li><a href="mailto:hello@dariusbilling.com">Email</a></li>
-        <li><a href="case-studies/s-collective/">S Collective</a></li>
+        <li><a href="case-studies/s-collective/">S Collective Case Study</a></li>
       </ul>
     </div>
   </footer>
 
   <script>
+    /* ── Scroll reveal ─────────────────────────────────────────────── */
     const revealEls = document.querySelectorAll('.reveal');
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.15 });
     revealEls.forEach(el => obs.observe(el));
+
+    /* ── Dark mode toggle ──────────────────────────────────────────── */
+    const darkToggle = document.getElementById('darkToggle');
+    const darkLabel  = document.getElementById('darkToggleLabel');
+    if (darkToggle) {
+      const applyTheme = dark => {
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+        darkToggle.setAttribute('aria-checked', dark ? 'true' : 'false');
+        if (darkLabel) darkLabel.textContent = dark ? 'Light Mode' : 'Dark Mode';
+      };
+      applyTheme(localStorage.getItem('theme') === 'dark');
+      darkToggle.addEventListener('click', () => {
+        const isDark = darkToggle.getAttribute('aria-checked') === 'true';
+        applyTheme(!isDark);
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      });
+    }
+
+    /* ── Custom cursor ─────────────────────────────────────────────── */
+    (() => {
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+      const cursor = document.getElementById('cursor');
+      let visible = false;
+
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        if (!visible) { cursor.style.opacity = '1'; visible = true; }
+      }, { passive: true });
+
+      document.querySelectorAll('a, button, [role="button"]').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
+      });
+
+      document.addEventListener('mouseleave', e => {
+        if (e.clientY <= 0 || e.clientX <= 0 ||
+            e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+          cursor.style.opacity = '0';
+          visible = false;
+        }
+      });
+      document.addEventListener('mouseenter', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        cursor.style.opacity = '1';
+        visible = true;
+      });
+    })();
   </script>
 
 </body>

@@ -640,9 +640,16 @@
       width: 100%;
       max-width: 100%;
       /* no forced aspect-ratio — video drives its own height */
-      border-radius: 14px;
+      border-radius: var(--radius-md);
       overflow: hidden;
       margin-bottom: var(--sp-5);
+      box-shadow:
+        0 2px 8px   rgba(0,0,0,0.08),
+        0 12px 32px rgba(0,0,0,0.12),
+        0 32px 64px rgba(0,0,0,0.08);
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      isolation: isolate;
     }
     .hero-media img.hero-img { width: 100%; height: auto; display: block; }
     .hero-media .hero-video  {
@@ -1590,9 +1597,9 @@
       margin: var(--sp-5) 0;
       cursor: pointer;
       box-shadow:
-        0 2px 8px rgba(0,0,0,0.10),
-        0 12px 32px rgba(0,0,0,0.18),
-        0 32px 64px rgba(0,0,0,0.14);
+        0 2px 8px   rgba(0,0,0,0.08),
+        0 12px 32px rgba(0,0,0,0.12),
+        0 32px 64px rgba(0,0,0,0.08);
       -webkit-user-select: none;
       user-select: none;
     }
@@ -1890,12 +1897,20 @@
     .wf-slider {
       position: relative;
       width: 100%;
-      border-radius: var(--sp-3);
+      border-radius: var(--radius-md);
       overflow: hidden;
       cursor: col-resize;
       user-select: none;
-      box-shadow: 0 8px 32px color-mix(in srgb, var(--text-primary) 12%, transparent);
+      /* Standard site media shadow */
+      box-shadow:
+        0 2px 8px   rgba(0,0,0,0.08),
+        0 12px 32px rgba(0,0,0,0.12),
+        0 32px 64px rgba(0,0,0,0.08);
       touch-action: none;
+      /* Force GPU compositing — fixes WebKit overflow+border-radius clip bug */
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      isolation: isolate;
     }
     .wf-slider__after {
       display: block;
@@ -1909,6 +1924,9 @@
       width: 35%;
       height: 100%;
       overflow: hidden;
+      /* Explicitly clip left corners to match parent — belt-and-suspenders */
+      border-top-left-radius: var(--radius-md);
+      border-bottom-left-radius: var(--radius-md);
     }
     .wf-slider__before img {
       display: block;
@@ -2106,17 +2124,59 @@
     [data-theme="dark"] .hp-preview-device { background: #2d2d2f; }
     [data-theme="dark"] .hp-preview-direction { color: #6e6e73; }
 
+    /* Racing page — persona intent grid */
+    .racing-intent-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-3);
+      margin: var(--sp-5) 0 var(--sp-4);
+    }
+    .racing-intent-card {
+      background: color-mix(in srgb, var(--bg) 55%, transparent);
+      border-radius: var(--radius-sm);
+      padding: var(--sp-4);
+    }
+    .racing-intent-badge {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      display: inline-block;
+      margin-bottom: var(--sp-3);
+    }
+    .racing-intent-badge--trust {
+      background: color-mix(in srgb, var(--coral) 14%, transparent);
+      color: var(--coral);
+    }
+    .racing-intent-badge--performance {
+      background: color-mix(in srgb, var(--blue) 12%, transparent);
+      color: var(--blue);
+    }
+    .racing-intent-text {
+      font-size: var(--text-sm); color: var(--text-secondary);
+      line-height: 1.6; margin: 0;
+    }
+    [data-theme="dark"] .racing-intent-card { background: rgba(255,255,255,0.04); }
+    [data-theme="dark"] .racing-intent-badge--trust { background: rgba(255,107,80,0.12); color: #ff6b50; }
+    [data-theme="dark"] .racing-intent-badge--performance { background: rgba(133,206,255,0.12); color: #85ceff; }
+    [data-theme="dark"] .racing-intent-text { color: #a1a1a6; }
+    @media (max-width: 600px) { .racing-intent-grid { grid-template-columns: 1fr; } }
+
     /* Figma embed — full-width, device frame handled by Figma */
     .cs-jolt__device {
       width: 100%;
       margin: var(--sp-5) 0;
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       overflow: hidden;
       background: #e8e8e8;
       box-shadow:
         0 2px 8px   rgba(0,0,0,0.08),
         0 12px 32px rgba(0,0,0,0.12),
         0 32px 64px rgba(0,0,0,0.08);
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      isolation: isolate;
     }
     .cs-jolt__screen {
       position: relative;
@@ -2704,9 +2764,12 @@
     .fui-top-image { margin-bottom: var(--sp-6); }
     .fui-top-image img {
       width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 8px 48px rgba(0,0,0,0.11);
+      border-radius: var(--radius-md);
       display: block;
+      box-shadow:
+        0 2px 8px   rgba(0,0,0,0.08),
+        0 12px 32px rgba(0,0,0,0.12),
+        0 32px 64px rgba(0,0,0,0.08);
     }
 
     .fui-insight {
@@ -3374,7 +3437,7 @@
       <li><a href="#strategy">Strategy</a></li>
       <li><a href="#wireframes">Wireframes</a></li>
       <li><a href="#final-ui">Final User Interface</a></li>
-      <li><a href="#homepage-preview">Homepage Preview</a></li>
+      <li><a href="#racing-page">Racing Page</a></li>
       <li><a href="#implementation">Implementation</a></li>
       <li><a href="#lessons">Lessons Learned</a></li>
     </ul>
@@ -4367,47 +4430,57 @@
         <span class="section-transition__label">Homepage</span>
       </div>
 
-      <!-- ══ HOMEPAGE PREVIEW ══════════════════════════════════════════ -->
-      <section class="hp-preview-section reveal reveal-d1" id="homepage-preview" aria-label="Homepage Preview">
+      <!-- ══ RACING PAGE ═══════════════════════════════════════════════ -->
+      <section class="hp-preview-section reveal reveal-d1" id="racing-page" aria-label="Racing Page">
 
-        <h2 class="section-label reveal reveal-d1">Homepage — Before &amp; After</h2>
-        <p class="cs-body reveal reveal-d2">The redesigned homepage shifts from a visually rich but structurally ambiguous layout to a conversion-optimised experience — clearer hierarchy, surfaces key services immediately, and guides users to action at every stage of the page.</p>
+        <h2 class="section-label reveal reveal-d1">Racing Page</h2>
+        <p class="cs-body reveal reveal-d2">The Racing page was one of the most complex design challenges in the project — it needed to serve two completely different users simultaneously. Every section order, headline, and CTA was mapped directly to persona intent rather than general convention.</p>
 
         <div class="hp-preview-container reveal reveal-d2">
           <span class="hp-preview-label">Interactive Prototype</span>
-          <h3 class="hp-preview-heading">Wireframe → High Fidelity</h3>
-          <p class="hp-preview-sub">Explore the final homepage design below — from initial wireframe structure through to the high-fidelity version with the redesigned GIF hero and service grid.</p>
+          <h3 class="hp-preview-heading">Designed for Two Audiences at Once</h3>
+          <p class="hp-preview-sub">First-time drivers needed to feel reassured — motorsport presented as approachable, not intimidating. Experienced track enthusiasts needed credibility — professional standards, not hobbyist energy. The page was structured so both could find their path without scrolling past content that wasn't meant for them.</p>
 
           <div class="hp-preview-device cs-jolt__device">
             <div class="hp-preview-device__screen cs-jolt__screen">
               <iframe
                 src="https://embed.figma.com/proto/qmPSXw4ULTsVKI2nyT7flK/Portfolio-Website?node-id=226-389&viewport=571%2C152%2C0.11&scaling=scale-down&content-scaling=fixed&page-id=3%3A7&embed-host=share"
                 allowfullscreen
-                title="S Collective Homepage — Wireframe to High Fidelity"
+                title="S Collective Racing Page — High Fidelity Prototype"
                 loading="lazy"
               ></iframe>
+            </div>
+          </div>
+
+          <!-- Persona intent mapping -->
+          <div class="racing-intent-grid">
+            <div class="racing-intent-card">
+              <span class="racing-intent-badge racing-intent-badge--trust">First-Time Driver</span>
+              <p class="racing-intent-text">Approachability and safety cues lead the page — motorsport is framed as participatory, not exclusive. Entry pathways surface early, before any commitment signals appear, reducing hesitation before engagement.</p>
+            </div>
+            <div class="racing-intent-card">
+              <span class="racing-intent-badge racing-intent-badge--performance">Track Enthusiast</span>
+              <p class="racing-intent-text">Professional credentials — structured environments, motorsport participation, real standards — are prominent in the first scroll. High-intent users can move directly to booking without navigating past introductory content.</p>
             </div>
           </div>
 
           <div class="hp-preview-cta">
             <div class="hp-preview-direction">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 3v10M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Mouse body -->
+                <rect x="4.5" y="1.5" width="7" height="11" rx="3.5" stroke="currentColor" stroke-width="1.3"/>
+                <!-- Button divider -->
+                <line x1="8" y1="1.5" x2="8" y2="6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                <!-- Scroll wheel -->
+                <rect x="7" y="4" width="2" height="3.5" rx="1" fill="currentColor" opacity="0.7"/>
               </svg>
-              Click into the prototype to interact — use the arrow keys to navigate between screens
-            </div>
-            <div class="hp-preview-direction">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M6 8h4M8 6v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-              Toggle the before/after wireframe view inside the prototype to compare directions
+              Click into the prototype to interact
             </div>
           </div>
         </div>
 
         <blockquote class="impact-block reveal reveal-d4" style="margin-top: var(--sp-7);">
-          <p>The homepage redesign removed four sources of friction identified in the audit — ambiguous navigation, a hidden service grid, no above-fold CTA, and a hero that required user interaction to communicate the brand's offering.</p>
+          <p>The Racing page structure was validated against both personas — reducing hesitation for first-timers by leading with approachability, and increasing confidence for enthusiasts by surfacing professional credibility before conversion. A single page serving two distinct intents, without compromise.</p>
         </blockquote>
 
       </section>
@@ -4651,7 +4724,7 @@
       { id: 'strategy',       li: navItems[3] },
       { id: 'wireframes',     li: navItems[4] },
       { id: 'final-ui',         li: navItems[5] },
-      { id: 'homepage-preview', li: navItems[6] },
+      { id: 'racing-page',      li: navItems[6] },
       { id: 'implementation',   li: navItems[7] },
       { id: 'lessons',          li: navItems[8] },
     ];

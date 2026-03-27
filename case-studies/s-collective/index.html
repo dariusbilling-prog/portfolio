@@ -1577,50 +1577,163 @@
     }
 
     /* ── Hero Video Annotation Module ─────────────────────────────── */
+    /* ── Hero Video Player ─────────────────────────────────────────── */
     .wf-video-section { margin-top: var(--sp-9); }
-    .wf-video-wrap {
+
+    /* Player shell */
+    .vp {
+      position: relative;
       width: 100%;
       border-radius: var(--radius-md);
       overflow: hidden;
+      background: #0a0a0c;
       margin: var(--sp-5) 0;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      cursor: pointer;
+      box-shadow:
+        0 2px 8px rgba(0,0,0,0.10),
+        0 12px 32px rgba(0,0,0,0.18),
+        0 32px 64px rgba(0,0,0,0.14);
+      -webkit-user-select: none;
+      user-select: none;
     }
-    .wf-video-wrap video { width: 100%; display: block; }
-    .wf-annotations {
+    .vp__video { width: 100%; display: block; }
+
+    /* Big play overlay */
+    .vp__overlay {
+      position: absolute;
+      inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .vp__big-play {
+      width: 72px; height: 72px;
+      background: rgba(255,255,255,0.13);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0.88);
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    .vp.is-paused .vp__big-play { opacity: 1; transform: scale(1); }
+
+    /* Gradient + control bar */
+    .vp__controls {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 56px 18px 16px;
+      background: linear-gradient(to top, rgba(0,0,0,0.76) 0%, rgba(0,0,0,0.28) 65%, transparent 100%);
+      display: flex; flex-direction: column; gap: 9px;
+      opacity: 0; transition: opacity 0.22s;
+      pointer-events: none;
+    }
+    .vp:hover .vp__controls,
+    .vp.is-paused .vp__controls { opacity: 1; pointer-events: all; }
+
+    /* Chapter label */
+    .vp__chapter-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.09em; text-transform: uppercase;
+      color: rgba(255,255,255,0.68);
+    }
+
+    /* Progress track */
+    .vp__progress {
+      position: relative;
+      height: 3px;
+      background: rgba(255,255,255,0.22);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: height 0.14s;
+    }
+    .vp:hover .vp__progress,
+    .vp.is-paused .vp__progress { height: 5px; }
+    .vp__progress-fill {
+      height: 100%; background: var(--coral); border-radius: 2px;
+      pointer-events: none; width: 0%; position: relative;
+      transition: width 0.08s linear;
+    }
+    /* Scrub handle */
+    .vp__progress-fill::after {
+      content: '';
+      position: absolute; right: -6px; top: 50%;
+      transform: translateY(-50%) scale(0);
+      width: 13px; height: 13px;
+      background: #fff; border-radius: 50%;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.45);
+      transition: transform 0.14s;
+    }
+    .vp:hover .vp__progress-fill::after,
+    .vp.is-paused .vp__progress-fill::after { transform: translateY(-50%) scale(1); }
+    /* Chapter tick marks */
+    .vp__chapter-tick {
+      position: absolute; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 2px; height: 160%; background: rgba(255,255,255,0.5);
+      border-radius: 1px; pointer-events: none;
+    }
+
+    /* Bottom row */
+    .vp__row { display: flex; align-items: center; gap: 10px; }
+    .vp__btn {
+      background: none; border: none; padding: 4px;
+      cursor: pointer; color: rgba(255,255,255,0.9);
+      display: flex; align-items: center; justify-content: center;
+      line-height: 0; flex-shrink: 0;
+      transition: color 0.14s, transform 0.14s;
+    }
+    .vp__btn:hover { color: #fff; transform: scale(1.12); }
+    .vp__btn svg { display: block; }
+    .vp__time {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; color: rgba(255,255,255,0.5);
+      letter-spacing: 0.04em; flex-shrink: 0;
+    }
+    .vp__spacer { flex: 1; }
+
+    /* Chapter breakdown cards — 3 columns */
+    .vp-chapters {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: var(--sp-4);
       margin: var(--sp-5) 0;
     }
-    .wf-annotation {
-      background: color-mix(in srgb, var(--blue) 6%, var(--bg));
-      border: 1px solid color-mix(in srgb, var(--blue) 15%, transparent);
+    .vp-chapter-card {
+      background: color-mix(in srgb, var(--blue) 5%, var(--bg));
+      border: 1px solid color-mix(in srgb, var(--blue) 11%, transparent);
       border-radius: var(--radius-md);
       padding: var(--sp-4) var(--sp-5);
+      transition: background 0.3s, border-color 0.3s;
     }
-    .wf-annotation__num {
-      font-family: 'Półtawski Nowy', Georgia, serif;
-      font-size: var(--text-md);
-      font-weight: 700;
-      color: var(--blue-heading);
-      display: block;
-      margin-bottom: var(--sp-2);
+    .vp-chapter-card.is-active {
+      background: color-mix(in srgb, var(--blue) 12%, var(--bg));
+      border-color: color-mix(in srgb, var(--blue) 30%, transparent);
     }
-    .wf-annotation__title {
+    .vp-chapter-card__time {
       font-family: 'Inter', sans-serif;
-      font-size: var(--text-sm);
-      font-weight: 700;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--coral); display: block; margin-bottom: var(--sp-2);
+    }
+    .vp-chapter-card__title {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-sm); font-weight: 700;
       color: var(--text-primary);
-      margin: 0 0 var(--sp-2) 0;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      margin: 0 0 var(--sp-2) 0; letter-spacing: -0.01em;
     }
-    .wf-annotation__body {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin: 0;
+    .vp-chapter-card__quote {
+      font-family: 'Półtawski Nowy', Georgia, serif;
+      font-size: var(--text-sm); font-style: italic;
+      color: var(--blue-heading);
+      margin: 0 0 var(--sp-3) 0; line-height: 1.5;
     }
+    .vp-chapter-card__body {
+      font-size: 13px; color: var(--text-secondary);
+      line-height: 1.6; margin: 0;
+    }
+
+    /* Friction note */
     .wf-friction-note {
       background: color-mix(in srgb, var(--coral) 8%, var(--bg));
       border-left: 3px solid var(--coral);
@@ -1629,19 +1742,20 @@
       margin-top: var(--sp-5);
     }
     .wf-friction-note p {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin: 0;
+      font-size: var(--text-base); color: var(--text-secondary);
+      line-height: 1.7; margin: 0;
     }
     .wf-friction-note strong { color: var(--text-primary); }
-    [data-theme="dark"] .wf-annotation { background: color-mix(in srgb, var(--blue) 10%, #2d2d2f); border-color: rgba(133,206,255,0.15); }
-    [data-theme="dark"] .wf-annotation__num { color: #85ceff; }
-    [data-theme="dark"] .wf-annotation__title { color: #f5f5f7; }
-    [data-theme="dark"] .wf-annotation__body { color: #a1a1a6; }
+
+    /* Dark mode */
+    [data-theme="dark"] .vp-chapter-card { background: color-mix(in srgb, var(--blue) 8%, #2d2d2f); border-color: rgba(133,206,255,0.10); }
+    [data-theme="dark"] .vp-chapter-card.is-active { background: color-mix(in srgb, var(--blue) 18%, #2d2d2f); border-color: rgba(133,206,255,0.30); }
+    [data-theme="dark"] .vp-chapter-card__title { color: #f5f5f7; }
+    [data-theme="dark"] .vp-chapter-card__quote { color: #85ceff; }
+    [data-theme="dark"] .vp-chapter-card__body { color: #a1a1a6; }
     [data-theme="dark"] .wf-friction-note { background: rgba(255,107,80,0.08); border-left-color: #ff6b50; }
     [data-theme="dark"] .wf-friction-note p { color: #a1a1a6; }
-    @media (max-width: 768px) { .wf-annotations { grid-template-columns: 1fr; } }
+    @media (max-width: 860px) { .vp-chapters { grid-template-columns: 1fr; } }
 
     /* ── Mobile Wireframes ─────────────────────────────────────────── */
     .mobile-wf-section {
@@ -3927,48 +4041,109 @@
 
           <h3 class="finding-heading">Hero Video — Service Storytelling Without Friction</h3>
 
-          <p class="wf-intro">The original hero required users to interact with a video carousel to discover what S Collective does — creating a layer of friction before any value was communicated. The redesigned hero auto-plays a contextual video, surfacing services immediately and eliminating the need to click before understanding the offering.</p>
+          <p class="wf-intro">The original hero required users to interact with a video carousel before understanding what S Collective does — adding friction before any value was communicated. The redesigned hero plays automatically on scroll, establishing emotional context within the first 7 seconds. No clicks required. Its role is to create the right emotional context for the page: if the user feels confident here, they are more likely to continue scrolling.</p>
 
-          <!-- Video preview -->
-          <div class="wf-video-wrap reveal reveal-d2">
+          <!-- ── Custom video player ─────────────────────────────────── -->
+          <div class="vp reveal reveal-d2 is-paused" id="heroVideoPlayer">
             <video
-              class="cs-scroll-video"
-              src="../../assets/videos/case-study-scollevtive-hero-video2.mp4"
+              class="vp__video"
+              src="../../assets/videos/s-collective-hero-vide-home-demo.mp4"
               muted
               playsinline
               preload="auto"
-              data-replay-delay="8000"
-              aria-label="Redesigned hero video showing each service section"
+              aria-label="S Collective hero video — 3 chapters, 21 seconds"
             ></video>
+
+            <!-- Paused overlay -->
+            <div class="vp__overlay" aria-hidden="true">
+              <div class="vp__big-play">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 4.5l14 7.5-14 7.5V4.5z" fill="white"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Control bar -->
+            <div class="vp__controls" role="group" aria-label="Video controls">
+
+              <!-- Current chapter name -->
+              <div class="vp__chapter-name" id="vpChapterName">Aspirational Outcome</div>
+
+              <!-- Progress + chapter ticks -->
+              <div class="vp__progress" id="vpProgress"
+                   role="slider" aria-label="Video progress"
+                   aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                <div class="vp__progress-fill" id="vpFill"></div>
+                <!-- Chapter 2 starts at 7s / ~33.3% of 21s -->
+                <div class="vp__chapter-tick" style="left:33.3%" title="Credibility — 7s" aria-hidden="true"></div>
+                <!-- Chapter 3 starts at 12s / ~57.1% of 21s -->
+                <div class="vp__chapter-tick" style="left:57.1%" title="Capability — 12s" aria-hidden="true"></div>
+              </div>
+
+              <!-- Button row -->
+              <div class="vp__row">
+                <!-- Play / Pause -->
+                <button class="vp__btn" id="vpPlayBtn" aria-label="Play">
+                  <svg class="vp-icon-play" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M5 3.5l13 6.5-13 6.5V3.5z" fill="currentColor"/>
+                  </svg>
+                  <svg class="vp-icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none">
+                    <rect x="4" y="3" width="4" height="14" rx="1" fill="currentColor"/>
+                    <rect x="12" y="3" width="4" height="14" rx="1" fill="currentColor"/>
+                  </svg>
+                </button>
+                <!-- Timestamp -->
+                <span class="vp__time" id="vpTime">0:00 / 0:21</span>
+                <div class="vp__spacer"></div>
+                <!-- Mute / Unmute -->
+                <button class="vp__btn" id="vpMuteBtn" aria-label="Unmute">
+                  <!-- Muted icon (X over speaker) -->
+                  <svg class="vp-icon-muted" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M3 6.5h2.5L9 3.5v11L5.5 11.5H3V6.5z" fill="currentColor"/>
+                    <line x1="12.5" y1="5.5" x2="16" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="16" y1="5.5" x2="12.5" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  <!-- Unmuted icon (sound waves) -->
+                  <svg class="vp-icon-sound" width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:none">
+                    <path d="M3 6.5h2.5L9 3.5v11L5.5 11.5H3V6.5z" fill="currentColor"/>
+                    <path d="M12 5.5c1.6 1.1 2.5 2.3 2.5 3.5S13.6 11.4 12 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M13.5 3.5c2.4 1.6 3.5 3.5 3.5 5.5s-1.1 3.9-3.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </button>
+              </div>
+
+            </div>
           </div>
 
-          <!-- Annotation breakdown -->
-          <div class="wf-annotations reveal reveal-d3">
-            <div class="wf-annotation">
-              <span class="wf-annotation__num">01</span>
-              <h4 class="wf-annotation__title">Brand Statement</h4>
-              <p class="wf-annotation__body">Opens with a clear declaration of what S Collective does — premium automotive services — so users understand the offering in under 3 seconds.</p>
+          <!-- ── Chapter breakdown ───────────────────────────────────── -->
+          <div class="vp-chapters reveal reveal-d3" id="vpChapterCards">
+
+            <div class="vp-chapter-card is-active" data-chapter="0">
+              <span class="vp-chapter-card__time">0 – 7s</span>
+              <h4 class="vp-chapter-card__title">Aspirational Outcome</h4>
+              <p class="vp-chapter-card__quote">"This is the level your ownership can reach."</p>
+              <p class="vp-chapter-card__body">Users aren't being sold a service — they're being shown a future version of themselves. Motorsport culture is framed as reachable, not exclusive, reducing hesitation before engaging with any service.</p>
             </div>
-            <div class="wf-annotation">
-              <span class="wf-annotation__num">02</span>
-              <h4 class="wf-annotation__title">Service Showcase</h4>
-              <p class="wf-annotation__body">Each service is shown in context — detailing, ceramic coating, and performance — giving users immediate visual proof of capability without clicking.</p>
+
+            <div class="vp-chapter-card" data-chapter="1">
+              <span class="vp-chapter-card__time">7 – 12s</span>
+              <h4 class="vp-chapter-card__title">Credibility</h4>
+              <p class="vp-chapter-card__quote">"We operate at a professional motorsport level."</p>
+              <p class="vp-chapter-card__body">Professional standards, structured environments — not hobbyist enthusiasm. Users are reassured the operation is legitimate and serious, reducing perceived risk before the conversion point.</p>
             </div>
-            <div class="wf-annotation">
-              <span class="wf-annotation__num">03</span>
-              <h4 class="wf-annotation__title">Trust Signals</h4>
-              <p class="wf-annotation__body">Real work is surfaced during the video scroll, building credibility for high-value services before users are asked to enquire.</p>
+
+            <div class="vp-chapter-card" data-chapter="2">
+              <span class="vp-chapter-card__time">12 – 20s</span>
+              <h4 class="vp-chapter-card__title">Capability</h4>
+              <p class="vp-chapter-card__quote">"We do real work on luxury sport cars."</p>
+              <p class="vp-chapter-card__body">Hands-on craft is made visible — detailing, preparation, precision. This builds desire before the CTA is surfaced, so users arrive at the conversion point already wanting the outcome.</p>
             </div>
-            <div class="wf-annotation">
-              <span class="wf-annotation__num">04</span>
-              <h4 class="wf-annotation__title">Conversion Pathway</h4>
-              <p class="wf-annotation__body">A persistent primary CTA sits above the fold throughout — capturing high-intent users at the moment interest peaks, not after it decays.</p>
-            </div>
+
           </div>
 
           <!-- Friction note -->
           <div class="wf-friction-note reveal reveal-d4">
-            <p><strong>Friction reduction by design:</strong> The previous hero required users to manually click a video carousel to discover available services. The redesigned hero removes this dependency entirely — the video plays automatically on scroll, communicating the full service range passively. Removing the interaction requirement reduced the effort-to-understanding ratio and contributed directly to the 40% CVR improvement.</p>
+            <p><strong>Why this structure works:</strong> Motion is processed faster than text. Users decide whether to stay on a page in seconds — and first impressions heavily influence conversion behavior. The previous hero required clicking a carousel before any service was communicated. The redesigned video establishes desire, credibility, and capability in 20 seconds, passively — removing the interaction requirement that was costing conversions.</p>
           </div>
 
         </article>
@@ -4832,6 +5007,140 @@
     img.loading  = 'lazy';
     img.decoding = 'async';
   });
+
+  /* ── Custom video player — Hero Video Wireframe section ─────────── */
+  (function () {
+    const player = document.getElementById('heroVideoPlayer');
+    if (!player) return;
+
+    const video       = player.querySelector('.vp__video');
+    const playBtn     = document.getElementById('vpPlayBtn');
+    const muteBtn     = document.getElementById('vpMuteBtn');
+    const progressEl  = document.getElementById('vpProgress');
+    const fillEl      = document.getElementById('vpFill');
+    const timeEl      = document.getElementById('vpTime');
+    const chapterName = document.getElementById('vpChapterName');
+    const cards       = document.querySelectorAll('.vp-chapter-card');
+
+    /* Chapter definitions — matches video edit */
+    const CHAPTERS = [
+      { start: 0,  label: 'Aspirational Outcome' },
+      { start: 7,  label: 'Credibility' },
+      { start: 12, label: 'Capability' },
+    ];
+
+    /* ── Helpers ─────────────────────────────── */
+    const fmt = s => {
+      const m = Math.floor(s / 60);
+      return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+    };
+
+    function currentChapterIdx(t) {
+      let idx = 0;
+      for (let i = CHAPTERS.length - 1; i >= 0; i--) {
+        if (t >= CHAPTERS[i].start) { idx = i; break; }
+      }
+      return idx;
+    }
+
+    /* ── UI update on timeupdate ─────────────── */
+    function updateUI() {
+      const dur = video.duration || 21;
+      const pct = (video.currentTime / dur) * 100;
+
+      fillEl.style.width = pct + '%';
+      progressEl.setAttribute('aria-valuenow', Math.round(pct));
+      timeEl.textContent = fmt(video.currentTime) + ' / ' + fmt(dur);
+
+      const ci = currentChapterIdx(video.currentTime);
+      chapterName.textContent = CHAPTERS[ci].label;
+      cards.forEach((c, i) => c.classList.toggle('is-active', i === ci));
+    }
+
+    /* ── Play / pause state ─────────────────── */
+    function setPlaying(playing) {
+      player.classList.toggle('is-paused', !playing);
+      playBtn.querySelector('.vp-icon-play').style.display  = playing ? 'none' : '';
+      playBtn.querySelector('.vp-icon-pause').style.display = playing ? ''     : 'none';
+      playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    }
+
+    /* ── Mute state ──────────────────────────── */
+    function setMuted(muted) {
+      video.muted = muted;
+      muteBtn.querySelector('.vp-icon-muted').style.display = muted  ? '' : 'none';
+      muteBtn.querySelector('.vp-icon-sound').style.display = muted  ? 'none' : '';
+      muteBtn.setAttribute('aria-label', muted ? 'Unmute' : 'Mute');
+    }
+
+    /* ── Seek on progress bar ────────────────── */
+    function seekTo(e) {
+      const rect = progressEl.getBoundingClientRect();
+      const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if (video.duration) video.currentTime = pct * video.duration;
+    }
+    let dragging = false;
+    progressEl.addEventListener('mousedown', e => { dragging = true; seekTo(e); });
+    document.addEventListener('mousemove',   e => { if (dragging) seekTo(e); });
+    document.addEventListener('mouseup',     () => { dragging = false; });
+    progressEl.addEventListener('click', seekTo);
+
+    /* Keyboard scrub on progress bar */
+    progressEl.addEventListener('keydown', e => {
+      if (!video.duration) return;
+      if (e.key === 'ArrowRight') video.currentTime = Math.min(video.duration, video.currentTime + 2);
+      if (e.key === 'ArrowLeft')  video.currentTime = Math.max(0, video.currentTime - 2);
+    });
+
+    /* ── Click player area to toggle play ────── */
+    player.addEventListener('click', e => {
+      /* ignore clicks inside the control buttons themselves */
+      if (e.target.closest('.vp__btn') || e.target.closest('.vp__progress')) return;
+      video.paused ? video.play().catch(() => {}) : video.pause();
+    });
+    playBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      video.paused ? video.play().catch(() => {}) : video.pause();
+    });
+
+    /* ── Mute button ─────────────────────────── */
+    muteBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      setMuted(!video.muted);
+    });
+
+    /* ── Video events ────────────────────────── */
+    video.addEventListener('play',            () => setPlaying(true));
+    video.addEventListener('pause',           () => setPlaying(false));
+    video.addEventListener('ended',           () => { setPlaying(false); /* hold on last frame */ });
+    video.addEventListener('timeupdate',      updateUI);
+    video.addEventListener('loadedmetadata',  updateUI);
+
+    /* ── Chapter cards click-to-seek ────────── */
+    cards.forEach((card, i) => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        video.currentTime = CHAPTERS[i].start;
+        video.play().catch(() => {});
+      });
+    });
+
+    /* ── Scroll-triggered playback ───────────── */
+    const vpObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.45 });
+    vpObs.observe(player);
+
+    /* ── Init ────────────────────────────────── */
+    setMuted(true);   /* starts muted — user can unmute via button */
+    setPlaying(false);
+  })();
 
 </script>
 

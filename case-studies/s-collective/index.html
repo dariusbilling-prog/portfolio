@@ -371,6 +371,7 @@
 
     body {
       font-family: 'Inter', sans-serif;
+      font-size: 18px;
       background-color: var(--bg);
       color: var(--text-primary);
       -webkit-font-smoothing: antialiased;
@@ -1624,121 +1625,34 @@
     }
     .vp.is-paused .vp__big-play { opacity: 1; transform: scale(1); }
 
-    /* Gradient + control bar */
-    .vp__controls {
+    /* Simple play button overlay */
+    .vp__simple-controls {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 56px 18px 16px;
-      background: linear-gradient(to top, rgba(0,0,0,0.76) 0%, rgba(0,0,0,0.28) 65%, transparent 100%);
-      display: flex; flex-direction: column; gap: 9px;
-      opacity: 0; transition: opacity 0.22s;
-      pointer-events: none;
+      bottom: 14px;
+      left: 14px;
+      z-index: 10;
     }
-    .vp:hover .vp__controls,
-    .vp.is-paused .vp__controls { opacity: 1; pointer-events: all; }
-
-    /* Chapter label */
-    .vp__chapter-name {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 0.09em; text-transform: uppercase;
-      color: rgba(255,255,255,0.68);
-    }
-
-    /* Progress track */
-    .vp__progress {
-      position: relative;
-      height: 3px;
-      background: rgba(255,255,255,0.22);
-      border-radius: 2px;
+    .vp__play-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(10,10,12,0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.92);
       cursor: pointer;
-      transition: height 0.14s;
+      transition: background 0.2s ease, transform 0.15s ease;
+      flex-shrink: 0;
     }
-    .vp:hover .vp__progress,
-    .vp.is-paused .vp__progress { height: 5px; }
-    .vp__progress-fill {
-      height: 100%; background: var(--coral); border-radius: 2px;
-      pointer-events: none; width: 0%; position: relative;
-      transition: width 0.08s linear;
+    .vp__play-pill:hover {
+      background: rgba(201,69,40,0.85);
+      transform: scale(1.08);
     }
-    /* Scrub handle */
-    .vp__progress-fill::after {
-      content: '';
-      position: absolute; right: -6px; top: 50%;
-      transform: translateY(-50%) scale(0);
-      width: 13px; height: 13px;
-      background: #fff; border-radius: 50%;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.45);
-      transition: transform 0.14s;
-    }
-    .vp:hover .vp__progress-fill::after,
-    .vp.is-paused .vp__progress-fill::after { transform: translateY(-50%) scale(1); }
-    /* Chapter tick marks */
-    .vp__chapter-tick {
-      position: absolute; top: 50%;
-      transform: translate(-50%, -50%);
-      width: 2px; height: 160%; background: rgba(255,255,255,0.5);
-      border-radius: 1px; pointer-events: none;
-    }
-
-    /* Bottom row */
-    .vp__row { display: flex; align-items: center; gap: 10px; }
-    .vp__btn {
-      background: none; border: none; padding: 4px;
-      cursor: pointer; color: rgba(255,255,255,0.9);
-      display: flex; align-items: center; justify-content: center;
-      line-height: 0; flex-shrink: 0;
-      transition: color 0.14s, transform 0.14s;
-    }
-    .vp__btn:hover { color: #fff; transform: scale(1.12); }
-    .vp__btn svg { display: block; }
-    .vp__time {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px; color: rgba(255,255,255,0.5);
-      letter-spacing: 0.04em; flex-shrink: 0;
-    }
-    .vp__spacer { flex: 1; }
-
-    /* Chapter breakdown cards — 3 columns */
-    .vp-chapters {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--sp-4);
-      margin: var(--sp-5) 0;
-    }
-    .vp-chapter-card {
-      background: color-mix(in srgb, var(--blue) 5%, var(--bg));
-      border: 1px solid color-mix(in srgb, var(--blue) 11%, transparent);
-      border-radius: var(--radius-md);
-      padding: var(--sp-4) var(--sp-5);
-      transition: background 0.3s, border-color 0.3s;
-    }
-    .vp-chapter-card.is-active {
-      background: color-mix(in srgb, var(--blue) 12%, var(--bg));
-      border-color: color-mix(in srgb, var(--blue) 30%, transparent);
-    }
-    .vp-chapter-card__time {
-      font-family: 'Inter', sans-serif;
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--coral); display: block; margin-bottom: var(--sp-2);
-    }
-    .vp-chapter-card__title {
-      font-family: 'Inter', sans-serif;
-      font-size: var(--text-sm); font-weight: 700;
-      color: var(--text-primary);
-      margin: 0 0 var(--sp-2) 0; letter-spacing: -0.01em;
-    }
-    .vp-chapter-card__quote {
-      font-family: 'Półtawski Nowy', Georgia, serif;
-      font-size: var(--text-sm); font-style: italic;
-      color: var(--blue-heading);
-      margin: 0 0 var(--sp-3) 0; line-height: 1.5;
-    }
-    .vp-chapter-card__body {
-      font-size: 13px; color: var(--text-secondary);
-      line-height: 1.6; margin: 0;
-    }
+    .vp__play-pill svg { display: block; }
 
     /* Friction note */
     .wf-friction-note {
@@ -1787,28 +1701,6 @@
       color: var(--coral); letter-spacing: 0.09em;
       font-variant-numeric: tabular-nums;
     }
-    .pr__transport {
-      display: flex; align-items: center;
-      padding: 5px 10px; gap: 2px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      background: #202022;
-    }
-    .pr__btn {
-      background: none; border: none;
-      color: rgba(255,255,255,0.6);
-      cursor: pointer; padding: 5px 6px;
-      border-radius: 3px;
-      display: flex; align-items: center; justify-content: center;
-      transition: color 0.13s, background 0.13s; line-height: 0;
-    }
-    .pr__btn:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.07); }
-    .pr__btn svg { display: block; }
-    .pr__btn--play {
-      background: rgba(255,255,255,0.10);
-      color: rgba(255,255,255,0.9);
-      padding: 5px 9px; margin: 0 3px;
-    }
-    .pr__btn--play:hover { background: rgba(255,255,255,0.18); }
     .pr__meta {
       font-size: 10px; color: rgba(255,255,255,0.22);
       letter-spacing: 0.05em; margin-left: auto; padding-right: 2px;
@@ -1950,15 +1842,41 @@
       position: relative; z-index: 1;
     }
 
-    /* Dark mode */
-    [data-theme="dark"] .vp-chapter-card { background: color-mix(in srgb, var(--blue) 8%, #2d2d2f); border-color: rgba(133,206,255,0.10); }
-    [data-theme="dark"] .vp-chapter-card.is-active { background: color-mix(in srgb, var(--blue) 18%, #2d2d2f); border-color: rgba(133,206,255,0.30); }
-    [data-theme="dark"] .vp-chapter-card__title { color: #f5f5f7; }
-    [data-theme="dark"] .vp-chapter-card__quote { color: #85ceff; }
-    [data-theme="dark"] .vp-chapter-card__body { color: #a1a1a6; }
+    /* ── Interaction hint callout ────────────────────────────────── */
+    .vp-interact-hint {
+      display: flex; align-items: center; gap: var(--sp-3);
+      padding: 12px 18px;
+      background: color-mix(in srgb, var(--blue) 6%, var(--bg));
+      border: 1px solid color-mix(in srgb, var(--blue) 14%, transparent);
+      border-radius: var(--radius-md);
+      margin: var(--sp-3) 0;
+    }
+    .vp-interact-hint__icon {
+      color: var(--coral); flex-shrink: 0;
+      animation: hint-bob 2.8s ease-in-out infinite;
+    }
+    .vp-interact-hint__content { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .vp-interact-hint__label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--coral);
+    }
+    .vp-interact-hint__text { font-size: 14px; color: var(--text-secondary); line-height: 1.4; }
+    .vp-interact-hint__arrow {
+      color: var(--blue); flex-shrink: 0; opacity: 0.6;
+      animation: hint-bounce 2.8s ease-in-out infinite;
+    }
+    @keyframes hint-bob {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-3px); }
+    }
+    @keyframes hint-bounce {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50%       { transform: translateY(4px); opacity: 1; }
+    }
+
+    [data-theme="dark"] .vp-interact-hint { background: color-mix(in srgb, var(--blue) 10%, #1c1c1e); border-color: color-mix(in srgb, var(--blue) 20%, transparent); }
     [data-theme="dark"] .wf-friction-note { background: rgba(255,107,80,0.08); border-left-color: #ff6b50; }
     [data-theme="dark"] .wf-friction-note p { color: #a1a1a6; }
-    @media (max-width: 860px) { .vp-chapters { grid-template-columns: 1fr; } }
 
     /* ── Mobile Wireframes ─────────────────────────────────────────── */
     .mobile-wf-section {
@@ -2025,12 +1943,12 @@
     }
     .phone-mockup__label {
       font-family: 'Inter', sans-serif;
-      font-size: var(--text-xs);
+      font-size: 13px;
       font-weight: 600;
       color: var(--text-muted);
       text-align: center;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-top: 16px;
     }
     [data-theme="dark"] .mobile-wf-section { border-top-color: rgba(255,255,255,0.08); }
     [data-theme="dark"] .mobile-wf-grid .phone-mockup__frame { background: #2d2d2f; box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 8px 24px rgba(0,0,0,0.4); }
@@ -2069,7 +1987,7 @@
       border: 1px solid color-mix(in srgb, var(--text-primary) 6%, transparent);
     }
     .wf-card__caption {
-      font-size: var(--text-sm);
+      font-size: var(--text-base);
       color: var(--text-secondary);
       line-height: 1.55;
     }
@@ -2350,7 +2268,7 @@
       color: var(--blue);
     }
     .racing-intent-text {
-      font-size: var(--text-sm); color: var(--text-secondary);
+      font-size: var(--text-base); color: var(--text-secondary);
       line-height: 1.6; margin: 0;
     }
     [data-theme="dark"] .racing-intent-card { background: rgba(255,255,255,0.04); }
@@ -3132,7 +3050,7 @@
       padding: var(--sp-4) var(--sp-5);
     }
     .ba-module-card__note {
-      font-size: var(--text-sm);
+      font-size: var(--text-base);
       color: var(--text-secondary);
       line-height: 1.6;
       margin: 0;
@@ -3184,7 +3102,7 @@
       display: flex;
       gap: var(--sp-3);
       align-items: flex-start;
-      font-size: var(--text-sm);
+      font-size: var(--text-base);
       line-height: 1.6;
       color: var(--text-secondary);
     }
@@ -3291,7 +3209,7 @@
     }
 
     .lesson-body {
-      font-size: var(--text-sm);
+      font-size: var(--text-base);
       line-height: 1.7;
       color: var(--text-secondary);
     }
@@ -3773,8 +3691,7 @@
 
 
       <!-- Intro body text -->
-      <p class="cs-body reveal reveal-d2">I conducted a UX and conversion audit to identify opportunities to improve clarity, trust, and conversion performance.</p>
-      <p class="cs-body reveal reveal-d2">The goal was to assess how effectively the experience supports user decision-making.</p>
+      <p class="cs-body reveal reveal-d2">UX and conversion audit across messaging, trust hierarchy, and conversion pathways. Four critical friction points identified before any design work began.</p>
 
       <!-- Insight card: Key Focus Areas -->
       <div class="cs-insight-card reveal reveal-d3">
@@ -3820,8 +3737,7 @@
 
         <!-- Left: text + button vertically centred -->
         <div class="audit-cta-split__text">
-          <p class="cs-body">The homepage created a strong visual impression. We identified an opportunity to pair that with clearer messaging around what S Collective offers, who it serves, and what visitors should do next.</p>
-          <p class="cs-body" style="margin-top: var(--sp-4);">This lack of clarity introduced early friction, forcing users to interpret the offering and reducing engagement.</p>
+          <p class="cs-body">The homepage looked great — but lacked a clear value proposition and next step. Users had to interpret the offering themselves, which cost conversions.</p>
           <a href="../../assets/files/S-Collective%20Website%20Audit%2012_22_25%20v1.1.pdf" target="_blank" rel="noopener noreferrer" class="cs-btn" style="margin-top: var(--sp-5); display: inline-flex; width: fit-content; align-self: flex-start;" aria-label="Download the full website audit PDF">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -3858,7 +3774,7 @@
         <div class="accordion-body">
 
         <!-- Sub-paragraph -->
-        <p class="cs-body">The hero section was visually compelling. We saw an opportunity to add a clearer value proposition and primary CTA to better guide first-time visitors.</p>
+        <p class="cs-body">Visually strong, but no value proposition and no CTA above the fold. First-time visitors had no clear next step.</p>
 
         <!-- Key Observations -->
         <p class="obs-intro">Key Observations:</p>
@@ -3902,7 +3818,7 @@
         <div class="accordion-body">
 
         <!-- Sub-paragraph -->
-        <p class="cs-body">Core services were hidden behind a horizontal carousel, requiring interaction to discover. High-value offerings risked never being seen.</p>
+        <p class="cs-body">Services were hidden behind a carousel. Users had to interact before understanding what was on offer — most never did.</p>
 
         <!-- Key Observations -->
         <p class="obs-intro">Key Observations:</p>
@@ -4113,7 +4029,7 @@
           <figcaption>Organizing audit findings to map scope across all site sections</figcaption>
         </figure>
 
-        <p class="cs-body reveal reveal-d3">The redesign focused on three levers: clarifying the value proposition, surfacing trust earlier, and reducing friction across the conversion path.</p>
+        <p class="cs-body reveal reveal-d3">Three levers drove the redesign: clearer value proposition, earlier trust, and a shorter path to conversion.</p>
 
         <!-- Key Observations -->
         <div class="cs-insight-card cs-insight-card--green reveal reveal-d3">
@@ -4130,7 +4046,7 @@
 
         <!-- Strategic Principles -->
         <h3 class="cs-data-label reveal reveal-d1" style="margin-top: var(--sp-7);">Strategic Principles</h3>
-        <p class="cs-body reveal reveal-d2">Six principles guided every layout, content, and interaction decision.</p>
+        <p class="cs-body reveal reveal-d2">Six principles guided every layout and interaction decision.</p>
 
         <ol class="strategy-principles reveal reveal-d3">
           <li class="principle-item">
@@ -4300,7 +4216,7 @@
 
           <h3 class="finding-heading">Hero Video — Service Storytelling Without Friction</h3>
 
-          <p class="wf-intro">The original hero required users to interact with a video carousel before understanding what S Collective does — adding friction before any value was communicated. The redesigned hero plays automatically on scroll, establishing emotional context within the first 7 seconds. No clicks required. Its role is to create the right emotional context for the page: if the user feels confident here, they are more likely to continue scrolling.</p>
+          <p class="wf-intro">The original hero required carousel interaction before any value was communicated. The redesign auto-plays on scroll — establishing desire, credibility, and capability in 20 seconds, passively.</p>
 
           <!-- ── Custom video player ─────────────────────────────────── -->
           <div class="vp reveal reveal-d2 is-paused" id="heroVideoPlayer">
@@ -4322,55 +4238,17 @@
               </div>
             </div>
 
-            <!-- Control bar -->
-            <div class="vp__controls" role="group" aria-label="Video controls">
-
-              <!-- Current chapter name -->
-              <div class="vp__chapter-name" id="vpChapterName">Aspirational Outcome</div>
-
-              <!-- Progress + chapter ticks -->
-              <div class="vp__progress" id="vpProgress"
-                   role="slider" aria-label="Video progress"
-                   aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-                <div class="vp__progress-fill" id="vpFill"></div>
-                <!-- Chapter 2 starts at 7s / ~33.3% of 21s -->
-                <div class="vp__chapter-tick" style="left:33.3%" title="Credibility — 7s" aria-hidden="true"></div>
-                <!-- Chapter 3 starts at 12s / ~57.1% of 21s -->
-                <div class="vp__chapter-tick" style="left:57.1%" title="Capability — 12s" aria-hidden="true"></div>
-              </div>
-
-              <!-- Button row -->
-              <div class="vp__row">
-                <!-- Play / Pause -->
-                <button class="vp__btn" id="vpPlayBtn" aria-label="Play">
-                  <svg class="vp-icon-play" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M5 3.5l13 6.5-13 6.5V3.5z" fill="currentColor"/>
-                  </svg>
-                  <svg class="vp-icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none">
-                    <rect x="4" y="3" width="4" height="14" rx="1" fill="currentColor"/>
-                    <rect x="12" y="3" width="4" height="14" rx="1" fill="currentColor"/>
-                  </svg>
-                </button>
-                <!-- Timestamp -->
-                <span class="vp__time" id="vpTime">0:00 / 0:21</span>
-                <div class="vp__spacer"></div>
-                <!-- Mute / Unmute -->
-                <button class="vp__btn" id="vpMuteBtn" aria-label="Unmute">
-                  <!-- Muted icon (X over speaker) -->
-                  <svg class="vp-icon-muted" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M3 6.5h2.5L9 3.5v11L5.5 11.5H3V6.5z" fill="currentColor"/>
-                    <line x1="12.5" y1="5.5" x2="16" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <line x1="16" y1="5.5" x2="12.5" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  </svg>
-                  <!-- Unmuted icon (sound waves) -->
-                  <svg class="vp-icon-sound" width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:none">
-                    <path d="M3 6.5h2.5L9 3.5v11L5.5 11.5H3V6.5z" fill="currentColor"/>
-                    <path d="M12 5.5c1.6 1.1 2.5 2.3 2.5 3.5S13.6 11.4 12 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M13.5 3.5c2.4 1.6 3.5 3.5 3.5 5.5s-1.1 3.9-3.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  </svg>
-                </button>
-              </div>
-
+            <!-- Simple play button overlay -->
+            <div class="vp__simple-controls">
+              <button class="vp__play-pill" id="vpPlayBtn" aria-label="Play">
+                <svg class="vp-icon-play" width="14" height="16" viewBox="0 0 14 16" fill="currentColor">
+                  <path d="M2 1.5l10 6.5-10 6.5V1.5z"/>
+                </svg>
+                <svg class="vp-icon-pause" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" style="display:none">
+                  <rect x="1" y="1" width="4" height="12" rx="1"/>
+                  <rect x="9" y="1" width="4" height="12" rx="1"/>
+                </svg>
+              </button>
             </div>
           </div>
 
@@ -4384,44 +4262,6 @@
                 <span class="pr__seq-name">FinalVideo (5) — scollective hero video loop</span>
               </div>
               <span class="pr__timecode" id="prTimecode" aria-live="polite" aria-label="Timecode">00:00:00:00</span>
-            </div>
-
-            <!-- Transport -->
-            <div class="pr__transport" role="group" aria-label="Transport controls">
-              <button class="pr__btn" id="prGoStart" title="Go to start" aria-label="Go to start">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <rect x="1.5" y="2" width="2" height="10" rx="0.5" fill="currentColor"/>
-                  <path d="M12 2.5L5.5 7l6.5 4.5V2.5z" fill="currentColor"/>
-                </svg>
-              </button>
-              <button class="pr__btn" id="prBack1f" title="Step back" aria-label="Step back 1 frame">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M11.5 2.5L5 7l6.5 4.5V2.5z" fill="currentColor"/>
-                  <path d="M5 2.5L3 7l2 4.5V2.5z" fill="currentColor" opacity="0.5"/>
-                </svg>
-              </button>
-              <button class="pr__btn pr__btn--play" id="prPlay" title="Play / Pause" aria-label="Play">
-                <svg class="pr-icon-play" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M3.5 2.5l10 4.5-10 4.5V2.5z" fill="currentColor"/>
-                </svg>
-                <svg class="pr-icon-pause" width="14" height="14" viewBox="0 0 14 14" fill="none" style="display:none">
-                  <rect x="2.5" y="2" width="3.5" height="10" rx="0.5" fill="currentColor"/>
-                  <rect x="8" y="2" width="3.5" height="10" rx="0.5" fill="currentColor"/>
-                </svg>
-              </button>
-              <button class="pr__btn" id="prFwd1f" title="Step forward" aria-label="Step forward 1 frame">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2.5 2.5L9 7 2.5 11.5V2.5z" fill="currentColor"/>
-                  <path d="M9 2.5l2 4.5-2 4.5V2.5z" fill="currentColor" opacity="0.5"/>
-                </svg>
-              </button>
-              <button class="pr__btn" id="prGoEnd" title="Go to end" aria-label="Go to end">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <rect x="10.5" y="2" width="2" height="10" rx="0.5" fill="currentColor"/>
-                  <path d="M2 2.5L8.5 7 2 11.5V2.5z" fill="currentColor"/>
-                </svg>
-              </button>
-              <span class="pr__meta">23.976 fps &nbsp;·&nbsp; 00:00:21:00</span>
             </div>
 
             <!-- Timeline -->
@@ -4487,32 +4327,6 @@
 
           </div><!-- /pr -->
 
-          <!-- ── Chapter breakdown ───────────────────────────────────── -->
-          <div class="vp-chapters reveal reveal-d3" id="vpChapterCards">
-
-            <div class="vp-chapter-card is-active" data-chapter="0">
-              <span class="vp-chapter-card__time">0 – 7s</span>
-              <h4 class="vp-chapter-card__title">Aspirational Outcome</h4>
-              <p class="vp-chapter-card__quote">"This is the level your ownership can reach."</p>
-              <p class="vp-chapter-card__body">Users aren't being sold a service — they're being shown a future version of themselves. Motorsport culture is framed as reachable, not exclusive, reducing hesitation before engaging with any service.</p>
-            </div>
-
-            <div class="vp-chapter-card" data-chapter="1">
-              <span class="vp-chapter-card__time">7 – 12s</span>
-              <h4 class="vp-chapter-card__title">Credibility</h4>
-              <p class="vp-chapter-card__quote">"We operate at a professional motorsport level."</p>
-              <p class="vp-chapter-card__body">Professional standards, structured environments — not hobbyist enthusiasm. Users are reassured the operation is legitimate and serious, reducing perceived risk before the conversion point.</p>
-            </div>
-
-            <div class="vp-chapter-card" data-chapter="2">
-              <span class="vp-chapter-card__time">12 – 20s</span>
-              <h4 class="vp-chapter-card__title">Capability</h4>
-              <p class="vp-chapter-card__quote">"We do real work on luxury sport cars."</p>
-              <p class="vp-chapter-card__body">Hands-on craft is made visible — detailing, preparation, precision. This builds desire before the CTA is surfaced, so users arrive at the conversion point already wanting the outcome.</p>
-            </div>
-
-          </div>
-
           <!-- Friction note -->
           <div class="wf-friction-note reveal reveal-d4">
             <p><strong>Why this structure works:</strong> Motion is processed faster than text. Users decide whether to stay on a page in seconds — and first impressions heavily influence conversion behavior. The previous hero required clicking a carousel before any service was communicated. The redesigned video establishes desire, credibility, and capability in 20 seconds, passively — removing the interaction requirement that was costing conversions.</p>
@@ -4524,7 +4338,7 @@
         <div class="mobile-wf-section reveal reveal-d1">
 
           <h3 class="finding-heading">Mobile Wireframes</h3>
-          <p class="mobile-wf-intro">Three device sizes were considered throughout the wireframe process. Mobile-first thinking shaped the information hierarchy — if content couldn't communicate clearly on a 390px screen, the structure was revised before moving to desktop.</p>
+          <p class="mobile-wf-intro">Mobile-first. Every screen was validated at 390px before moving to desktop.</p>
 
           <div class="mobile-wf-grid">
 
@@ -4534,7 +4348,7 @@
                   <img src="../../assets/images/hand-wire-frame-1.jpg" alt="Mobile wireframe — Homepage layout and component planning" />
                 </div>
               </div>
-              <span class="phone-mockup__label">Homepage</span>
+              <span class="phone-mockup__label">Services</span>
             </div>
 
             <div class="phone-mockup reveal reveal-d3">
@@ -4543,7 +4357,7 @@
                   <img src="../../assets/images/hand-wire-frame-2.jpg" alt="Mobile wireframe — Racing page with dual-audience layout" />
                 </div>
               </div>
-              <span class="phone-mockup__label">Racing Page</span>
+              <span class="phone-mockup__label">Blog</span>
             </div>
 
             <div class="phone-mockup reveal reveal-d2">
@@ -4552,7 +4366,7 @@
                   <img src="../../assets/images/hero-after.jpg" alt="Mobile wireframe — Service discovery grid" />
                 </div>
               </div>
-              <span class="phone-mockup__label">Services</span>
+              <span class="phone-mockup__label">Social Media</span>
             </div>
 
             <div class="phone-mockup reveal reveal-d3">
@@ -4561,7 +4375,7 @@
                   <img src="../../assets/images/cro-form-page-fullscreen.jpg" alt="Mobile wireframe — Conversion form and enquiry pathway" />
                 </div>
               </div>
-              <span class="phone-mockup__label">Enquiry</span>
+              <span class="phone-mockup__label">Mobile Navigation</span>
             </div>
 
           </div>
@@ -4642,8 +4456,7 @@
 
           <div class="content-split__text">
             <h2 class="finding-heading" style="margin-bottom: var(--sp-4);">Brand Authority &amp; Mid/Low CRO Modules</h2>
-            <p class="cs-body">Brand authority positioned early reduces hesitation and increases CTA engagement before users are asked to act.</p>
-            <p class="cs-body" style="margin-top: var(--sp-3);">The homepage had no immediate conversion path, requiring high-intent users to scroll or navigate before taking action.</p>
+            <p class="cs-body">Brand authority positioned early reduces hesitation before the ask. The original homepage had no immediate conversion path — high-intent users had to hunt for it.</p>
           </div>
 
           <div class="content-split__media">
@@ -4679,7 +4492,7 @@
 
         <!-- Brand Authority Module A/B Wireframes ─────────────────── -->
         <h3 class="cs-data-label reveal reveal-d1" style="margin-top: var(--sp-8);">Module Direction — A/B Concepts</h3>
-        <p class="cs-body reveal reveal-d2" style="margin-bottom: var(--sp-5);">Two wireframe directions were explored for each mid-page module — one focused on social proof density, one on hierarchical clarity. Placement and sequencing were tested against user scroll patterns to identify which structure better supported conversion intent.</p>
+        <p class="cs-body reveal reveal-d2" style="margin-bottom: var(--sp-5);">Two directions per module — social proof density vs. hierarchical clarity. Sequencing was mapped against user scroll patterns to find the higher-converting structure.</p>
 
         <div class="ba-modules-grid">
 
@@ -4690,7 +4503,7 @@
             </div>
             <img class="ba-module-card__img" src="../../assets/images/Social%20Proof%20%26%20Hierarchy.png" alt="Direction A — Social proof and hierarchy wireframe showing testimonials above service modules" />
             <div class="ba-module-card__body">
-              <p class="ba-module-card__note">Leads with client results and trust markers before presenting services. Reduces skepticism early by anchoring brand authority through social evidence before asking for conversion.</p>
+              <p class="ba-module-card__note">Leads with client results before presenting services. Anchors authority through social proof before asking for conversion.</p>
             </div>
           </div>
 
@@ -4701,7 +4514,7 @@
             </div>
             <img class="ba-module-card__img" src="../../assets/images/cro-form-page-fullscreen.jpg" alt="Direction B — Service-led wireframe with conversion form overlaid mid-page" />
             <div class="ba-module-card__body">
-              <p class="ba-module-card__note">Surfaces service options immediately with a persistent form CTA overlaid. Designed to capture high-intent users who arrived knowing what they want — reducing path length to inquiry.</p>
+              <p class="ba-module-card__note">Surfaces services immediately with a persistent CTA. Captures high-intent users who arrive knowing what they want.</p>
             </div>
           </div>
 
@@ -4712,7 +4525,7 @@
             </div>
             <img class="ba-module-card__img" src="../../assets/images/racing-page-fullscreen.jpg" alt="Racing page wireframe focused on brand authority" />
             <div class="ba-module-card__body">
-              <p class="ba-module-card__note">The Racing page uses a performance-first layout — leading with track credentials and driver testimonials to establish authority before surfacing booking pathways for both first-time and experienced drivers.</p>
+              <p class="ba-module-card__note">Performance-first layout — track credentials and testimonials establish authority before booking pathways appear.</p>
             </div>
           </div>
 
@@ -4723,7 +4536,7 @@
             </div>
             <img class="ba-module-card__img" src="../../assets/images/findings-1-diagram.png" alt="Findings diagram showing dual-intent user flow structure" />
             <div class="ba-module-card__body">
-              <p class="ba-module-card__note">Audit findings shaped a dual-intent layout — serving both curious explorers and committed bookers without either group needing to scroll past irrelevant content to find their path forward.</p>
+              <p class="ba-module-card__note">Dual-intent layout — explorers and committed bookers each find their path without scrolling past irrelevant content.</p>
             </div>
           </div>
 
@@ -4743,7 +4556,7 @@
       <section class="hp-preview-section reveal reveal-d1" id="racing-page" aria-label="Racing Page">
 
         <h2 class="section-label reveal reveal-d1">Racing Page</h2>
-        <p class="cs-body reveal reveal-d2">The Racing page was one of the most complex design challenges in the project — it needed to serve two completely different users simultaneously. Every section order, headline, and CTA was mapped directly to persona intent rather than general convention.</p>
+        <p class="cs-body reveal reveal-d2">The Racing page had to serve two completely different users at once. Every section, headline, and CTA was mapped to persona intent — not convention.</p>
 
         <div class="hp-preview-container reveal reveal-d2">
           <span class="hp-preview-label">Interactive Prototype</span>
@@ -4765,11 +4578,11 @@
           <div class="racing-intent-grid">
             <div class="racing-intent-card">
               <span class="racing-intent-badge racing-intent-badge--trust">First-Time Driver</span>
-              <p class="racing-intent-text">Approachability and safety cues lead the page — motorsport is framed as participatory, not exclusive. Entry pathways surface early, before any commitment signals appear, reducing hesitation before engagement.</p>
+              <p class="racing-intent-text">Motorsport is framed as approachable. Safety cues and entry pathways surface before any commitment signal.</p>
             </div>
             <div class="racing-intent-card">
               <span class="racing-intent-badge racing-intent-badge--performance">Track Enthusiast</span>
-              <p class="racing-intent-text">Professional credentials — structured environments, motorsport participation, real standards — are prominent in the first scroll. High-intent users can move directly to booking without navigating past introductory content.</p>
+              <p class="racing-intent-text">Professional credentials appear in the first scroll. High-intent users can go straight to booking.</p>
             </div>
           </div>
 
@@ -4805,7 +4618,7 @@
 
         <h2 class="section-label reveal reveal-d1">Implementation</h2>
 
-        <p class="impl-intro reveal reveal-d2">The redesign moved from concept to delivery across a structured six-week sprint — coordinating visual design, development handoff, and content migration in parallel.</p>
+        <p class="impl-intro reveal reveal-d2">Concept to delivery in six weeks — design, handoff, and content migration running in parallel.</p>
 
         <div class="impl-grid reveal reveal-d3">
 
@@ -4874,7 +4687,7 @@
 
         <h2 class="section-label reveal reveal-d1">Lessons Learned</h2>
 
-        <p class="lessons-intro reveal reveal-d2">Five principles I'll carry into every future project — distilled from what worked, what didn't, and what I'd approach differently.</p>
+        <p class="lessons-intro reveal reveal-d2">Five principles distilled from what worked, what didn't, and what I'd do differently.</p>
 
         <div class="lessons-grid">
 
@@ -4882,7 +4695,7 @@
             <div class="lesson-num" aria-hidden="true">01</div>
             <div>
               <h3 class="lesson-title">Research before redesign — always</h3>
-              <p class="lesson-body">Starting with user interviews revealed that the homepage's biggest problem wasn't visual — it was structural. Without research, the redesign would have addressed symptoms instead of causes.</p>
+              <p class="lesson-body">The homepage's problem was structural, not visual. Research revealed that before a single frame was opened.</p>
             </div>
           </article>
 
@@ -4890,7 +4703,7 @@
             <div class="lesson-num" aria-hidden="true">02</div>
             <div>
               <h3 class="lesson-title">Stakeholder alignment saves time</h3>
-              <p class="lesson-body">Early brand workshops with the S Collective team prevented mid-sprint pivots. Every design decision had a shared reference point — which made feedback faster and revisions fewer.</p>
+              <p class="lesson-body">Brand workshops up front prevented mid-sprint pivots. Shared reference points made feedback faster and revisions fewer.</p>
             </div>
           </article>
 
@@ -4898,7 +4711,7 @@
             <div class="lesson-num" aria-hidden="true">03</div>
             <div>
               <h3 class="lesson-title">Mobile is a product strategy, not a breakpoint</h3>
-              <p class="lesson-body">Designing mobile-first forced hierarchy decisions that improved the desktop layout too. The constraint became a feature — shorter copy, clearer CTAs, tighter flow.</p>
+              <p class="lesson-body">Mobile-first constraints improved the desktop layout too. Shorter copy, clearer CTAs, tighter flow — the constraint became a feature.</p>
             </div>
           </article>
 
@@ -4906,7 +4719,7 @@
             <div class="lesson-num" aria-hidden="true">04</div>
             <div>
               <h3 class="lesson-title">Performance is a design decision</h3>
-              <p class="lesson-body">Every image, font, and animation has a load cost. Keeping this in mind during design — not just in handoff — resulted in a site that felt as fast as it looked.</p>
+              <p class="lesson-body">Every image, font, and animation has a load cost. Designing with performance in mind — not just at handoff — keeps the experience fast.</p>
             </div>
           </article>
 
@@ -4914,7 +4727,7 @@
             <div class="lesson-num" aria-hidden="true">05</div>
             <div>
               <h3 class="lesson-title">Measure to validate, not to confirm</h3>
-              <p class="lesson-body">Setting success metrics before launch kept post-launch analysis honest. The 40% form increase was meaningful because we defined what success looked like before the site went live.</p>
+              <p class="lesson-body">Metrics defined before launch kept post-launch analysis honest. The 40% increase was meaningful because success was defined first.</p>
             </div>
           </article>
 
@@ -5392,52 +5205,11 @@
 
   /* ── Custom video player — Hero Video Wireframe section ─────────── */
   (function () {
-    const player = document.getElementById('heroVideoPlayer');
+    const player  = document.getElementById('heroVideoPlayer');
     if (!player) return;
 
-    const video       = player.querySelector('.vp__video');
-    const playBtn     = document.getElementById('vpPlayBtn');
-    const muteBtn     = document.getElementById('vpMuteBtn');
-    const progressEl  = document.getElementById('vpProgress');
-    const fillEl      = document.getElementById('vpFill');
-    const timeEl      = document.getElementById('vpTime');
-    const chapterName = document.getElementById('vpChapterName');
-    const cards       = document.querySelectorAll('.vp-chapter-card');
-
-    /* Chapter definitions — matches video edit */
-    const CHAPTERS = [
-      { start: 0,  label: 'Aspirational Outcome' },
-      { start: 7,  label: 'Credibility' },
-      { start: 12, label: 'Capability' },
-    ];
-
-    /* ── Helpers ─────────────────────────────── */
-    const fmt = s => {
-      const m = Math.floor(s / 60);
-      return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
-    };
-
-    function currentChapterIdx(t) {
-      let idx = 0;
-      for (let i = CHAPTERS.length - 1; i >= 0; i--) {
-        if (t >= CHAPTERS[i].start) { idx = i; break; }
-      }
-      return idx;
-    }
-
-    /* ── UI update on timeupdate ─────────────── */
-    function updateUI() {
-      const dur = video.duration || 21;
-      const pct = (video.currentTime / dur) * 100;
-
-      fillEl.style.width = pct + '%';
-      progressEl.setAttribute('aria-valuenow', Math.round(pct));
-      timeEl.textContent = fmt(video.currentTime) + ' / ' + fmt(dur);
-
-      const ci = currentChapterIdx(video.currentTime);
-      chapterName.textContent = CHAPTERS[ci].label;
-      cards.forEach((c, i) => c.classList.toggle('is-active', i === ci));
-    }
+    const video   = player.querySelector('.vp__video');
+    const playBtn = document.getElementById('vpPlayBtn');
 
     /* ── Play / pause state ─────────────────── */
     function setPlaying(playing) {
@@ -5447,37 +5219,9 @@
       playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
     }
 
-    /* ── Mute state ──────────────────────────── */
-    function setMuted(muted) {
-      video.muted = muted;
-      muteBtn.querySelector('.vp-icon-muted').style.display = muted  ? '' : 'none';
-      muteBtn.querySelector('.vp-icon-sound').style.display = muted  ? 'none' : '';
-      muteBtn.setAttribute('aria-label', muted ? 'Unmute' : 'Mute');
-    }
-
-    /* ── Seek on progress bar ────────────────── */
-    function seekTo(e) {
-      const rect = progressEl.getBoundingClientRect();
-      const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      if (video.duration) video.currentTime = pct * video.duration;
-    }
-    let dragging = false;
-    progressEl.addEventListener('mousedown', e => { dragging = true; seekTo(e); });
-    document.addEventListener('mousemove',   e => { if (dragging) seekTo(e); });
-    document.addEventListener('mouseup',     () => { dragging = false; });
-    progressEl.addEventListener('click', seekTo);
-
-    /* Keyboard scrub on progress bar */
-    progressEl.addEventListener('keydown', e => {
-      if (!video.duration) return;
-      if (e.key === 'ArrowRight') video.currentTime = Math.min(video.duration, video.currentTime + 2);
-      if (e.key === 'ArrowLeft')  video.currentTime = Math.max(0, video.currentTime - 2);
-    });
-
     /* ── Click player area to toggle play ────── */
     player.addEventListener('click', e => {
-      /* ignore clicks inside the control buttons themselves */
-      if (e.target.closest('.vp__btn') || e.target.closest('.vp__progress')) return;
+      if (e.target.closest('.vp__play-pill')) return;
       video.paused ? video.play().catch(() => {}) : video.pause();
     });
     playBtn.addEventListener('click', e => {
@@ -5485,27 +5229,10 @@
       video.paused ? video.play().catch(() => {}) : video.pause();
     });
 
-    /* ── Mute button ─────────────────────────── */
-    muteBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      setMuted(!video.muted);
-    });
-
     /* ── Video events ────────────────────────── */
-    video.addEventListener('play',            () => setPlaying(true));
-    video.addEventListener('pause',           () => setPlaying(false));
-    video.addEventListener('ended',           () => { setPlaying(false); /* hold on last frame */ });
-    video.addEventListener('timeupdate',      updateUI);
-    video.addEventListener('loadedmetadata',  updateUI);
-
-    /* ── Chapter cards click-to-seek ────────── */
-    cards.forEach((card, i) => {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', () => {
-        video.currentTime = CHAPTERS[i].start;
-        video.play().catch(() => {});
-      });
-    });
+    video.addEventListener('play',  () => setPlaying(true));
+    video.addEventListener('pause', () => setPlaying(false));
+    video.addEventListener('ended', () => setPlaying(false));
 
     /* ── Scroll-triggered playback ───────────── */
     const vpObs = new IntersectionObserver(entries => {
@@ -5520,7 +5247,7 @@
     vpObs.observe(player);
 
     /* ── Init ────────────────────────────────── */
-    setMuted(true);   /* starts muted — user can unmute via button */
+    video.muted = true;
     setPlaying(false);
   })();
 
@@ -5531,7 +5258,6 @@
     const prRuler  = document.getElementById('prRuler');
     const prTlBody = document.getElementById('prTlBody');
     const tcEl     = document.getElementById('prTimecode');
-    const playBtn  = document.getElementById('prPlay');
     if (!video || !prPh) return;
 
     const DURATION = 21;
@@ -5555,20 +5281,10 @@
       tcEl.textContent = toTC(video.currentTime);
     }
 
-    /* Sync play/pause button icons */
-    function syncBtn() {
-      const playing = !video.paused;
-      const iconPlay  = playBtn.querySelector('.pr-icon-play');
-      const iconPause = playBtn.querySelector('.pr-icon-pause');
-      if (iconPlay)  iconPlay.style.display  = playing ? 'none' : '';
-      if (iconPause) iconPause.style.display = playing ? '' : 'none';
-      playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
-    }
-
     video.addEventListener('timeupdate',   syncPh);
-    video.addEventListener('play',         () => { syncPh(); syncBtn(); });
-    video.addEventListener('pause',        () => { syncPh(); syncBtn(); });
-    video.addEventListener('ended',        syncBtn);
+    video.addEventListener('play',         syncPh);
+    video.addEventListener('pause',        syncPh);
+    video.addEventListener('ended',        syncPh);
 
     /* Build ruler tick marks */
     function buildRuler() {
@@ -5603,52 +5319,30 @@
       video.currentTime = pct * (video.duration || DURATION);
     }
 
-    /* Ruler and lane click/drag seeking */
-    let dragging = false;
-    function startDrag(e) { dragging = true; seekFromX(e.clientX); }
+    /* Ruler + playhead drag — pause while scrubbing, resume on release */
+    let dragging  = false;
+    let wasPaused = true;
+
+    function startDrag(e) {
+      wasPaused = video.paused;
+      dragging  = true;
+      video.pause();
+      seekFromX(e.clientX);
+      e.preventDefault();
+    }
 
     prRuler.addEventListener('mousedown', startDrag);
-    document.querySelectorAll('[data-seek-lane]').forEach(lane => {
-      lane.addEventListener('mousedown', startDrag);
-    });
-
-    /* Playhead drag */
     prPh.style.pointerEvents = 'all';
-    prPh.addEventListener('mousedown', e => { dragging = true; e.preventDefault(); });
+    prPh.addEventListener('mousedown', startDrag);
 
     document.addEventListener('mousemove', e => { if (dragging) seekFromX(e.clientX); });
-    document.addEventListener('mouseup',   () => { dragging = false; });
-
-    /* Clip click → jump to clip start time */
-    document.querySelectorAll('.pr__clip').forEach(clip => {
-      clip.addEventListener('click', e => {
-        e.stopPropagation();
-        const leftPct = parseFloat(clip.style.left) / 100;
-        video.currentTime = leftPct * (video.duration || DURATION);
-        video.play().catch(() => {});
-      });
+    document.addEventListener('mouseup', () => {
+      if (!dragging) return;
+      dragging = false;
+      if (!wasPaused) video.play().catch(() => {});
     });
 
-    /* Keyboard scrub on ruler */
-    prRuler.addEventListener('keydown', e => {
-      const step = (video.duration || DURATION) / 100;
-      if (e.key === 'ArrowRight') video.currentTime = Math.min(video.duration || DURATION, video.currentTime + step);
-      if (e.key === 'ArrowLeft')  video.currentTime = Math.max(0, video.currentTime - step);
-    });
-
-    /* Transport buttons */
-    const prGoStart = document.getElementById('prGoStart');
-    const prBack1f  = document.getElementById('prBack1f');
-    const prFwd1f   = document.getElementById('prFwd1f');
-    const prGoEnd   = document.getElementById('prGoEnd');
-
-    if (prGoStart) prGoStart.addEventListener('click', () => { video.currentTime = 0; video.pause(); });
-    if (prBack1f)  prBack1f.addEventListener('click',  () => { video.currentTime = Math.max(0, video.currentTime - 1/24); video.pause(); });
-    if (playBtn)   playBtn.addEventListener('click',   () => { video.paused ? video.play().catch(()=>{}) : video.pause(); });
-    if (prFwd1f)   prFwd1f.addEventListener('click',   () => { video.currentTime = Math.min(video.duration||DURATION, video.currentTime + 1/24); video.pause(); });
-    if (prGoEnd)   prGoEnd.addEventListener('click',   () => { video.currentTime = video.duration||DURATION; video.pause(); });
-
-    syncPh(); syncBtn();
+    syncPh();
   })();
 
 </script>

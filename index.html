@@ -842,7 +842,7 @@
       pointer-events: none;
     }
     .accordion-impact {
-      font-size: var(--text-sm);
+      font-size: 16px;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       color: var(--text-secondary);
@@ -1646,6 +1646,9 @@
       bottom: 14px;
       left: 14px;
       z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .vp__play-pill {
       display: flex;
@@ -1872,10 +1875,10 @@
     }
     .vp-interact-hint__content { flex: 1; display: flex; flex-direction: column; gap: 2px; }
     .vp-interact-hint__label {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--coral);
     }
-    .vp-interact-hint__text { font-size: 14px; color: var(--text-secondary); line-height: 1.4; }
+    .vp-interact-hint__text { font-size: 17px; color: var(--text-secondary); line-height: 1.4; }
     .vp-interact-hint__arrow {
       color: var(--blue); flex-shrink: 0; opacity: 0.6;
       animation: hint-bounce 2.8s ease-in-out infinite;
@@ -4278,6 +4281,12 @@
                   <rect x="9" y="1" width="4" height="12" rx="1"/>
                 </svg>
               </button>
+              <button class="vp__play-pill" id="vpReplayBtn" aria-label="Replay">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1.5 7.5a6 6 0 1 0 1.2-3.6"/>
+                  <path d="M1.5 2v3h3"/>
+                </svg>
+              </button>
             </div>
           </div>
 
@@ -5218,8 +5227,9 @@
     const player  = document.getElementById('heroVideoPlayer');
     if (!player) return;
 
-    const video   = player.querySelector('.vp__video');
-    const playBtn = document.getElementById('vpPlayBtn');
+    const video      = player.querySelector('.vp__video');
+    const playBtn    = document.getElementById('vpPlayBtn');
+    const replayBtn  = document.getElementById('vpReplayBtn');
     let userPaused = false;
 
     /* ── Play / pause state ─────────────────── */
@@ -5240,6 +5250,12 @@
       e.stopPropagation();
       if (video.paused) { userPaused = false; video.play().catch(() => {}); }
       else              { userPaused = true;  video.pause(); }
+    });
+    replayBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      video.currentTime = 0;
+      userPaused = false;
+      video.play().catch(() => {});
     });
 
     /* ── Video events ────────────────────────── */

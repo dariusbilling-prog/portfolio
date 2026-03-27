@@ -1754,6 +1754,202 @@
     }
     .wf-friction-note strong { color: var(--text-primary); }
 
+    /* ── Premiere-style timeline panel ─────────────────────────────── */
+    .pr {
+      background: #1c1c1e;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin: var(--sp-3) 0;
+      font-family: 'Inter', sans-serif;
+      -webkit-user-select: none; user-select: none;
+      box-shadow:
+        0 2px 8px   rgba(0,0,0,0.08),
+        0 12px 32px rgba(0,0,0,0.12),
+        0 32px 64px rgba(0,0,0,0.08);
+    }
+    .pr__hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 12px;
+      background: #252527;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .pr__hdr-left { display: flex; align-items: center; gap: 7px; }
+    .pr__seq-dot {
+      width: 10px; height: 10px;
+      background: var(--coral); border-radius: 2px; flex-shrink: 0;
+    }
+    .pr__seq-name {
+      font-size: 11px; font-weight: 500;
+      color: rgba(255,255,255,0.5); letter-spacing: 0.03em;
+    }
+    .pr__timecode {
+      font-size: 13px; font-weight: 700;
+      color: var(--coral); letter-spacing: 0.09em;
+      font-variant-numeric: tabular-nums;
+    }
+    .pr__transport {
+      display: flex; align-items: center;
+      padding: 5px 10px; gap: 2px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: #202022;
+    }
+    .pr__btn {
+      background: none; border: none;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer; padding: 5px 6px;
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.13s, background 0.13s; line-height: 0;
+    }
+    .pr__btn:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.07); }
+    .pr__btn svg { display: block; }
+    .pr__btn--play {
+      background: rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.9);
+      padding: 5px 9px; margin: 0 3px;
+    }
+    .pr__btn--play:hover { background: rgba(255,255,255,0.18); }
+    .pr__meta {
+      font-size: 10px; color: rgba(255,255,255,0.22);
+      letter-spacing: 0.05em; margin-left: auto; padding-right: 2px;
+    }
+    .pr__tl { display: flex; height: 140px; }
+    .pr__trk-hdrs {
+      width: 52px; flex-shrink: 0;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex; flex-direction: column;
+    }
+    .pr__ruler-spc {
+      height: 22px; flex-shrink: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .pr__trk-hdr {
+      flex: 1;
+      display: flex; align-items: center; justify-content: flex-end;
+      padding: 0 7px; gap: 4px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .pr__trk-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.3);
+    }
+    .pr__v1-badge {
+      font-size: 10px; font-weight: 700;
+      background: #3d5f8f; color: rgba(255,255,255,0.9);
+      padding: 1px 5px; border-radius: 2px;
+    }
+    .pr__tl-body { flex: 1; position: relative; overflow: hidden; }
+    .pr__tl-inner { position: absolute; inset: 0; }
+    .pr__ruler {
+      height: 22px; position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: #181818; cursor: pointer; overflow: hidden;
+    }
+    .pr__rtick {
+      position: absolute; bottom: 0; width: 1px;
+      background: rgba(255,255,255,0.2);
+    }
+    .pr__rtick--major { height: 100%; background: rgba(255,255,255,0.35); }
+    .pr__rtick--med   { height: 55%; }
+    .pr__rtick--minor { height: 33%; }
+    .pr__rlabel {
+      position: absolute; top: 3px;
+      font-size: 9px; color: rgba(255,255,255,0.42);
+      letter-spacing: 0.03em; transform: translateX(-50%);
+      white-space: nowrap; font-variant-numeric: tabular-nums;
+    }
+    .pr__ph {
+      position: absolute; top: 0; bottom: 0;
+      left: 0%; z-index: 10;
+      transform: translateX(-50%); cursor: col-resize;
+      pointer-events: none;
+    }
+    .pr__ph-head {
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 8px solid var(--coral);
+      margin: 0 auto;
+    }
+    .pr__ph-line {
+      width: 1px; height: 100%;
+      background: var(--coral); opacity: 0.85; margin: 0 auto;
+    }
+    .pr__tracks {
+      position: absolute; top: 22px; left: 0; right: 0; bottom: 0;
+      display: flex; flex-direction: column;
+      background:
+        linear-gradient(90deg,
+          rgba(91,129,186,0.07)  0%,     rgba(91,129,186,0.07)  33.3%,
+          rgba(201,69,40,0.07)   33.3%,  rgba(201,69,40,0.07)   57.1%,
+          rgba(59,99,71,0.07)    57.1%,  rgba(59,99,71,0.07)    95.3%,
+          transparent            95.3%
+        );
+    }
+    .pr__lane {
+      flex: 1; position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      cursor: crosshair;
+    }
+    .pr__lane:hover { background: rgba(255,255,255,0.01); }
+    .pr__clip {
+      position: absolute; top: 3px; bottom: 3px;
+      border-radius: 2px; overflow: hidden;
+      cursor: pointer;
+      display: flex; align-items: center; padding: 0 5px;
+      transition: filter 0.14s;
+    }
+    .pr__clip:hover { filter: brightness(1.25); }
+    .pr__clip::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -52deg,
+        transparent, transparent 5px,
+        rgba(255,255,255,0.03) 5px, rgba(255,255,255,0.03) 6px
+      );
+      pointer-events: none;
+    }
+    .pr__clip--fx::after {
+      content: 'fx';
+      position: absolute; top: 2px; right: 4px;
+      font-size: 8px; font-weight: 700; letter-spacing: 0.04em;
+      color: rgba(48,209,88,0.8);
+      pointer-events: none;
+    }
+    .pr__clip--v1 {
+      background: linear-gradient(155deg, #38487a, #2a3660);
+      border-left: 2px solid #5b81ba;
+    }
+    .pr__clip--v2 {
+      background: linear-gradient(155deg, #6b2828, #511e1e);
+      border-left: 2px solid #c94528;
+    }
+    .pr__clip--v3 {
+      background: linear-gradient(155deg, #2a5438, #1e4028);
+      border-left: 2px solid #3b6347;
+    }
+    .pr__clip--audio {
+      background: #1a3d5c;
+      border-left: 2px solid #3a8fc0;
+      background-image:
+        repeating-linear-gradient(90deg,
+          rgba(58,143,192,0.28) 0px, rgba(58,143,192,0.28) 1px,
+          transparent 1px, transparent 3px
+        ),
+        linear-gradient(to top,
+          rgba(58,143,192,0.4) 0%, rgba(58,143,192,0.15) 40%,
+          rgba(58,143,192,0.35) 60%, rgba(58,143,192,0.1) 80%,
+          rgba(58,143,192,0.3) 100%
+        );
+    }
+    .pr__clip-name {
+      font-size: 9px; font-weight: 600;
+      color: rgba(255,255,255,0.6); letter-spacing: 0.04em;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      position: relative; z-index: 1;
+    }
+
     /* Dark mode */
     [data-theme="dark"] .vp-chapter-card { background: color-mix(in srgb, var(--blue) 8%, #2d2d2f); border-color: rgba(133,206,255,0.10); }
     [data-theme="dark"] .vp-chapter-card.is-active { background: color-mix(in srgb, var(--blue) 18%, #2d2d2f); border-color: rgba(133,206,255,0.30); }
@@ -4178,6 +4374,119 @@
             </div>
           </div>
 
+          <!-- ── Premiere Timeline Panel ──────────────────────────────── -->
+          <div class="pr reveal reveal-d3" id="prPanel" aria-label="Timeline editor — scrub or click clips to seek">
+
+            <!-- Header -->
+            <div class="pr__hdr">
+              <div class="pr__hdr-left">
+                <span class="pr__seq-dot" aria-hidden="true"></span>
+                <span class="pr__seq-name">FinalVideo (5) — scollective hero video loop</span>
+              </div>
+              <span class="pr__timecode" id="prTimecode" aria-live="polite" aria-label="Timecode">00:00:00:00</span>
+            </div>
+
+            <!-- Transport -->
+            <div class="pr__transport" role="group" aria-label="Transport controls">
+              <button class="pr__btn" id="prGoStart" title="Go to start" aria-label="Go to start">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <rect x="1.5" y="2" width="2" height="10" rx="0.5" fill="currentColor"/>
+                  <path d="M12 2.5L5.5 7l6.5 4.5V2.5z" fill="currentColor"/>
+                </svg>
+              </button>
+              <button class="pr__btn" id="prBack1f" title="Step back" aria-label="Step back 1 frame">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M11.5 2.5L5 7l6.5 4.5V2.5z" fill="currentColor"/>
+                  <path d="M5 2.5L3 7l2 4.5V2.5z" fill="currentColor" opacity="0.5"/>
+                </svg>
+              </button>
+              <button class="pr__btn pr__btn--play" id="prPlay" title="Play / Pause" aria-label="Play">
+                <svg class="pr-icon-play" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3.5 2.5l10 4.5-10 4.5V2.5z" fill="currentColor"/>
+                </svg>
+                <svg class="pr-icon-pause" width="14" height="14" viewBox="0 0 14 14" fill="none" style="display:none">
+                  <rect x="2.5" y="2" width="3.5" height="10" rx="0.5" fill="currentColor"/>
+                  <rect x="8" y="2" width="3.5" height="10" rx="0.5" fill="currentColor"/>
+                </svg>
+              </button>
+              <button class="pr__btn" id="prFwd1f" title="Step forward" aria-label="Step forward 1 frame">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M2.5 2.5L9 7 2.5 11.5V2.5z" fill="currentColor"/>
+                  <path d="M9 2.5l2 4.5-2 4.5V2.5z" fill="currentColor" opacity="0.5"/>
+                </svg>
+              </button>
+              <button class="pr__btn" id="prGoEnd" title="Go to end" aria-label="Go to end">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <rect x="10.5" y="2" width="2" height="10" rx="0.5" fill="currentColor"/>
+                  <path d="M2 2.5L8.5 7 2 11.5V2.5z" fill="currentColor"/>
+                </svg>
+              </button>
+              <span class="pr__meta">23.976 fps &nbsp;·&nbsp; 00:00:21:00</span>
+            </div>
+
+            <!-- Timeline -->
+            <div class="pr__tl">
+              <!-- Track header labels -->
+              <div class="pr__trk-hdrs" aria-hidden="true">
+                <div class="pr__ruler-spc"></div>
+                <div class="pr__trk-hdr"><span class="pr__trk-label">V3</span></div>
+                <div class="pr__trk-hdr"><span class="pr__trk-label">V2</span></div>
+                <div class="pr__trk-hdr"><span class="pr__v1-badge">V1</span></div>
+                <div class="pr__trk-hdr"><span class="pr__trk-label">A1</span></div>
+              </div>
+
+              <!-- Scrollable timeline body -->
+              <div class="pr__tl-body" id="prTlBody">
+                <div class="pr__tl-inner">
+
+                  <!-- Ruler (ticks generated by JS) -->
+                  <div class="pr__ruler" id="prRuler"
+                       role="slider" tabindex="0"
+                       aria-label="Seek video" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+                  <!-- Playhead -->
+                  <div class="pr__ph" id="prPh" aria-hidden="true">
+                    <div class="pr__ph-head"></div>
+                    <div class="pr__ph-line"></div>
+                  </div>
+
+                  <!-- Track lanes -->
+                  <div class="pr__tracks">
+
+                    <!-- V3: Chapter 3 — Capability (57.1 – 95.3%) -->
+                    <div class="pr__lane" data-seek-lane>
+                      <div class="pr__clip pr__clip--v3 pr__clip--fx" style="left:57.1%;width:9.3%;"><span class="pr__clip-name">cap_01</span></div>
+                      <div class="pr__clip pr__clip--v3 pr__clip--fx" style="left:66.7%;width:9.3%;"><span class="pr__clip-name">cap_02</span></div>
+                      <div class="pr__clip pr__clip--v3" style="left:76.3%;width:9.3%;"><span class="pr__clip-name">cap_03</span></div>
+                      <div class="pr__clip pr__clip--v3" style="left:86%;width:9.3%;"><span class="pr__clip-name">cap_04</span></div>
+                    </div>
+
+                    <!-- V2: Chapter 2 — Credibility (33.3 – 57.1%) -->
+                    <div class="pr__lane" data-seek-lane>
+                      <div class="pr__clip pr__clip--v2 pr__clip--fx" style="left:33.3%;width:11.6%;"><span class="pr__clip-name">cred_01</span></div>
+                      <div class="pr__clip pr__clip--v2" style="left:45.2%;width:11.6%;"><span class="pr__clip-name">cred_02</span></div>
+                    </div>
+
+                    <!-- V1: Chapter 1 — Aspirational (0 – 33.3%) four cuts -->
+                    <div class="pr__lane" data-seek-lane>
+                      <div class="pr__clip pr__clip--v1" style="left:0.5%;width:7.6%;"><span class="pr__clip-name">asp_01</span></div>
+                      <div class="pr__clip pr__clip--v1" style="left:8.4%;width:7.8%;"><span class="pr__clip-name">asp_02</span></div>
+                      <div class="pr__clip pr__clip--v1" style="left:16.5%;width:7.8%;"><span class="pr__clip-name">asp_03</span></div>
+                      <div class="pr__clip pr__clip--v1" style="left:24.6%;width:7.8%;"><span class="pr__clip-name">asp_04</span></div>
+                    </div>
+
+                    <!-- A1: Audio — full span -->
+                    <div class="pr__lane" data-seek-lane>
+                      <div class="pr__clip pr__clip--audio" style="left:0.5%;width:94.5%;"><span class="pr__clip-name">audio_main</span></div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /pr -->
+
           <!-- ── Chapter breakdown ───────────────────────────────────── -->
           <div class="vp-chapters reveal reveal-d3" id="vpChapterCards">
 
@@ -5080,6 +5389,133 @@
     img.loading  = 'lazy';
     img.decoding = 'async';
   });
+
+  /* ── Premiere timeline panel ─────────────────────────────────────── */
+  (function () {
+    const video    = document.querySelector('#heroVideoPlayer .vp__video');
+    const prPh     = document.getElementById('prPh');
+    const prRuler  = document.getElementById('prRuler');
+    const prTlBody = document.getElementById('prTlBody');
+    const tcEl     = document.getElementById('prTimecode');
+    const playBtn  = document.getElementById('prPlay');
+    if (!video || !prPh) return;
+
+    const DURATION = 21;
+
+    /* Timecode formatter: HH:MM:SS:FF at 24fps */
+    function toTC(secs) {
+      const f = Math.round((secs % 1) * 24) % 24;
+      const s = Math.floor(secs) % 60;
+      const m = Math.floor(secs / 60) % 60;
+      const h = Math.floor(secs / 3600);
+      return [h,m,s].map(v => String(v).padStart(2,'0')).join(':')
+           + ':' + String(f).padStart(2,'0');
+    }
+
+    /* Sync playhead position + timecode */
+    function syncPh() {
+      const dur = video.duration || DURATION;
+      const pct = (video.currentTime / dur) * 100;
+      prPh.style.left = pct + '%';
+      prRuler.setAttribute('aria-valuenow', Math.round(pct));
+      tcEl.textContent = toTC(video.currentTime);
+    }
+
+    /* Sync play/pause button icons */
+    function syncBtn() {
+      const playing = !video.paused;
+      const iconPlay  = playBtn.querySelector('.pr-icon-play');
+      const iconPause = playBtn.querySelector('.pr-icon-pause');
+      if (iconPlay)  iconPlay.style.display  = playing ? 'none' : '';
+      if (iconPause) iconPause.style.display = playing ? '' : 'none';
+      playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    }
+
+    video.addEventListener('timeupdate',   syncPh);
+    video.addEventListener('play',         () => { syncPh(); syncBtn(); });
+    video.addEventListener('pause',        () => { syncPh(); syncBtn(); });
+    video.addEventListener('ended',        syncBtn);
+
+    /* Build ruler tick marks */
+    function buildRuler() {
+      prRuler.innerHTML = '';
+      const dur = video.duration || DURATION;
+      for (let t = 0; t <= Math.ceil(dur) + 0.1; t += 0.5) {
+        if (t > dur + 0.1) break;
+        const pct     = (t / dur) * 100;
+        const isMajor = (Math.round(t * 10) % 50 === 0);  /* every 5s */
+        const isMed   = Number.isInteger(Math.round(t * 2) / 2) && t % 1 === 0 && !isMajor; /* every 1s */
+        const tick    = document.createElement('div');
+        tick.className = 'pr__rtick' +
+          (isMajor ? ' pr__rtick--major' : isMed ? ' pr__rtick--med' : ' pr__rtick--minor');
+        tick.style.left = pct + '%';
+        prRuler.appendChild(tick);
+        if (isMajor) {
+          const lbl = document.createElement('span');
+          lbl.className    = 'pr__rlabel';
+          lbl.style.left   = pct + '%';
+          lbl.textContent  = Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2,'0');
+          prRuler.appendChild(lbl);
+        }
+      }
+    }
+    video.addEventListener('loadedmetadata', buildRuler);
+    buildRuler();
+
+    /* Seek helper — maps clientX to video time */
+    function seekFromX(clientX) {
+      const rect = prTlBody.getBoundingClientRect();
+      const pct  = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      video.currentTime = pct * (video.duration || DURATION);
+    }
+
+    /* Ruler and lane click/drag seeking */
+    let dragging = false;
+    function startDrag(e) { dragging = true; seekFromX(e.clientX); }
+
+    prRuler.addEventListener('mousedown', startDrag);
+    document.querySelectorAll('[data-seek-lane]').forEach(lane => {
+      lane.addEventListener('mousedown', startDrag);
+    });
+
+    /* Playhead drag */
+    prPh.style.pointerEvents = 'all';
+    prPh.addEventListener('mousedown', e => { dragging = true; e.preventDefault(); });
+
+    document.addEventListener('mousemove', e => { if (dragging) seekFromX(e.clientX); });
+    document.addEventListener('mouseup',   () => { dragging = false; });
+
+    /* Clip click → jump to clip start time */
+    document.querySelectorAll('.pr__clip').forEach(clip => {
+      clip.addEventListener('click', e => {
+        e.stopPropagation();
+        const leftPct = parseFloat(clip.style.left) / 100;
+        video.currentTime = leftPct * (video.duration || DURATION);
+        video.play().catch(() => {});
+      });
+    });
+
+    /* Keyboard scrub on ruler */
+    prRuler.addEventListener('keydown', e => {
+      const step = (video.duration || DURATION) / 100;
+      if (e.key === 'ArrowRight') video.currentTime = Math.min(video.duration || DURATION, video.currentTime + step);
+      if (e.key === 'ArrowLeft')  video.currentTime = Math.max(0, video.currentTime - step);
+    });
+
+    /* Transport buttons */
+    const prGoStart = document.getElementById('prGoStart');
+    const prBack1f  = document.getElementById('prBack1f');
+    const prFwd1f   = document.getElementById('prFwd1f');
+    const prGoEnd   = document.getElementById('prGoEnd');
+
+    if (prGoStart) prGoStart.addEventListener('click', () => { video.currentTime = 0; video.pause(); });
+    if (prBack1f)  prBack1f.addEventListener('click',  () => { video.currentTime = Math.max(0, video.currentTime - 1/24); video.pause(); });
+    if (playBtn)   playBtn.addEventListener('click',   () => { video.paused ? video.play().catch(()=>{}) : video.pause(); });
+    if (prFwd1f)   prFwd1f.addEventListener('click',   () => { video.currentTime = Math.min(video.duration||DURATION, video.currentTime + 1/24); video.pause(); });
+    if (prGoEnd)   prGoEnd.addEventListener('click',   () => { video.currentTime = video.duration||DURATION; video.pause(); });
+
+    syncPh(); syncBtn();
+  })();
 
   /* ── Custom video player — Hero Video Wireframe section ─────────── */
   (function () {

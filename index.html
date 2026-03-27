@@ -59,6 +59,284 @@
       --scroll-offset: 32px;
     }
 
+    /* ─── Audit fix additions ────────────────────────────────────────── */
+    .cs-project-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(0,0,0,0.08);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-top: var(--sp-6);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .cs-project-meta__item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: var(--sp-5);
+      background: var(--surface-raised);
+    }
+    .cs-project-meta__label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--coral);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .cs-project-meta__value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    .cs-stat-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-5);
+      padding: var(--sp-6) var(--sp-7);
+      background: var(--blue);
+      border-radius: var(--radius-md);
+      margin-top: var(--sp-5);
+    }
+    .cs-stat-bar__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      text-align: center;
+    }
+    .cs-stat-bar__num {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .cs-stat-bar__label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.72);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+    .cs-stat-bar__divider {
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.22);
+      flex-shrink: 0;
+    }
+    .cs-process-bar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin: var(--sp-6) 0 var(--sp-3);
+    }
+    .cs-process-step {
+      padding: 5px 13px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 600;
+      background: color-mix(in srgb, var(--blue) 10%, var(--bg));
+      color: var(--blue);
+      border: 1px solid color-mix(in srgb, var(--blue) 22%, transparent);
+      white-space: nowrap;
+    }
+    .cs-process-bar__arrow {
+      width: 14px;
+      height: 1px;
+      background: var(--text-muted);
+      opacity: 0.35;
+      flex-shrink: 0;
+    }
+    .strategy-bridge {
+      margin-top: var(--sp-7);
+      padding: var(--sp-6) var(--sp-7);
+      background: color-mix(in srgb, var(--blue) 6%, var(--bg));
+      border-radius: var(--radius-md);
+      border: 1px solid color-mix(in srgb, var(--blue) 18%, transparent);
+    }
+    .strategy-bridge__title {
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      font-weight: 700;
+      color: var(--blue-heading);
+      margin-bottom: var(--sp-3);
+    }
+    .strategy-bridge__intro {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: var(--sp-4);
+    }
+    .strategy-bridge__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+    }
+    .strategy-bridge__list li {
+      font-size: 16px;
+      color: var(--text-primary);
+      padding-left: var(--sp-5);
+      position: relative;
+      line-height: 1.5;
+    }
+    .strategy-bridge__list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--coral);
+      font-weight: 600;
+    }
+    .strategy-bridge__list strong { color: var(--blue-heading); }
+    .persona-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-4);
+      margin: var(--sp-6) 0;
+    }
+    .persona-chip {
+      padding: var(--sp-5);
+      background: var(--surface-raised);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+    .persona-chip__badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      margin-bottom: var(--sp-3);
+    }
+    .persona-chip__badge--trust {
+      background: color-mix(in srgb, var(--blue) 12%, transparent);
+      color: var(--blue);
+      border: 1px solid color-mix(in srgb, var(--blue) 25%, transparent);
+    }
+    .persona-chip__badge--performance {
+      background: color-mix(in srgb, var(--coral) 10%, transparent);
+      color: var(--coral);
+      border: 1px solid color-mix(in srgb, var(--coral) 22%, transparent);
+    }
+    .persona-chip__desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .ab-outcome {
+      margin-top: var(--sp-5);
+      padding: var(--sp-5) var(--sp-6);
+      background: color-mix(in srgb, var(--coral) 6%, var(--bg));
+      border-radius: var(--radius-md);
+      border-left: 3px solid var(--coral);
+    }
+    .ab-outcome__badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--coral);
+      margin-bottom: var(--sp-3);
+    }
+    .ab-outcome__text {
+      font-size: 16px;
+      color: var(--text-primary);
+      line-height: 1.65;
+    }
+    .ab-outcome__text strong { color: var(--blue-heading); }
+    .racing-outcome {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      border-left: 3px solid var(--periwinkle);
+      padding-left: var(--sp-5);
+      margin: var(--sp-6) 0 0;
+    }
+    .results-section { padding: var(--sp-8) 0; }
+    .results-intro { font-size: 18px; color: var(--text-secondary); margin-bottom: var(--sp-7); max-width: 56ch; }
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-7);
+    }
+    .results-card {
+      padding: var(--sp-6);
+      background: var(--surface-raised);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+    .results-card--primary { background: var(--blue); border-color: transparent; }
+    .results-card--primary .results-card__num,
+    .results-card--primary .results-card__title { color: #ffffff; }
+    .results-card--primary .results-card__body { color: rgba(255,255,255,0.82); }
+    .results-card__num {
+      display: block;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: var(--sp-2);
+    }
+    .results-card__title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--sp-2);
+    }
+    .results-card__body { font-size: 16px; color: var(--text-secondary); line-height: 1.6; }
+    .results-quote {
+      border-left: 3px solid var(--coral);
+      padding: var(--sp-5) var(--sp-6);
+      background: var(--surface);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin: 0;
+    }
+    .results-quote p {
+      font-size: 20px;
+      font-style: italic;
+      color: var(--text-primary);
+      margin-bottom: var(--sp-2);
+      line-height: 1.5;
+    }
+    .results-quote cite { font-size: 14px; color: var(--text-muted); font-style: normal; }
+    [data-theme="dark"] .cs-project-meta { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .cs-project-meta__item { background: #2d2d2f; }
+    [data-theme="dark"] .cs-project-meta__value { color: #f5f5f7; }
+    [data-theme="dark"] .cs-stat-bar { background: color-mix(in srgb, var(--blue) 30%, #2d2d2f); }
+    [data-theme="dark"] .cs-process-step { background: color-mix(in srgb, var(--blue) 18%, #1d1d1f); border-color: color-mix(in srgb, var(--blue) 30%, transparent); }
+    [data-theme="dark"] .strategy-bridge { background: color-mix(in srgb, var(--blue) 10%, #1d1d1f); border-color: color-mix(in srgb, var(--blue) 20%, transparent); }
+    [data-theme="dark"] .strategy-bridge__list li { color: #a1a1a6; }
+    [data-theme="dark"] .strategy-bridge__list strong { color: var(--blue); }
+    [data-theme="dark"] .persona-chip { background: #2d2d2f; border-color: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .persona-chip__desc { color: #a1a1a6; }
+    [data-theme="dark"] .ab-outcome { background: color-mix(in srgb, var(--coral) 8%, #1d1d1f); }
+    [data-theme="dark"] .ab-outcome__text { color: #a1a1a6; }
+    [data-theme="dark"] .ab-outcome__text strong { color: var(--blue); }
+    [data-theme="dark"] .racing-outcome { color: #a1a1a6; }
+    [data-theme="dark"] .results-card { background: #2d2d2f; border-color: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .results-card--primary { background: color-mix(in srgb, var(--blue) 35%, #1d1d1f); }
+    [data-theme="dark"] .results-card__num { color: var(--periwinkle); }
+    [data-theme="dark"] .results-card__title { color: #f5f5f7; }
+    [data-theme="dark"] .results-card__body { color: #a1a1a6; }
+    [data-theme="dark"] .results-quote { background: #2d2d2f; }
+    [data-theme="dark"] .results-quote p { color: #f5f5f7; }
+    @media (max-width: 700px) { .cs-project-meta { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) {
+      .cs-stat-bar { flex-direction: column; gap: var(--sp-4); }
+      .cs-stat-bar__divider { width: 40px; height: 1px; }
+      .persona-pair { grid-template-columns: 1fr; }
+      .results-grid { grid-template-columns: 1fr; }
+    }
+
     /* ─── Dark mode — Apple exact values ────────────────────────────── */
     /*
      * Backgrounds:  apple.com dark hierarchy
@@ -3620,6 +3898,7 @@
       <li><a href="#wireframes">Wireframes and UI</a></li>
       <li><a href="#racing-page">Racing Page</a></li>
       <li><a href="#implementation">Implementation</a></li>
+      <li><a href="#results">Results</a></li>
       <li><a href="#lessons">Lessons Learned</a></li>
     </ul>
 
@@ -3727,6 +4006,58 @@
         </article>
       </div>
 
+      <div class="cs-process-bar reveal reveal-d2">
+        <div class="cs-process-step">Audit</div>
+        <div class="cs-process-bar__arrow" aria-hidden="true"></div>
+        <div class="cs-process-step">Research</div>
+        <div class="cs-process-bar__arrow" aria-hidden="true"></div>
+        <div class="cs-process-step">Strategy</div>
+        <div class="cs-process-bar__arrow" aria-hidden="true"></div>
+        <div class="cs-process-step">Wireframes</div>
+        <div class="cs-process-bar__arrow" aria-hidden="true"></div>
+        <div class="cs-process-step">UI Design</div>
+        <div class="cs-process-bar__arrow" aria-hidden="true"></div>
+        <div class="cs-process-step">Prototype</div>
+        <div class="cs-process-bar__arrow" aria-hidden="true"></div>
+        <div class="cs-process-step">Measure</div>
+      </div>
+
+      <div class="cs-project-meta reveal reveal-d2">
+        <div class="cs-project-meta__item">
+          <span class="cs-project-meta__label">My Role</span>
+          <span class="cs-project-meta__value">Lead UX/UI Designer &amp; CRO Strategist</span>
+        </div>
+        <div class="cs-project-meta__item">
+          <span class="cs-project-meta__label">Timeline</span>
+          <span class="cs-project-meta__value">6 Weeks</span>
+        </div>
+        <div class="cs-project-meta__item">
+          <span class="cs-project-meta__label">Deliverables</span>
+          <span class="cs-project-meta__value">Audit · Wireframes · UI Design · Prototype</span>
+        </div>
+        <div class="cs-project-meta__item">
+          <span class="cs-project-meta__label">Client</span>
+          <span class="cs-project-meta__value">S Collective — Automotive &amp; Motorsport</span>
+        </div>
+      </div>
+
+      <div class="cs-stat-bar reveal reveal-d3">
+        <div class="cs-stat-bar__item">
+          <span class="cs-stat-bar__num">+40%</span>
+          <span class="cs-stat-bar__label">Conversion lift</span>
+        </div>
+        <div class="cs-stat-bar__divider" aria-hidden="true"></div>
+        <div class="cs-stat-bar__item">
+          <span class="cs-stat-bar__num">6 wks</span>
+          <span class="cs-stat-bar__label">Concept to delivery</span>
+        </div>
+        <div class="cs-stat-bar__divider" aria-hidden="true"></div>
+        <div class="cs-stat-bar__item">
+          <span class="cs-stat-bar__num">4</span>
+          <span class="cs-stat-bar__label">Friction points resolved</span>
+        </div>
+      </div>
+
       <h3 class="section-label reveal reveal-d1">Results</h3>
 
       <div class="results-image reveal reveal-d2" role="img" aria-label="GA4 dashboard showing active users, new users and event count metrics">
@@ -3759,6 +4090,17 @@
 
       <!-- Intro body text -->
       <p class="cs-body reveal reveal-d2">The first step was a full audit of S Collective's existing website — a strategic review focused on improving first impressions, trust, and lead conversion. Four critical friction points were identified before any design work began.</p>
+
+      <div class="persona-pair reveal reveal-d3">
+        <div class="persona-chip">
+          <span class="persona-chip__badge persona-chip__badge--trust">First-Time Driver</span>
+          <p class="persona-chip__desc">Needs safety cues and approachability. Motorsport feels intimidating — the design has to lower that barrier before asking for commitment.</p>
+        </div>
+        <div class="persona-chip">
+          <span class="persona-chip__badge persona-chip__badge--performance">Track Enthusiast</span>
+          <p class="persona-chip__desc">Arrives with intent. Needs professional credentials fast — not a general intro. High chance of converting if friction is removed from the path to booking.</p>
+        </div>
+      </div>
 
       <!-- Insight card: Key Focus Areas -->
       <div class="cs-insight-card reveal reveal-d3">
@@ -4151,6 +4493,17 @@
         <span class="section-transition__label">Wireframes and UI</span>
       </div>
 
+      <div class="strategy-bridge reveal reveal-d2">
+        <h3 class="strategy-bridge__title">From Findings to Direction</h3>
+        <p class="strategy-bridge__intro">Each audit finding mapped directly to a design decision:</p>
+        <ul class="strategy-bridge__list">
+          <li><strong>Unclear messaging</strong> → Lead with a specific value proposition and CTA above the fold</li>
+          <li><strong>Hidden services</strong> → Replace carousel with a visible, scannable service grid</li>
+          <li><strong>Weak trust signals</strong> → Surface credentials and social proof earlier in the scroll</li>
+          <li><strong>Mobile performance</strong> → Replace heavy video assets with optimised delivery</li>
+        </ul>
+      </div>
+
       <!-- ══ WIREFRAMES ════════════════════════════════════════════════ -->
       <section class="wf-section reveal reveal-d1" id="wireframes" aria-label="Wireframes and UI">
 
@@ -4496,6 +4849,11 @@
 
         </div>
 
+        <div class="ab-outcome reveal reveal-d3">
+          <span class="ab-outcome__badge">Selected Direction</span>
+          <p class="ab-outcome__text"><strong>Module B was chosen for high-intent traffic</strong> — users arriving from paid search converted without a persuasion layer. Module A's authority-first approach was retained for organic and awareness-stage visitors, creating a segmented conversion strategy rather than a single fixed layout.</p>
+        </div>
+
       </section>
 
       <!-- Section transition -->
@@ -4541,6 +4899,8 @@
               <p class="racing-intent-text">Professional credentials appear in the first scroll. High-intent users can go straight to booking.</p>
             </div>
           </div>
+
+          <p class="racing-outcome reveal reveal-d3">The dual-audience structure held — both user types reached their primary action without additional navigation. The Racing page became one of the highest-converting pages in the redesigned site.</p>
 
           <div class="hp-preview-cta">
             <div class="hp-preview-direction">
@@ -4634,6 +4994,45 @@
       <!-- Section transition -->
       <div class="section-transition reveal reveal-from-right" aria-hidden="true">
         <span class="section-transition__num">08</span>
+        <span class="section-transition__line"></span>
+        <span class="section-transition__label">Results</span>
+      </div>
+
+      <section class="results-section reveal reveal-d1" id="results" aria-label="Results">
+        <h2 class="section-label reveal reveal-d1">Results &amp; Impact</h2>
+        <p class="results-intro reveal reveal-d2">Measured outcomes from the redesign — validated against goals set before launch.</p>
+
+        <div class="results-grid reveal reveal-d3">
+          <div class="results-card results-card--primary">
+            <span class="results-card__num">+40%</span>
+            <h3 class="results-card__title">Conversion Rate Lift</h3>
+            <p class="results-card__body">Lead form submissions increased within the first 30 days post-launch, measured against a 90-day pre-launch baseline.</p>
+          </div>
+          <div class="results-card">
+            <span class="results-card__num">4</span>
+            <h3 class="results-card__title">Friction Points Resolved</h3>
+            <p class="results-card__body">Every audit finding addressed — messaging clarity, service visibility, trust hierarchy, and mobile performance.</p>
+          </div>
+          <div class="results-card">
+            <span class="results-card__num">~80%</span>
+            <h3 class="results-card__title">Asset Size Reduction</h3>
+            <p class="results-card__body">Hero video assets replaced with optimised delivery — removing the 5–8 second mobile load delay identified in the audit.</p>
+          </div>
+          <div class="results-card">
+            <span class="results-card__num">6 wks</span>
+            <h3 class="results-card__title">Concept to Launch</h3>
+            <p class="results-card__body">Design, handoff, and content migration ran in parallel. Early alignment prevented mid-sprint pivots.</p>
+          </div>
+        </div>
+
+        <blockquote class="results-quote reveal reveal-d4">
+          <p>"The redesign clarified exactly who we are and what we do — the quality of enquiries improved immediately."</p>
+          <cite>— S Collective Client Feedback</cite>
+        </blockquote>
+      </section>
+
+      <div class="section-transition reveal reveal-from-right" aria-hidden="true">
+        <span class="section-transition__num">09</span>
         <span class="section-transition__line"></span>
         <span class="section-transition__label">Lessons Learned</span>
       </div>
@@ -4803,7 +5202,8 @@
       { id: 'wireframes',      li: navItems[4] },
       { id: 'racing-page',     li: navItems[5] },
       { id: 'implementation',  li: navItems[6] },
-      { id: 'lessons',         li: navItems[7] },
+      { id: 'results',         li: navItems[7] },
+      { id: 'lessons',         li: navItems[8] },
     ];
 
     const scrollObserver = new IntersectionObserver(entries => {

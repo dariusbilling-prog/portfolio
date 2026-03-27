@@ -652,10 +652,30 @@
       /* Smooth scroll + offset for sticky nav */
       scroll-behavior: smooth;
       scroll-padding-top: var(--scroll-offset);
-      /* Hide native scrollbar — custom progress bar replaces it */
-      scrollbar-width: none; /* Firefox */
+      /* Native scrollbar — styled to match design */
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: color-mix(in srgb, var(--periwinkle) 65%, transparent) transparent; /* Firefox thumb / track */
     }
-    html::-webkit-scrollbar { display: none; } /* Chrome / Safari */
+    /* Chrome / Safari / Edge — styled scrollbar */
+    html::-webkit-scrollbar { width: 10px; }
+    html::-webkit-scrollbar-track { background: transparent; }
+    html::-webkit-scrollbar-thumb {
+      background: color-mix(in srgb, var(--periwinkle) 65%, transparent);
+      border-radius: 5px;
+      min-height: 40px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    html::-webkit-scrollbar-thumb:hover {
+      background: var(--periwinkle);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    html::-webkit-scrollbar-thumb:active {
+      background: color-mix(in srgb, var(--periwinkle) 85%, white);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -3780,36 +3800,24 @@
       margin: 0;
     }
 
-    /* ── Scroll Progress Bar ─────────────────────────────────────────── */
+    /* ── Scroll Progress Underlay ────────────────────────────────────── */
+    /* Passive read-progress fill — sits behind native scrollbar thumb  */
     .scroll-progress-track {
       position: fixed;
       top: var(--nav-h);
       right: 0;
       width: 10px;
       height: calc(100vh - var(--nav-h));
-      background: color-mix(in srgb, var(--periwinkle) 12%, var(--bg));
-      z-index: 200;
-      cursor: ns-resize;
-      transition: background 150ms ease;
-      user-select: none;
+      background: color-mix(in srgb, var(--periwinkle) 10%, var(--bg));
+      z-index: 1;
+      pointer-events: none;
     }
-    .scroll-progress-track:hover {
-      background: color-mix(in srgb, var(--periwinkle) 26%, var(--bg));
-    }
-    .scroll-progress-track.is-dragging {
-      background: color-mix(in srgb, var(--periwinkle) 38%, var(--bg));
-    }
-
     .scroll-progress-fill {
       width: 100%;
       height: 0%;
-      background: var(--periwinkle);
-      border-radius: 0 0 4px 4px;
+      background: color-mix(in srgb, var(--periwinkle) 30%, var(--bg));
       transition: height 80ms linear;
       pointer-events: none;
-    }
-    .scroll-progress-track.is-dragging .scroll-progress-fill {
-      transition: none;
     }
 
     /* ═══════════════════════════════════════════════════════════════════
@@ -5077,7 +5085,7 @@
 </div>
 
 <!-- Scroll progress bar -->
-<div class="scroll-progress-track" id="scrollTrack" role="scrollbar" aria-controls="main-content" aria-label="Page scroll position — drag to scroll" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+<div class="scroll-progress-track" aria-hidden="true">
   <div class="scroll-progress-fill" id="scrollProgress"></div>
 </div>
 
@@ -5126,65 +5134,16 @@
       });
     }
 
-    /* ── Scroll progress bar ─────────────────────────────────────── */
+    /* ── Scroll progress underlay ────────────────────────────────── */
     const progressFill = document.getElementById('scrollProgress');
-    const scrollTrack  = document.getElementById('scrollTrack');
     if (progressFill) {
       const updateProgress = () => {
         const scrollTop = window.scrollY;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        progressFill.style.height = pct + '%';
-        if (scrollTrack) scrollTrack.setAttribute('aria-valuenow', Math.round(pct));
+        progressFill.style.height = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
       };
       window.addEventListener('scroll', updateProgress, { passive: true });
       updateProgress();
-    }
-
-    /* ── Scroll-bar drag-to-scroll ───────────────────────────────── */
-    if (scrollTrack) {
-      let dragging = false;
-
-      function scrollToClientY(clientY) {
-        const rect     = scrollTrack.getBoundingClientRect();
-        const pct      = Math.max(0, Math.min(1, (clientY - rect.top) / rect.height));
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        window.scrollTo({ top: pct * maxScroll });
-      }
-
-      /* Mouse */
-      scrollTrack.addEventListener('mousedown', e => {
-        dragging = true;
-        scrollTrack.classList.add('is-dragging');
-        scrollToClientY(e.clientY);
-        e.preventDefault();
-      });
-      document.addEventListener('mousemove', e => {
-        if (!dragging) return;
-        scrollToClientY(e.clientY);
-      });
-      document.addEventListener('mouseup', () => {
-        if (!dragging) return;
-        dragging = false;
-        scrollTrack.classList.remove('is-dragging');
-      });
-
-      /* Touch */
-      scrollTrack.addEventListener('touchstart', e => {
-        dragging = true;
-        scrollTrack.classList.add('is-dragging');
-        scrollToClientY(e.touches[0].clientY);
-        e.preventDefault();
-      }, { passive: false });
-      document.addEventListener('touchmove', e => {
-        if (!dragging) return;
-        scrollToClientY(e.touches[0].clientY);
-        e.preventDefault();
-      }, { passive: false });
-      document.addEventListener('touchend', () => {
-        dragging = false;
-        scrollTrack.classList.remove('is-dragging');
-      });
     }
 
     /* ── Scroll spy ───────────────────────────────────────────────── */

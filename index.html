@@ -1772,19 +1772,28 @@
     .pr__ph {
       position: absolute; top: 0; bottom: 0;
       left: 0%; z-index: 10;
+      width: 20px;
       transform: translateX(-50%); cursor: col-resize;
       pointer-events: none;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    /* Invisible wider hitbox — keeps visual thin but grab area 20px */
+    .pr__ph::before {
+      content: ''; position: absolute;
+      inset: 0; width: 20px;
+      left: 50%; transform: translateX(-50%);
+      cursor: col-resize;
     }
     .pr__ph-head {
       width: 0; height: 0;
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
       border-top: 8px solid var(--coral);
-      margin: 0 auto;
+      flex-shrink: 0;
     }
     .pr__ph-line {
-      width: 1px; height: 100%;
-      background: var(--coral); opacity: 0.85; margin: 0 auto;
+      width: 1px; flex: 1;
+      background: var(--coral); opacity: 0.85;
     }
     .pr__tracks {
       position: absolute; top: 22px; left: 0; right: 0; bottom: 0;

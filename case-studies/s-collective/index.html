@@ -1,4 +1,4 @@
-﻿<!-- No builders were harmed in the making of this layout. -->
+<!-- No builders were harmed in the making of this layout. -->
 <!--
   Hi Nate and Tim — Follow the white rabbit. Knock, Knock.
 
@@ -30,7 +30,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Pol%C5%82tawski+Nowy:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&family=Work+Sans:wght@400&display=swap" rel="stylesheet" />
 
   <style>
-    /* ─── Design Tokens ─────────────────────────────────────────────── */
+    /* --- Design Tokens ----------------------------------------------- */
     :root {
       --bg:          #f2ede4;
       --blue:        #3d5f8f;   /* 5.15:1 on #f2ede4 — WCAG AA ✓ */
@@ -78,7 +78,7 @@
       --scroll-offset: 32px;
     }
 
-    /* ─── Audit fix additions ────────────────────────────────────────── */
+    /* --- Audit fix additions ------------------------------------------ */
     .cs-project-meta {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -356,7 +356,7 @@
       .results-grid { grid-template-columns: 1fr; }
     }
 
-    /* ─── Dark mode — Apple exact values ────────────────────────────── */
+    /* --- Dark mode — Apple exact values ------------------------------ */
     /*
      * Backgrounds:  apple.com dark hierarchy
      *   #1d1d1f  primary page bg
@@ -385,13 +385,13 @@
       --periwinkle:      #90d4ff;
     }
 
-    /* ── Base ──────────────────────────────────────────────────────── */
+    /* -- Base -------------------------------------------------------- */
     [data-theme="dark"] body {
       background-color: var(--bg);
       color: var(--text-primary);
     }
 
-    /* ── Navigation ────────────────────────────────────────────────── */
+    /* -- Navigation -------------------------------------------------- */
     [data-theme="dark"] .global-nav {
       background: #1d1d1f;
       border-bottom-color: rgba(255,255,255,0.1);
@@ -403,12 +403,12 @@
     [data-theme="dark"] .dark-toggle__label      { color: #a1a1a6; }
     [data-theme="dark"] .dark-toggle[aria-checked="true"] .dark-toggle__track { background: #2997ff; }
 
-    /* ── Sidebar + progress ────────────────────────────────────────── */
+    /* -- Sidebar + progress ------------------------------------------ */
     [data-theme="dark"] .sidebar                 { background: #1d1d1f; }
     [data-theme="dark"] .scroll-progress-track   { background: rgba(255,255,255,0.07); }
     [data-theme="dark"] .scroll-progress-fill    { background: #2997ff; }
 
-    /* ── Breadcrumb + section nav ──────────────────────────────────── */
+    /* -- Breadcrumb + section nav ------------------------------------ */
     [data-theme="dark"] .breadcrumb a            { color: #86868b; }
     [data-theme="dark"] .breadcrumb a:hover      { color: #f5f5f7; }
     [data-theme="dark"] .breadcrumb .current     { color: #f5f5f7; }
@@ -418,29 +418,29 @@
     [data-theme="dark"] .section-nav li.active a { color: #f5f5f7; }
     [data-theme="dark"] .section-nav li.active a::after { background: #2997ff; }
 
-    /* ── Tags ──────────────────────────────────────────────────────── */
+    /* -- Tags -------------------------------------------------------- */
     [data-theme="dark"] .tag {
       background: #2d2d2f;
       border-color: rgba(255,255,255,0.1);
       color: #a1a1a6;
     }
 
-    /* ── Section labels ────────────────────────────────────────────── */
+    /* -- Section labels ---------------------------------------------- */
     [data-theme="dark"] .section-label     { color: #ff6b50; }
     [data-theme="dark"] .fui-insight-label { color: #ff6b50; }
     [data-theme="dark"] .cs-data-label     { color: #a1a1a6; }
 
-    /* ── Section transition — white in dark mode ──────────────────── */
+    /* -- Section transition — white in dark mode -------------------- */
     [data-theme="dark"] .section-transition__num   { color: rgba(255,255,255,0.82); }
     [data-theme="dark"] .section-transition__line  { background: rgba(255,255,255,0.42); }
     [data-theme="dark"] .section-transition__label { color: rgba(255,255,255,0.82); }
 
-    /* ── Body + heading text ───────────────────────────────────────── */
+    /* -- Body + heading text ----------------------------------------- */
     [data-theme="dark"] .cs-body           { color: #a1a1a6; }
     [data-theme="dark"] .cs-data-value     { color: #f5f5f7; }
     [data-theme="dark"] .fui-insight-text  { color: #f5f5f7; }
 
-    /* ── Accordions ────────────────────────────────────────────────── */
+    /* -- Accordions -------------------------------------------------- */
     [data-theme="dark"] .accordion-item                          { border-color: rgba(255,255,255,0.1); }
     [data-theme="dark"] .accordion-trigger                       { background: #1d1d1f; }
     [data-theme="dark"] .accordion-trigger:hover                 { background: #2d2d2f; }
@@ -451,7 +451,7 @@
     [data-theme="dark"] .finding-heading                         { color: #f5f5f7; }
     [data-theme="dark"] .accordion-impact                        { color: #a1a1a6; }
 
-    /* ── Cards: strategy, overview, persona, principle, wf ─────────── */
+    /* -- Cards: strategy, overview, persona, principle, wf ----------- */
     [data-theme="dark"] .fui-strategy-card  { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
     [data-theme="dark"] .fui-strategy-text  { color: #a1a1a6; }
     [data-theme="dark"] .fui-strategy-label { color: #30d158; }
@@ -486,7 +486,7 @@
       color: #f5f5f7;
     }
 
-    /* ── Impact + callout blocks ───────────────────────────────────── */
+    /* -- Impact + callout blocks ------------------------------------- */
     [data-theme="dark"] .wf-impact,
     [data-theme="dark"] .impact-block {
       background: #2d2d2f;
@@ -498,14 +498,14 @@
       border-color: rgba(41,151,255,0.2);
     }
 
-    /* ── Insight cards (green variant) ────────────────────────────── */
+    /* -- Insight cards (green variant) ------------------------------ */
     [data-theme="dark"] .cs-insight-card--green {
       background: rgba(48,209,88,0.07);
       border-color: rgba(48,209,88,0.2);
     }
     [data-theme="dark"] .cs-insight-card--green .cs-insight-card__title { color: #30d158; }
 
-    /* ── Wireframe before/after blocks ────────────────────────────── */
+    /* -- Wireframe before/after blocks ------------------------------ */
     [data-theme="dark"] .f5-strategic {
       background: rgba(48,209,88,0.07);
       border-color: rgba(48,209,88,0.2);
@@ -515,29 +515,29 @@
     [data-theme="dark"] .wf-block__label--after::before { background: #30d158; }
     [data-theme="dark"] .wf-block__caption             { color: #a1a1a6; }
 
-    /* ── Audit CTA ─────────────────────────────────────────────────── */
+    /* -- Audit CTA --------------------------------------------------- */
     [data-theme="dark"] .audit-cta-split { background: transparent; border-color: transparent; box-shadow: none; }
 
-    /* ── Metrics ───────────────────────────────────────────────────── */
+    /* -- Metrics ----------------------------------------------------- */
     [data-theme="dark"] .cs-data-value   { color: #f5f5f7; }
     [data-theme="dark"] .metric-before   { color: #f5f5f7; }
     [data-theme="dark"] .metric-target   { color: #30d158; }
     [data-theme="dark"] .metric-card     { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
 
-    /* ── Lists ─────────────────────────────────────────────────────── */
+    /* -- Lists ------------------------------------------------------- */
     [data-theme="dark"] .obs-list li             { color: #a1a1a6; }
     [data-theme="dark"] .fui-improvements-list li{ color: #a1a1a6; }
     [data-theme="dark"] .fui-improvements-title  { color: #f5f5f7; }
     [data-theme="dark"] .wf-improvements__title  { color: #f5f5f7; }
     [data-theme="dark"] .impl-list li            { color: #a1a1a6; }
 
-    /* ── Stats ─────────────────────────────────────────────────────── */
+    /* -- Stats ------------------------------------------------------- */
     [data-theme="dark"] .stat-value        { color: #f5f5f7; }
     [data-theme="dark"] .stat-value.accent { color: #ff6b50; }
     [data-theme="dark"] .stat-label        { color: #86868b; }
     [data-theme="dark"] .stat-note         { color: var(--text-muted); }
 
-    /* ── Implementation tools + lessons ───────────────────────────── */
+    /* -- Implementation tools + lessons ----------------------------- */
     [data-theme="dark"] .impl-tool         { background: #2d2d2f; border-color: rgba(255,255,255,0.1); }
     [data-theme="dark"] .impl-tool__name   { color: #f5f5f7; }
     [data-theme="dark"] .impl-outcome      { background: rgba(41,151,255,0.07); border-color: rgba(41,151,255,0.18); }
@@ -550,7 +550,7 @@
     [data-theme="dark"] .impl-intro,
     [data-theme="dark"] .lessons-intro     { color: #a1a1a6; }
 
-    /* ─── Global Navigation ──────────────────────────────────────────── */
+    /* --- Global Navigation -------------------------------------------- */
     :root { --nav-h: 60px; }
 
     .global-nav {
@@ -650,10 +650,10 @@
     .dark-toggle[aria-checked="true"] .dark-toggle__track { background: #0A84FF; }
     .dark-toggle[aria-checked="true"] .dark-toggle__thumb { transform: translateX(18px); }
 
-    /* ─── Reset ─────────────────────────────────────────────────────── */
+    /* --- Reset ------------------------------------------------------- */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ─── Global heading spacing ─────────────────────────────────────── */
+    /* --- Global heading spacing --------------------------------------- */
     h2, h3 { margin-bottom: clamp(8px, 1vw + 4px, 15px); }
 
     .lessons-section h2:not(.section-label),
@@ -705,7 +705,7 @@
       min-height: 100vh;
     }
 
-    /* ─── Accessibility: focus indicators ───────────────────────────── */
+    /* --- Accessibility: focus indicators ----------------------------- */
     a:focus-visible,
     button:focus-visible,
     [role="button"]:focus-visible,
@@ -717,7 +717,7 @@
       border-radius: 2px;
     }
 
-    /* ─── Accessibility: reduced motion ─────────────────────────────── */
+    /* --- Accessibility: reduced motion ------------------------------- */
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after {
@@ -745,7 +745,7 @@
       min-height: 100vh;
     }
 
-    /* ─── Sidebar — sticky across entire page ────────────────────────── */
+    /* --- Sidebar — sticky across entire page -------------------------- */
     .sidebar {
       position: sticky;
       top: calc(var(--nav-h) + var(--sp-4));
@@ -759,7 +759,7 @@
     }
     .sidebar::-webkit-scrollbar { display: none; }
 
-    /* ─── Breadcrumb ─────────────────────────────────────────────────── */
+    /* --- Breadcrumb --------------------------------------------------- */
     .breadcrumb {
       display: flex;
       align-items: center;
@@ -788,7 +788,7 @@
     }
     .breadcrumb .sep { font-size: var(--text-xs); opacity: 0.75; }
 
-    /* ─── Section nav ────────────────────────────────────────────────── */
+    /* --- Section nav -------------------------------------------------- */
     .section-nav {
       margin-top: var(--sp-5);
       list-style: none;
@@ -827,7 +827,7 @@
     .section-nav li.active a { font-weight: 500; color: var(--text-primary); }
     .section-nav li.active a::after { background: var(--coral); transform: scaleX(1); }
 
-    /* ─── Mobile nav toggle ──────────────────────────────────────────── */
+    /* --- Mobile nav toggle -------------------------------------------- */
     .mobile-nav-toggle {
       display: none;
       align-items: center;
@@ -847,13 +847,13 @@
     .mobile-nav-toggle svg { transition: transform 0.3s ease; }
     .mobile-nav-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
 
-    /* ─── Main content column ────────────────────────────────────────── */
+    /* --- Main content column ------------------------------------------ */
     .content-col {
       min-width: 0; /* prevent grid blowout */
       padding-bottom: var(--sp-9);
     }
 
-    /* ─── Shared: section label (coral dash + uppercase) ─────────────── */
+    /* --- Shared: section label (coral dash + uppercase) --------------- */
     .section-label {
       display: inline-flex;
       align-items: center;
@@ -909,7 +909,7 @@
       font-style: italic;
     }
 
-    /* ─── HERO SECTION ───────────────────────────────────────────────── */
+    /* --- HERO SECTION ------------------------------------------------- */
     .hero-section {
       padding-top: 60px;
     }
@@ -992,7 +992,7 @@
     #lottie-hero { width: 100%; height: 100%; display: block; }
     #lottie-hero svg { width: 100% !important; height: 100% !important; display: block; }
 
-    /* ─── Three-screen showcase ──────────────────────────────────── */
+    /* --- Three-screen showcase ------------------------------------ */
     .screens-showcase {
       position: absolute;
       inset: 0;
@@ -1099,7 +1099,7 @@
       cursor: default;
     }
 
-    /* ─── PROJECT SUMMARY BAR ───────────────────────────────────────── */
+    /* --- PROJECT SUMMARY BAR ----------------------------------------- */
     .project-summary {
       margin: var(--sp-7) 0;
       padding: var(--sp-6);
@@ -1133,7 +1133,7 @@
       margin: 0;
     }
 
-    /* ─── ACCORDION ──────────────────────────────────────────────────── */
+    /* --- ACCORDION ---------------------------------------------------- */
     .accordion-wrap {
       display: flex;
       flex-direction: column;
@@ -1201,7 +1201,7 @@
       /* max-height injected by JS for accurate animation timing */
     }
 
-    /* ─── OVERVIEW & RESULTS SECTION ────────────────────────────────── */
+    /* --- OVERVIEW & RESULTS SECTION ---------------------------------- */
     .overview-section {
       padding-top: var(--sp-7);
     }
@@ -1480,7 +1480,7 @@
       border-color: color-mix(in srgb, var(--periwinkle) 50%, transparent);
     }
 
-    /* ─── RESEARCH SECTION ───────────────────────────────────────────── */
+    /* --- RESEARCH SECTION --------------------------------------------- */
     .research-section { padding-top: var(--sp-9); }
 
     .research-body-text {
@@ -1578,7 +1578,7 @@
       margin-bottom: var(--sp-1);
     }
 
-    /* ─── Global: section heading → body copy spacing ─────────────── */
+    /* --- Global: section heading → body copy spacing --------------- */
     /* Keeps any heading immediately close to the paragraph that follows */
     .finding-heading + p,
     h3 + .wf-intro,
@@ -1658,7 +1658,7 @@
       letter-spacing: 0.02em;
     }
 
-    /* ── Finding split layout — text left / media right ────────── */
+    /* -- Finding split layout — text left / media right ---------- */
     /* .content-split is a semantic alias for reuse outside research  */
     .finding-split,
     .content-split {
@@ -1694,7 +1694,7 @@
     }
     #lottie-sitemap svg { width: 100% !important; height: auto !important; display: block; }
 
-    /* ── Finding 5 — Performance layout ───────────────────────── */
+    /* -- Finding 5 — Performance layout ------------------------- */
     .f5-text-block { margin-bottom: var(--sp-5); }
     .f5-text-block__label {
       display: block;
@@ -1762,7 +1762,7 @@
       margin: 0;
     }
 
-    /* ── Wireframes Section ─────────────────────────────────────────── */
+    /* -- Wireframes Section ------------------------------------------- */
     .wf-section { margin-bottom: var(--sp-7); }
     #wireframes > h2 { margin-top: var(--sp-9); }
     .wf-article { display: flex; flex-direction: column; }
@@ -1927,8 +1927,8 @@
       .wf-hero-insight { padding: var(--sp-5) var(--sp-3); }
     }
 
-    /* ── Hero Video Annotation Module ─────────────────────────────── */
-    /* ── Hero Video Player ─────────────────────────────────────────── */
+    /* -- Hero Video Annotation Module ------------------------------- */
+    /* -- Hero Video Player ------------------------------------------- */
     .wf-video-section { margin-top: var(--sp-9); }
 
     /* Player shell */
@@ -2012,7 +2012,7 @@
     }
     .wf-friction-note strong { color: var(--text-primary); }
 
-    /* ── Premiere-style timeline panel ─────────────────────────────── */
+    /* -- Premiere-style timeline panel ------------------------------- */
     .pr {
       background: #1c1c1e;
       border-radius: var(--radius-md);
@@ -2194,7 +2194,7 @@
       position: relative; z-index: 1;
     }
 
-    /* ── Interaction hint callout ────────────────────────────────── */
+    /* -- Interaction hint callout ---------------------------------- */
     .vp-interact-hint {
       display: flex; align-items: center; gap: var(--sp-3);
       padding: 12px 18px;
@@ -2230,7 +2230,7 @@
     [data-theme="dark"] .wf-friction-note { background: rgba(255,107,80,0.08); border-left-color: #ff6b50; }
     [data-theme="dark"] .wf-friction-note p { color: #a1a1a6; }
 
-    /* ── Mobile Wireframes ─────────────────────────────────────────── */
+    /* -- Mobile Wireframes ------------------------------------------- */
     .mobile-wf-section {
       margin-top: var(--sp-9);
       padding-top: var(--sp-7);
@@ -2307,7 +2307,7 @@
     @media (max-width: 900px) { .mobile-wf-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 560px) { .mobile-wf-grid { grid-template-columns: repeat(2, 1fr); } }
 
-    /* ── Wireframe Cards Grid ────────────────────────────────────────── */
+    /* -- Wireframe Cards Grid ------------------------------------------ */
     .wf-cards-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -2344,7 +2344,7 @@
       line-height: 1.55;
     }
 
-    /* ── Strategic Bullets Title ─────────────────────────────────────── */
+    /* -- Strategic Bullets Title --------------------------------------- */
     .wf-bullets-title {
       font-family: 'Inter', sans-serif;
       font-size: var(--text-base);
@@ -2353,7 +2353,7 @@
       margin-bottom: 16px;
     }
 
-    /* ── Before/After Slider ─────────────────────────────────────────── */
+    /* -- Before/After Slider ------------------------------------------- */
     .wf-slider-wrap {
       margin-bottom: var(--sp-7);
       display: flex;
@@ -2476,7 +2476,7 @@
       .wf-cards-grid { grid-template-columns: 1fr; }
     }
 
-    /* ── Jolt — Figma interactive preview ─────────────────────────── */
+    /* -- Jolt — Figma interactive preview --------------------------- */
     .cs-jolt { margin-bottom: var(--sp-7); }
     .cs-jolt__label {
       font-size: 0.7rem;
@@ -2502,7 +2502,7 @@
       margin-bottom: var(--sp-2);
     }
 
-    /* ── Section 6 — Homepage Preview ─────────────────────────────── */
+    /* -- Section 6 — Homepage Preview ------------------------------- */
     .hp-preview-section {
       padding-top: var(--sp-7);
       margin-bottom: var(--sp-8);
@@ -2670,7 +2670,7 @@
     [data-theme="dark"] .cs-jolt__heading { color: #f5f5f7; }
     [data-theme="dark"] .cs-jolt__device { background: #1c1c1e; }
 
-    /* ── Audit CTA Split ───────────────────────────────────────────── */
+    /* -- Audit CTA Split --------------------------------------------- */
     .audit-cta-split {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -2704,7 +2704,7 @@
       .audit-cta-split__image { order: -1; }
     }
 
-    /* ── Strategy Section ──────────────────────────────────────────── */
+    /* -- Strategy Section -------------------------------------------- */
     .strategy-section {
       margin-top: var(--sp-9);
       margin-bottom: var(--sp-8);
@@ -2760,7 +2760,7 @@
       .strategy-principles { grid-template-columns: 1fr; }
     }
 
-    /* ── User Intent Profiles / Personas ───────────────────────────── */
+    /* -- User Intent Profiles / Personas ----------------------------- */
     .persona-section {
       margin-top: var(--sp-9);
       margin-bottom: var(--sp-8);
@@ -3008,7 +3008,7 @@
     }
 
 
-    /* ─── Page-load animations ───────────────────────────────────────── */
+    /* --- Page-load animations ----------------------------------------- */
     .anim { opacity: 0; transform: translateY(16px); animation: fadeSlideIn 0.6s cubic-bezier(0.22,1,0.36,1) forwards; }
     .anim-d1 { animation-delay: 0.05s; }
     .anim-d2 { animation-delay: 0.12s; }
@@ -3022,7 +3022,7 @@
     .sidebar .breadcrumb  { animation: fadeSlideIn 0.5s 0.05s cubic-bezier(0.22,1,0.36,1) both; opacity: 0; }
     .sidebar .section-nav { animation: fadeSlideIn 0.5s 0.14s cubic-bezier(0.22,1,0.36,1) both; opacity: 0; }
 
-    /* ─── Scroll reveal ──────────────────────────────────────────────── */
+    /* --- Scroll reveal ------------------------------------------------ */
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-d1 { transition-delay: 0.05s; }
@@ -3030,7 +3030,7 @@
     .reveal-d3 { transition-delay: 0.25s; }
     .reveal-d4 { transition-delay: 0.35s; }
 
-    /* ─── Scroll reveal: slide from right ───────────────────────────── */
+    /* --- Scroll reveal: slide from right ----------------------------- */
     /* Overrides the default translateY so the element drifts in         */
     /* horizontally. Works with the same IntersectionObserver + .visible */
     .reveal-from-right {
@@ -3043,7 +3043,7 @@
       transform: translateX(0);
     }
 
-    /* ─── Custom cursor — 1:1 filled circle ──────────────────────────── */
+    /* --- Custom cursor — 1:1 filled circle ---------------------------- */
     .cursor {
       position: fixed; top: 0; left: 0;
       width: 20px; height: 20px;
@@ -3086,7 +3086,7 @@
       100% { transform: translate(6%,5%)   scale(1.03); }
     }
 
-    /* ─── Lottie player controls ─────────────────────────────────────── */
+    /* --- Lottie player controls --------------------------------------- */
     .lottie-wrap {
       position: relative;
     }
@@ -3137,7 +3137,7 @@
       border-color: transparent;
     }
 
-    /* ─── Grain overlay ──────────────────────────────────────────────── */
+    /* --- Grain overlay ------------------------------------------------ */
     body::before {
       content: ''; position: fixed; inset: 0;
       pointer-events: none; z-index: 9999; opacity: 0.025;
@@ -3148,7 +3148,7 @@
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        RESPONSIVE — Tablet (â‰¤ 1024px)
     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-    /* ── Wide screen (≥ 1600px) ─────────────────────────────────────── */
+    /* -- Wide screen (≥ 1600px) --------------------------------------- */
     @media (min-width: 1600px) {
       :root { --content-max: 1680px; --nav-width: 240px; }
       body  { font-size: 19px; }
@@ -3240,7 +3240,7 @@
       .metric-before { font-size: var(--text-xl); }
     }
 
-    /* ── Final UI Section ────────────────────────────────────────────── */
+    /* -- Final UI Section ---------------------------------------------- */
     .fui-section {
       padding-top: var(--sp-7);
       margin-bottom: var(--sp-7);
@@ -3373,7 +3373,7 @@
       .fui-two-col { grid-template-columns: 1fr; }
     }
 
-    /* ── Brand Authority A/B Module Cards ─────────────────────────── */
+    /* -- Brand Authority A/B Module Cards --------------------------- */
     .ba-modules-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -3442,7 +3442,7 @@
     [data-theme="dark"] .ba-module-card__label--b { background: rgba(255,107,80,0.1); color: #ff6b50; border-color: rgba(255,107,80,0.2); }
     @media (max-width: 768px) { .ba-modules-grid { grid-template-columns: 1fr; } }
 
-    /* ── Implementation Section ──────────────────────────────────────── */
+    /* -- Implementation Section ---------------------------------------- */
     .impl-section { padding-top: var(--sp-7); margin-bottom: var(--sp-9); }
 
     .impl-intro {
@@ -3537,7 +3537,7 @@
 
     }
 
-    /* ── Lessons Learned Section ─────────────────────────────────────── */
+    /* -- Lessons Learned Section --------------------------------------- */
     .lessons-section { padding-top: var(--sp-8); margin-bottom: var(--sp-9); }
 
     .lessons-intro {
@@ -3614,7 +3614,7 @@
       .impl-tool-grid { grid-template-columns: 1fr; }
     }
 
-    /* ── Section Transition Numbers ─────────────────────────────────── */
+    /* -- Section Transition Numbers ----------------------------------- */
     .section-transition {
       display: flex;
       align-items: center;
@@ -3654,7 +3654,7 @@
 
     /* section-transition dark mode — defined in main block above */
 
-    /* ── Case Study Footer ───────────────────────────────────────────── */
+    /* -- Case Study Footer --------------------------------------------- */
     .case-study-footer {
       margin-top: var(--sp-9);
       padding: var(--sp-8) 0 var(--sp-7);
@@ -3728,7 +3728,7 @@
     [data-theme="dark"] .footer-link:hover { color: #F5F5F7; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.18); }
     [data-theme="dark"] .footer-link--primary { background: var(--coral); color: #fff; border-color: var(--coral); }
 
-    /* ── Back to top ─────────────────────────────────────────────────── */
+    /* -- Back to top --------------------------------------------------- */
     .back-to-top {
       position: fixed;
       bottom: var(--sp-6);
@@ -3770,7 +3770,7 @@
       border-color: var(--coral);
     }
 
-    /* ── Viewport State Control ─────────────────────────────────────── */
+    /* -- Viewport State Control --------------------------------------- */
     /* Desktop (≥1024px): show site, hide coming soon                    */
     .site-desktop     { display: block; }
     .site-coming-soon { display: none;  }
@@ -3793,7 +3793,7 @@
       }
     }
 
-    /* ── Coming Soon inner elements ─────────────────────────────────── */
+    /* -- Coming Soon inner elements ----------------------------------- */
     .mobile-coming-soon__cat {
       width: clamp(120px, 35vw, 220px);
       height: auto;
@@ -3819,7 +3819,7 @@
       margin: 0;
     }
 
-    /* ── Scroll Progress Underlay ────────────────────────────────────── */
+    /* -- Scroll Progress Underlay -------------------------------------- */
     /* Passive read-progress fill — sits behind native scrollbar thumb  */
     .scroll-progress-track {
       position: fixed;
@@ -3839,13 +3839,13 @@
       pointer-events: none;
     }
 
-    /* ═══════════════════════════════════════════════════════════════════
+    /* ===================================================================
        CURSOR OVERRIDE — must be LAST in the stylesheet so it wins every
        cursor:pointer / cursor:default / cursor:col-resize above.
        The 1×1 transparent GIF forces the OS cursor off at system level,
        fixing Chrome/Safari bugs where cursor:none leaks on composited
        layers (position:fixed, backdrop-filter, SVG, text nodes).
-    ═══════════════════════════════════════════════════════════════════ */
+    =================================================================== */
     @media (pointer: fine) {
       html, body, :root,
       *, *::before, *::after {
@@ -3864,17 +3864,17 @@
 </head>
 <body>
 
-<!-- ── Mobile Coming Soon ─────────────────────────────────────────── -->
+<!-- -- Mobile Coming Soon ------------------------------------------- -->
 <div class="site-coming-soon mobile-coming-soon" role="main" aria-label="Mobile version coming soon">
   <p class="mobile-coming-soon__heading">Mobile Coming Soon</p>
   <img class="mobile-coming-soon__cat" src="../../assets/images/grumpy-cat.png" alt="Grumpy cat" />
   <p class="mobile-coming-soon__sub">This case study is optimised for desktop. A mobile experience is on the way.</p>
 </div>
 
-<!-- ── Desktop Site ──────────────────────────────────────────────── -->
+<!-- -- Desktop Site ------------------------------------------------ -->
 <div class="site-desktop">
 
-<!-- ── Global Navigation ─────────────────────────────────────────── -->
+<!-- -- Global Navigation ------------------------------------------- -->
 <header class="global-nav" role="banner">
   <div class="global-nav__inner">
     <a href="../../" class="global-nav__logo" aria-label="Darius Billing Portfolio" style="font-family: 'Work Sans', sans-serif; font-weight: 400;">Darius.design</a>
@@ -3897,10 +3897,10 @@
   </div>
 </header>
 
-<!-- ── Single persistent layout wrapper ─────────────────────────── -->
+<!-- -- Single persistent layout wrapper --------------------------- -->
 <div class="page-layout">
 
-  <!-- ── Sidebar (sticky across entire page) ──────────────────────── -->
+  <!-- -- Sidebar (sticky across entire page) ------------------------ -->
   <aside class="sidebar" aria-label="Case study navigation">
 
     <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -3938,7 +3938,7 @@
 
   </aside>
 
-  <!-- ── Content column ───────────────────────────────────────────── -->
+  <!-- -- Content column --------------------------------------------- -->
   <main class="content-col">
 
     <!-- â•â• HERO â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
@@ -4128,7 +4128,7 @@
         </p>
       </blockquote>
 
-      <!-- ── Jolt #1 — Figma Wireframe Preview ──────────────────────── -->
+      <!-- -- Jolt #1 — Figma Wireframe Preview ------------------------ -->
       <div class="cs-jolt reveal reveal-d3">
         <span class="cs-jolt__label">Interactive Wireframe</span>
         <h3 class="cs-jolt__heading">Racing Page — Designed for Two Audiences at Once</h3>
@@ -4169,10 +4169,10 @@
 
       </div>
 
-      <!-- ── ACCORDION WRAP ────────────────────────────────────────── -->
+      <!-- -- ACCORDION WRAP ------------------------------------------ -->
       <div class="accordion-wrap">
 
-      <!-- ── Finding 1 ─────────────────────────────────────────────── -->
+      <!-- -- Finding 1 ----------------------------------------------- -->
       <div class="accordion-item" data-open="true">
         <button class="accordion-trigger" aria-expanded="true">
           <div class="accordion-trigger__labels">
@@ -4216,7 +4216,7 @@
         </div><!-- /accordion-body -->
       </div><!-- /accordion-item 1 -->
 
-      <!-- ── Finding 2 ─────────────────────────────────────────────── -->
+      <!-- -- Finding 2 ----------------------------------------------- -->
       <div class="accordion-item" data-open="false">
         <button class="accordion-trigger" aria-expanded="false">
           <div class="accordion-trigger__labels">
@@ -4261,7 +4261,7 @@
       </div><!-- /accordion-item 2 -->
 
 
-      <!-- ── Finding 4 ─────────────────────────────────────────────── -->
+      <!-- -- Finding 4 ----------------------------------------------- -->
       <div class="accordion-item" data-open="false">
         <button class="accordion-trigger" aria-expanded="false">
           <div class="accordion-trigger__labels">
@@ -4294,7 +4294,7 @@
         </div><!-- /accordion-body -->
       </div><!-- /accordion-item 4 -->
 
-      <!-- ── Finding 5 ─────────────────────────────────────────────── -->
+      <!-- -- Finding 5 ----------------------------------------------- -->
       <div class="accordion-item" data-open="false">
         <button class="accordion-trigger" aria-expanded="false">
           <div class="accordion-trigger__labels">
@@ -4344,7 +4344,7 @@
 
       </div><!-- /accordion-wrap -->
 
-      <!-- ══ USER INTENT PROFILES ══════════════════════════════════════ -->
+      <!-- == USER INTENT PROFILES ====================================== -->
       <!-- Section transition -->
       <div class="section-transition reveal reveal-from-right" aria-hidden="true">
         <span class="section-transition__num">02</span>
@@ -4421,7 +4421,7 @@
 
       </section>
 
-      <!-- ══ STRATEGIC IMPLICATION ═════════════════════════════════════ -->
+      <!-- == STRATEGIC IMPLICATION ===================================== -->
       <div class="f5-strategic reveal reveal-d2" style="margin-top: var(--sp-8); margin-bottom: var(--sp-8);">
         <h2 class="f5-strategic__label">Strategic Implication</h2>
         <p class="f5-strategic__text">These findings compounded across the experience—reducing clarity, delaying trust, and limiting conversion at every stage.</p>
@@ -4435,7 +4435,7 @@
         <span class="section-transition__label">Strategy</span>
       </div>
 
-      <!-- ══ STRATEGY ══════════════════════════════════════════════════ -->
+      <!-- == STRATEGY ================================================== -->
       <section class="strategy-section" id="strategy" aria-label="Strategy">
 
         <h2 class="section-label reveal reveal-d1">Strategy</h2>
@@ -4511,12 +4511,12 @@
         </ul>
       </div>
 
-      <!-- ══ WIREFRAMES ════════════════════════════════════════════════ -->
+      <!-- == WIREFRAMES ================================================ -->
       <section class="wf-section reveal reveal-d1" id="wireframes" aria-label="Wireframes and UI">
 
         <h2 class="section-label reveal reveal-d1">Wireframes and UI</h2>
 
-        <!-- ── Wireframe #1 — Navigation ──────────────────────────── -->
+        <!-- -- Wireframe #1 — Navigation ---------------------------- -->
         <article class="wf-article reveal reveal-d2">
 
           <h3 class="finding-heading">Navigation</h3>
@@ -4567,7 +4567,7 @@
 
         </article>
 
-        <!-- ── Wireframe #2 — Hero Direction ───────────────────────── -->
+        <!-- -- Wireframe #2 — Hero Direction ------------------------- -->
         <article class="wf-article reveal reveal-d2" style="margin-top: var(--sp-9);">
 
           <h3 class="finding-heading">Hero Direction</h3>
@@ -4627,7 +4627,7 @@
 
         </article>
 
-        <!-- ── Wireframe #3 — Hero Video Direction ─────────────────── -->
+        <!-- -- Wireframe #3 — Hero Video Direction ------------------- -->
         <article class="wf-video-section reveal reveal-d1" style="margin-top: var(--sp-9);">
 
           <h2 class="finding-heading">Home Page Video — Storytelling</h2>
@@ -4640,7 +4640,7 @@
           </ul>
           <p class="cs-body reveal reveal-d3">The goal was to establish desire, credibility, and capability in 20 seconds, passively.</p>
 
-          <!-- ── Custom video player ─────────────────────────────────── -->
+          <!-- -- Custom video player ----------------------------------- -->
           <div class="vp reveal reveal-d2 is-paused" id="heroVideoPlayer">
             <video
               class="vp__video"
@@ -4680,7 +4680,7 @@
             </div>
           </div>
 
-          <!-- ── Premiere Timeline Panel ──────────────────────────────── -->
+          <!-- -- Premiere Timeline Panel -------------------------------- -->
           <div class="pr reveal reveal-d3" id="prPanel" aria-label="Timeline editor — scrub or click clips to seek">
 
             <!-- Header -->
@@ -4762,7 +4762,7 @@
 
         </article>
 
-        <!-- ── Mobile Wireframes ──────────────────────────────────────── -->
+        <!-- -- Mobile Wireframes ---------------------------------------- -->
         <div class="mobile-wf-section reveal reveal-d1">
 
           <h3 class="finding-heading">Mobile Wireframes</h3>
@@ -4810,7 +4810,7 @@
 
         </div>
 
-        <!-- Module Direction — A/B Concepts ──────────────────────── -->
+        <!-- Module Direction — A/B Concepts ------------------------ -->
         <h2 class="finding-heading reveal reveal-d1" style="margin-top: var(--sp-8);">Module Direction — A/B Concepts</h2>
         <p class="cs-body reveal reveal-d2" style="font-size:18px; margin-bottom: var(--sp-5);">Each module tested a different conversion hypothesis — authority-first vs. intent-first. Placement and sequencing were driven by scroll depth data and user intent signals.</p>
 
@@ -4854,7 +4854,7 @@
         <span class="section-transition__label">Racing Page</span>
       </div>
 
-      <!-- ══ RACING PAGE ═══════════════════════════════════════════════ -->
+      <!-- == RACING PAGE =============================================== -->
       <section class="hp-preview-section reveal reveal-d1" id="racing-page" aria-label="Racing Page">
 
         <h3 class="section-label reveal reveal-d1">UX/UI Design</h3>
@@ -4920,7 +4920,7 @@
         <span class="section-transition__label">Implementation</span>
       </div>
 
-      <!-- ══ IMPLEMENTATION ════════════════════════════════════════════════ -->
+      <!-- == IMPLEMENTATION ================================================ -->
       <section class="impl-section reveal reveal-d1" id="implementation" aria-label="Implementation">
 
         <h2 class="section-label reveal reveal-d1">Implementation</h2>
@@ -5010,7 +5010,7 @@
         <span class="section-transition__label">Lessons Learned</span>
       </div>
 
-      <!-- ══ LESSONS LEARNED ════════════════════════════════════════════════ -->
+      <!-- == LESSONS LEARNED ================================================ -->
       <section class="lessons-section reveal reveal-d1" id="lessons" aria-label="Lessons Learned">
 
         <h2 class="section-label reveal reveal-d1">Lessons Learned</h2>
@@ -5067,7 +5067,7 @@
 
       </section>
 
-      <!-- ══ FOOTER / CLOSING CTA ═══════════════════════════════════════ -->
+      <!-- == FOOTER / CLOSING CTA ======================================= -->
       <footer class="case-study-footer reveal reveal-d1" id="footer" aria-label="Get in touch">
         <p class="footer-label">Let's work together</p>
         <h2 class="footer-heading">Darius Shojaei</h2>
@@ -5123,12 +5123,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 <script>
   (() => {
-    /* ── Disabled nav links — prevent # jump ─────────────────────── */
+    /* -- Disabled nav links — prevent # jump ----------------------- */
     document.querySelectorAll('a[aria-disabled="true"]').forEach(a => {
       a.addEventListener('click', e => e.preventDefault());
     });
 
-    /* ── Mobile nav toggle ────────────────────────────────────────── */
+    /* -- Mobile nav toggle ------------------------------------------ */
     const toggle  = document.querySelector('.mobile-nav-toggle');
     const navList = document.getElementById('section-nav-list');
     toggle.addEventListener('click', () => {
@@ -5136,7 +5136,7 @@
       toggle.setAttribute('aria-expanded', isOpen);
     });
 
-    /* ── Dark mode toggle ─────────────────────────────────────────── */
+    /* -- Dark mode toggle ------------------------------------------- */
     const darkToggle = document.getElementById('darkToggle');
     const darkLabel  = document.getElementById('darkToggleLabel');
     if (darkToggle) {
@@ -5153,7 +5153,7 @@
       });
     }
 
-    /* ── Scroll progress underlay ────────────────────────────────── */
+    /* -- Scroll progress underlay ---------------------------------- */
     const progressFill = document.getElementById('scrollProgress');
     if (progressFill) {
       const updateProgress = () => {
@@ -5165,7 +5165,7 @@
       updateProgress();
     }
 
-    /* ── Scroll spy ───────────────────────────────────────────────── */
+    /* -- Scroll spy ------------------------------------------------- */
     const navItems = document.querySelectorAll('.section-nav li');
     const sectionMap = [
       { id: 'overview',        li: navItems[0] },
@@ -5195,7 +5195,7 @@
       if (el) scrollObserver.observe(el);
     });
 
-    /* ── Nav links → scroll to preceding section-transition ─────── */
+    /* -- Nav links → scroll to preceding section-transition ------- */
     document.querySelectorAll('.section-nav a').forEach(link => {
       link.addEventListener('click', e => {
         const href = link.getAttribute('href');
@@ -5221,7 +5221,7 @@
       });
     });
 
-    /* ── Scroll reveal ────────────────────────────────────────────── */
+    /* -- Scroll reveal ---------------------------------------------- */
     const revealEls = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -5233,7 +5233,7 @@
     }, { threshold: 0.12 });
     revealEls.forEach(el => revealObserver.observe(el));
 
-    /* ── Scroll-triggered video playback + 5s replay after end ─── */
+    /* -- Scroll-triggered video playback + 5s replay after end --- */
     const scrollVideos = document.querySelectorAll('.cs-scroll-video');
     if (scrollVideos.length) {
       const replayTimers = new Map();
@@ -5265,7 +5265,7 @@
       scrollVideos.forEach(video => videoObserver.observe(video));
     }
 
-    /* ── Accordion — accurate scrollHeight animation ─────────────── */
+    /* -- Accordion — accurate scrollHeight animation --------------- */
     function accordionSetHeight(item, open) {
       const body = item.querySelector('.accordion-body');
       if (open) {
@@ -5307,7 +5307,7 @@
       });
     });
 
-    /* ── Back to top ─────────────────────────────────────────────── */
+    /* -- Back to top ----------------------------------------------- */
     const backToTop = document.getElementById('backToTop');
     if (backToTop) {
       window.addEventListener('scroll', () => {
@@ -5317,7 +5317,7 @@
       backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     }
 
-    /* ── Custom cursor — true 1:1 tracking, no lag ───────────────── */
+    /* -- Custom cursor — true 1:1 tracking, no lag ----------------- */
     if (window.matchMedia('(pointer: fine)').matches) {
       const cursor = document.getElementById('cursor');
       let visible = false;
@@ -5361,7 +5361,7 @@
     }
   })();
 
-  /* ── Before/After Hero Slider ──────────────────────────────────── */
+  /* -- Before/After Hero Slider ------------------------------------ */
   (() => {
     const slider   = document.getElementById('heroSlider');
     if (!slider) return;
@@ -5396,7 +5396,7 @@
     window.addEventListener('touchend',   () => { dragging = false; });
   })();
 
-  /* ── Lottie controls utility ───────────────────────────────────── */
+  /* -- Lottie controls utility ------------------------------------- */
   function attachLottieControls(wrapper, anim) {
     const controls  = wrapper.querySelector('.lottie-controls');
     if (!controls) return { setPlaying: () => {} };
@@ -5429,7 +5429,7 @@
     return { setPlaying };
   }
 
-  /* ── Lottie: hero animation (plays while in viewport, loops) ───── */
+  /* -- Lottie: hero animation (plays while in viewport, loops) ----- */
   (() => {
     const heroContainer = document.getElementById('lottie-hero');
     if (!heroContainer || typeof lottie === 'undefined') return;
@@ -5463,7 +5463,7 @@
     observer.observe(heroContainer);
   })();
 
-  /* ── Lottie: service discovery — lazy-load JSON until 400px away ── */
+  /* -- Lottie: service discovery — lazy-load JSON until 400px away -- */
   (() => {
     const container = document.getElementById('lottie-service');
     if (!container || typeof lottie === 'undefined') return;
@@ -5493,7 +5493,7 @@
     loadObs.observe(container);
   })();
 
-  /* ── Lottie: site map — lazy-load JSON until 400px away ─────────── */
+  /* -- Lottie: site map — lazy-load JSON until 400px away ----------- */
   (() => {
     const container = document.getElementById('lottie-sitemap');
     if (!container || typeof lottie === 'undefined') return;
@@ -5523,7 +5523,7 @@
     loadObs.observe(container);
   })();
 
-  /* ── Global image lazy loading ───────────────────────────────────── */
+  /* -- Global image lazy loading ------------------------------------- */
   /* Sets loading="lazy" + decoding="async" on every image that        */
   /* doesn't already have an explicit loading attribute.               */
   document.querySelectorAll('img:not([loading])').forEach(img => {
@@ -5531,7 +5531,7 @@
     img.decoding = 'async';
   });
 
-  /* ── Custom video player — Hero Video Wireframe section ─────────── */
+  /* -- Custom video player — Hero Video Wireframe section ----------- */
   (function () {
     const player  = document.getElementById('heroVideoPlayer');
     if (!player) return;
@@ -5540,7 +5540,7 @@
     const playBtn = document.getElementById('vpPlayBtn');
     const replayBtn = document.getElementById('vpReplayBtn');
 
-    /* ── Play / pause state ─────────────────── */
+    /* -- Play / pause state ------------------- */
     function setPlaying(playing) {
       player.classList.toggle('is-paused', !playing);
       playBtn.querySelector('.vp-icon-play').style.display  = playing ? 'none' : '';
@@ -5548,7 +5548,7 @@
       playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
     }
 
-    /* ── Click player area to toggle play ────── */
+    /* -- Click player area to toggle play ------ */
     player.addEventListener('click', e => {
       if (e.target.closest('.vp__play-pill')) return;
       if (video.paused) { userPaused = false; video.play().catch(() => {}); }
@@ -5566,7 +5566,7 @@
       video.play().catch(() => {});
     });
 
-    /* ── Video events ────────────────────────── */
+    /* -- Video events -------------------------- */
     video.addEventListener('play',  () => setPlaying(true));
     video.addEventListener('pause', () => setPlaying(false));
     video.addEventListener('ended', () => {
@@ -5574,7 +5574,7 @@
       video.play().catch(() => {});
     });
 
-    /* ── Scroll-triggered playback ───────────── */
+    /* -- Scroll-triggered playback ------------- */
     const vpObs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -5586,12 +5586,12 @@
     }, { threshold: 0.25 });
     vpObs.observe(player);
 
-    /* ── Init ────────────────────────────────── */
+    /* -- Init ---------------------------------- */
     video.muted = true;
     setPlaying(false);
   })();
 
-  /* ── Premiere timeline panel ─────────────────────────────────────── */
+  /* -- Premiere timeline panel --------------------------------------- */
   (function () {
     const video    = document.querySelector('#heroVideoPlayer .vp__video');
     const prPh     = document.getElementById('prPh');

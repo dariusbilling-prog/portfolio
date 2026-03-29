@@ -561,142 +561,183 @@
   </script>
 
   <!-- ════════════════════════════════════════════════════════════════
-       TIER 1 — LEAN PROTOTYPE
-       Converted from tier1-lean-prototype.jsx
-       No charts — only wireframe boxes and placeholder blocks.
+       TIER 1 — LEAN PROTOTYPE (redesigned)
+       Layout mirrors Tier 2 exactly for an apples-to-apples comparison.
+       Two key differences from Tier 2:
+         1. Strict black & white palette — zero color anywhere
+         2. Fully static — no useState, no onClick, no navigation
+       This gives Ben a clear sense of the structure and data without
+       any of the visual polish or interactivity of the higher tiers.
   ═════════════════════════════════════════════════════════════════ -->
   <script type="text/babel">
     (function(){
-      const { useState } = React;
-      const screens = { home:"home", scan:"scan", dashboard:"dashboard" };
+      // No useState needed — this component is 100% static
+      const { StackedBar, LineChart } = window.Charts;
 
-      function WireframeBox({ children, style, onClick, dashed }) {
+      // ── Strict greyscale palette — no color allowed ──────────────
+      const bw = {
+        bg:        "#f7f7f7",   // page/phone background
+        card:      "#ffffff",   // card surfaces
+        dark:      "#111111",   // header, primary buttons
+        mid:       "#444444",   // secondary text, icons
+        muted:     "#888888",   // muted labels
+        border:    "#e0e0e0",   // card borders
+        light:     "#f0f0f0",   // subtle fills
+        lighter:   "#fafafa",   // near-white fills
+        text:      "#111111",   // primary text
+        textSec:   "#555555",   // secondary text
+      };
+
+      // Weekly chart data — greyscale bars (dark / mid / light grey)
+      const weeklyData = [
+        {day:"Mon",recycling:1.2,compost:0.4,landfill:0.8},
+        {day:"Tue",recycling:0.8,compost:0.6,landfill:0.3},
+        {day:"Wed",recycling:1.5,compost:0.3,landfill:0.5},
+        {day:"Thu",recycling:0.6,compost:0.8,landfill:0.4},
+        {day:"Fri",recycling:1.1,compost:0.5,landfill:0.6},
+        {day:"Sat",recycling:1.8,compost:0.9,landfill:0.3},
+        {day:"Sun",recycling:0.9,compost:0.3,landfill:0.2},
+      ];
+
+      // ── Stat card — mirrors Tier 2 StatCard without color ────────
+      function StatCard({ label, value, unit, icon }) {
         return (
-          <div onClick={onClick} style={{
-            border: dashed?"2px dashed #999":"2px solid #333",
-            borderRadius:4, padding:16, backgroundColor:"#fff",
-            cursor: onClick?"pointer":"default", ...style,
-          }}>{children}</div>
+          <div style={{flex:1,backgroundColor:bw.card,borderRadius:14,padding:16,border:`1px solid ${bw.border}`}}>
+            <div style={{width:32,height:32,borderRadius:8,backgroundColor:bw.light,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,marginBottom:10}}>{icon}</div>
+            <div style={{fontSize:22,fontWeight:700,color:bw.text}}>
+              {value}<span style={{fontSize:12,fontWeight:400,color:bw.muted,marginLeft:2}}>{unit}</span>
+            </div>
+            <div style={{fontSize:12,color:bw.textSec,marginTop:2}}>{label}</div>
+          </div>
         );
       }
-      function Placeholder({ width, height, label }) {
+
+      // ── Single static home screen — no navigation at all ─────────
+      function Tier1Static() {
+        return (
+          <div style={{display:"flex",flexDirection:"column"}}>
+
+            {/* ── Header — dark grey, mirrors Tier 2 green header ── */}
+            <div style={{padding:"24px 20px 16px",backgroundColor:bw.dark}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                <div>
+                  <div style={{fontSize:14,color:"rgba(255,255,255,0.55)"}}>Good morning</div>
+                  <div style={{fontSize:22,fontWeight:700,color:"#fff",marginTop:2}}>Alex Johnson</div>
+                  <div style={{fontSize:12,color:"rgba(255,255,255,0.45)",marginTop:4}}>Unit 4B — Greenway Apartments</div>
+                </div>
+                {/* Avatar placeholder */}
+                <div style={{width:42,height:42,borderRadius:12,backgroundColor:"rgba(255,255,255,0.12)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:"rgba(255,255,255,0.7)",border:"1px solid rgba(255,255,255,0.15)"}}>AJ</div>
+              </div>
+
+              {/* Rewards banner — grey instead of green */}
+              <div style={{marginTop:20,backgroundColor:"rgba(255,255,255,0.08)",borderRadius:12,padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center",border:"1px solid rgba(255,255,255,0.1)"}}>
+                <div>
+                  <div style={{fontSize:12,color:"rgba(255,255,255,0.5)"}}>Reward Points</div>
+                  <div style={{fontSize:24,fontWeight:700,color:"#fff"}}>320</div>
+                </div>
+                <div style={{backgroundColor:"rgba(255,255,255,0.15)",color:"rgba(255,255,255,0.8)",padding:"6px 14px",borderRadius:20,fontSize:12,fontWeight:600,border:"1px solid rgba(255,255,255,0.2)"}}>
+                  Bronze Level
+                </div>
+              </div>
+            </div>
+
+            {/* ── Stat cards ──────────────────────────────────────── */}
+            <div style={{padding:"20px 20px 0",display:"flex",gap:10}}>
+              <StatCard label="Recycled"  value="4.2" unit="lbs" icon="♻"/>
+              <StatCard label="Composted" value="1.8" unit="lbs" icon="🌿"/>
+              <StatCard label="Landfill"  value="2.1" unit="lbs" icon="🗑"/>
+            </div>
+
+            {/* ── Weekly chart ─────────────────────────────────────── */}
+            <div style={{margin:"20px 20px 0",backgroundColor:bw.card,borderRadius:14,padding:20,border:`1px solid ${bw.border}`}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+                <div style={{fontSize:15,fontWeight:700,color:bw.text}}>This Week</div>
+                {/* "View Details" label is present but non-interactive */}
+                <div style={{fontSize:12,color:bw.muted,fontWeight:600}}>View Details →</div>
+              </div>
+              {/* StackedBar in strict greyscale: dark/mid/light grey */}
+              <StackedBar
+                data={weeklyData}
+                keys={["recycling","compost","landfill"]}
+                colors={["#222222","#777777","#cccccc"]}
+                labelKey="day"
+                height={140}
+              />
+              {/* Legend */}
+              <div style={{display:"flex",gap:14,marginTop:12}}>
+                {[{c:"#222",l:"Recycling"},{c:"#777",l:"Compost"},{c:"#ccc",l:"Landfill"}].map((x,i)=>(
+                  <div key={i} style={{display:"flex",alignItems:"center",gap:5}}>
+                    <div style={{width:10,height:10,borderRadius:2,backgroundColor:x.c,border:"1px solid #ddd"}}/>
+                    <span style={{fontSize:10,color:bw.muted}}>{x.l}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Quick action buttons — static, no onClick ────────── */}
+            <div style={{padding:"20px 20px",display:"flex",gap:10}}>
+              <div style={{flex:1,backgroundColor:bw.dark,borderRadius:14,padding:"18px 16px",textAlign:"center"}}>
+                <div style={{fontSize:24,marginBottom:6}}>📷</div>
+                <div style={{fontSize:14,fontWeight:600,color:"#fff"}}>Scan Item</div>
+                <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",marginTop:2}}>Log your waste</div>
+              </div>
+              <div style={{flex:1,backgroundColor:bw.card,borderRadius:14,padding:"18px 16px",textAlign:"center",border:`1px solid ${bw.border}`}}>
+                <div style={{fontSize:24,marginBottom:6}}>📊</div>
+                <div style={{fontSize:14,fontWeight:600,color:bw.text}}>Insights</div>
+                <div style={{fontSize:11,color:bw.muted,marginTop:2}}>Track progress</div>
+              </div>
+            </div>
+
+            {/* ── Personalised tips ────────────────────────────────── */}
+            <div style={{margin:"0 20px 20px",backgroundColor:bw.card,borderRadius:14,padding:20,border:`1px solid ${bw.border}`}}>
+              <div style={{fontSize:15,fontWeight:700,color:bw.text,marginBottom:14}}>Personalized Tips</div>
+              {[
+                {icon:"🥡",title:"Compost food scraps",   desc:"Reduce landfill by 30%"},
+                {icon:"📦",title:"Flatten cardboard boxes",desc:"Saves bin space for your building"},
+                {icon:"🧴",title:"Check bottle caps",      desc:"Need separate sorting in your area"},
+              ].map((tip,i)=>(
+                <div key={i} style={{display:"flex",gap:12,padding:"12px 0",borderBottom:i<2?`1px solid ${bw.border}`:"none",alignItems:"flex-start"}}>
+                  <div style={{width:36,height:36,borderRadius:10,backgroundColor:bw.light,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{tip.icon}</div>
+                  <div>
+                    <div style={{fontSize:14,fontWeight:600,color:bw.text}}>{tip.title}</div>
+                    <div style={{fontSize:12,color:bw.textSec,marginTop:2}}>{tip.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* ── Building leaderboard ─────────────────────────────── */}
+            <div style={{margin:"0 20px 20px",backgroundColor:bw.light,borderRadius:14,padding:20}}>
+              <div style={{fontSize:15,fontWeight:700,color:bw.text,marginBottom:8}}>Building Leaderboard</div>
+              <div style={{fontSize:13,color:bw.textSec,marginBottom:4}}>Greenway Apartments ranks</div>
+              <div style={{fontSize:28,fontWeight:700,color:bw.dark}}>#3 of 12</div>
+              <div style={{fontSize:12,color:bw.muted,marginTop:4}}>in your property management group</div>
+            </div>
+
+          </div>
+        );
+      }
+
+      // ── Phone frame — same dimensions as Tier 2, greyscale border ─
+      function Tier1App() {
         return (
           <div style={{
-            width:width||"100%", height:height||80,
-            backgroundColor:"#e0e0e0", border:"1px solid #ccc",
-            display:"flex", alignItems:"center", justifyContent:"center",
-            borderRadius:4, fontFamily:"monospace", fontSize:12, color:"#666",
-          }}>{label||"[ Placeholder ]"}</div>
-        );
-      }
-      function HomeScreen({ onNavigate }) {
-        return (
-          <div style={{display:"flex",flexDirection:"column",gap:16}}>
-            <div style={{textAlign:"center",padding:"24px 0 8px",borderBottom:"1px solid #ddd"}}>
-              <div style={{fontSize:18,fontWeight:700,fontFamily:"monospace"}}>WASTE FREE</div>
-              <div style={{fontSize:12,color:"#888",fontFamily:"monospace"}}>Resident Dashboard</div>
-            </div>
-            <WireframeBox>
-              <div style={{fontFamily:"monospace",fontSize:13,fontWeight:700}}>Welcome, Resident</div>
-              <div style={{fontFamily:"monospace",fontSize:11,color:"#666",marginTop:4}}>Unit 4B — Greenway Apartments</div>
-            </WireframeBox>
-            <WireframeBox>
-              <div style={{fontFamily:"monospace",fontSize:12,fontWeight:700,marginBottom:12}}>THIS WEEK'S WASTE SUMMARY</div>
-              <div style={{display:"flex",gap:12}}>
-                <Placeholder width="33%" height={60} label="Recycling: 4.2 lbs"/>
-                <Placeholder width="33%" height={60} label="Compost: 1.8 lbs"/>
-                <Placeholder width="33%" height={60} label="Landfill: 2.1 lbs"/>
-              </div>
-            </WireframeBox>
-            <WireframeBox dashed>
-              <div style={{fontFamily:"monospace",fontSize:12,fontWeight:700,marginBottom:8}}>REWARDS POINTS</div>
-              <Placeholder height={40} label="320 pts — Bronze Level"/>
-            </WireframeBox>
-            <div style={{display:"flex",gap:12}}>
-              <WireframeBox onClick={()=>onNavigate(screens.scan)} style={{flex:1,textAlign:"center"}}>
-                <div style={{fontFamily:"monospace",fontSize:24}}>[ ◻ ]</div>
-                <div style={{fontFamily:"monospace",fontSize:11,marginTop:4}}>SCAN WASTE</div>
-              </WireframeBox>
-              <WireframeBox onClick={()=>onNavigate(screens.dashboard)} style={{flex:1,textAlign:"center"}}>
-                <div style={{fontFamily:"monospace",fontSize:24}}>[ ≡ ]</div>
-                <div style={{fontFamily:"monospace",fontSize:11,marginTop:4}}>VIEW DATA</div>
-              </WireframeBox>
+            width:375, minHeight:667,
+            backgroundColor:bw.bg,
+            borderRadius:32, overflow:"hidden",
+            boxShadow:"0 20px 60px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.08)",
+            border:"8px solid #1a1a1a",
+            position:"relative",
+          }}>
+            {/* Notch */}
+            <div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:150,height:28,backgroundColor:"#1a1a1a",borderRadius:"0 0 18px 18px",zIndex:10}}/>
+            <div style={{paddingTop:28}}>
+              <Tier1Static/>
             </div>
           </div>
         );
       }
-      function ScanScreen({ onNavigate }) {
-        const [scanned,setScanned] = useState(false);
-        return (
-          <div style={{display:"flex",flexDirection:"column",gap:16}}>
-            <div style={{display:"flex",alignItems:"center",gap:12,borderBottom:"1px solid #ddd",paddingBottom:12}}>
-              <span onClick={()=>onNavigate(screens.home)} style={{fontFamily:"monospace",cursor:"pointer",fontSize:14}}>← Back</span>
-              <span style={{fontFamily:"monospace",fontWeight:700,fontSize:14}}>SCAN WASTE</span>
-            </div>
-            {!scanned ? (
-              <>
-                <Placeholder height={200} label="[ Camera / Scanner Area ]"/>
-                <div style={{fontFamily:"monospace",fontSize:11,color:"#888",textAlign:"center"}}>Scan QR code on waste bin or item barcode</div>
-                <WireframeBox onClick={()=>setScanned(true)} style={{textAlign:"center",backgroundColor:"#333",color:"#fff"}}>
-                  <div style={{fontFamily:"monospace",fontSize:13}}>[ SIMULATE SCAN ]</div>
-                </WireframeBox>
-              </>
-            ) : (
-              <>
-                <WireframeBox style={{backgroundColor:"#f5f5f5"}}>
-                  <div style={{fontFamily:"monospace",fontSize:12,fontWeight:700,marginBottom:8}}>SCAN RESULT</div>
-                  <div style={{fontFamily:"monospace",fontSize:11,color:"#444"}}>Item: Plastic Water Bottle</div>
-                  <div style={{fontFamily:"monospace",fontSize:11,color:"#444"}}>Category: Recyclable</div>
-                  <div style={{fontFamily:"monospace",fontSize:11,color:"#444"}}>Points Earned: +5</div>
-                </WireframeBox>
-                <WireframeBox dashed>
-                  <div style={{fontFamily:"monospace",fontSize:12,fontWeight:700,marginBottom:8}}>SORTING GUIDANCE</div>
-                  <div style={{fontFamily:"monospace",fontSize:11,color:"#666"}}>→ Remove cap and label</div>
-                  <div style={{fontFamily:"monospace",fontSize:11,color:"#666"}}>→ Rinse container</div>
-                  <div style={{fontFamily:"monospace",fontSize:11,color:"#666"}}>→ Place in BLUE recycling bin</div>
-                </WireframeBox>
-                <WireframeBox onClick={()=>setScanned(false)} style={{textAlign:"center",backgroundColor:"#333",color:"#fff"}}>
-                  <div style={{fontFamily:"monospace",fontSize:13}}>[ SCAN ANOTHER ]</div>
-                </WireframeBox>
-              </>
-            )}
-          </div>
-        );
-      }
-      function DashboardScreen({ onNavigate }) {
-        return (
-          <div style={{display:"flex",flexDirection:"column",gap:16}}>
-            <div style={{display:"flex",alignItems:"center",gap:12,borderBottom:"1px solid #ddd",paddingBottom:12}}>
-              <span onClick={()=>onNavigate(screens.home)} style={{fontFamily:"monospace",cursor:"pointer",fontSize:14}}>← Back</span>
-              <span style={{fontFamily:"monospace",fontWeight:700,fontSize:14}}>WASTE DATA</span>
-            </div>
-            <WireframeBox>
-              <div style={{fontFamily:"monospace",fontSize:12,fontWeight:700,marginBottom:12}}>MONTHLY BREAKDOWN</div>
-              <Placeholder height={120} label="[ Bar Chart — Waste by Category ]"/>
-            </WireframeBox>
-            <WireframeBox>
-              <div style={{fontFamily:"monospace",fontSize:12,fontWeight:700,marginBottom:8}}>BEHAVIOR INSIGHTS</div>
-              <div style={{fontFamily:"monospace",fontSize:11,color:"#444"}}>• Recycling rate: 52% (↑ 8% from last month)</div>
-              <div style={{fontFamily:"monospace",fontSize:11,color:"#444"}}>• Most recycled item: Cardboard boxes</div>
-              <div style={{fontFamily:"monospace",fontSize:11,color:"#444"}}>• Suggestion: Compost food scraps to reduce landfill</div>
-            </WireframeBox>
-            <WireframeBox dashed>
-              <div style={{fontFamily:"monospace",fontSize:12,fontWeight:700,marginBottom:8}}>COMMUNITY COMPARISON</div>
-              <Placeholder height={60} label="[ Your building ranks #3 of 12 ]"/>
-            </WireframeBox>
-          </div>
-        );
-      }
-      function Tier1App() {
-        const [screen,setScreen] = useState(screens.home);
-        return (
-          <div style={{width:360,minHeight:640,backgroundColor:"#fff",border:"3px solid #333",borderRadius:8,padding:20}}>
-            {screen===screens.home      && <HomeScreen      onNavigate={setScreen}/>}
-            {screen===screens.scan      && <ScanScreen      onNavigate={setScreen}/>}
-            {screen===screens.dashboard && <DashboardScreen onNavigate={setScreen}/>}
-          </div>
-        );
-      }
+
       ReactDOM.createRoot(document.getElementById('tier1-mount')).render(<Tier1App/>);
     })();
   </script>

@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Waste Free — Prototype Preview | Darius Shojaei</title>
+
+  <!--
+    PRIVATE PAGE — Not linked from main navigation.
+    This is a client-facing preview page sent directly to Ben.
+    URL: /projects/waste-free-preview
+    Purpose: Let Ben compare the 3 prototype tiers before choosing.
+  -->
+
+  <!-- Fonts — matching the main site exactly -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Work+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- ─────────────────────────────────────────────────────────────────
+       React 18 + ReactDOM (UMD builds — no bundler needed)
+       Babel Standalone — transpiles <script type="text/babel"> in-browser
+       Recharts 2 — charting library used by Tier 2 & 3 prototypes
+  ────────────────────────────────────────────────────────────────── -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/recharts@2/umd/Recharts.js"></script>
+
+  <style>
+    /* ── Design tokens — mirrors main site ──────────────────────────── */
+    :root {
+      --bg:            #f2ede4;   /* warm cream — same as main site */
+      --blue:          #3d5f8f;
+      --periwinkle:    #5b81ba;
+      --text-primary:  #1a1a1f;
+      --text-secondary:#5a6270;
+      --text-muted:    #536070;
+      --nav-h:         60px;
+      --content-max:   1200px;
+      --radius:        10px;
+      --sp-2: 8px;
+      --sp-3: 12px;
+      --sp-4: 16px;
+      --sp-5: 24px;
+      --sp-6: 32px;
+      --sp-8: 48px;
+    }
+
+    /* ── Reset ──────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      /* Push content below the fixed nav */
+      padding-top: var(--nav-h);
+    }
+
+    /* ── Global nav — logo only (no links, no dark toggle) ──────────
+       The nav items and dark mode toggle from the main site have been
+       intentionally removed for this private client page. Ben only
+       needs to see the branding and the prototypes — nothing else.
+    ─────────────────────────────────────────────────────────────── */
+    .global-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: #faf8f4;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+    }
+
+    .global-nav__inner {
+      width: 100%;
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 var(--sp-5);
+      display: flex;
+      align-items: center;
+      /* Logo only — no space-between needed */
+    }
+
+    .global-nav__logo {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: color 0.2s ease;
+    }
+    .global-nav__logo:hover { color: var(--blue); }
+
+    /* ── Page hero — intro section for Ben ─────────────────────────── */
+    .preview-hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--sp-8) var(--sp-5) var(--sp-6);
+      text-align: center;
+    }
+
+    .preview-hero__eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: var(--sp-3);
+    }
+
+    .preview-hero__title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--sp-4);
+    }
+
+    .preview-hero__title span {
+      /* "Waste Free" highlighted in green to echo the app brand */
+      color: #1B7A4A;
+    }
+
+    .preview-hero__body {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin: 0 auto var(--sp-5);
+    }
+
+    /* Small divider beneath the intro */
+    .preview-hero__divider {
+      width: 48px;
+      height: 3px;
+      background: var(--blue);
+      border-radius: 2px;
+      margin: 0 auto;
+      opacity: 0.35;
+    }
+
+    /* ── Tier section wrappers ──────────────────────────────────────── */
+    .tiers-container {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      padding: var(--sp-8) var(--sp-5);
+      padding-bottom: 100px;
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .tier-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-5);
+    }
+
+    /* Tier number badge above each prototype */
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: 6px 16px 6px 8px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .tier-badge__num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* Tier 1 — neutral/grey (lo-fi, wireframe feel) */
+    .tier-badge--1 { background: #eee; color: #333; }
+    .tier-badge--1 .tier-badge__num { background: #333; }
+
+    /* Tier 2 — green (investor-ready, polished) */
+    .tier-badge--2 { background: #E8F5EE; color: #1B7A4A; }
+    .tier-badge--2 .tier-badge__num { background: #1B7A4A; }
+
+    /* Tier 3 — deeper green (product vision, premium) */
+    .tier-badge--3 { background: #ECFDF5; color: #047857; }
+    .tier-badge--3 .tier-badge__num { background: #047857; }
+
+    .tier-meta {
+      text-align: center;
+    }
+
+    .tier-meta__name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(20px, 2.5vw, 26px);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.015em;
+    }
+
+    .tier-meta__desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 480px;
+      margin: 0 auto 8px;
+    }
+
+    .tier-meta__price {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
+    }
+
+    /* React prototype mount points */
+    .tier-mount {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Horizontal rule between tiers */
+    .tier-divider {
+      width: 100%;
+      max-width: 480px;
+      height: 1px;
+      background: rgba(0,0,0,0.08);
+      margin: 0 auto;
+    }
+
+    /* ── Footer note ────────────────────────────────────────────────
+       Minimal signed footer — no links, no navigation, just a note.
+       This is NOT the main site footer (which has been removed per
+       the brief). This is just a small attribution line.
+    ─────────────────────────────────────────────────────────────── */
+    .preview-footer {
+      text-align: center;
+      padding: var(--sp-6) var(--sp-5) 48px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .preview-footer p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .preview-footer a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .preview-footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive — tighten padding on small screens ─────────────── */
+    @media (max-width: 600px) {
+      .preview-hero { padding: 36px var(--sp-4) 32px; }
+      .tiers-container { gap: 56px; padding: 36px var(--sp-4) 80px; }
+    }
+
+    /* ── Cursor override — last rule wins the cascade ───────────────
+       Same 1×1 transparent GIF trick as the main site to hide the
+       native OS cursor on pointer devices.
+    ─────────────────────────────────────────────────────────────── */
+    @media (pointer: fine) {
+      html, body, :root, *, *::before, *::after {
+        cursor: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"), none !important;
+      }
+      .global-nav, .global-nav *, .global-nav *::before, .global-nav *::after {
+        cursor: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"), none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Global nav — logo only ─────────────────────────────────────
+       Nav links (Home, Work, About, Contact) and the dark mode toggle
+       have been removed. This page is private — Ben doesn't need to
+       navigate anywhere else from here.
+  ─────────────────────────────────────────────────────────────────── -->
+  <header class="global-nav" role="banner">
+    <div class="global-nav__inner">
+      <a href="/" class="global-nav__logo" aria-label="Darius Shojaei — back to portfolio">
+        Darius.design
+      </a>
+    </div>
+  </header>
+
+  <!-- ── Page intro ─────────────────────────────────────────────────── -->
+  <section class="preview-hero" aria-label="Page introduction">
+    <p class="preview-hero__eyebrow">Private Preview — For Ben</p>
+    <h1 class="preview-hero__title"><span>Waste Free</span> — Prototype Options</h1>
+    <p class="preview-hero__body">
+      Hi Ben — below are three interactive prototype examples, one for each tier we discussed.
+      Click through each one to get a feel for the difference in depth, polish, and scope,
+      then let me know which direction feels right for where you are now.
+    </p>
+    <div class="preview-hero__divider"></div>
+  </section>
+
+  <!-- ── React mount points — one per tier ──────────────────────────── -->
+  <main class="tiers-container" aria-label="Prototype tiers">
+
+    <!-- Tier 1 -->
+    <section class="tier-section" aria-label="Option 1 — Lean Prototype">
+      <div class="tier-badge tier-badge--1">
+        <span class="tier-badge__num">1</span>
+        Lean Prototype
+      </div>
+      <div class="tier-meta">
+        <h2 class="tier-meta__name">Concept Validation</h2>
+        <p class="tier-meta__desc">
+          Low-fidelity wireframes focused on flow and structure.
+          Black &amp; white, monospace, no visual polish — built to test ideas fast.
+        </p>
+        <p class="tier-meta__price">Investment: $2,500 – $3,500</p>
+      </div>
+      <div class="tier-mount" id="tier1-mount"></div>
+    </section>
+
+    <div class="tier-divider" role="separator"></div>
+
+    <!-- Tier 2 -->
+    <section class="tier-section" aria-label="Option 2 — Investor-Ready Prototype">
+      <div class="tier-badge tier-badge--2">
+        <span class="tier-badge__num">2</span>
+        Investor-Ready
+      </div>
+      <div class="tier-meta">
+        <h2 class="tier-meta__name">Polished & Fundable</h2>
+        <p class="tier-meta__desc">
+          Clean modern UI with real data visualisations.
+          Looks and feels like an actual product — ideal for pitching or user testing.
+        </p>
+        <p class="tier-meta__price">Investment: $4,500 – $6,500 &nbsp;·&nbsp; Recommended</p>
+      </div>
+      <div class="tier-mount" id="tier2-mount"></div>
+    </section>
+
+    <div class="tier-divider" role="separator"></div>
+
+    <!-- Tier 3 -->
+    <section class="tier-section" aria-label="Option 3 — Product Vision Prototype">
+      <div class="tier-badge tier-badge--3">
+        <span class="tier-badge__num">3</span>
+        Product Vision
+      </div>
+      <div class="tier-meta">
+        <h2 class="tier-meta__name">Full-Scope Experience</h2>
+        <p class="tier-meta__desc">
+          Five fully-navigable screens with tabs, charts, a leaderboard, rewards and a profile.
+          The closest thing to a real shipped app — built to impress investors and early adopters.
+        </p>
+        <p class="tier-meta__price">Investment: $7,500 – $12,000+</p>
+      </div>
+      <div class="tier-mount" id="tier3-mount"></div>
+    </section>
+
+  </main>
+
+  <!-- ── Minimal page footer (NOT the main site footer) ──────────────
+       The main site footer has been removed per the brief.
+       This is just a lightweight attribution + contact line for Ben.
+  ─────────────────────────────────────────────────────────────────── -->
+  <footer class="preview-footer" aria-label="Page footer">
+    <p>
+      Prepared by <a href="mailto:hello@dariusbilling.com">Darius Shojaei</a> &nbsp;·&nbsp;
+      Questions? Reply to my email or reach me at
+      <a href="mailto:hello@dariusbilling.com">hello@dariusbilling.com</a>
+    </p>
+  </footer>
+
+  <!-- ── Cursor dot overlay — matches main site behaviour ────────────── -->
+  <div id="cursor" style="
+    position: fixed;
+    top: 0; left: 0;
+    width: 10px; height: 10px;
+    background: #1a1a1f;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease, opacity 0.2s ease;
+    opacity: 0;
+  "></div>
+  <script>
+    (function() {
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+      var dot = document.getElementById('cursor');
+      document.addEventListener('mousemove', function(e) {
+        dot.style.opacity = '1';
+        dot.style.left = e.clientX + 'px';
+        dot.style.top  = e.clientY + 'px';
+      }, { passive: true });
+      document.addEventListener('mouseleave', function() { dot.style.opacity = '0'; });
+    })();
+  </script>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       TIER 1 — LEAN PROTOTYPE
+       Converted from tier1-lean-prototype.jsx
+       Changes from original JSX:
+         • Removed  `import { useState } from "react"` — uses global React
+         • Removed  `export default` — component rendered directly to DOM
+         • cursor: pointer inline styles left as-is (overridden by CSS above)
+  ═════════════════════════════════════════════════════════════════ -->
+  <script type="text/babel">
+    (function() {
+      const { useState } = React;
+
+      const screens = { home: "home", scan: "scan", dashboard: "dashboard" };
+
+      function WireframeBox({ children, style, onClick, dashed }) {
+        return (
+          <div onClick={onClick} style={{
+            border: dashed ? "2px dashed #999" : "2px solid #333",
+            borderRadius: 4, padding: 16, backgroundColor: "#fff",
+            cursor: onClick ? "pointer" : "default", ...style,
+          }}>
+            {children}
+          </div>
+        );
+      }
+
+      function Placeholder({ width, height, label }) {
+        return (
+          <div style={{
+            width: width || "100%", height: height || 80,
+            backgroundColor: "#e0e0e0", border: "1px solid #ccc",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            borderRadius: 4, fontFamily: "monospace", fontSize: 12, color: "#666",
+          }}>
+            {label || "[ Placeholder ]"}
+          </div>
+        );
+      }
+
+      function HomeScreen({ onNavigate }) {
+        return (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ textAlign: "center", padding: "24px 0 8px", borderBottom: "1px solid #ddd" }}>
+              <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "monospace" }}>WASTE FREE</div>
+              <div style={{ fontSize: 12, color: "#888", fontFamily: "monospace" }}>Resident Dashboard</div>
+            </div>
+            <WireframeBox>
+              <div style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700 }}>Welcome, Resident</div>
+              <div style={{ fontFamily: "monospace", fontSize: 11, color: "#666", marginTop: 4 }}>Unit 4B — Greenway Apartments</div>
+            </WireframeBox>
+            <WireframeBox>
+              <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, marginBottom: 12 }}>THIS WEEK'S WASTE SUMMARY</div>
+              <div style={{ display: "flex", gap: 12 }}>
+                <Placeholder width="33%" height={60} label="Recycling: 4.2 lbs" />
+                <Placeholder width="33%" height={60} label="Compost: 1.8 lbs" />
+                <Placeholder width="33%" height={60} label="Landfill: 2.1 lbs" />
+              </div>
+            </WireframeBox>
+            <WireframeBox dashed>
+              <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, marginBottom: 8 }}>REWARDS POINTS</div>
+              <Placeholder height={40} label="320 pts — Bronze Level" />
+            </WireframeBox>
+            <div style={{ display: "flex", gap: 12 }}>
+              <WireframeBox onClick={() => onNavigate(screens.scan)} style={{ flex: 1, textAlign: "center" }}>
+                <div style={{ fontFamily: "monospace", fontSize: 24 }}>[ ◻ ]</div>
+                <div style={{ fontFamily: "monospace", fontSize: 11, marginTop: 4 }}>SCAN WASTE</div>
+              </WireframeBox>
+              <WireframeBox onClick={() => onNavigate(screens.dashboard)} style={{ flex: 1, textAlign: "center" }}>
+                <div style={{ fontFamily: "monospace", fontSize: 24 }}>[ ≡ ]</div>
+                <div style={{ fontFamily: "monospace", fontSize: 11, marginTop: 4 }}>VIEW DATA</div>
+              </WireframeBox>
+            </div>
+          </div>
+        );
+      }
+
+      function ScanScreen({ onNavigate }) {
+        const [scanned, setScanned] = useState(false);
+        return (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, borderBottom: "1px solid #ddd", paddingBottom: 12 }}>
+              <span onClick={() => onNavigate(screens.home)} style={{ fontFamily: "monospace", cursor: "pointer", fontSize: 14 }}>← Back</span>
+              <span style={{ fontFamily: "monospace", fontWeight: 700, fontSize: 14 }}>SCAN WASTE</span>
+            </div>
+            {!scanned ? (
+              <>
+                <Placeholder height={200} label="[ Camera / Scanner Area ]" />
+                <div style={{ fontFamily: "monospace", fontSize: 11, color: "#888", textAlign: "center" }}>
+                  Scan QR code on waste bin or item barcode
+                </div>
+                <WireframeBox onClick={() => setScanned(true)} style={{ textAlign: "center", backgroundColor: "#333", color: "#fff" }}>
+                  <div style={{ fontFamily: "monospace", fontSize: 13 }}>[ SIMULATE SCAN ]</div>
+                </WireframeBox>
+              </>
+            ) : (
+              <>
+                <WireframeBox style={{ backgroundColor: "#f5f5f5" }}>
+                  <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, marginBottom: 8 }}>SCAN RESULT</div>
+                  <div style={{ fontFamily: "monospace", fontSize: 11, color: "#444" }}>Item: Plastic Water Bottle</div>
+                  <div style={{ fontFamily: "monospace", fontSize: 11, color: "#444" }}>Category: Recyclable</div>
+                  <div style={{ fontFamily: "monospace", fontSize: 11, color: "#444" }}>Points Earned: +5</div>
+                </WireframeBox>
+                <WireframeBox dashed>
+                  <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, marginBottom: 8 }}>SORTING GUIDANCE</div>
+                  <div style={{ fontFamily: "monospace", fontSize: 11, color: "#666" }}>→ Remove cap and label</div>
+                  <div style={{ fontFamily: "monospace", fontSize: 11, color: "#666" }}>→ Rinse container</div>
+                  <div style={{ fontFamily: "monospace", fontSize: 11, color: "#666" }}>→ Place in BLUE recycling bin</div>
+                </WireframeBox>
+                <WireframeBox onClick={() => setScanned(false)} style={{ textAlign: "center", backgroundColor: "#333", color: "#fff" }}>
+                  <div style={{ fontFamily: "monospace", fontSize: 13 }}>[ SCAN ANOTHER ]</div>
+                </WireframeBox>
+              </>
+            )}
+          </div>
+        );
+      }
+
+      function DashboardScreen({ onNavigate }) {
+        return (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, borderBottom: "1px solid #ddd", paddingBottom: 12 }}>
+              <span onClick={() => onNavigate(screens.home)} style={{ fontFamily: "monospace", cursor: "pointer", fontSize: 14 }}>← Back</span>
+              <span style={{ fontFamily: "monospace", fontWeight: 700, fontSize: 14 }}>WASTE DATA</span>
+            </div>
+            <WireframeBox>
+              <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, marginBottom: 12 }}>MONTHLY BREAKDOWN</div>
+              <Placeholder height={120} label="[ Bar Chart — Waste by Category ]" />
+            </WireframeBox>
+            <WireframeBox>
+              <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, marginBottom: 8 }}>BEHAVIOR INSIGHTS</div>
+              <div style={{ fontFamily: "monospace", fontSize: 11, color: "#444" }}>• Recycling rate: 52% (↑ 8% from last month)</div>
+              <div style={{ fontFamily: "monospace", fontSize: 11, color: "#444" }}>• Most recycled item: Cardboard boxes</div>
+              <div style={{ fontFamily: "monospace", fontSize: 11, color: "#444" }}>• Suggestion: Compost food scraps to reduce landfill</div>
+            </WireframeBox>
+            <WireframeBox dashed>
+              <div style={{ fontFamily: "monospace", fontSize: 12, fontWeight: 700, marginBottom: 8 }}>COMMUNITY COMPARISON</div>
+              <Placeholder height={60} label="[ Your building ranks #3 of 12 ]" />
+            </WireframeBox>
+          </div>
+        );
+      }
+
+      function Tier1App() {
+        const [currentScreen, setCurrentScreen] = useState(screens.home);
+        return (
+          <div style={{
+            width: 360, minHeight: 640,
+            backgroundColor: "#fff", border: "3px solid #333",
+            borderRadius: 8, padding: 20, position: "relative",
+          }}>
+            {currentScreen === screens.home     && <HomeScreen      onNavigate={setCurrentScreen} />}
+            {currentScreen === screens.scan     && <ScanScreen      onNavigate={setCurrentScreen} />}
+            {currentScreen === screens.dashboard && <DashboardScreen onNavigate={setCurrentScreen} />}
+          </div>
+        );
+      }
+
+      const root1 = ReactDOM.createRoot(document.getElementById('tier1-mount'));
+      root1.render(<Tier1App />);
+    })();
+  </script>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       TIER 2 — INVESTOR-READY PROTOTYPE
+       Converted from tier2-investor-ready.jsx
+       Changes from original JSX:
+         • Removed ES module imports — uses global React + Recharts
+         • Removed `export default` — rendered directly to DOM
+  ═════════════════════════════════════════════════════════════════ -->
+  <script type="text/babel">
+    (function() {
+      const { useState } = React;
+      const {
+        BarChart, Bar, LineChart, Line,
+        XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+      } = Recharts;
+
+      const weeklyData = [
+        { day: "Mon", recycling: 1.2, compost: 0.4, landfill: 0.8 },
+        { day: "Tue", recycling: 0.8, compost: 0.6, landfill: 0.3 },
+        { day: "Wed", recycling: 1.5, compost: 0.3, landfill: 0.5 },
+        { day: "Thu", recycling: 0.6, compost: 0.8, landfill: 0.4 },
+        { day: "Fri", recycling: 1.1, compost: 0.5, landfill: 0.6 },
+        { day: "Sat", recycling: 1.8, compost: 0.9, landfill: 0.3 },
+        { day: "Sun", recycling: 0.9, compost: 0.3, landfill: 0.2 },
+      ];
+
+      const monthlyTrend = [
+        { month: "Oct", rate: 38 }, { month: "Nov", rate: 42 },
+        { month: "Dec", rate: 44 }, { month: "Jan", rate: 48 },
+        { month: "Feb", rate: 52 }, { month: "Mar", rate: 57 },
+      ];
+
+      const colors = {
+        bg: "#F7FAF8", card: "#FFFFFF", primary: "#1B7A4A",
+        primaryLight: "#E8F5EE", accent: "#F59E0B", accentLight: "#FEF3C7",
+        text: "#1A2B23", textSecondary: "#5F7367", textMuted: "#94A89B",
+        border: "#E2EBE6", recycling: "#1B7A4A", compost: "#92400E",
+        landfill: "#6B7280",
+      };
+
+      function NavBar({ title, onBack }) {
+        return (
+          <div style={{ display: "flex", alignItems: "center", padding: "16px 20px", borderBottom: `1px solid ${colors.border}`, backgroundColor: colors.card }}>
+            {onBack && (
+              <div onClick={onBack} style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: colors.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", marginRight: 12, fontSize: 16, color: colors.primary }}>←</div>
+            )}
+            <div style={{ fontSize: 17, fontWeight: 700, color: colors.text }}>{title}</div>
+          </div>
+        );
+      }
+
+      function StatCard({ label, value, unit, icon, color }) {
+        return (
+          <div style={{ flex: 1, backgroundColor: colors.card, borderRadius: 14, padding: 16, border: `1px solid ${colors.border}` }}>
+            <div style={{ width: 32, height: 32, borderRadius: 8, backgroundColor: `${color}15`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, marginBottom: 10 }}>{icon}</div>
+            <div style={{ fontSize: 22, fontWeight: 700, color: colors.text }}>
+              {value}<span style={{ fontSize: 12, fontWeight: 400, color: colors.textMuted, marginLeft: 2 }}>{unit}</span>
+            </div>
+            <div style={{ fontSize: 12, color: colors.textSecondary, marginTop: 2 }}>{label}</div>
+          </div>
+        );
+      }
+
+      function T2HomeScreen({ onNavigate }) {
+        return (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ padding: "24px 20px 16px", backgroundColor: colors.primary }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div>
+                  <div style={{ fontSize: 14, color: "rgba(255,255,255,0.7)" }}>Good morning</div>
+                  <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", marginTop: 2 }}>Alex Johnson</div>
+                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", marginTop: 4 }}>Unit 4B — Greenway Apartments</div>
+                </div>
+                <div style={{ width: 42, height: 42, borderRadius: 12, backgroundColor: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: "#fff" }}>AJ</div>
+              </div>
+              <div style={{ marginTop: 20, backgroundColor: "rgba(255,255,255,0.15)", borderRadius: 12, padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div>
+                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.7)" }}>Reward Points</div>
+                  <div style={{ fontSize: 24, fontWeight: 700, color: "#fff" }}>320</div>
+                </div>
+                <div style={{ backgroundColor: colors.accent, color: "#fff", padding: "6px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600 }}>Bronze Level</div>
+              </div>
+            </div>
+            <div style={{ padding: "20px 20px 0", display: "flex", gap: 10 }}>
+              <StatCard label="Recycled"   value="4.2" unit="lbs" icon="♻" color={colors.recycling} />
+              <StatCard label="Composted"  value="1.8" unit="lbs" icon="🌱" color={colors.compost}   />
+              <StatCard label="Landfill"   value="2.1" unit="lbs" icon="🗑" color={colors.landfill}  />
+            </div>
+            <div style={{ margin: "20px 20px 0", backgroundColor: colors.card, borderRadius: 14, padding: 20, border: `1px solid ${colors.border}` }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                <div style={{ fontSize: 15, fontWeight: 700, color: colors.text }}>This Week</div>
+                <div style={{ fontSize: 12, color: colors.primary, fontWeight: 600, cursor: "pointer" }} onClick={() => onNavigate("dashboard")}>View Details →</div>
+              </div>
+              <ResponsiveContainer width="100%" height={140}>
+                <BarChart data={weeklyData} barGap={2}>
+                  <CartesianGrid strokeDasharray="3 3" stroke={colors.border} vertical={false} />
+                  <XAxis dataKey="day" tick={{ fontSize: 11, fill: colors.textMuted }} axisLine={false} tickLine={false} />
+                  <YAxis hide />
+                  <Tooltip contentStyle={{ borderRadius: 8, border: `1px solid ${colors.border}`, fontSize: 12 }} />
+                  <Bar dataKey="recycling" stackId="a" fill={colors.recycling} />
+                  <Bar dataKey="compost"   stackId="a" fill="#D97706" />
+                  <Bar dataKey="landfill"  stackId="a" fill={colors.landfill} radius={[4,4,0,0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div style={{ padding: "20px 20px", display: "flex", gap: 10 }}>
+              <div onClick={() => onNavigate("scan")} style={{ flex: 1, backgroundColor: colors.primary, borderRadius: 14, padding: "18px 16px", cursor: "pointer", textAlign: "center" }}>
+                <div style={{ fontSize: 24, marginBottom: 6 }}>📷</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: "#fff" }}>Scan Item</div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", marginTop: 2 }}>Log your waste</div>
+              </div>
+              <div onClick={() => onNavigate("dashboard")} style={{ flex: 1, backgroundColor: colors.card, borderRadius: 14, padding: "18px 16px", cursor: "pointer", textAlign: "center", border: `1px solid ${colors.border}` }}>
+                <div style={{ fontSize: 24, marginBottom: 6 }}>📊</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: colors.text }}>Insights</div>
+                <div style={{ fontSize: 11, color: colors.textSecondary, marginTop: 2 }}>Track progress</div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function T2ScanScreen({ onNavigate }) {
+        const [scanned, setScanned] = useState(false);
+        return (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <NavBar title="Scan Item" onBack={() => onNavigate("home")} />
+            <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 16 }}>
+              {!scanned ? (
+                <>
+                  <div style={{ height: 240, backgroundColor: "#1a1a1a", borderRadius: 16, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ width: 160, height: 160, border: "3px solid rgba(255,255,255,0.4)", borderRadius: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", textAlign: "center" }}>Point camera at<br/>item or bin QR code</div>
+                    </div>
+                  </div>
+                  <button onClick={() => setScanned(true)} style={{ width: "100%", padding: "16px 0", backgroundColor: colors.primary, color: "#fff", border: "none", borderRadius: 12, fontSize: 15, fontWeight: 600, cursor: "pointer" }}>
+                    Simulate Scan
+                  </button>
+                  <div style={{ textAlign: "center", fontSize: 12, color: colors.textMuted }}>You can also enter an item manually below</div>
+                </>
+              ) : (
+                <>
+                  <div style={{ backgroundColor: colors.primaryLight, borderRadius: 16, padding: 24, textAlign: "center" }}>
+                    <div style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: colors.primary, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px", fontSize: 24, color: "#fff" }}>✓</div>
+                    <div style={{ fontSize: 17, fontWeight: 700, color: colors.text }}>Item Identified</div>
+                    <div style={{ fontSize: 13, color: colors.textSecondary, marginTop: 4 }}>Plastic Water Bottle</div>
+                  </div>
+                  <div style={{ backgroundColor: colors.card, borderRadius: 14, padding: 20, border: `1px solid ${colors.border}` }}>
+                    <div style={{ display: "inline-block", backgroundColor: `${colors.recycling}15`, color: colors.recycling, padding: "4px 12px", borderRadius: 20, fontSize: 12, fontWeight: 600, marginBottom: 12 }}>♻ Recyclable</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: colors.text, marginBottom: 12 }}>How to sort this item:</div>
+                    {["Remove cap and label","Rinse container","Place in BLUE recycling bin"].map((step, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: i < 2 ? `1px solid ${colors.border}` : "none" }}>
+                        <div style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: colors.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: colors.primary, flexShrink: 0 }}>{i + 1}</div>
+                        <div style={{ fontSize: 13, color: colors.text }}>{step}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ backgroundColor: colors.accentLight, borderRadius: 14, padding: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: colors.text }}>Points Earned</div>
+                      <div style={{ fontSize: 12, color: colors.textSecondary }}>Keep it up! 80 more to Silver</div>
+                    </div>
+                    <div style={{ fontSize: 24, fontWeight: 700, color: colors.accent }}>+5</div>
+                  </div>
+                  <button onClick={() => setScanned(false)} style={{ width: "100%", padding: "16px 0", backgroundColor: colors.primary, color: "#fff", border: "none", borderRadius: 12, fontSize: 15, fontWeight: 600, cursor: "pointer" }}>
+                    Scan Another Item
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      function T2DashboardScreen({ onNavigate }) {
+        return (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <NavBar title="Insights" onBack={() => onNavigate("home")} />
+            <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ backgroundColor: colors.card, borderRadius: 14, padding: 20, border: `1px solid ${colors.border}` }}>
+                <div style={{ fontSize: 15, fontWeight: 700, color: colors.text, marginBottom: 4 }}>Your Recycling Rate</div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 16 }}>
+                  <span style={{ fontSize: 32, fontWeight: 700, color: colors.primary }}>57%</span>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: colors.primary, backgroundColor: colors.primaryLight, padding: "2px 8px", borderRadius: 10 }}>+5% this month</span>
+                </div>
+                <ResponsiveContainer width="100%" height={120}>
+                  <LineChart data={monthlyTrend}>
+                    <CartesianGrid strokeDasharray="3 3" stroke={colors.border} vertical={false} />
+                    <XAxis dataKey="month" tick={{ fontSize: 11, fill: colors.textMuted }} axisLine={false} tickLine={false} />
+                    <YAxis hide domain={[30, 65]} />
+                    <Line type="monotone" dataKey="rate" stroke={colors.primary} strokeWidth={2.5} dot={{ fill: colors.primary, r: 4 }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+              <div style={{ backgroundColor: colors.card, borderRadius: 14, padding: 20, border: `1px solid ${colors.border}` }}>
+                <div style={{ fontSize: 15, fontWeight: 700, color: colors.text, marginBottom: 14 }}>Personalized Tips</div>
+                {[
+                  { icon: "🥡", title: "Compost food scraps",     desc: "You could reduce landfill by 30%" },
+                  { icon: "📦", title: "Flatten cardboard boxes", desc: "Saves bin space for your building" },
+                  { icon: "🧴", title: "Check bottle caps",       desc: "Caps need separate sorting in your area" },
+                ].map((tip, i) => (
+                  <div key={i} style={{ display: "flex", gap: 12, padding: "12px 0", borderBottom: i < 2 ? `1px solid ${colors.border}` : "none", alignItems: "flex-start" }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: colors.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0 }}>{tip.icon}</div>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: colors.text }}>{tip.title}</div>
+                      <div style={{ fontSize: 12, color: colors.textSecondary, marginTop: 2 }}>{tip.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ backgroundColor: colors.primaryLight, borderRadius: 14, padding: 20 }}>
+                <div style={{ fontSize: 15, fontWeight: 700, color: colors.text, marginBottom: 8 }}>Building Leaderboard</div>
+                <div style={{ fontSize: 13, color: colors.textSecondary, marginBottom: 4 }}>Greenway Apartments ranks</div>
+                <div style={{ fontSize: 28, fontWeight: 700, color: colors.primary }}>#3 of 12</div>
+                <div style={{ fontSize: 12, color: colors.textSecondary, marginTop: 4 }}>in your property management group</div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function Tier2App() {
+        const [currentScreen, setCurrentScreen] = useState("home");
+        return (
+          <div style={{ width: 375, minHeight: 667, backgroundColor: "#F7FAF8", borderRadius: 32, overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.1)", border: "8px solid #1a1a1a", position: "relative" }}>
+            {/* Notch */}
+            <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 150, height: 28, backgroundColor: "#1a1a1a", borderRadius: "0 0 18px 18px", zIndex: 10 }} />
+            <div style={{ paddingTop: 28 }}>
+              {currentScreen === "home"      && <T2HomeScreen      onNavigate={setCurrentScreen} />}
+              {currentScreen === "scan"      && <T2ScanScreen      onNavigate={setCurrentScreen} />}
+              {currentScreen === "dashboard" && <T2DashboardScreen onNavigate={setCurrentScreen} />}
+            </div>
+          </div>
+        );
+      }
+
+      const root2 = ReactDOM.createRoot(document.getElementById('tier2-mount'));
+      root2.render(<Tier2App />);
+    })();
+  </script>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       TIER 3 — PRODUCT VISION PROTOTYPE
+       Converted from tier3-product-vision.jsx
+       Changes from original JSX:
+         • Removed ES module imports — uses global React + Recharts
+         • Removed `export default` — rendered directly to DOM
+         • All 5 screens: Home, Scan, Insights (w/ tabs), Rewards, Profile
+  ═════════════════════════════════════════════════════════════════ -->
+  <script type="text/babel">
+    (function() {
+      const { useState } = React;
+      const {
+        BarChart, Bar, LineChart, Line, AreaChart, Area,
+        PieChart, Pie, Cell,
+        XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+      } = Recharts;
+
+      const weeklyData = [
+        { day: "Mon", recycling: 1.2, compost: 0.4, landfill: 0.8 },
+        { day: "Tue", recycling: 0.8, compost: 0.6, landfill: 0.3 },
+        { day: "Wed", recycling: 1.5, compost: 0.3, landfill: 0.5 },
+        { day: "Thu", recycling: 0.6, compost: 0.8, landfill: 0.4 },
+        { day: "Fri", recycling: 1.1, compost: 0.5, landfill: 0.6 },
+        { day: "Sat", recycling: 1.8, compost: 0.9, landfill: 0.3 },
+        { day: "Sun", recycling: 0.9, compost: 0.3, landfill: 0.2 },
+      ];
+      const monthlyTrend = [
+        { month: "Oct", rate: 38, target: 50 }, { month: "Nov", rate: 42, target: 50 },
+        { month: "Dec", rate: 44, target: 50 }, { month: "Jan", rate: 48, target: 55 },
+        { month: "Feb", rate: 52, target: 55 }, { month: "Mar", rate: 57, target: 60 },
+      ];
+      const pieData = [
+        { name: "Recyclable", value: 42, color: "#059669" },
+        { name: "Compost",    value: 22, color: "#D97706" },
+        { name: "Landfill",   value: 26, color: "#6B7280" },
+        { name: "Hazardous",  value:  5, color: "#DC2626" },
+        { name: "E-Waste",    value:  5, color: "#7C3AED" },
+      ];
+      const impactData = [
+        { month: "Oct", co2: 12, water: 45 }, { month: "Nov", co2: 15, water: 52 },
+        { month: "Dec", co2: 14, water: 48 }, { month: "Jan", co2: 18, water: 61 },
+        { month: "Feb", co2: 22, water: 72 }, { month: "Mar", co2: 26, water: 84 },
+      ];
+      const leaderboard = [
+        { rank: 1, name: "Riverside Towers", rate: 72, trend: "+4%" },
+        { rank: 2, name: "Maple Gardens",    rate: 65, trend: "+2%" },
+        { rank: 3, name: "Greenway Apts",    rate: 57, trend: "+5%", isYou: true },
+        { rank: 4, name: "Pine Estates",     rate: 51, trend: "+1%" },
+        { rank: 5, name: "Harbor View",      rate: 48, trend: "-2%" },
+      ];
+      const rewardItems = [
+        { name: "Local Coffee Voucher",  pts: 200, icon: "☕", available: true  },
+        { name: "$10 Grocery Credit",    pts: 400, icon: "🛒", available: true  },
+        { name: "Community Garden Pass", pts: 150, icon: "🌻", available: true  },
+        { name: "Eco Product Box",       pts: 600, icon: "📦", available: false },
+      ];
+      const purchaseHistory = [
+        { item: "Organic Oat Milk",  brand: "Planet Oat",    recyclable: true,  date: "Mar 26" },
+        { item: "Pasta Sauce",       brand: "Rao's",          recyclable: true,  date: "Mar 24" },
+        { item: "Chip Bag",          brand: "Kettle Brand",   recyclable: false, date: "Mar 23" },
+        { item: "Yogurt Container",  brand: "Chobani",        recyclable: true,  date: "Mar 22" },
+      ];
+
+      const c = {
+        bg: "#F5F8F6", card: "#FFFFFF", primary: "#059669", primaryDark: "#047857",
+        primaryLight: "#ECFDF5", accent: "#F59E0B", accentLight: "#FFFBEB",
+        purple: "#7C3AED", purpleLight: "#F5F3FF",
+        text: "#111827", textSec: "#4B5563", textMuted: "#9CA3AF",
+        border: "#E5E7EB", surface: "#F9FAFB",
+      };
+
+      function TabBar({ active, onNavigate }) {
+        const tabs = [
+          { id: "home",     label: "Home",    icon: "⌂" },
+          { id: "scan",     label: "Scan",    icon: "◎" },
+          { id: "insights", label: "Insights",icon: "◈" },
+          { id: "rewards",  label: "Rewards", icon: "★" },
+          { id: "profile",  label: "Profile", icon: "●" },
+        ];
+        return (
+          <div style={{ display: "flex", borderTop: `1px solid ${c.border}`, backgroundColor: c.card, padding: "6px 0 10px", position: "sticky", bottom: 0 }}>
+            {tabs.map(t => (
+              <div key={t.id} onClick={() => onNavigate(t.id)} style={{ flex: 1, textAlign: "center", cursor: "pointer", padding: "4px 0" }}>
+                <div style={{ fontSize: 18, color: active === t.id ? c.primary : c.textMuted, marginBottom: 2 }}>{t.icon}</div>
+                <div style={{ fontSize: 10, fontWeight: active === t.id ? 700 : 500, color: active === t.id ? c.primary : c.textMuted }}>{t.label}</div>
+              </div>
+            ))}
+          </div>
+        );
+      }
+
+      function NavHeader({ title, subtitle, onBack, rightAction }) {
+        return (
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: `1px solid ${c.border}`, backgroundColor: c.card }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              {onBack && (
+                <div onClick={onBack} style={{ width: 34, height: 34, borderRadius: 10, backgroundColor: c.surface, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 14, color: c.textSec }}>←</div>
+              )}
+              <div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: c.text }}>{title}</div>
+                {subtitle && <div style={{ fontSize: 11, color: c.textMuted }}>{subtitle}</div>}
+              </div>
+            </div>
+            {rightAction}
+          </div>
+        );
+      }
+
+      function T3HomeScreen({ onNavigate }) {
+        return (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ background: `linear-gradient(135deg, ${c.primaryDark} 0%, ${c.primary} 50%, #34D399 100%)`, padding: "28px 20px 20px", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "relative", zIndex: 1 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <div>
+                    <div style={{ fontSize: 13, color: "rgba(255,255,255,0.75)" }}>Good morning</div>
+                    <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", marginTop: 2 }}>Alex Johnson</div>
+                  </div>
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <div style={{ width: 38, height: 38, borderRadius: 12, backgroundColor: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, color: "#fff" }}>🔔</div>
+                    <div style={{ width: 38, height: 38, borderRadius: 12, background: "linear-gradient(135deg, #34D399, #059669)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 700, color: "#fff", border: "2px solid rgba(255,255,255,0.3)" }}>AJ</div>
+                  </div>
+                </div>
+                <div style={{ marginTop: 20, display: "flex", gap: 8 }}>
+                  {[{ label: "CO₂ Saved", value: "26 lbs", icon: "🌍" }, { label: "Water Saved", value: "84 gal", icon: "💧" }, { label: "Trees Equiv.", value: "0.3", icon: "🌳" }].map((s, i) => (
+                    <div key={i} style={{ flex: 1, backgroundColor: "rgba(255,255,255,0.15)", borderRadius: 12, padding: "12px 10px", textAlign: "center" }}>
+                      <div style={{ fontSize: 16, marginBottom: 4 }}>{s.icon}</div>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: "#fff" }}>{s.value}</div>
+                      <div style={{ fontSize: 10, color: "rgba(255,255,255,0.7)" }}>{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {/* Reward progress card */}
+            <div style={{ margin: "0 20px", marginTop: -1, backgroundColor: c.card, borderRadius: 14, padding: "16px 18px", boxShadow: "0 4px 20px rgba(0,0,0,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between", transform: "translateY(-10px)" }}>
+              <div>
+                <div style={{ fontSize: 12, color: c.textSec }}>Reward Points</div>
+                <div style={{ fontSize: 24, fontWeight: 700, color: c.text }}>320<span style={{ fontSize: 11, fontWeight: 500, color: c.textMuted, marginLeft: 6 }}>/ 400 Silver</span></div>
+                <div style={{ width: 160, height: 6, backgroundColor: c.border, borderRadius: 3, marginTop: 8, overflow: "hidden" }}>
+                  <div style={{ width: "80%", height: "100%", background: `linear-gradient(90deg, ${c.accent}, #FBBF24)`, borderRadius: 3 }} />
+                </div>
+              </div>
+              <div onClick={() => onNavigate("rewards")} style={{ backgroundColor: c.accentLight, color: c.accent, padding: "8px 14px", borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>Redeem →</div>
+            </div>
+            {/* Weekly summary */}
+            <div style={{ padding: "8px 20px 0" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                <div style={{ fontSize: 15, fontWeight: 700, color: c.text }}>This Week</div>
+                <div onClick={() => onNavigate("insights")} style={{ fontSize: 12, color: c.primary, fontWeight: 600, cursor: "pointer" }}>Full Report →</div>
+              </div>
+              <div style={{ backgroundColor: c.card, borderRadius: 14, padding: 16, border: `1px solid ${c.border}` }}>
+                <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
+                  {[{ label: "Recycled", val: "4.2 lbs", color: c.primary, pct: "+12%" }, { label: "Composted", val: "1.8 lbs", color: "#D97706", pct: "+8%" }, { label: "Landfill", val: "2.1 lbs", color: "#6B7280", pct: "-15%" }].map((s, i) => (
+                    <div key={i} style={{ flex: 1 }}>
+                      <div style={{ width: "100%", height: 4, backgroundColor: `${s.color}20`, borderRadius: 2, marginBottom: 8 }}>
+                        <div style={{ width: i === 0 ? "70%" : i === 1 ? "40%" : "50%", height: "100%", backgroundColor: s.color, borderRadius: 2 }} />
+                      </div>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: c.text }}>{s.val}</div>
+                      <div style={{ fontSize: 11, color: c.textMuted }}>{s.label}</div>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: s.pct.startsWith("+") ? c.primary : "#DC2626", marginTop: 2 }}>{s.pct}</div>
+                    </div>
+                  ))}
+                </div>
+                <ResponsiveContainer width="100%" height={100}>
+                  <BarChart data={weeklyData} barGap={2} barSize={14}>
+                    <XAxis dataKey="day" tick={{ fontSize: 10, fill: c.textMuted }} axisLine={false} tickLine={false} />
+                    <YAxis hide />
+                    <Bar dataKey="recycling" stackId="a" fill={c.primary} />
+                    <Bar dataKey="compost"   stackId="a" fill="#D97706" />
+                    <Bar dataKey="landfill"  stackId="a" fill="#9CA3AF" radius={[3,3,0,0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            {/* Purchase intelligence */}
+            <div style={{ padding: "16px 20px 0" }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: c.text, marginBottom: 12 }}>Purchase Intelligence</div>
+              <div style={{ backgroundColor: c.card, borderRadius: 14, border: `1px solid ${c.border}`, overflow: "hidden" }}>
+                {purchaseHistory.map((p, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderBottom: i < purchaseHistory.length - 1 ? `1px solid ${c.border}` : "none" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                      <div style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: p.recyclable ? c.primary : "#DC2626", flexShrink: 0 }} />
+                      <div>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: c.text }}>{p.item}</div>
+                        <div style={{ fontSize: 11, color: c.textMuted }}>{p.brand}</div>
+                      </div>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: p.recyclable ? c.primary : "#DC2626" }}>{p.recyclable ? "Recyclable" : "Not Recyclable"}</div>
+                      <div style={{ fontSize: 10, color: c.textMuted }}>{p.date}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Quick actions */}
+            <div style={{ padding: "12px 20px 16px", display: "flex", gap: 10 }}>
+              <div onClick={() => onNavigate("scan")}     style={{ flex: 1, background: `linear-gradient(135deg, ${c.primaryDark}, ${c.primary})`, borderRadius: 14, padding: "16px 14px", cursor: "pointer", textAlign: "center", boxShadow: `0 4px 14px ${c.primary}40` }}>
+                <div style={{ fontSize: 22, marginBottom: 4 }}>◎</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: "#fff" }}>Scan Item</div>
+              </div>
+              <div onClick={() => onNavigate("insights")} style={{ flex: 1, backgroundColor: c.card, borderRadius: 14, padding: "16px 14px", cursor: "pointer", textAlign: "center", border: `1px solid ${c.border}` }}>
+                <div style={{ fontSize: 22, marginBottom: 4 }}>◈</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: c.text }}>Insights</div>
+              </div>
+              <div onClick={() => onNavigate("rewards")}  style={{ flex: 1, backgroundColor: c.accentLight, borderRadius: 14, padding: "16px 14px", cursor: "pointer", textAlign: "center" }}>
+                <div style={{ fontSize: 22, marginBottom: 4 }}>★</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: c.accent }}>Rewards</div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function T3ScanScreen({ onNavigate }) {
+        const [step, setStep] = useState("ready");
+        return (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <NavHeader title="Scan Item" subtitle="Log waste for tracking" onBack={() => onNavigate("home")} />
+            <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 16 }}>
+              {step === "ready" && (
+                <>
+                  <div style={{ height: 260, background: "linear-gradient(180deg, #111 0%, #1a1a1a 100%)", borderRadius: 20, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+                    <div style={{ width: 180, height: 180, position: "relative" }}>
+                      {[{ top:0,left:0,borderTop:"3px solid #34D399",borderLeft:"3px solid #34D399" },{ top:0,right:0,borderTop:"3px solid #34D399",borderRight:"3px solid #34D399" },{ bottom:0,left:0,borderBottom:"3px solid #34D399",borderLeft:"3px solid #34D399" },{ bottom:0,right:0,borderBottom:"3px solid #34D399",borderRight:"3px solid #34D399" }].map((s, i) => (
+                        <div key={i} style={{ position: "absolute", width: 30, height: 30, borderRadius: 2, ...s }} />
+                      ))}
+                      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", fontSize: 13, color: "rgba(255,255,255,0.5)", textAlign: "center", lineHeight: 1.5 }}>Position item or<br/>bin QR code here</div>
+                    </div>
+                    <div style={{ position: "absolute", bottom: 16, display: "flex", gap: 24, fontSize: 12, color: "rgba(255,255,255,0.5)" }}>
+                      <span>📷 Camera</span><span>📱 QR Code</span><span>✏️ Manual</span>
+                    </div>
+                  </div>
+                  <button onClick={() => { setStep("scanning"); setTimeout(() => setStep("result"), 800); }} style={{ width: "100%", padding: "16px 0", background: `linear-gradient(135deg, ${c.primaryDark}, ${c.primary})`, color: "#fff", border: "none", borderRadius: 14, fontSize: 15, fontWeight: 600, cursor: "pointer", boxShadow: `0 4px 14px ${c.primary}40` }}>
+                    Simulate Scan
+                  </button>
+                </>
+              )}
+              {step === "scanning" && (
+                <div style={{ height: 300, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: 40, marginBottom: 12 }}>◎</div>
+                    <div style={{ fontSize: 15, fontWeight: 600, color: c.text }}>Scanning...</div>
+                    <div style={{ fontSize: 12, color: c.textMuted, marginTop: 4 }}>Identifying item</div>
+                  </div>
+                </div>
+              )}
+              {step === "result" && (
+                <>
+                  <div style={{ background: `linear-gradient(135deg, ${c.primaryLight}, #D1FAE5)`, borderRadius: 16, padding: 24, textAlign: "center" }}>
+                    <div style={{ width: 56, height: 56, borderRadius: 28, background: `linear-gradient(135deg, ${c.primaryDark}, ${c.primary})`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px", fontSize: 24, color: "#fff", boxShadow: `0 4px 14px ${c.primary}40` }}>✓</div>
+                    <div style={{ fontSize: 18, fontWeight: 700, color: c.text }}>Plastic Water Bottle</div>
+                    <div style={{ display: "inline-block", marginTop: 8, backgroundColor: `${c.primary}20`, color: c.primary, padding: "4px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600 }}>♻ Recyclable — BLUE Bin</div>
+                  </div>
+                  <div style={{ backgroundColor: c.card, borderRadius: 14, padding: 18, border: `1px solid ${c.border}` }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: c.text, marginBottom: 14 }}>Sorting Steps</div>
+                    {[{ step: "Remove cap and label", detail: "Caps go in landfill bin" },{ step: "Rinse container", detail: "Quick rinse is fine" },{ step: "Place in BLUE bin", detail: "Recycling pickup: Tuesday" }].map((s, i) => (
+                      <div key={i} style={{ display: "flex", gap: 12, padding: "10px 0", borderBottom: i < 2 ? `1px solid ${c.border}` : "none", alignItems: "flex-start" }}>
+                        <div style={{ width: 26, height: 26, borderRadius: 13, background: `linear-gradient(135deg, ${c.primaryLight}, #D1FAE5)`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: c.primary, flexShrink: 0 }}>{i + 1}</div>
+                        <div>
+                          <div style={{ fontSize: 13, fontWeight: 600, color: c.text }}>{s.step}</div>
+                          <div style={{ fontSize: 11, color: c.textMuted, marginTop: 2 }}>{s.detail}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ backgroundColor: c.purpleLight, borderRadius: 14, padding: 16, display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <div style={{ fontSize: 20, flexShrink: 0 }}>💡</div>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: c.purple }}>Eco Tip</div>
+                      <div style={{ fontSize: 12, color: c.textSec, marginTop: 4, lineHeight: 1.5 }}>Switch to a reusable water bottle and eliminate this waste entirely. Your building's lobby has a water refill station.</div>
+                    </div>
+                  </div>
+                  <div style={{ backgroundColor: c.accentLight, borderRadius: 14, padding: 16, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: c.text }}>Points Earned</div>
+                      <div style={{ fontSize: 11, color: c.textSec }}>80 more to Silver Level</div>
+                    </div>
+                    <div style={{ fontSize: 26, fontWeight: 700, color: c.accent }}>+5</div>
+                  </div>
+                  <button onClick={() => setStep("ready")} style={{ width: "100%", padding: "16px 0", background: `linear-gradient(135deg, ${c.primaryDark}, ${c.primary})`, color: "#fff", border: "none", borderRadius: 14, fontSize: 15, fontWeight: 600, cursor: "pointer" }}>
+                    Scan Another Item
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      function T3InsightsScreen({ onNavigate }) {
+        const [tab, setTab] = useState("overview");
+        return (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <NavHeader title="Insights" subtitle="Your environmental impact" onBack={() => onNavigate("home")} />
+            <div style={{ display: "flex", padding: "12px 20px 0", gap: 8 }}>
+              {["overview","trends","community"].map(t => (
+                <div key={t} onClick={() => setTab(t)} style={{ flex: 1, textAlign: "center", padding: "8px 0", borderRadius: 10, fontSize: 12, fontWeight: 600, cursor: "pointer", backgroundColor: tab === t ? c.primary : c.surface, color: tab === t ? "#fff" : c.textSec }}>
+                  {t.charAt(0).toUpperCase() + t.slice(1)}
+                </div>
+              ))}
+            </div>
+            <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 16 }}>
+              {tab === "overview" && (
+                <>
+                  <div style={{ backgroundColor: c.card, borderRadius: 14, padding: 18, border: `1px solid ${c.border}` }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: c.text }}>Recycling Rate</div>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: c.primary, backgroundColor: c.primaryLight, padding: "2px 8px", borderRadius: 10 }}>+5% this month</div>
+                    </div>
+                    <div style={{ fontSize: 36, fontWeight: 700, color: c.primary, margin: "8px 0" }}>57%</div>
+                    <ResponsiveContainer width="100%" height={100}>
+                      <AreaChart data={monthlyTrend}>
+                        <defs>
+                          <linearGradient id="rateGrad3" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%"  stopColor={c.primary} stopOpacity={0.2} />
+                            <stop offset="95%" stopColor={c.primary} stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <XAxis dataKey="month" tick={{ fontSize: 10, fill: c.textMuted }} axisLine={false} tickLine={false} />
+                        <YAxis hide domain={[30, 65]} />
+                        <Area type="monotone" dataKey="rate" stroke={c.primary} strokeWidth={2.5} fill="url(#rateGrad3)" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div style={{ backgroundColor: c.card, borderRadius: 14, padding: 18, border: `1px solid ${c.border}` }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: c.text, marginBottom: 12 }}>Waste Breakdown</div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <ResponsiveContainer width="50%" height={120}>
+                        <PieChart>
+                          <Pie data={pieData} dataKey="value" cx="50%" cy="50%" innerRadius={30} outerRadius={50}>
+                            {pieData.map((entry, i) => <Cell key={i} fill={entry.color} />)}
+                          </Pie>
+                        </PieChart>
+                      </ResponsiveContainer>
+                      <div style={{ flex: 1 }}>
+                        {pieData.map((d, i) => (
+                          <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                            <div style={{ width: 8, height: 8, borderRadius: 2, backgroundColor: d.color, flexShrink: 0 }} />
+                            <div style={{ fontSize: 11, color: c.textSec, flex: 1 }}>{d.name}</div>
+                            <div style={{ fontSize: 11, fontWeight: 700, color: c.text }}>{d.value}%</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+              {tab === "trends" && (
+                <>
+                  <div style={{ backgroundColor: c.card, borderRadius: 14, padding: 18, border: `1px solid ${c.border}` }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: c.text, marginBottom: 14 }}>Environmental Impact Over Time</div>
+                    <ResponsiveContainer width="100%" height={160}>
+                      <AreaChart data={impactData}>
+                        <defs>
+                          <linearGradient id="co2Grad3" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%"  stopColor={c.primary} stopOpacity={0.2} />
+                            <stop offset="95%" stopColor={c.primary} stopOpacity={0} />
+                          </linearGradient>
+                          <linearGradient id="waterGrad3" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%"  stopColor="#3B82F6" stopOpacity={0.2} />
+                            <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke={c.border} vertical={false} />
+                        <XAxis dataKey="month" tick={{ fontSize: 10, fill: c.textMuted }} axisLine={false} tickLine={false} />
+                        <YAxis hide />
+                        <Tooltip contentStyle={{ borderRadius: 8, border: `1px solid ${c.border}`, fontSize: 12 }} />
+                        <Area type="monotone" dataKey="co2"   stroke={c.primary} strokeWidth={2} fill="url(#co2Grad3)"   name="CO₂ (lbs)" />
+                        <Area type="monotone" dataKey="water" stroke="#3B82F6"   strokeWidth={2} fill="url(#waterGrad3)" name="Water (gal)" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div style={{ backgroundColor: c.card, borderRadius: 14, padding: 18, border: `1px solid ${c.border}` }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: c.text, marginBottom: 14 }}>Personalized Recommendations</div>
+                    {[{ icon:"🥡",title:"Start composting food scraps",impact:"Could reduce landfill by 30%",priority:"High"},{ icon:"📦",title:"Flatten cardboard before recycling",impact:"Saves 40% bin space",priority:"Medium"},{ icon:"🧴",title:"Check local cap recycling rules",impact:"Avoid contamination",priority:"Low"}].map((t, i) => (
+                      <div key={i} style={{ display: "flex", gap: 12, padding: "12px 0", borderBottom: i < 2 ? `1px solid ${c.border}` : "none" }}>
+                        <div style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: c.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0 }}>{t.icon}</div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontSize: 13, fontWeight: 600, color: c.text }}>{t.title}</div>
+                          <div style={{ fontSize: 11, color: c.textMuted, marginTop: 2 }}>{t.impact}</div>
+                        </div>
+                        <div style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 8, height: "fit-content", backgroundColor: t.priority==="High" ? "#FEE2E2" : t.priority==="Medium" ? c.accentLight : c.surface, color: t.priority==="High" ? "#DC2626" : t.priority==="Medium" ? c.accent : c.textMuted }}>{t.priority}</div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+              {tab === "community" && (
+                <>
+                  <div style={{ backgroundColor: c.card, borderRadius: 14, padding: 18, border: `1px solid ${c.border}` }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: c.text, marginBottom: 14 }}>Building Leaderboard</div>
+                    {leaderboard.map((b, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", marginBottom: 6, borderRadius: 10, backgroundColor: b.isYou ? c.primaryLight : "transparent", border: b.isYou ? `1px solid ${c.primary}30` : "1px solid transparent" }}>
+                        <div style={{ width: 28, height: 28, borderRadius: 14, backgroundColor: b.rank <= 3 ? c.accentLight : c.surface, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: b.rank <= 3 ? c.accent : c.textMuted }}>{b.rank}</div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontSize: 13, fontWeight: 600, color: c.text }}>{b.name} {b.isYou && <span style={{ fontSize: 10, color: c.primary }}>(You)</span>}</div>
+                        </div>
+                        <div style={{ textAlign: "right" }}>
+                          <div style={{ fontSize: 14, fontWeight: 700, color: c.text }}>{b.rate}%</div>
+                          <div style={{ fontSize: 10, fontWeight: 600, color: b.trend.startsWith("+") ? c.primary : "#DC2626" }}>{b.trend}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ background: `linear-gradient(135deg, ${c.primaryDark}, ${c.primary})`, borderRadius: 14, padding: 20, color: "#fff" }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>March Challenge</div>
+                    <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 12 }}>Reduce landfill waste by 20% to earn 100 bonus points</div>
+                    <div style={{ width: "100%", height: 8, backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 4, overflow: "hidden" }}>
+                      <div style={{ width: "65%", height: "100%", backgroundColor: "#34D399", borderRadius: 4 }} />
+                    </div>
+                    <div style={{ fontSize: 11, opacity: 0.7, marginTop: 6 }}>65% complete — 4 days remaining</div>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      function T3RewardsScreen({ onNavigate }) {
+        return (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <NavHeader title="Rewards" subtitle="320 points available" onBack={() => onNavigate("home")} />
+            <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ background: `linear-gradient(135deg, ${c.accentLight}, #FDE68A)`, borderRadius: 14, padding: 20 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                  <div>
+                    <div style={{ fontSize: 12, color: c.textSec }}>Current Level</div>
+                    <div style={{ fontSize: 22, fontWeight: 700, color: c.text }}>Bronze</div>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <div style={{ fontSize: 12, color: c.textSec }}>Next Level</div>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: c.accent }}>Silver (400 pts)</div>
+                  </div>
+                </div>
+                <div style={{ width: "100%", height: 8, backgroundColor: "rgba(0,0,0,0.1)", borderRadius: 4, marginTop: 14, overflow: "hidden" }}>
+                  <div style={{ width: "80%", height: "100%", background: `linear-gradient(90deg, ${c.accent}, #FBBF24)`, borderRadius: 4 }} />
+                </div>
+                <div style={{ fontSize: 11, color: c.textSec, marginTop: 6 }}>80 points to Silver</div>
+              </div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: c.text }}>Available Rewards</div>
+              {rewardItems.map((r, i) => (
+                <div key={i} style={{ backgroundColor: c.card, borderRadius: 14, padding: 16, border: `1px solid ${c.border}`, display: "flex", alignItems: "center", gap: 14, opacity: r.available ? 1 : 0.5 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: c.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>{r.icon}</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: c.text }}>{r.name}</div>
+                    <div style={{ fontSize: 12, color: c.textMuted, marginTop: 2 }}>{r.pts} points</div>
+                  </div>
+                  <div style={{ padding: "8px 16px", borderRadius: 10, fontSize: 12, fontWeight: 600, cursor: r.available ? "pointer" : "default", backgroundColor: r.available && r.pts <= 320 ? c.primary : c.surface, color: r.available && r.pts <= 320 ? "#fff" : c.textMuted }}>
+                    {r.available && r.pts <= 320 ? "Redeem" : r.available ? "Need more pts" : "Locked"}
+                  </div>
+                </div>
+              ))}
+              <div style={{ fontSize: 14, fontWeight: 700, color: c.text, marginTop: 4 }}>Recent Activity</div>
+              <div style={{ backgroundColor: c.card, borderRadius: 14, border: `1px solid ${c.border}`, overflow: "hidden" }}>
+                {[{ action: "Scanned plastic bottle", pts: "+5", date: "Today" },{ action: "Completed weekly streak", pts: "+20", date: "Yesterday" },{ action: "Redeemed coffee voucher", pts: "-200", date: "Mar 25" },{ action: "Referred a neighbor", pts: "+50", date: "Mar 22" }].map((h, i) => (
+                  <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderBottom: i < 3 ? `1px solid ${c.border}` : "none" }}>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 500, color: c.text }}>{h.action}</div>
+                      <div style={{ fontSize: 11, color: c.textMuted }}>{h.date}</div>
+                    </div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: h.pts.startsWith("+") ? c.primary : "#DC2626" }}>{h.pts}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function T3ProfileScreen({ onNavigate }) {
+        return (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <NavHeader title="Profile" onBack={() => onNavigate("home")} />
+            <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ textAlign: "center", padding: "8px 0" }}>
+                <div style={{ width: 72, height: 72, borderRadius: 24, background: `linear-gradient(135deg, ${c.primaryDark}, #34D399)`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto", fontSize: 24, fontWeight: 700, color: "#fff", boxShadow: `0 4px 14px ${c.primary}30` }}>AJ</div>
+                <div style={{ fontSize: 18, fontWeight: 700, color: c.text, marginTop: 12 }}>Alex Johnson</div>
+                <div style={{ fontSize: 13, color: c.textSec }}>Unit 4B — Greenway Apartments</div>
+                <div style={{ fontSize: 12, color: c.primary, fontWeight: 600, marginTop: 4 }}>Member since Jan 2026</div>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                {[{ label: "Items Scanned", value: "142", icon: "📱" },{ label: "Recycling Rate", value: "57%", icon: "♻" },{ label: "Points Earned", value: "520", icon: "⭐" },{ label: "CO₂ Saved", value: "26 lbs", icon: "🌍" }].map((s, i) => (
+                  <div key={i} style={{ backgroundColor: c.card, borderRadius: 12, padding: 14, border: `1px solid ${c.border}`, textAlign: "center" }}>
+                    <div style={{ fontSize: 20, marginBottom: 4 }}>{s.icon}</div>
+                    <div style={{ fontSize: 18, fontWeight: 700, color: c.text }}>{s.value}</div>
+                    <div style={{ fontSize: 11, color: c.textMuted, marginTop: 2 }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ backgroundColor: c.card, borderRadius: 14, border: `1px solid ${c.border}`, overflow: "hidden" }}>
+                {[{ label: "Notification Preferences", icon: "🔔" },{ label: "Linked Purchase Accounts", icon: "🔗" },{ label: "Privacy Settings", icon: "🔒" },{ label: "Help & Support", icon: "❓" }].map((item, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 16px", borderBottom: i < 3 ? `1px solid ${c.border}` : "none", cursor: "pointer" }}>
+                    <div style={{ fontSize: 18 }}>{item.icon}</div>
+                    <div style={{ fontSize: 13, fontWeight: 500, color: c.text, flex: 1 }}>{item.label}</div>
+                    <div style={{ fontSize: 14, color: c.textMuted }}>→</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function Tier3App() {
+        const [currentScreen, setCurrentScreen] = useState("home");
+        const renderScreen = () => {
+          switch (currentScreen) {
+            case "home":     return <T3HomeScreen     onNavigate={setCurrentScreen} />;
+            case "scan":     return <T3ScanScreen     onNavigate={setCurrentScreen} />;
+            case "insights": return <T3InsightsScreen onNavigate={setCurrentScreen} />;
+            case "rewards":  return <T3RewardsScreen  onNavigate={setCurrentScreen} />;
+            case "profile":  return <T3ProfileScreen  onNavigate={setCurrentScreen} />;
+            default:         return <T3HomeScreen     onNavigate={setCurrentScreen} />;
+          }
+        };
+        return (
+          <div style={{ width: 375, height: 720, backgroundColor: c.bg, borderRadius: 36, overflow: "hidden", boxShadow: "0 25px 80px rgba(0,0,0,0.18), 0 6px 20px rgba(0,0,0,0.12)", border: "8px solid #111", position: "relative", display: "flex", flexDirection: "column" }}>
+            {/* Notch */}
+            <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 150, height: 28, backgroundColor: "#111", borderRadius: "0 0 20px 20px", zIndex: 10 }} />
+            {/* Scrollable content area */}
+            <div style={{ flex: 1, overflowY: "auto", paddingTop: 28 }}>
+              {renderScreen()}
+            </div>
+            {/* Bottom tab bar */}
+            <TabBar active={currentScreen} onNavigate={setCurrentScreen} />
+          </div>
+        );
+      }
+
+      const root3 = ReactDOM.createRoot(document.getElementById('tier3-mount'));
+      root3.render(<Tier3App />);
+    })();
+  </script>
+
+</body>
+</html>

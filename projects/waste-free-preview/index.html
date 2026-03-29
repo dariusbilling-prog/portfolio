@@ -354,6 +354,66 @@
     </p>
   </footer>
 
+  <!-- ── Expiry gate ────────────────────────────────────────────────
+       Checks today's date against the expiry (3 days from send: Mar 31 2026).
+       If expired, renders a full-screen overlay so the prototype is unusable.
+       The page HTML is still present but visually inaccessible.
+  ─────────────────────────────────────────────────────────────────── -->
+  <script>
+    (function(){
+      var EXPIRY = new Date('2026-04-01T00:00:00'); // expires end of March 31
+      if (new Date() >= EXPIRY) {
+        document.body.style.overflow = 'hidden';
+        var overlay = document.createElement('div');
+        overlay.style.cssText = [
+          'position:fixed','inset:0','z-index:999999',
+          'background:rgba(10,10,10,0.97)',
+          'display:flex','flex-direction:column',
+          'align-items:center','justify-content:center',
+          'font-family:Inter,sans-serif','text-align:center','padding:40px',
+        ].join(';');
+        overlay.innerHTML = [
+          '<div style="font-size:36px;margin-bottom:20px">⏳</div>',
+          '<div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:12px">This preview has expired</div>',
+          '<div style="font-size:15px;color:rgba(255,255,255,0.55);max-width:380px;line-height:1.6;margin-bottom:28px">',
+            'This demo link was time-limited to 3 days.',
+            '<br>To continue the conversation, reach out directly.',
+          '</div>',
+          '<a href="mailto:dariusbilling@gmail.com" style="',
+            'display:inline-block;padding:14px 28px;',
+            'background:#fff;color:#111;border-radius:10px;',
+            'font-size:14px;font-weight:600;text-decoration:none;',
+          '">Contact Darius →</a>',
+        ].join('');
+        document.body.appendChild(overlay);
+      }
+    })();
+  </script>
+
+  <!-- ── Watermark — sticky bar at bottom of viewport ──────────────
+       Always visible. Makes forwarding the link harder to defend legally.
+       Uses pointer-events:none so it doesn't block scrolling or clicks.
+  ─────────────────────────────────────────────────────────────────── -->
+  <div id="watermark" style="
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 9998;
+    background: rgba(10,10,10,0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 9px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    pointer-events: none;
+    user-select: none;
+  ">
+    <span style="font-family:Inter,sans-serif;font-size:11px;font-weight:500;color:rgba(255,255,255,0.55);letter-spacing:0.04em;">
+      🔒 Demo prepared exclusively for Ben &nbsp;·&nbsp; Not for distribution &nbsp;·&nbsp; Expires March 31, 2026
+    </span>
+  </div>
+
   <!-- Dark mode toggle — same logic as main site -->
   <script>
     (function(){

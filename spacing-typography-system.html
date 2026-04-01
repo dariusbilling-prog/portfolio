@@ -232,7 +232,7 @@
        HERO
        ============================================ */
     .hero {
-      padding: var(--space-4) 0 var(--space-5);
+      padding: var(--space-4) 0 0;
     }
 
     .hero-label {
@@ -1923,18 +1923,20 @@
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-label">On This Page</div>
       <ul class="sidebar-nav" id="sidebarNav">
-        <li><a href="#context" data-section="context">Why We're Here</a></li>
+        <div class="sidebar-label" style="margin-top: 0;">Overview</div>
         <li><a href="#wireframes" data-section="wireframes">Wireframes vs UI</a></li>
         <div class="sidebar-divider"></div>
+        <div class="sidebar-label">Typography &amp; Spacing</div>
         <li><a href="#typography" data-section="typography">Typography System</a></li>
         <li><a href="#spacing" data-section="spacing">Spacing Scale</a></li>
         <li><a href="#how-spacing" data-section="how-spacing">How Spacing Works</a></li>
         <div class="sidebar-divider"></div>
+        <div class="sidebar-label">UI Examples</div>
         <li><a href="#service-example" data-section="service-example">Service Section</a></li>
         <li><a href="#blog-example" data-section="blog-example">Blog Card</a></li>
+        <li><a href="#screen-examples" data-section="screen-examples">Screen Examples</a></li>
         <div class="sidebar-divider"></div>
-        <li><a href="#screen-examples" data-section="screen-examples">Live Screen Examples</a></li>
-        <div class="sidebar-divider"></div>
+        <div class="sidebar-label">Reference</div>
         <li><a href="#fast-rule" data-section="fast-rule">Quick Rules</a></li>
         <li><a href="#hero-exception" data-section="hero-exception">Hero Exception</a></li>
         <li><a href="#closing" data-section="closing">Closing</a></li>
@@ -1951,22 +1953,6 @@
         <h1>Spacing &amp; Typography System</h1>
         <p class="hero-subtitle">A universal system for consistent spacing and type hierarchy across any project.</p>
         <p class="hero-note">This page defines the core spacing and typography rules that apply to every screen, section, and component. Use the sidebar to jump to any topic.</p>
-      </section>
-
-      <!-- WHY WE'RE HERE -->
-      <section id="context">
-        <div class="context-section">
-          <h3>Why We're Here</h3>
-          <p>We all want our pages to be consistent, efficient to build, and easy to maintain — so this is about aligning on a simple system we can all follow.</p>
-          <p>Assumptions around spacing and hierarchy from wireframes often lead to inconsistencies in implementation. Rather than going section by section, we can solve this faster by defining a few core rules and applying them universally.</p>
-          <p>Here's the plan:</p>
-          <ul class="agenda-list">
-            <li>Review 1-2 real examples together</li>
-            <li>Align on spacing and typography rules</li>
-            <li>Apply those rules consistently across every page and component</li>
-          </ul>
-          <p>If helpful, we can walk through one section live on desktop and mobile, then use that as the reference for everything else.</p>
-        </div>
       </section>
 
       <!-- WIREFRAMES VS UI -->

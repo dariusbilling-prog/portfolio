@@ -1,0 +1,3216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spacing & Typography System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poltawski+Nowy:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       CSS VARIABLES — THE SYSTEM
+       ============================================ */
+    :root {
+      --space-1: 8px;
+      --space-2: 16px;
+      --space-3: 24px;
+      --space-4: 32px;
+      --space-5: 48px;
+      --space-6: 80px;
+      --space-7: 120px;
+
+      --h1-desktop: 48px;
+      --h2-desktop: 38px;
+      --h3-desktop: 30px;
+      --h4-desktop: 24px;
+      --body-large: 18px;
+      --body: 16px;
+      --small: 14px;
+
+      --h1-tablet: 38px;
+      --h2-tablet: 30px;
+      --h3-tablet: 24px;
+      --h4-tablet: 20px;
+      --body-tablet: 16px;
+      --small-tablet: 14px;
+
+      --h1-mobile: 32px;
+      --h2-mobile: 26px;
+      --h3-mobile: 22px;
+      --h4-mobile: 18px;
+      --body-mobile: 16px;
+      --small-mobile: 14px;
+
+      --bg: #F2EDE4;
+      --bg-surface: #EAE4D9;
+      --bg-code: #E2DCD2;
+      --text-primary: #1A1A1F;
+      --text-secondary: #5A5A63;
+      --text-tertiary: #8A8A93;
+      --accent: #C94528;
+      --accent-subtle: rgba(201, 69, 40, 0.08);
+      --border: rgba(26, 26, 31, 0.12);
+      --border-strong: rgba(26, 26, 31, 0.2);
+      --annotation-bg: rgba(201, 69, 40, 0.06);
+      --spacing-indicator: #C94528;
+
+      --font-heading: 'Poltawski Nowy', Georgia, serif;
+      --font-body: 'Inter', sans-serif;
+      --font-nav: 'Work Sans', sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', monospace;
+
+      --sidebar-width: 220px;
+    }
+
+    /* ============================================
+       DARK MODE VARIABLES
+       ============================================ */
+    [data-theme="dark"] {
+      --bg: #1D1D1F;
+      --bg-surface: #343A3F;
+      --bg-code: #2A2A2E;
+      --text-primary: #F5F5F7;
+      --text-secondary: #98989D;
+      --text-tertiary: #86868B;
+      --accent: #FF6B50;
+      --accent-subtle: rgba(255, 107, 80, 0.1);
+      --border: rgba(245, 245, 247, 0.1);
+      --border-strong: rgba(245, 245, 247, 0.18);
+      --annotation-bg: rgba(255, 107, 80, 0.1);
+      --spacing-indicator: #FF6B50;
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: var(--body);
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg);
+    }
+
+    /* ============================================
+       TOP NAV BAR
+       ============================================ */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: var(--space-2) var(--space-4);
+    }
+
+    .top-nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      font-family: var(--font-nav);
+      font-size: var(--body-large);
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-page-title {
+      font-family: var(--font-body);
+      font-size: var(--small);
+      color: var(--text-tertiary);
+    }
+
+    /* ============================================
+       SIDEBAR + CONTENT LAYOUT
+       ============================================ */
+    .page-layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: 48px; /* clear fixed top nav */
+    }
+
+    /* ============================================
+       STICKY LEFT SIDEBAR NAV
+       ============================================ */
+    .sidebar {
+      position: sticky;
+      top: 60px; /* below fixed top nav */
+      height: calc(100vh - 60px);
+      padding: var(--space-5) var(--space-3) var(--space-5) var(--space-4);
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      /* Hide scrollbar but keep scrollable */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .sidebar::-webkit-scrollbar { display: none; }
+
+    .sidebar-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-tertiary);
+      margin-bottom: var(--space-2);
+      padding-left: var(--space-2);
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar-nav a {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      padding: 8px var(--space-2);
+      border-radius: 6px;
+      border-left: 2px solid transparent;
+      transition: all 0.2s ease;
+      line-height: 1.4;
+    }
+
+    .sidebar-nav a:hover {
+      color: var(--text-primary);
+      background: var(--accent-subtle);
+    }
+
+    .sidebar-nav a.active {
+      color: var(--text-primary);
+      font-weight: 600;
+      border-left-color: var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--border);
+      margin: var(--space-2) var(--space-2);
+    }
+
+    /* ============================================
+       MAIN CONTENT
+       ============================================ */
+    .main-content {
+      padding: var(--space-5) var(--space-5);
+      max-width: 960px;
+      min-height: 100vh;
+    }
+
+    section {
+      margin-bottom: var(--space-6);
+      scroll-margin-top: 80px; /* offset for fixed nav */
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      padding: var(--space-4) 0 var(--space-5);
+    }
+
+    .hero-label {
+      font-family: var(--font-body);
+      font-size: var(--small);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: var(--space-2);
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: var(--h1-desktop);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .hero-subtitle {
+      font-size: var(--body-large);
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin-bottom: var(--space-3);
+    }
+
+    .hero-note {
+      font-size: var(--small);
+      color: var(--text-tertiary);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       SECTION HEADERS
+       ============================================ */
+    .section-header {
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-number {
+      font-family: var(--font-mono);
+      font-size: var(--small);
+      color: var(--accent);
+      margin-bottom: var(--space-1);
+    }
+
+    .section-header h2 {
+      font-family: var(--font-heading);
+      font-size: var(--h2-desktop);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .section-desc {
+      font-size: var(--body);
+      color: var(--text-secondary);
+      margin-top: var(--space-1);
+      max-width: 640px;
+    }
+
+    /* ============================================
+       CONTEXT / MEETING NOTES
+       ============================================ */
+    .context-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .context-section h3 {
+      font-family: var(--font-heading);
+      font-size: var(--h3-desktop);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+      line-height: 1.2;
+    }
+
+    .context-section p {
+      font-size: var(--body);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--space-2);
+    }
+
+    .context-section p:last-child { margin-bottom: 0; }
+
+    .context-section .agenda-list {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-2) 0;
+    }
+
+    .context-section .agenda-list li {
+      font-size: var(--body);
+      color: var(--text-secondary);
+      padding: var(--space-1) 0;
+      padding-left: var(--space-3);
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .context-section .agenda-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    /* Wireframes vs UI */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      margin: var(--space-3) 0;
+    }
+
+    .compare-box {
+      padding: var(--space-3);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .compare-box.does {
+      background: rgba(201, 69, 40, 0.04);
+      border-color: rgba(201, 69, 40, 0.15);
+    }
+
+    .compare-box.does-not {
+      background: rgba(26, 26, 31, 0.03);
+    }
+
+    .compare-box-label {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: var(--space-2);
+    }
+
+    .compare-box.does .compare-box-label { color: var(--accent); }
+    .compare-box.does-not .compare-box-label { color: var(--text-tertiary); }
+
+    .compare-box ul { list-style: none; padding: 0; }
+
+    .compare-box ul li {
+      font-size: var(--body);
+      color: var(--text-secondary);
+      padding: 4px 0;
+      line-height: 1.5;
+    }
+
+    .compare-box.does ul li::before { content: '\2713\0020'; color: var(--accent); font-weight: 600; }
+    .compare-box.does-not ul li::before { content: '\2717\0020'; color: var(--text-tertiary); font-weight: 600; }
+
+    /* ============================================
+       TYPOGRAPHY SCALE
+       ============================================ */
+    .type-scale-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    .type-scale-column h3 {
+      font-family: var(--font-body);
+      font-size: var(--small);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: var(--space-3);
+    }
+
+    .type-sample {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-3);
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .type-sample:last-child { border-bottom: none; }
+
+    .type-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-tertiary);
+      min-width: 120px;
+      flex-shrink: 0;
+    }
+
+    .type-render {
+      font-family: var(--font-heading);
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .type-render.body-text {
+      font-family: var(--font-body);
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       SPACING SYSTEM
+       ============================================ */
+    .spacing-scale {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+    }
+
+    .spacing-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .spacing-label {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-secondary);
+      min-width: 80px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .spacing-bar {
+      height: 32px;
+      background: var(--accent);
+      opacity: 0.15;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .spacing-bar::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      height: 100%;
+      width: 4px;
+      background: var(--accent);
+      border-radius: 4px 0 0 4px;
+      opacity: 1;
+    }
+
+    .spacing-value {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    .spacing-rule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .spacing-rule {
+      padding: var(--space-3);
+      background: var(--bg-surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .spacing-rule-value {
+      font-family: var(--font-mono);
+      font-size: var(--small);
+      color: var(--accent);
+      margin-bottom: var(--space-1);
+    }
+
+    .spacing-rule p {
+      font-size: var(--small);
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       HOW SPACING WORKS
+       ============================================ */
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+
+    .example-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: var(--space-4);
+    }
+
+    .example-card-title {
+      font-family: var(--font-body);
+      font-size: var(--small);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: var(--space-3);
+    }
+
+    .example-card-subtitle {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-bottom: var(--space-3);
+    }
+
+    .anno-text-heading {
+      font-family: var(--font-heading);
+      font-size: var(--h4-desktop);
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .anno-text-subheading {
+      font-family: var(--font-body);
+      font-size: var(--body-large);
+      color: var(--text-secondary);
+    }
+
+    .anno-text-body {
+      font-family: var(--font-body);
+      font-size: var(--body);
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .spacing-indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 6px 0;
+    }
+
+    .spacing-indicator-line {
+      flex: 1;
+      height: 1px;
+      background: var(--spacing-indicator);
+      opacity: 0.3;
+    }
+
+    .spacing-indicator-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      white-space: nowrap;
+      background: var(--annotation-bg);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .placeholder-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-1);
+    }
+
+    .placeholder-card {
+      height: 48px;
+      background: var(--bg-code);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .placeholder-section {
+      padding: var(--space-3);
+      background: var(--bg-code);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .placeholder-section span {
+      font-size: var(--small);
+      color: var(--text-tertiary);
+    }
+
+    /* ============================================
+       UI EXAMPLES
+       ============================================ */
+    .ui-example-wrapper {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: var(--space-4);
+      position: relative;
+      margin-bottom: var(--space-4);
+    }
+
+    .ui-example-label {
+      position: absolute;
+      top: calc(-1 * var(--space-2));
+      left: var(--space-3);
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .ui-example-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-4);
+      align-items: start;
+    }
+
+    .ui-annotations {
+      min-width: 140px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .annotation-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--annotation-bg);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border-left: 2px solid var(--accent);
+    }
+
+    .annotation-tag .arrow { color: var(--accent); opacity: 0.5; }
+
+    /* Two-column: annotated vs clean */
+    .split-example {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .split-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: var(--space-3) var(--space-3) var(--space-4);
+      position: relative;
+    }
+
+    .split-panel-label {
+      position: absolute;
+      top: calc(-1 * 12px);
+      left: var(--space-3);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .split-panel-label.annotated {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .split-panel-label.clean {
+      background: var(--text-primary);
+      color: var(--bg);
+    }
+
+    /* Clean mock spacing — exact system values, nothing extra */
+    .clean-service-mock > * { margin: 0; padding: 0; }
+    .clean-service-mock .service-mock-title { margin: 0 0 16px 0; }
+    .clean-service-mock .service-mock-desc { margin: 0 0 32px 0; }
+    .clean-service-mock .service-mock-cards { margin: 0 0 80px 0; }
+
+    .clean-blog-card .blog-card-content > * { margin: 0; padding: 0; }
+    .clean-blog-card .blog-card-content h4 { margin: 0 0 8px 0; }
+    .clean-blog-card .blog-card-content .blog-card-meta { margin: 0 0 8px 0; }
+    .clean-blog-card .blog-card-content .blog-card-desc { margin: 0; }
+
+    @media (max-width: 768px) {
+      .split-example { grid-template-columns: 1fr; }
+    }
+
+    /* Hero exception callout */
+    .exception-callout {
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+      background: var(--annotation-bg);
+      position: relative;
+    }
+
+    .exception-callout-badge {
+      position: absolute;
+      top: -13px;
+      left: var(--space-3);
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .exception-callout h3 {
+      font-family: var(--font-heading);
+      font-size: var(--h3-desktop);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+      line-height: 1.2;
+    }
+
+    .exception-callout p {
+      font-size: var(--body);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--space-2);
+    }
+
+    .exception-callout p:last-child { margin-bottom: 0; }
+
+    .exception-list {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-2) 0;
+    }
+
+    .exception-list li {
+      font-size: var(--body);
+      color: var(--text-secondary);
+      padding: 6px 0 6px var(--space-3);
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .exception-list li::before {
+      content: '\2713';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .service-mock-title {
+      font-family: var(--font-heading);
+      font-size: var(--h3-desktop);
+      color: var(--text-primary);
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .service-mock-desc {
+      font-size: var(--body);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 480px;
+    }
+
+    .service-mock-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+    }
+
+    .service-mock-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: var(--space-3);
+    }
+
+    .service-mock-card h4 {
+      font-family: var(--font-body);
+      font-size: var(--body);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .service-mock-card p {
+      font-size: var(--small);
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
+
+    .blog-card-mock {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      max-width: 340px;
+    }
+
+    .blog-card-image {
+      width: 100%;
+      height: 180px;
+      background: var(--bg-code);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .blog-card-image span { font-size: var(--small); color: var(--text-tertiary); }
+
+    .blog-card-content { padding: var(--space-3); }
+
+    .blog-card-content h4 {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .blog-card-meta { font-size: 13px; color: var(--text-tertiary); }
+
+    .blog-card-desc {
+      font-size: var(--small);
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       FAST RULE
+       ============================================ */
+    .fast-rule {
+      background: var(--text-primary);
+      color: var(--bg);
+      border-radius: 12px;
+      padding: var(--space-5);
+      margin-top: var(--space-5);
+    }
+
+    .fast-rule h2 {
+      font-family: var(--font-heading);
+      font-size: var(--h3-desktop);
+      font-weight: 400;
+      color: var(--bg);
+      margin-bottom: var(--space-1);
+    }
+
+    .fast-rule-subtitle {
+      font-size: var(--small);
+      color: rgba(242, 237, 228, 0.5);
+      margin-bottom: var(--space-4);
+    }
+
+    .fast-rule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+    }
+
+    .fast-rule-item {
+      padding: var(--space-3);
+      background: rgba(242, 237, 228, 0.06);
+      border: 1px solid rgba(242, 237, 228, 0.1);
+      border-radius: 8px;
+    }
+
+    .fast-rule-value {
+      font-family: var(--font-mono);
+      font-size: var(--h3-desktop);
+      color: var(--accent);
+      font-weight: 400;
+      margin-bottom: var(--space-1);
+    }
+
+    .fast-rule-item p {
+      font-size: var(--body);
+      color: rgba(242, 237, 228, 0.7);
+      line-height: 1.5;
+    }
+
+    .fast-rule-item .rule-label {
+      font-size: var(--small);
+      font-weight: 600;
+      color: var(--bg);
+      margin-bottom: 4px;
+    }
+
+    /* Closing */
+    .closing-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: var(--space-5);
+      text-align: center;
+      margin-top: var(--space-5);
+    }
+
+    .closing-section h3 {
+      font-family: var(--font-heading);
+      font-size: var(--h3-desktop);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .closing-section p {
+      font-size: var(--body);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* ============================================
+       CODE BLOCK
+       ============================================ */
+    .code-block {
+      background: var(--text-primary);
+      color: #D4D4D8;
+      border-radius: 8px;
+      padding: var(--space-3);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin-top: var(--space-3);
+    }
+
+    .code-block .comment { color: #6A6A73; }
+    .code-block .property { color: #93C5FD; }
+    .code-block .value { color: #FCA5A5; }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .page-footer {
+      padding: var(--space-5) 0;
+      border-top: 1px solid var(--border);
+      margin-top: var(--space-7);
+      text-align: center;
+    }
+
+    .page-footer p {
+      font-size: var(--small);
+      color: var(--text-tertiary);
+    }
+
+    /* ============================================
+       THEME TOGGLE
+       ============================================ */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .theme-toggle-label {
+      font-family: var(--font-nav);
+      font-size: var(--small);
+      color: var(--text-secondary);
+      white-space: nowrap;
+      transition: color 0.3s ease;
+    }
+
+    .theme-toggle-track {
+      width: 48px;
+      height: 28px;
+      background: #B0B0B8;
+      border-radius: 14px;
+      position: relative;
+      transition: background 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle-thumb {
+      width: 22px;
+      height: 22px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    /* Dark mode toggle state */
+    [data-theme="dark"] .theme-toggle-track {
+      background: #5B9BD5;
+    }
+
+    [data-theme="dark"] .theme-toggle-thumb {
+      left: 23px;
+      background: linear-gradient(135deg, #FF9A76, #FF6B50, #E8534A);
+      box-shadow: 0 0 8px rgba(255, 107, 80, 0.4);
+    }
+
+    /* Dark mode overrides for specific components */
+    [data-theme="dark"] .code-block {
+      background: #0D0D0F;
+      border: 1px solid rgba(245, 245, 247, 0.06);
+    }
+
+    [data-theme="dark"] .fast-rule {
+      background: #F5F5F7;
+      color: #1D1D1F;
+    }
+
+    [data-theme="dark"] .fast-rule h2 {
+      color: #1D1D1F;
+    }
+
+    [data-theme="dark"] .fast-rule-subtitle {
+      color: rgba(29, 29, 31, 0.5);
+    }
+
+    [data-theme="dark"] .fast-rule-item {
+      background: rgba(29, 29, 31, 0.06);
+      border-color: rgba(29, 29, 31, 0.1);
+    }
+
+    [data-theme="dark"] .fast-rule-item p {
+      color: rgba(29, 29, 31, 0.6);
+    }
+
+    [data-theme="dark"] .fast-rule-item .rule-label {
+      color: #1D1D1F;
+    }
+
+    [data-theme="dark"] .top-nav {
+      background: #1D1D1F;
+      border-bottom-color: rgba(245, 245, 247, 0.08);
+    }
+
+    [data-theme="dark"] .sidebar {
+      border-right-color: rgba(245, 245, 247, 0.08);
+    }
+
+    [data-theme="dark"] .type-render {
+      color: #85CEFF;
+    }
+
+    [data-theme="dark"] .type-render.body-text {
+      color: var(--text-primary);
+    }
+
+    [data-theme="dark"] .compare-box.does {
+      background: rgba(255, 107, 80, 0.06);
+      border-color: rgba(255, 107, 80, 0.2);
+    }
+
+    [data-theme="dark"] .compare-box.does-not {
+      background: rgba(245, 245, 247, 0.03);
+    }
+
+    @media (max-width: 1024px) {
+      [data-theme="dark"] .sidebar {
+        background: #1D1D1F;
+      }
+    }
+
+    /* ============================================
+       MOBILE RESPONSIVE
+       ============================================ */
+    @media (max-width: 1024px) {
+      .page-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: var(--sidebar-width);
+        height: calc(100vh - 60px);
+        background: var(--bg);
+        z-index: 90;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        border-right: 1px solid var(--border);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.2);
+        z-index: 89;
+      }
+
+      .sidebar-overlay.open { display: block; }
+
+      .menu-toggle {
+        display: flex !important;
+      }
+
+      .main-content {
+        padding: var(--space-4) var(--space-3);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: var(--h1-mobile); }
+      .section-header h2 { font-size: var(--h2-mobile); }
+      .type-scale-group { grid-template-columns: 1fr !important; gap: var(--space-4); }
+      .examples-grid { grid-template-columns: 1fr; }
+      .spacing-rule-grid { grid-template-columns: 1fr !important; }
+      .fast-rule-grid { grid-template-columns: 1fr; }
+      .service-mock-cards { grid-template-columns: 1fr; }
+      .ui-example-inner { grid-template-columns: 1fr; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .fast-rule { padding: var(--space-4); }
+      .fast-rule-value { font-size: var(--h4-desktop); }
+      .context-section { padding: var(--space-4); }
+      .closing-section { padding: var(--space-4); }
+    }
+
+    /* ============================================
+       SCREEN MOCKUP TABS
+       ============================================ */
+    .screen-examples-section {
+      margin-bottom: var(--space-6);
+    }
+
+    .mockup-group {
+      margin-bottom: var(--space-6);
+    }
+
+    .mockup-group-label {
+      font-family: var(--font-body);
+      font-size: var(--small);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: var(--space-2);
+    }
+
+    .mockup-group-title {
+      font-family: var(--font-heading);
+      font-size: var(--h4-desktop);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .tab-toggle {
+      display: inline-flex;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px;
+      margin-bottom: var(--space-3);
+      gap: 2px;
+    }
+
+    .tab-toggle-btn {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      background: transparent;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-toggle-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .tab-toggle-btn.active {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Hero Mockup — Desktop */
+    .hero-mockup {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #111;
+    }
+
+    .hero-mockup-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(0,0,0,0.85);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-mockup-nav .mock-logo {
+      font-family: var(--font-nav);
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-mockup-nav .mock-nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero-mockup-nav .mock-nav-links span {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .hero-mockup-nav .mock-nav-cta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .hero-mockup-nav .mock-nav-cta span {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .hero-mockup-nav .mock-nav-cta .cta-btn-small {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--accent);
+      padding: 8px 16px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .hero-mockup-body {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      text-align: left;
+      padding: 80px 48px;
+      background: linear-gradient(180deg, rgba(17,17,17,0.35) 0%, rgba(17,17,17,0.65) 100%),
+                  linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+
+    .hero-mockup-body .hero-mock-h1 {
+      font-family: var(--font-heading);
+      font-size: 52px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 640px;
+    }
+
+    .hero-mockup-body .hero-mock-sub {
+      font-family: var(--font-body);
+      font-size: 18px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      max-width: 560px;
+    }
+
+    .hero-mockup-body .hero-mock-cta {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      border: 2px solid #fff;
+      padding: 16px 32px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Hero Mockup — Mobile */
+    .hero-mockup-mobile {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #111;
+      max-width: 390px;
+    }
+
+    .hero-mockup-mobile .mobile-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: rgba(0,0,0,0.85);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-mockup-mobile .mobile-nav .mock-logo {
+      font-family: var(--font-nav);
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .hero-mockup-mobile .mobile-nav .hamburger {
+      width: 22px;
+      height: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-mockup-mobile .mobile-nav .hamburger span {
+      display: block;
+      height: 2px;
+      background: #fff;
+      border-radius: 1px;
+    }
+
+    .hero-mockup-mobile .mobile-hero-body {
+      position: relative;
+      min-height: 440px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      text-align: left;
+      padding: 48px 24px;
+      background: linear-gradient(180deg, rgba(17,17,17,0.35) 0%, rgba(17,17,17,0.65) 100%),
+                  linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+
+    .hero-mockup-mobile .hero-mock-h1 {
+      font-family: var(--font-heading);
+      font-size: 36px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-mockup-mobile .hero-mock-sub {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+    }
+
+    .hero-mockup-mobile .mobile-cta-group {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .hero-mockup-mobile .mobile-cta-group .cta-primary {
+      flex: 1;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--accent);
+      padding: 16px 16px;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .hero-mockup-mobile .mobile-cta-group .cta-secondary {
+      flex: 1;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.5);
+      padding: 16px 16px;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    /* Spacing annotations overlay */
+    .mock-spacing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .mock-spacing-indicator .line {
+      flex: 1;
+      height: 1px;
+      border-top: 1px dashed var(--accent);
+      opacity: 0.5;
+    }
+
+    .mock-spacing-indicator .label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      background: rgba(201, 69, 40, 0.15);
+      padding: 2px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    [data-theme="dark"] .mock-spacing-indicator .label {
+      background: rgba(255, 107, 80, 0.2);
+    }
+
+    .mock-vertical-spacer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+    }
+
+    .mock-vertical-spacer .vline {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      border-left: 1px dashed var(--accent);
+      opacity: 0.3;
+    }
+
+    /* Slider / Card Carousel Mockup */
+    .slider-mockup {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #1A1A1F;
+      padding: 48px;
+    }
+
+    .slider-mockup .slider-header-h2 {
+      font-family: var(--font-heading);
+      font-size: 42px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+    }
+
+    .slider-mockup .slider-header-sub {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.5;
+    }
+
+    .slider-mockup .slider-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .slider-mockup .slider-card {
+      border-radius: 8px;
+      overflow: hidden;
+      background: #2A2A2F;
+    }
+
+    .slider-mockup .slider-card .card-img {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, #3a3a4a 0%, #2a2a3a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .slider-mockup .slider-card .card-label {
+      padding: 16px;
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      text-align: center;
+    }
+
+    .slider-mockup .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-mockup .slider-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .slider-mockup .slider-dots .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+    }
+
+    .slider-mockup .slider-dots .dot.active {
+      background: #fff;
+    }
+
+    .slider-mockup .slider-arrows {
+      display: flex;
+      gap: 16px;
+    }
+
+    .slider-mockup .slider-arrows .arrow {
+      font-size: 22px;
+      color: rgba(255,255,255,0.5);
+      cursor: default;
+    }
+
+    /* Slider — Mobile */
+    .slider-mockup-mobile {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #1A1A1F;
+      max-width: 390px;
+      padding: 32px 24px;
+    }
+
+    .slider-mockup-mobile .slider-header-h2 {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+    }
+
+    .slider-mockup-mobile .slider-header-sub {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.5;
+    }
+
+    .slider-mockup-mobile .mobile-card-scroll {
+      display: flex;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .slider-mockup-mobile .slider-card {
+      border-radius: 8px;
+      overflow: hidden;
+      background: #2A2A2F;
+      min-width: 260px;
+      flex-shrink: 0;
+    }
+
+    .slider-mockup-mobile .slider-card .card-img {
+      width: 100%;
+      height: 280px;
+      background: linear-gradient(135deg, #3a3a4a 0%, #2a2a3a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .slider-mockup-mobile .slider-card .card-label {
+      padding: 16px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      text-align: center;
+    }
+
+    .slider-mockup-mobile .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slider-mockup-mobile .slider-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .slider-mockup-mobile .slider-dots .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+    }
+
+    .slider-mockup-mobile .slider-dots .dot.active {
+      background: #fff;
+    }
+
+    .slider-mockup-mobile .slider-arrows {
+      display: flex;
+      gap: 16px;
+    }
+
+    .slider-mockup-mobile .slider-arrows .arrow {
+      font-size: 22px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Content Section Mockup — Header > Body > Cards */
+    .content-section-mockup {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #1A1A1F;
+      padding: 80px 80px;
+    }
+
+    .content-section-mockup .cs-eyebrow {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .content-section-mockup .cs-h2 {
+      font-family: var(--font-heading);
+      font-size: 52px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 700px;
+    }
+
+    .content-section-mockup .cs-body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      max-width: 700px;
+    }
+
+    .content-section-mockup .cs-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .content-section-mockup .cs-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-section-mockup .cs-card .cs-card-img {
+      width: 100%;
+      height: 240px;
+      background: linear-gradient(135deg, #3a3a4a 0%, #2a2a3a 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .content-section-mockup .cs-card .cs-card-title {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .content-section-mockup .cs-card .cs-card-desc {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+    }
+
+    .device-pair {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-5);
+      align-items: start;
+    }
+
+    /* Mobile Nav Dropdown Mockup */
+    .mobile-nav-mockup {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #1A1A1F;
+      max-width: 390px;
+    }
+
+    .mobile-nav-mockup .mnav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 24px;
+    }
+
+    .mobile-nav-mockup .mnav-header .mock-logo {
+      font-family: var(--font-nav);
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.04em;
+    }
+
+    .mobile-nav-mockup .mnav-header .close-icon {
+      font-size: 28px;
+      color: #fff;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .mobile-nav-mockup .mnav-links {
+      padding: 0 24px;
+    }
+
+    .mobile-nav-mockup .mnav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .mobile-nav-mockup .mnav-link .chevron {
+      font-size: 20px;
+      color: rgba(255,255,255,0.35);
+      font-weight: 300;
+    }
+
+    .mobile-nav-mockup .mnav-footer {
+      padding: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: #fff;
+    }
+
+    .mobile-nav-mockup .mnav-cta-btn {
+      display: block;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: #1A1A1F;
+      border: 2px solid #1A1A1F;
+      padding: 16px;
+      border-radius: 4px;
+    }
+
+    .mobile-nav-mockup .mnav-contact {
+      text-align: center;
+      padding-top: 16px;
+    }
+
+    .mobile-nav-mockup .mnav-contact div {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: #1A1A1F;
+      padding: 4px 0;
+    }
+
+    .mobile-nav-mockup .mnav-contact .mnav-email {
+      font-size: 14px;
+      color: rgba(26,26,31,0.5);
+    }
+
+    @media (max-width: 900px) {
+      .device-pair {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Menu toggle button — hidden on desktop */
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    .menu-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIXED TOP NAV -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <div style="display: flex; align-items: center; gap: var(--space-2);">
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <span class="nav-brand">Design System</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-4);">
+        <span class="nav-page-title">Spacing & Typography System</span>
+        <div class="theme-toggle" id="themeToggle" role="button" aria-label="Toggle dark mode">
+          <span class="theme-toggle-label" id="themeLabel">Dark Mode</span>
+          <div class="theme-toggle-track">
+            <div class="theme-toggle-thumb"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SIDEBAR OVERLAY (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- PAGE LAYOUT -->
+  <div class="page-layout">
+
+    <!-- LEFT SIDEBAR NAV -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-label">On This Page</div>
+      <ul class="sidebar-nav" id="sidebarNav">
+        <li><a href="#context" data-section="context">Why We're Here</a></li>
+        <li><a href="#wireframes" data-section="wireframes">Wireframes vs UI</a></li>
+        <div class="sidebar-divider"></div>
+        <li><a href="#typography" data-section="typography">Typography System</a></li>
+        <li><a href="#spacing" data-section="spacing">Spacing Scale</a></li>
+        <li><a href="#how-spacing" data-section="how-spacing">How Spacing Works</a></li>
+        <div class="sidebar-divider"></div>
+        <li><a href="#service-example" data-section="service-example">Service Section</a></li>
+        <li><a href="#blog-example" data-section="blog-example">Blog Card</a></li>
+        <div class="sidebar-divider"></div>
+        <li><a href="#screen-examples" data-section="screen-examples">Live Screen Examples</a></li>
+        <div class="sidebar-divider"></div>
+        <li><a href="#fast-rule" data-section="fast-rule">Quick Rules</a></li>
+        <li><a href="#hero-exception" data-section="hero-exception">Hero Exception</a></li>
+        <li><a href="#closing" data-section="closing">Closing</a></li>
+        <li><a href="#css-vars" data-section="css-vars">CSS Variables</a></li>
+      </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- HERO -->
+      <section class="hero" id="hero">
+        <div class="hero-label">Design System Reference</div>
+        <h1>Spacing &amp; Typography System</h1>
+        <p class="hero-subtitle">A universal system for consistent spacing and type hierarchy across any project.</p>
+        <p class="hero-note">This page defines the core spacing and typography rules that apply to every screen, section, and component. Use the sidebar to jump to any topic.</p>
+      </section>
+
+      <!-- WHY WE'RE HERE -->
+      <section id="context">
+        <div class="context-section">
+          <h3>Why We're Here</h3>
+          <p>We all want our pages to be consistent, efficient to build, and easy to maintain — so this is about aligning on a simple system we can all follow.</p>
+          <p>Assumptions around spacing and hierarchy from wireframes often lead to inconsistencies in implementation. Rather than going section by section, we can solve this faster by defining a few core rules and applying them universally.</p>
+          <p>Here's the plan:</p>
+          <ul class="agenda-list">
+            <li>Review 1-2 real examples together</li>
+            <li>Align on spacing and typography rules</li>
+            <li>Apply those rules consistently across every page and component</li>
+          </ul>
+          <p>If helpful, we can walk through one section live on desktop and mobile, then use that as the reference for everything else.</p>
+        </div>
+      </section>
+
+      <!-- WIREFRAMES VS UI -->
+      <section id="wireframes">
+        <div class="section-header">
+          <h2>Wireframes vs UI</h2>
+          <p class="section-desc">This is an important distinction — wireframes get us aligned on structure, but they don't define the final details.</p>
+        </div>
+
+        <div class="compare-grid">
+          <div class="compare-box does">
+            <div class="compare-box-label">Wireframes Define</div>
+            <ul>
+              <li>Structure</li>
+              <li>Hierarchy</li>
+              <li>Intent</li>
+            </ul>
+          </div>
+          <div class="compare-box does-not">
+            <div class="compare-box-label">Wireframes Do Not Define</div>
+            <ul>
+              <li>Exact spacing</li>
+              <li>Exact font sizes</li>
+              <li>Final visual consistency</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="context-section" style="margin-top: var(--space-4);">
+          <p>That's why we need this system — it fills the gap between what the wireframes show and what actually gets built. Instead of guessing spacing or font sizes from the wireframe, you use the rules below. The goal is to avoid mixing sizes across sections.</p>
+          <p>For typography specifically, we're standardizing on a fixed scale (you'll see it in the next section). This means every heading, body text, and small label uses a specific size from the scale — no in-between values.</p>
+        </div>
+      </section>
+
+      <!-- TYPOGRAPHY SYSTEM -->
+      <section id="typography">
+        <div class="section-header">
+          <div class="section-number">01</div>
+          <h2>Typography System</h2>
+          <p class="section-desc">To keep things consistent, we're standardizing typography using a fixed scale. The goal is to avoid mixing sizes across sections. Every heading, body text, and label picks from this list — nothing in between.</p>
+        </div>
+
+        <div class="type-scale-group">
+          <div class="type-scale-column">
+            <h3>Desktop</h3>
+            <div class="type-sample">
+              <span class="type-label">H1 — 48px</span>
+              <span class="type-render" style="font-size: 48px;">Heading One</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">H2 — 38px</span>
+              <span class="type-render" style="font-size: 38px;">Heading Two</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">H3 — 30px</span>
+              <span class="type-render" style="font-size: 30px;">Heading Three</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">H4 — 24px</span>
+              <span class="type-render" style="font-size: 24px;">Heading Four</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">Body L — 18px</span>
+              <span class="type-render body-text" style="font-size: 18px;">Body Large Text</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">Body — 16px</span>
+              <span class="type-render body-text" style="font-size: 16px;">Body Text</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">Small — 14px</span>
+              <span class="type-render body-text" style="font-size: 14px;">Small Text</span>
+            </div>
+          </div>
+
+          <div class="type-scale-column">
+            <h3>Tablet</h3>
+            <div class="type-sample">
+              <span class="type-label">H1 — 38px</span>
+              <span class="type-render" style="font-size: 38px;">Heading One</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">H2 — 30px</span>
+              <span class="type-render" style="font-size: 30px;">Heading Two</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">H3 — 24px</span>
+              <span class="type-render" style="font-size: 24px;">Heading Three</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">H4 — 20px</span>
+              <span class="type-render" style="font-size: 20px;">Heading Four</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">Body — 16px</span>
+              <span class="type-render body-text" style="font-size: 16px;">Body Text</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">Small — 14px</span>
+              <span class="type-render body-text" style="font-size: 14px;">Small Text</span>
+            </div>
+          </div>
+
+          <div class="type-scale-column">
+            <h3>Mobile</h3>
+            <div class="type-sample">
+              <span class="type-label">H1 — 32px</span>
+              <span class="type-render" style="font-size: 32px;">Heading One</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">H2 — 26px</span>
+              <span class="type-render" style="font-size: 26px;">Heading Two</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">H3 — 22px</span>
+              <span class="type-render" style="font-size: 22px;">Heading Three</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">H4 — 18px</span>
+              <span class="type-render" style="font-size: 18px;">Heading Four</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">Body — 16px</span>
+              <span class="type-render body-text" style="font-size: 16px;">Body Text</span>
+            </div>
+            <div class="type-sample">
+              <span class="type-label">Small — 14px</span>
+              <span class="type-render body-text" style="font-size: 14px;">Small Text</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPACING SCALE -->
+      <section id="spacing">
+        <div class="section-header">
+          <div class="section-number">02</div>
+          <h2>Spacing Scale</h2>
+          <p class="section-desc">Only these values should be used — nothing else. Spacing reflects hierarchy: elements that belong together get smaller spacing, separate sections get larger spacing.</p>
+        </div>
+
+        <div class="spacing-scale">
+          <div class="spacing-item">
+            <span class="spacing-label">8px</span>
+            <div class="spacing-bar" style="width: 8px;"></div>
+            <span class="spacing-value">--space-1</span>
+          </div>
+          <div class="spacing-item">
+            <span class="spacing-label">16px</span>
+            <div class="spacing-bar" style="width: 32px;"></div>
+            <span class="spacing-value">--space-2</span>
+          </div>
+          <div class="spacing-item">
+            <span class="spacing-label">24px</span>
+            <div class="spacing-bar" style="width: 64px;"></div>
+            <span class="spacing-value">--space-3</span>
+          </div>
+          <div class="spacing-item">
+            <span class="spacing-label">32px</span>
+            <div class="spacing-bar" style="width: 100px;"></div>
+            <span class="spacing-value">--space-4</span>
+          </div>
+          <div class="spacing-item">
+            <span class="spacing-label">48px</span>
+            <div class="spacing-bar" style="width: 160px;"></div>
+            <span class="spacing-value">--space-5</span>
+          </div>
+          <div class="spacing-item">
+            <span class="spacing-label">80px</span>
+            <div class="spacing-bar" style="width: 260px;"></div>
+            <span class="spacing-value">--space-6</span>
+          </div>
+          <div class="spacing-item">
+            <span class="spacing-label">120px</span>
+            <div class="spacing-bar" style="width: 380px;"></div>
+            <span class="spacing-value">--space-7</span>
+          </div>
+        </div>
+
+        <div class="spacing-rule-grid" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="spacing-rule">
+            <div class="spacing-rule-value">8-16px</div>
+            <p>Tight relationships — title to subtitle, label to value, meta to description.</p>
+          </div>
+          <div class="spacing-rule">
+            <div class="spacing-rule-value">24-32px</div>
+            <p>Related content — heading to content block, text to cards, between groups.</p>
+          </div>
+          <div class="spacing-rule">
+            <div class="spacing-rule-value">48-80px</div>
+            <p>Section separation — between content sections. Gives breathing room.</p>
+          </div>
+          <div class="spacing-rule">
+            <div class="spacing-rule-value">80-120px</div>
+            <p>Major breaks — between top-level page areas. Creates the premium, editorial feel.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW SPACING WORKS -->
+      <section id="how-spacing">
+        <div class="section-header">
+          <div class="section-number">03</div>
+          <h2>How Spacing Works</h2>
+          <p class="section-desc">Spacing should reflect hierarchy. Here are three common patterns you'll use on almost every section — tight groups, content separation, and section breaks.</p>
+        </div>
+
+        <div class="examples-grid">
+          <div class="example-card">
+            <div class="example-card-title">A. Tight Group</div>
+            <div class="example-card-subtitle">Text Stack — 16px between elements</div>
+            <div>
+              <div class="anno-text-heading">Page Heading</div>
+              <div class="spacing-indicator">
+                <span class="spacing-indicator-line"></span>
+                <span class="spacing-indicator-label">16px</span>
+                <span class="spacing-indicator-line"></span>
+              </div>
+              <div class="anno-text-subheading">Supporting Subheading</div>
+              <div class="spacing-indicator">
+                <span class="spacing-indicator-line"></span>
+                <span class="spacing-indicator-label">16px</span>
+                <span class="spacing-indicator-line"></span>
+              </div>
+              <div class="anno-text-body">Body text that provides additional context and detail below the heading stack.</div>
+            </div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-card-title">B. Content Separation</div>
+            <div class="example-card-subtitle">Text to Content — 32px gap</div>
+            <div>
+              <div class="anno-text-heading" style="font-size: 20px;">Section Title</div>
+              <div style="margin-top: 8px;">
+                <div class="anno-text-body">Description text for this content area.</div>
+              </div>
+              <div class="spacing-indicator">
+                <span class="spacing-indicator-line"></span>
+                <span class="spacing-indicator-label">32px</span>
+                <span class="spacing-indicator-line"></span>
+              </div>
+              <div class="placeholder-cards">
+                <div class="placeholder-card"></div>
+                <div class="placeholder-card"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-card-title">C. Section Separation</div>
+            <div class="example-card-subtitle">Between sections — 80px gap</div>
+            <div>
+              <div class="placeholder-section"><span>Section A</span></div>
+              <div class="spacing-indicator">
+                <span class="spacing-indicator-line"></span>
+                <span class="spacing-indicator-label">80px</span>
+                <span class="spacing-indicator-line"></span>
+              </div>
+              <div class="placeholder-section"><span>Section B</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICE SECTION EXAMPLE -->
+      <section id="service-example">
+        <div class="section-header">
+          <div class="section-number">04</div>
+          <h2>Real Example — Service Section</h2>
+          <p class="section-desc">How spacing rules apply to a typical service section with title, description, and cards.</p>
+        </div>
+
+        <div class="split-example">
+          <!-- LEFT: Annotated -->
+          <div class="split-panel">
+            <div class="split-panel-label annotated">With Spacing Notes</div>
+            <div class="service-mock-title">Our Services</div>
+            <div class="spacing-indicator" style="max-width: 180px;">
+              <span class="spacing-indicator-line"></span>
+              <span class="spacing-indicator-label">16px</span>
+              <span class="spacing-indicator-line"></span>
+            </div>
+            <div class="service-mock-desc">We provide comprehensive design and development solutions tailored to your business goals.</div>
+            <div class="spacing-indicator" style="max-width: 180px;">
+              <span class="spacing-indicator-line"></span>
+              <span class="spacing-indicator-label">32px</span>
+              <span class="spacing-indicator-line"></span>
+            </div>
+            <div class="service-mock-cards" style="grid-template-columns: 1fr 1fr;">
+              <div class="service-mock-card">
+                <h4>UX Design</h4>
+                <p>User research, wireframes, and prototyping.</p>
+              </div>
+              <div class="service-mock-card">
+                <h4>UI Design</h4>
+                <p>Visual design systems and high-fidelity screens.</p>
+              </div>
+            </div>
+            <div class="spacing-indicator" style="max-width: 180px;">
+              <span class="spacing-indicator-line"></span>
+              <span class="spacing-indicator-label">80px</span>
+              <span class="spacing-indicator-line"></span>
+            </div>
+            <div style="padding: 16px; background: var(--bg-code); border-radius: 6px; text-align: center;">
+              <span style="font-size: 14px; color: var(--text-tertiary);">Next Section</span>
+            </div>
+          </div>
+
+          <!-- RIGHT: Clean (what it actually looks like) -->
+          <div class="split-panel">
+            <div class="split-panel-label clean">What It Looks Like</div>
+            <div class="clean-service-mock">
+              <div class="service-mock-title">Our Services</div>
+              <div class="service-mock-desc">We provide comprehensive design and development solutions tailored to your business goals.</div>
+              <div class="service-mock-cards" style="grid-template-columns: 1fr 1fr;">
+                <div class="service-mock-card">
+                  <h4>UX Design</h4>
+                  <p>User research, wireframes, and prototyping.</p>
+                </div>
+                <div class="service-mock-card">
+                  <h4>UI Design</h4>
+                  <p>Visual design systems and high-fidelity screens.</p>
+                </div>
+              </div>
+              <div style="padding: 16px; background: var(--bg-code); border-radius: 6px; text-align: center; margin-top: 80px;">
+                <span style="font-size: 14px; color: var(--text-tertiary);">Next Section</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BLOG CARD EXAMPLE -->
+      <section id="blog-example">
+        <div class="section-header">
+          <div class="section-number">05</div>
+          <h2>Real Example — Blog Card</h2>
+          <p class="section-desc">Spacing within a card component — tighter values for closely related content.</p>
+        </div>
+
+        <div class="split-example">
+          <!-- LEFT: Annotated -->
+          <div class="split-panel">
+            <div class="split-panel-label annotated">With Spacing Notes</div>
+            <div class="blog-card-mock" style="max-width: 100%;">
+              <div class="blog-card-image"><span>Featured Image</span></div>
+              <div class="blog-card-content">
+                <div class="spacing-indicator" style="max-width: 140px;">
+                  <span class="spacing-indicator-line"></span>
+                  <span class="spacing-indicator-label">16px</span>
+                  <span class="spacing-indicator-line"></span>
+                </div>
+                <h4>Article Title Goes Here</h4>
+                <div class="spacing-indicator" style="max-width: 140px;">
+                  <span class="spacing-indicator-line"></span>
+                  <span class="spacing-indicator-label">8px</span>
+                  <span class="spacing-indicator-line"></span>
+                </div>
+                <div class="blog-card-meta">Apr 1, 2026 &middot; 5 min read</div>
+                <div class="spacing-indicator" style="max-width: 140px;">
+                  <span class="spacing-indicator-line"></span>
+                  <span class="spacing-indicator-label">8-16px</span>
+                  <span class="spacing-indicator-line"></span>
+                </div>
+                <div class="blog-card-desc">A brief description of the article content that gives readers a preview.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Clean -->
+          <div class="split-panel">
+            <div class="split-panel-label clean">What It Looks Like</div>
+            <div class="blog-card-mock clean-blog-card" style="max-width: 100%;">
+              <div class="blog-card-image"><span>Featured Image</span></div>
+              <div class="blog-card-content" style="padding-top: 16px;">
+                <h4>Article Title Goes Here</h4>
+                <div class="blog-card-meta">Apr 1, 2026 &middot; 5 min read</div>
+                <div class="blog-card-desc">A brief description of the article content that gives readers a preview.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIVE SCREEN EXAMPLES -->
+      <section id="screen-examples" class="screen-examples-section">
+        <div class="section-header">
+          <div class="section-number">05</div>
+          <h2>Live Screen Examples</h2>
+          <p class="section-desc">Real hero section examples showing the spacing system in action. Toggle annotations on and off to see how the system creates the final result.</p>
+        </div>
+
+        <!-- ========== DESKTOP HERO ========== -->
+        <div class="mockup-group">
+          <div class="mockup-group-label">Desktop</div>
+          <div class="mockup-group-title">Hero Section</div>
+
+          <div class="tab-toggle" data-tab-group="desktop-hero">
+            <button class="tab-toggle-btn active" data-tab="clean">Clean View</button>
+            <button class="tab-toggle-btn" data-tab="annotated">Show Measurements</button>
+          </div>
+
+          <!-- CLEAN (no measurements) -->
+          <div class="tab-content active" data-tab-group="desktop-hero" data-tab-panel="clean">
+            <div class="hero-mockup">
+              <div class="hero-mockup-body">
+                <div class="hero-mock-h1">Your Primary Headline Goes Here</div>
+                <div style="height:16px;"></div>
+                <div class="hero-mock-sub">A supporting subtitle that expands on the headline with a brief value proposition or description.</div>
+                <div style="height:32px;"></div>
+                <div class="hero-mock-cta">Call to Action</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ANNOTATED (measurements shown) -->
+          <div class="tab-content" data-tab-group="desktop-hero" data-tab-panel="annotated">
+            <div class="hero-mockup">
+              <div class="hero-mockup-body">
+                <!-- TOP PADDING: 80px -->
+                <div class="mock-spacing-indicator" style="position:absolute; top:0; left:48px; right:48px;">
+                  <span class="line"></span>
+                  <span class="label">80px — top padding</span>
+                  <span class="line"></span>
+                </div>
+
+                <div class="hero-mock-h1">Your Primary Headline Goes Here</div>
+
+                <!-- H1 → SUBTITLE: 16px -->
+                <div class="mock-spacing-indicator" style="padding: 6px 0;">
+                  <span class="line"></span>
+                  <span class="label">16px — title → subtitle</span>
+                  <span class="line"></span>
+                </div>
+
+                <div class="hero-mock-sub">A supporting subtitle that expands on the headline with a brief value proposition or description.</div>
+
+                <!-- SUBTITLE → CTA: 32px -->
+                <div class="mock-spacing-indicator" style="padding: 16px 0;">
+                  <span class="line"></span>
+                  <span class="label">32px — subtitle → CTA</span>
+                  <span class="line"></span>
+                </div>
+
+                <div class="hero-mock-cta">Call to Action</div>
+
+                <!-- CTA → BOTTOM: 80px -->
+                <div class="mock-spacing-indicator" style="position:absolute; bottom:0; left:48px; right:48px;">
+                  <span class="line"></span>
+                  <span class="label">80px — hero bottom padding</span>
+                  <span class="line"></span>
+                </div>
+
+                <!-- LEFT: side padding annotation -->
+                <div style="position:absolute; top:50%; left:8px; transform:translateY(-50%); writing-mode:vertical-lr; text-orientation:mixed;">
+                  <span style="font-family:var(--font-mono); font-size:10px; color:var(--accent); background:rgba(201,69,40,0.15); padding:3px 5px; border-radius:3px;">48px pad</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== MOBILE HERO ========== -->
+        <div class="mockup-group">
+          <div class="mockup-group-label">Mobile</div>
+          <div class="mockup-group-title">Hero Section</div>
+
+          <div class="tab-toggle" data-tab-group="mobile-hero">
+            <button class="tab-toggle-btn active" data-tab="clean">Clean View</button>
+            <button class="tab-toggle-btn" data-tab="annotated">Show Measurements</button>
+          </div>
+
+          <!-- CLEAN -->
+          <div class="tab-content active" data-tab-group="mobile-hero" data-tab-panel="clean">
+            <div class="hero-mockup-mobile">
+              <div class="mobile-nav">
+                <div class="mock-logo">Brand Name</div>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+              </div>
+              <div class="mobile-hero-body">
+                <div class="hero-mock-h1">Mobile Headline Here</div>
+                <div style="height:16px;"></div>
+                <div class="hero-mock-sub">A concise mobile subtitle that communicates the core offering in one or two lines.</div>
+                <div style="height:32px;"></div>
+                <div class="mobile-cta-group">
+                  <div class="cta-primary">Get Started</div>
+                  <div class="cta-secondary">555.000.0000</div>
+                </div>
+                <div style="height:16px;"></div>
+                <div style="font-family:var(--font-body); font-size:12px; color:rgba(255,255,255,0.4);">City, State</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ANNOTATED -->
+          <div class="tab-content" data-tab-group="mobile-hero" data-tab-panel="annotated">
+            <div class="hero-mockup-mobile">
+              <div class="mobile-nav">
+                <div class="mock-logo">Brand Name</div>
+                <div class="hamburger"><span></span><span></span><span></span></div>
+              </div>
+              <div class="mobile-hero-body" style="gap:0;">
+                <!-- NAV → CONTENT: 48px -->
+                <div class="mock-spacing-indicator" style="position:absolute; top:0; left:20px; right:20px;">
+                  <span class="line"></span>
+                  <span class="label">48px — top</span>
+                  <span class="line"></span>
+                </div>
+
+                <div class="hero-mock-h1">Mobile Headline Here</div>
+
+                <!-- H1 → SUBTITLE: 16px -->
+                <div class="mock-spacing-indicator" style="padding:6px 0;">
+                  <span class="line"></span>
+                  <span class="label">16px</span>
+                  <span class="line"></span>
+                </div>
+
+                <div class="hero-mock-sub">A concise mobile subtitle that communicates the core offering in one or two lines.</div>
+
+                <!-- SUBTITLE → CTA: 32px -->
+                <div class="mock-spacing-indicator" style="padding:16px 0;">
+                  <span class="line"></span>
+                  <span class="label">32px</span>
+                  <span class="line"></span>
+                </div>
+
+                <div class="mobile-cta-group">
+                  <div class="cta-primary">Get Started</div>
+                  <div class="cta-secondary">555.000.0000</div>
+                </div>
+
+                <!-- CTA → ADDRESS: 16px -->
+                <div class="mock-spacing-indicator" style="padding:6px 0;">
+                  <span class="line"></span>
+                  <span class="label">16px</span>
+                  <span class="line"></span>
+                </div>
+
+                <div style="font-family:var(--font-body); font-size:12px; color:rgba(255,255,255,0.4);">City, State</div>
+
+                <!-- BOTTOM: 48px -->
+                <div class="mock-spacing-indicator" style="position:absolute; bottom:0; left:20px; right:20px;">
+                  <span class="line"></span>
+                  <span class="label">48px — bottom</span>
+                  <span class="line"></span>
+                </div>
+
+                <!-- LEFT: side padding -->
+                <div style="position:absolute; top:50%; left:4px; transform:translateY(-50%); writing-mode:vertical-lr;">
+                  <span style="font-family:var(--font-mono); font-size:10px; color:var(--accent); background:rgba(201,69,40,0.15); padding:2px 4px; border-radius:3px;">24px</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== MOBILE NAV DROPDOWN ========== -->
+        <div class="mockup-group">
+          <div class="mockup-group-label">Mobile</div>
+          <div class="mockup-group-title">Navigation Dropdown</div>
+
+          <div class="tab-toggle" data-tab-group="mobile-nav">
+            <button class="tab-toggle-btn active" data-tab="clean">Clean View</button>
+            <button class="tab-toggle-btn" data-tab="annotated">Show Measurements</button>
+          </div>
+
+          <!-- CLEAN -->
+          <div class="tab-content active" data-tab-group="mobile-nav" data-tab-panel="clean">
+            <div class="mobile-nav-mockup">
+              <div class="mnav-header">
+                <div class="mock-logo">BRAND NAME</div>
+                <div class="close-icon">&times;</div>
+              </div>
+              <div class="mnav-links">
+                <div class="mnav-link">Services <span class="chevron">&#8250;</span></div>
+                <div class="mnav-link">Products <span class="chevron">&#8250;</span></div>
+                <div class="mnav-link">About</div>
+                <div class="mnav-link">Portfolio</div>
+                <div class="mnav-link">Company <span class="chevron">&#8250;</span></div>
+              </div>
+              <div class="mnav-footer">
+                <div class="mnav-cta-btn">Get Started</div>
+                <div class="mnav-contact">
+                  <div>(555) 000-0000</div>
+                  <div class="mnav-email">info@example.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ANNOTATED -->
+          <div class="tab-content" data-tab-group="mobile-nav" data-tab-panel="annotated">
+            <div class="mobile-nav-mockup" style="position:relative;">
+              <div class="mnav-header">
+                <div class="mock-logo">BRAND NAME</div>
+                <div class="close-icon">&times;</div>
+              </div>
+
+              <!-- HEADER → LINKS: spacing annotation -->
+              <div style="padding: 0 24px;">
+                <div class="mock-spacing-indicator">
+                  <span class="line"></span>
+                  <span class="label">24px — header padding</span>
+                  <span class="line"></span>
+                </div>
+              </div>
+
+              <div class="mnav-links">
+                <div class="mnav-link">Services <span class="chevron">&#8250;</span></div>
+
+                <div class="mock-spacing-indicator" style="padding: 0;">
+                  <span class="line"></span>
+                  <span class="label">16px — link padding (top + bottom)</span>
+                  <span class="line"></span>
+                </div>
+
+                <div class="mnav-link">Products <span class="chevron">&#8250;</span></div>
+                <div class="mnav-link">About</div>
+                <div class="mnav-link">Portfolio</div>
+                <div class="mnav-link">Company <span class="chevron">&#8250;</span></div>
+              </div>
+
+              <!-- LINKS → FOOTER divider annotation -->
+              <div style="padding: 0 24px;">
+                <div class="mock-spacing-indicator">
+                  <span class="line"></span>
+                  <span class="label">border — section divider</span>
+                  <span class="line"></span>
+                </div>
+              </div>
+
+              <div class="mnav-footer">
+                <div class="mnav-cta-btn">Get Started</div>
+
+                <div class="mock-spacing-indicator" style="padding: 6px 0 0;">
+                  <span class="line"></span>
+                  <span class="label">16px — CTA → contact</span>
+                  <span class="line"></span>
+                </div>
+
+                <div class="mnav-contact">
+                  <div>(555) 000-0000</div>
+                  <div class="mnav-email">info@example.com</div>
+                </div>
+              </div>
+
+              <!-- LEFT: side padding -->
+              <div style="position:absolute; top:50%; left:4px; transform:translateY(-50%); writing-mode:vertical-lr;">
+                <span style="font-family:var(--font-mono); font-size:10px; color:var(--accent); background:rgba(201,69,40,0.15); padding:2px 4px; border-radius:3px;">24px</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== DESKTOP SLIDER GALLERY ========== -->
+        <div class="mockup-group">
+          <div class="mockup-group-label">Desktop</div>
+          <div class="mockup-group-title">Card Carousel / Slider Section</div>
+
+          <div class="tab-toggle" data-tab-group="desktop-slider">
+            <button class="tab-toggle-btn active" data-tab="clean">Clean View</button>
+            <button class="tab-toggle-btn" data-tab="annotated">Show Measurements</button>
+          </div>
+
+          <!-- CLEAN -->
+          <div class="tab-content active" data-tab-group="desktop-slider" data-tab-panel="clean">
+            <div class="slider-mockup">
+              <div class="slider-header-h2">Section Heading Goes Here</div>
+              <div style="height:16px;"></div>
+              <div class="slider-header-sub">Supporting subtitle with additional context for this section</div>
+              <div style="height:32px;"></div>
+              <div class="slider-cards">
+                <div class="slider-card">
+                  <div class="card-img">Image</div>
+                  <div class="card-label">Card Title One</div>
+                </div>
+                <div class="slider-card">
+                  <div class="card-img">Image</div>
+                  <div class="card-label">Card Title Two</div>
+                </div>
+                <div class="slider-card">
+                  <div class="card-img">Image</div>
+                  <div class="card-label">Card Title Three</div>
+                </div>
+              </div>
+              <div style="height:32px;"></div>
+              <div class="slider-controls">
+                <div class="slider-dots">
+                  <div class="dot active"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </div>
+                <div class="slider-arrows">
+                  <span class="arrow">&larr;</span>
+                  <span class="arrow">&rarr;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ANNOTATED -->
+          <div class="tab-content" data-tab-group="desktop-slider" data-tab-panel="annotated">
+            <div class="slider-mockup" style="position:relative;">
+              <div class="slider-header-h2">Section Heading Goes Here</div>
+
+              <!-- H2 → SUBTITLE: 16px -->
+              <div class="mock-spacing-indicator" style="padding:6px 0;">
+                <span class="line"></span>
+                <span class="label">16px — heading → subtitle</span>
+                <span class="line"></span>
+              </div>
+
+              <div class="slider-header-sub">Supporting subtitle with additional context for this section</div>
+
+              <!-- SUBTITLE → CARDS: 32px -->
+              <div class="mock-spacing-indicator" style="padding:16px 0;">
+                <span class="line"></span>
+                <span class="label">32px — subtitle → cards</span>
+                <span class="line"></span>
+              </div>
+
+              <div class="slider-cards">
+                <div class="slider-card">
+                  <div class="card-img">Image</div>
+                  <div class="card-label">Card Title One</div>
+                </div>
+                <div class="slider-card" style="position:relative;">
+                  <div class="card-img">Image</div>
+                  <!-- Image → Label annotation -->
+                  <div style="position:absolute; right:-4px; top:50%; transform:translateX(100%) translateY(-50%); writing-mode:vertical-lr;">
+                    <span style="font-family:var(--font-mono); font-size:10px; color:var(--accent); background:rgba(201,69,40,0.15); padding:2px 5px; border-radius:3px;">16px card gap</span>
+                  </div>
+                  <div class="card-label">Card Title One</div>
+                </div>
+                <div class="slider-card">
+                  <div class="card-img">Image</div>
+                  <div class="card-label">Card Title Three</div>
+                </div>
+              </div>
+
+              <!-- CARDS → CONTROLS: 32px -->
+              <div class="mock-spacing-indicator" style="padding:16px 0;">
+                <span class="line"></span>
+                <span class="label">32px — cards → controls</span>
+                <span class="line"></span>
+              </div>
+
+              <div class="slider-controls">
+                <div class="slider-dots">
+                  <div class="dot active"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </div>
+                <div class="slider-arrows">
+                  <span class="arrow">&larr;</span>
+                  <span class="arrow">&rarr;</span>
+                </div>
+              </div>
+
+              <!-- Section padding annotation -->
+              <div class="mock-spacing-indicator" style="position:absolute; top:0; left:0; right:0;">
+                <span class="line"></span>
+                <span class="label">48px — section padding</span>
+                <span class="line"></span>
+              </div>
+              <div class="mock-spacing-indicator" style="position:absolute; bottom:0; left:0; right:0;">
+                <span class="line"></span>
+                <span class="label">48px — section padding</span>
+                <span class="line"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== MOBILE SLIDER GALLERY ========== -->
+        <div class="mockup-group">
+          <div class="mockup-group-label">Mobile</div>
+          <div class="mockup-group-title">Card Carousel / Slider Section</div>
+
+          <div class="tab-toggle" data-tab-group="mobile-slider">
+            <button class="tab-toggle-btn active" data-tab="clean">Clean View</button>
+            <button class="tab-toggle-btn" data-tab="annotated">Show Measurements</button>
+          </div>
+
+          <!-- CLEAN -->
+          <div class="tab-content active" data-tab-group="mobile-slider" data-tab-panel="clean">
+            <div class="slider-mockup-mobile">
+              <div class="slider-header-h2">Section Heading Goes Here</div>
+              <div style="height:16px;"></div>
+              <div class="slider-header-sub">Supporting subtitle with additional context</div>
+              <div style="height:32px;"></div>
+              <div class="mobile-card-scroll">
+                <div class="slider-card">
+                  <div class="card-img">Image</div>
+                  <div class="card-label">Card Title One</div>
+                </div>
+                <div class="slider-card" style="opacity:0.4;">
+                  <div class="card-img">Image</div>
+                  <div class="card-label">Card Title Two</div>
+                </div>
+              </div>
+              <div style="height:32px;"></div>
+              <div class="slider-controls">
+                <div class="slider-dots">
+                  <div class="dot active"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </div>
+                <div class="slider-arrows">
+                  <span class="arrow">&larr;</span>
+                  <span class="arrow">&rarr;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ANNOTATED -->
+          <div class="tab-content" data-tab-group="mobile-slider" data-tab-panel="annotated">
+            <div class="slider-mockup-mobile" style="position:relative;">
+              <div class="slider-header-h2">Section Heading Goes Here</div>
+
+              <!-- H2 → SUBTITLE: 12px (tighter on mobile) -->
+              <div class="mock-spacing-indicator" style="padding:4px 0;">
+                <span class="line"></span>
+                <span class="label">16px — heading → subtitle</span>
+                <span class="line"></span>
+              </div>
+
+              <div class="slider-header-sub">Supporting subtitle with additional context</div>
+
+              <!-- SUBTITLE → CARDS: 24px -->
+              <div class="mock-spacing-indicator" style="padding:16px 0;">
+                <span class="line"></span>
+                <span class="label">32px — subtitle → cards</span>
+                <span class="line"></span>
+              </div>
+
+              <div class="mobile-card-scroll">
+                <div class="slider-card" style="position:relative;">
+                  <div class="card-img">Image</div>
+                  <div class="card-label">Card Title One</div>
+                  <!-- Card gap annotation -->
+                  <div style="position:absolute; right:-4px; top:50%; transform:translateX(100%) translateY(-50%); writing-mode:vertical-lr;">
+                    <span style="font-family:var(--font-mono); font-size:10px; color:var(--accent); background:rgba(201,69,40,0.15); padding:2px 4px; border-radius:3px;">16px</span>
+                  </div>
+                </div>
+                <div class="slider-card" style="opacity:0.4;">
+                  <div class="card-img">Image</div>
+                  <div class="card-label">Card Title Two</div>
+                </div>
+              </div>
+
+              <!-- CARDS → CONTROLS: 24px -->
+              <div class="mock-spacing-indicator" style="padding:16px 0;">
+                <span class="line"></span>
+                <span class="label">32px — cards → controls</span>
+                <span class="line"></span>
+              </div>
+
+              <div class="slider-controls">
+                <div class="slider-dots">
+                  <div class="dot active"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </div>
+                <div class="slider-arrows">
+                  <span class="arrow">&larr;</span>
+                  <span class="arrow">&rarr;</span>
+                </div>
+              </div>
+
+              <!-- Side padding -->
+              <div style="position:absolute; top:50%; left:4px; transform:translateY(-50%); writing-mode:vertical-lr;">
+                <span style="font-family:var(--font-mono); font-size:10px; color:var(--accent); background:rgba(201,69,40,0.15); padding:2px 4px; border-radius:3px;">24px</span>
+              </div>
+
+              <!-- Top/bottom padding -->
+              <div class="mock-spacing-indicator" style="position:absolute; top:0; left:24px; right:24px;">
+                <span class="line"></span>
+                <span class="label">32px — top pad</span>
+                <span class="line"></span>
+              </div>
+              <div class="mock-spacing-indicator" style="position:absolute; bottom:0; left:24px; right:24px;">
+                <span class="line"></span>
+                <span class="label">32px — bottom pad</span>
+                <span class="line"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== DESKTOP CONTENT SECTION ========== -->
+        <div class="mockup-group">
+          <div class="mockup-group-label">Desktop</div>
+          <div class="mockup-group-title">Content Section — Header, Body &amp; Cards</div>
+
+          <div class="tab-toggle" data-tab-group="desktop-content">
+            <button class="tab-toggle-btn active" data-tab="clean">Clean View</button>
+            <button class="tab-toggle-btn" data-tab="annotated">Show Measurements</button>
+          </div>
+
+          <!-- CLEAN -->
+          <div class="tab-content active" data-tab-group="desktop-content" data-tab-panel="clean">
+            <div class="content-section-mockup">
+              <div class="cs-eyebrow">Eyebrow Label</div>
+              <div style="height:8px;"></div>
+              <div class="cs-h2">Section Heading Built for Multiple Lines</div>
+              <div style="height:16px;"></div>
+              <div class="cs-body">A paragraph of body copy that supports the heading and provides context. This typically runs 2-3 lines on desktop and gives the reader enough information to understand the section before reaching the cards below.</div>
+              <div style="height:48px;"></div>
+              <div class="cs-cards">
+                <div class="cs-card">
+                  <div class="cs-card-img">Image</div>
+                  <div style="height:16px;"></div>
+                  <div class="cs-card-title">Card Title One</div>
+                  <div style="height:8px;"></div>
+                  <div class="cs-card-desc">Supporting description that explains this card's content in a sentence or two.</div>
+                </div>
+                <div class="cs-card">
+                  <div class="cs-card-img">Image</div>
+                  <div style="height:16px;"></div>
+                  <div class="cs-card-title">Card Title Two</div>
+                  <div style="height:8px;"></div>
+                  <div class="cs-card-desc">Supporting description that explains this card's content in a sentence or two.</div>
+                </div>
+                <div class="cs-card">
+                  <div class="cs-card-img">Image</div>
+                  <div style="height:16px;"></div>
+                  <div class="cs-card-title">Card Title Three</div>
+                  <div style="height:8px;"></div>
+                  <div class="cs-card-desc">Supporting description that explains this card's content in a sentence or two.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ANNOTATED -->
+          <div class="tab-content" data-tab-group="desktop-content" data-tab-panel="annotated">
+            <div class="content-section-mockup" style="position:relative;">
+
+              <div class="cs-eyebrow">Eyebrow Label</div>
+
+              <!-- EYEBROW → H2: 8px -->
+              <div class="mock-spacing-indicator" style="padding:2px 0;">
+                <span class="line"></span>
+                <span class="label">8px — eyebrow → heading</span>
+                <span class="line"></span>
+              </div>
+
+              <div class="cs-h2">Section Heading Built for Multiple Lines</div>
+
+              <!-- H2 → BODY: 16px -->
+              <div class="mock-spacing-indicator" style="padding:6px 0;">
+                <span class="line"></span>
+                <span class="label">16px — heading → body</span>
+                <span class="line"></span>
+              </div>
+
+              <div class="cs-body">A paragraph of body copy that supports the heading and provides context. This typically runs 2-3 lines on desktop and gives the reader enough information to understand the section before reaching the cards below.</div>
+
+              <!-- BODY → CARDS: 48px -->
+              <div class="mock-spacing-indicator" style="padding:24px 0;">
+                <span class="line"></span>
+                <span class="label">48px — body text → card grid</span>
+                <span class="line"></span>
+              </div>
+
+              <div class="cs-cards">
+                <div class="cs-card">
+                  <div class="cs-card-img">Image</div>
+                  <!-- IMG → TITLE: 16px -->
+                  <div class="mock-spacing-indicator" style="padding:6px 0;">
+                    <span class="line"></span>
+                    <span class="label">16px</span>
+                    <span class="line"></span>
+                  </div>
+                  <div class="cs-card-title">Card Title One</div>
+                  <!-- TITLE → DESC: 8px -->
+                  <div class="mock-spacing-indicator" style="padding:2px 0;">
+                    <span class="line"></span>
+                    <span class="label">8px</span>
+                    <span class="line"></span>
+                  </div>
+                  <div class="cs-card-desc">Supporting description that explains this card's content in a sentence or two.</div>
+                </div>
+                <div class="cs-card" style="position:relative;">
+                  <div class="cs-card-img">Image</div>
+                  <div style="height:16px;"></div>
+                  <div class="cs-card-title">Card Title Two</div>
+                  <div style="height:8px;"></div>
+                  <div class="cs-card-desc">Supporting description that explains this card's content in a sentence or two.</div>
+                  <!-- Card gap annotation -->
+                  <div style="position:absolute; left:-18px; top:50%; transform:translateY(-50%); writing-mode:vertical-lr;">
+                    <span style="font-family:var(--font-mono); font-size:10px; color:var(--accent); background:rgba(201,69,40,0.15); padding:2px 5px; border-radius:3px;">32px gap</span>
+                  </div>
+                </div>
+                <div class="cs-card">
+                  <div class="cs-card-img">Image</div>
+                  <div style="height:16px;"></div>
+                  <div class="cs-card-title">Card Title Three</div>
+                  <div style="height:8px;"></div>
+                  <div class="cs-card-desc">Supporting description that explains this card's content in a sentence or two.</div>
+                </div>
+              </div>
+
+              <!-- Section padding annotations -->
+              <div class="mock-spacing-indicator" style="position:absolute; top:0; left:0; right:0;">
+                <span class="line"></span>
+                <span class="label">80px — section top padding</span>
+                <span class="line"></span>
+              </div>
+              <div class="mock-spacing-indicator" style="position:absolute; bottom:0; left:0; right:0;">
+                <span class="line"></span>
+                <span class="label">80px — section bottom padding</span>
+                <span class="line"></span>
+              </div>
+              <!-- Side padding -->
+              <div style="position:absolute; top:50%; left:8px; transform:translateY(-50%); writing-mode:vertical-lr; text-orientation:mixed;">
+                <span style="font-family:var(--font-mono); font-size:10px; color:var(--accent); background:rgba(201,69,40,0.15); padding:3px 5px; border-radius:3px;">80px pad</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUICK RULES -->
+      <section id="fast-rule">
+        <div class="fast-rule">
+          <h2>Quick Implementation Rules</h2>
+          <p class="fast-rule-subtitle">Tight groups, generous section breaks. These four values cover 95% of every layout.</p>
+          <div class="fast-rule-grid" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="fast-rule-item">
+              <div class="fast-rule-value">16px</div>
+              <div class="rule-label">Text Relationships</div>
+              <p>Title to subtitle, heading to description, label to value.</p>
+            </div>
+            <div class="fast-rule-item">
+              <div class="fast-rule-value">32px</div>
+              <div class="rule-label">Text to Content</div>
+              <p>Description to cards, heading to grid, text to visual content.</p>
+            </div>
+            <div class="fast-rule-item">
+              <div class="fast-rule-value">48px</div>
+              <div class="rule-label">Inner Sections</div>
+              <p>Between content groups within a section. Moderate breathing room.</p>
+            </div>
+            <div class="fast-rule-item">
+              <div class="fast-rule-value">80px</div>
+              <div class="rule-label">Section Spacing</div>
+              <p>Between major page sections. Creates the premium, editorial feel.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HERO EXCEPTION -->
+      <section id="hero-exception">
+        <div class="exception-callout">
+          <div class="exception-callout-badge">Exception</div>
+          <h3>Hero Sections Don't Follow These Rules</h3>
+          <p>Hero sections are the one place where you can break the global spacing and typography system. They're the first thing a user sees — they need to set the tone, communicate the brand, and create impact. That means hero sections can use:</p>
+          <ul class="exception-list">
+            <li>Larger or custom font sizes outside the type scale (e.g., display type at 56-80px)</li>
+            <li>Tighter or looser letter-spacing for visual impact</li>
+            <li>Custom spacing that gives the section more breathing room</li>
+            <li>Brand-specific styling, colors, or layout choices</li>
+          </ul>
+          <p>Everything else on the page — service sections, cards, blog layouts, footers — follows the system. But the hero is where branding lives, so treat it as its own thing.</p>
+          <p>When in doubt: if it's the hero, match the brand guidelines. If it's anything else, use the spacing and type scale above.</p>
+        </div>
+      </section>
+
+      <!-- CLOSING -->
+      <section id="closing">
+        <div class="closing-section">
+          <h3>That's It</h3>
+          <p>Once a team aligns on these rules, they can be applied consistently across every page and component without needing detailed QA on every section. Standardize everything using four values — 16px, 32px, 48px, and 80px — and move fast. The generous section breaks are what give any site that premium, editorial feel.</p>
+        </div>
+      </section>
+
+      <!-- CSS VARIABLES -->
+      <section id="css-vars">
+        <div class="section-header">
+          <div class="section-number">06</div>
+          <h2>CSS Variables Reference</h2>
+          <p class="section-desc">Copy these into the project root. All spacing and type sizes reference these variables.</p>
+        </div>
+
+        <div class="code-block">
+<span class="comment">/* Spacing Scale */</span>
+<span class="property">--space-1</span>: <span class="value">8px</span>;
+<span class="property">--space-2</span>: <span class="value">16px</span>;
+<span class="property">--space-3</span>: <span class="value">24px</span>;
+<span class="property">--space-4</span>: <span class="value">32px</span>;
+<span class="property">--space-5</span>: <span class="value">48px</span>;
+<span class="property">--space-6</span>: <span class="value">80px</span>;
+<span class="property">--space-7</span>: <span class="value">120px</span>;
+
+<span class="comment">/* Typography — Desktop */</span>
+<span class="property">--h1-desktop</span>: <span class="value">48px</span>;
+<span class="property">--h2-desktop</span>: <span class="value">38px</span>;
+<span class="property">--h3-desktop</span>: <span class="value">30px</span>;
+<span class="property">--h4-desktop</span>: <span class="value">24px</span>;
+<span class="property">--body-large</span>: <span class="value">18px</span>;
+<span class="property">--body</span>: <span class="value">16px</span>;
+<span class="property">--small</span>: <span class="value">14px</span>;
+
+<span class="comment">/* Typography — Tablet */</span>
+<span class="property">--h1-tablet</span>: <span class="value">38px</span>;
+<span class="property">--h2-tablet</span>: <span class="value">30px</span>;
+<span class="property">--h3-tablet</span>: <span class="value">24px</span>;
+<span class="property">--h4-tablet</span>: <span class="value">20px</span>;
+<span class="property">--body-tablet</span>: <span class="value">16px</span>;
+<span class="property">--small-tablet</span>: <span class="value">14px</span>;
+
+<span class="comment">/* Typography — Mobile */</span>
+<span class="property">--h1-mobile</span>: <span class="value">32px</span>;
+<span class="property">--h2-mobile</span>: <span class="value">26px</span>;
+<span class="property">--h3-mobile</span>: <span class="value">22px</span>;
+<span class="property">--h4-mobile</span>: <span class="value">18px</span>;
+<span class="property">--body-mobile</span>: <span class="value">16px</span>;
+<span class="property">--small-mobile</span>: <span class="value">14px</span>;
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="page-footer">
+        <p>Spacing &amp; Typography System &middot; April 2026</p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- SCROLL-SPY + MOBILE TOGGLE SCRIPT -->
+  <script>
+    // Scroll-spy: highlight active sidebar link based on scroll position
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.sidebar-nav a[data-section]');
+
+    function updateActiveLink() {
+      let current = '';
+      const scrollY = window.scrollY;
+
+      sections.forEach(section => {
+        const top = section.offsetTop - 120;
+        if (scrollY >= top) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-section') === current) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveLink, { passive: true });
+    updateActiveLink();
+
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeLabel = document.getElementById('themeLabel');
+    const htmlEl = document.documentElement;
+
+    // Check for saved preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      htmlEl.setAttribute('data-theme', 'dark');
+      themeLabel.textContent = 'Light Mode';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        htmlEl.removeAttribute('data-theme');
+        themeLabel.textContent = 'Dark Mode';
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlEl.setAttribute('data-theme', 'dark');
+        themeLabel.textContent = 'Light Mode';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+    // Mobile sidebar toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('open');
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('open');
+    }
+
+    menuToggle.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', closeSidebar);
+
+    // Close sidebar when clicking a link (mobile)
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 1024) {
+          closeSidebar();
+        }
+      });
+    });
+
+    // Tab toggle system for screen mockups
+    document.querySelectorAll('.tab-toggle').forEach(toggle => {
+      const group = toggle.getAttribute('data-tab-group');
+      const buttons = toggle.querySelectorAll('.tab-toggle-btn');
+      const panels = document.querySelectorAll(`.tab-content[data-tab-group="${group}"]`);
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.getAttribute('data-tab');
+
+          // Update buttons
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Update panels
+          panels.forEach(p => {
+            if (p.getAttribute('data-tab-panel') === tab) {
+              p.classList.add('active');
+            } else {
+              p.classList.remove('active');
+            }
+          });
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

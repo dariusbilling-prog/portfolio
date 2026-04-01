@@ -98,6 +98,7 @@
       line-height: 1.6;
       color: var(--text-primary);
       background: var(--bg);
+      overflow-x: hidden;
     }
 
     /* ============================================
@@ -1173,8 +1174,16 @@
     }
 
     @media (max-width: 768px) {
+      /* Nav — hide page title and toggle label to prevent overflow */
+      .nav-page-title { display: none; }
+      .theme-toggle-label { display: none; }
+      .top-nav { padding: var(--space-2) var(--space-3); }
+
+      /* Typography */
       .hero h1 { font-size: var(--h1-mobile); }
       .section-header h2 { font-size: var(--h2-mobile); }
+
+      /* Grids — collapse to single column */
       .type-scale-group { grid-template-columns: 1fr !important; gap: var(--space-4); }
       .examples-grid { grid-template-columns: 1fr; }
       .spacing-rule-grid { grid-template-columns: 1fr !important; }
@@ -1182,9 +1191,18 @@
       .service-mock-cards { grid-template-columns: 1fr; }
       .ui-example-inner { grid-template-columns: 1fr; }
       .compare-grid { grid-template-columns: 1fr; }
+      .slider-mockup .slider-cards { grid-template-columns: 1fr; }
+      .content-section-mockup .cs-cards { grid-template-columns: 1fr; }
+
+      /* Mockup paddings — reduce from desktop values */
+      .hero-mockup-nav { padding: var(--space-2) var(--space-3); }
+      .hero-mockup-body { padding: var(--space-5) var(--space-3); }
+      .slider-mockup { padding: var(--space-4) var(--space-3); }
+      .content-section-mockup { padding: var(--space-5) var(--space-3); }
+
+      /* Spacing / padding reductions */
       .fast-rule { padding: var(--space-4); }
       .fast-rule-value { font-size: var(--h4-desktop); }
-      .context-section { padding: var(--space-4); }
       .closing-section { padding: var(--space-4); }
     }
 

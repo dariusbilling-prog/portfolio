@@ -1042,6 +1042,10 @@
     sections.forEach(s => {
       if (window.scrollY >= s.offsetTop - 100) current = s.id;
     });
+    // If scrolled to bottom, activate last section
+    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 50) {
+      current = sections[sections.length - 1].id;
+    }
     navItems.forEach(li => {
       li.classList.remove('active');
       if (li.querySelector(`a[href="#${current}"]`)) li.classList.add('active');

@@ -1030,15 +1030,17 @@
       </div>
       <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
         <div onClick={onBuyAgain} style={{
-          flex: 1, padding: "10px 0", borderRadius: 10, background: "#1a1a1a",
-          color: "#fff", textAlign: "center", fontSize: 13, fontWeight: 600, cursor: "pointer"
+          flex: "1 1 0", minWidth: 0, padding: "10px 8px", borderRadius: 10, background: "#1a1a1a",
+          color: "#fff", textAlign: "center", fontSize: 12, fontWeight: 600, cursor: "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center"
         }}>Buy it Again</div>
         {hasAlt && (
           <div onClick={onBuyWF} style={{
-            flex: 1, padding: "10px 0", borderRadius: 10, background: "transparent",
+            flex: "1 1 0", minWidth: 0, padding: "10px 8px", borderRadius: 10, background: "transparent",
             border: "1.5px solid #1a1a1a", color: "#1a1a1a", textAlign: "center",
-            fontSize: 13, fontWeight: 600, cursor: "pointer"
-          }}>{wfLabel || "Buy it WasteFree"}</div>
+            fontSize: 12, fontWeight: 600, cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center"
+          }}>{wfLabel || "Buy WasteFree"}</div>
         )}
       </div>
       <div onClick={onAdd} style={{
@@ -1113,7 +1115,7 @@
           name="Cherry Dr. Pepper"
           detail="12-pack, 12 oz cans"
           price="$5.99"
-          wfLabel="WasteFree: Save 💰"
+          wfLabel="Buy WasteFree"
           onBuyAgain={onBuyAgain}
           onBuyWF={() => onBuyWF("money")}
           onAdd={onCart}
@@ -1122,7 +1124,7 @@
           name="Tide Pods"
           detail="42-count, Original"
           price="$12.99"
-          wfLabel="WasteFree: Healthier 🥗"
+          wfLabel="Buy Healthier"
           onBuyAgain={onBuyAgain}
           onBuyWF={() => onBuyWF("health")}
           onAdd={onCart}
@@ -1131,7 +1133,7 @@
           name="Bounty Paper Towels"
           detail="8-roll, Select-A-Size"
           price="$8.49"
-          wfLabel="WasteFree: Greener 🌍"
+          wfLabel="Sustainable Pick"
           onBuyAgain={onBuyAgain}
           onBuyWF={() => onBuyWF("planet")}
           onAdd={onCart}

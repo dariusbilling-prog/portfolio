@@ -72,18 +72,54 @@
       color: var(--text);
       text-decoration: none;
     }
-    .nav__links {
-      list-style: none;
+    .nav__actions {
       display: flex;
-      gap: 28px;
+      align-items: center;
+      gap: 10px;
     }
-    .nav__links a {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-2);
-      text-decoration: none;
+    .dark-toggle__label {
+      font-size: 13px;
+      color: var(--text-3);
+      font-family: var(--font-sans);
     }
-    .nav__links a:hover { color: var(--text); }
+    .dark-toggle {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      background: var(--border);
+      border-radius: 11px;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s;
+    }
+    .dark-toggle__thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .dark-toggle[aria-checked="true"] {
+      background: var(--text);
+    }
+    .dark-toggle[aria-checked="true"] .dark-toggle__thumb {
+      transform: translateX(18px);
+    }
+
+    /* --- Dark mode ------------------------------------------------------ */
+    [data-theme="dark"] {
+      --bg:       #141414;
+      --text:     #e8e8e8;
+      --text-2:   #aaaaaa;
+      --text-3:   #777777;
+      --border:   #2a2a2a;
+      --border-2: #3a3a3a;
+      --surface:  #1c1c1c;
+    }
 
     /* --- Layout: sidebar + content ------------------------------------- */
     .layout {
@@ -515,12 +551,12 @@
 <nav class="nav">
   <div class="nav__inner">
     <a href="../../" class="nav__logo">Darius.design</a>
-    <ul class="nav__links">
-      <li><a href="../../">Home</a></li>
-      <li><a href="../../#work">Work</a></li>
-      <li><a href="../../about">About</a></li>
-      <li><a href="mailto:darius@dariusshojaei.com">Contact</a></li>
-    </ul>
+    <div class="nav__actions">
+      <span class="dark-toggle__label" id="darkToggleLabel">Dark Mode</span>
+      <button class="dark-toggle" id="darkToggle" role="switch" aria-checked="false" aria-label="Toggle dark mode">
+        <span class="dark-toggle__thumb"></span>
+      </button>
+    </div>
   </div>
 </nav>
 
@@ -736,8 +772,28 @@
       <h2>Flows & Interactive Prototypes</h2>
       <p>Click through each prototype to experience the flow. Flow diagrams show the user journey logic above each interactive wireframe.</p>
 
-      <!-- FLOW 1: Repurchase -->
-      <h3>Flow 1 — Repurchase</h3>
+      <!-- FLOW 1: Onboarding -->
+      <h3>Flow 1 — Onboarding</h3>
+      <div class="flow">
+        <div class="flow__step">Leasing agent introduces app</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">User opens app</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Creates account</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Chooses preference (Save Money / Be Healthier / Save the Planet)</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Grants notification permission</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Done — app waits for first collection</div>
+      </div>
+
+      <p>Onboarding happens before the app — leasing agents explain why WasteFree matters during move-in. The app just needs to collect one critical preference and get out of the way. That preference choice (Save Money, Be Healthier, or Save the Planet) shapes every "Buy it WasteFree" recommendation across the entire app. Target is under 60 seconds from open to done.</p>
+
+      <div id="flow-1-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
+
+      <!-- FLOW 2: Repurchase -->
+      <h3>Flow 2 — Repurchase</h3>
       <div class="flow">
         <div class="flow__step">Push notification arrives</div>
         <div class="flow__arrow"></div>
@@ -775,12 +831,12 @@
         <div class="flow__step">Confirmation + Impact</div>
       </div>
 
-      <p>This is 90% of the app's expected activity. A resident gets a push notification after their trash is collected, taps it, and lands directly on their item list. Each item offers three actions — buy the same thing again, buy a WasteFree alternative based on their onboarding preference, or add to cart for later. The "Buy it WasteFree" path is where the preference from onboarding (Flow 3) comes to life — the alternative product changes based on whether the resident chose Save Money, Be Healthier, or Save the Planet. Use the preference toggle in the prototype below to see how the experience shifts.</p>
+      <p>This is 90% of the app's expected activity. A resident gets a push notification after their trash is collected, taps it, and lands directly on their item list. Each item offers three actions — buy the same thing again, buy a WasteFree alternative based on their onboarding preference, or add to cart for later. The "Buy it WasteFree" path is where the preference from onboarding (Flow 1) comes to life — the alternative product changes based on whether the resident chose Save Money, Be Healthier, or Save the Planet. Use the preference toggle in the prototype below to see how the experience shifts.</p>
 
-      <div id="flow-1-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
+      <div id="flow-2-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
-      <!-- FLOW 2: Impact & Score -->
-      <h3>Flow 2 — Impact & Score</h3>
+      <!-- FLOW 3: Impact & Score -->
+      <h3>Flow 3 — Impact & Score</h3>
       <div class="flow">
         <div class="flow__step">User taps "My Impact" tab</div>
         <div class="flow__arrow"></div>
@@ -796,26 +852,6 @@
       </div>
 
       <p>This is a single scrollable page — not separate screens. The WasteFree Score works like a FICO score for waste. A sticky date toggle at the top (Last Pickup / This Week / This Month / YTD) controls all four sections at once. Community ranking is the primary engagement hook — residents see how their building compares. Impact equivalencies make the data tangible ("Your reduction equals 3 trees saved").</p>
-
-      <div id="flow-2-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
-
-      <!-- FLOW 3: Onboarding -->
-      <h3>Flow 3 — Onboarding</h3>
-      <div class="flow">
-        <div class="flow__step">Leasing agent introduces app</div>
-        <div class="flow__arrow"></div>
-        <div class="flow__step">User opens app</div>
-        <div class="flow__arrow"></div>
-        <div class="flow__step">Creates account</div>
-        <div class="flow__arrow"></div>
-        <div class="flow__step">Chooses preference (Save Money / Be Healthier / Save the Planet)</div>
-        <div class="flow__arrow"></div>
-        <div class="flow__step">Grants notification permission</div>
-        <div class="flow__arrow"></div>
-        <div class="flow__step">Done — app waits for first collection</div>
-      </div>
-
-      <p>Onboarding happens before the app — leasing agents explain why WasteFree matters during move-in. The app just needs to collect one critical preference and get out of the way. That preference choice (Save Money, Be Healthier, or Save the Planet) shapes every "Buy it WasteFree" recommendation across the entire app. Target is under 60 seconds from open to done.</p>
 
       <div id="flow-3-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
     </section>
@@ -875,6 +911,22 @@
 
   window.addEventListener('scroll', updateActive);
   updateActive();
+
+  // Dark mode toggle
+  const darkToggle = document.getElementById('darkToggle');
+  const darkLabel = document.getElementById('darkToggleLabel');
+  const root = document.documentElement;
+
+  function setTheme(dark) {
+    root.setAttribute('data-theme', dark ? 'dark' : 'light');
+    darkToggle.setAttribute('aria-checked', dark);
+    darkLabel.textContent = dark ? 'Light Mode' : 'Dark Mode';
+  }
+
+  darkToggle.addEventListener('click', () => {
+    const isDark = darkToggle.getAttribute('aria-checked') === 'true';
+    setTheme(!isDark);
+  });
 </script>
 
 <!-- React & Babel for embedded prototypes -->
@@ -882,7 +934,502 @@
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-<!-- Flow 1: Repurchase -->
+
+
+
+<!-- React & Babel for embedded prototypes -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+<!-- Flow 1: Onboarding -->
+<script type="text/babel">
+{(() => {
+  const { useState } = React;
+
+  const SCREENS = {
+    WELCOME: "welcome",
+    ACCOUNT: "account",
+    PREFERENCE: "preference",
+    NOTIFICATIONS: "notifications",
+    DONE: "done",
+    PROFILE: "profile",
+  };
+
+  const PHONE_SCALE = 0.65;
+  const PHONE_W = 390;
+  const PHONE_H = 844;
+
+  const PhoneFrame = ({ children, hideNav = true }) => (
+    <div style={{
+      width: PHONE_W * PHONE_SCALE,
+      height: PHONE_H * PHONE_SCALE,
+      overflow: "hidden",
+      flexShrink: 0
+    }}>
+    <div style={{
+      width: PHONE_W, height: PHONE_H, background: "#fff", borderRadius: 40,
+      border: "3px solid #1a1a1a", position: "relative", overflow: "hidden",
+      display: "flex", flexDirection: "column",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+      transform: `scale(${PHONE_SCALE})`, transformOrigin: "top left"
+    }}>
+      <div style={{
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "12px 24px 4px", fontSize: 14, fontWeight: 600, color: "#1a1a1a",
+        flexShrink: 0
+      }}>
+        <span>9:41</span>
+        <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+          <div style={{ width: 18, height: 12, border: "1.5px solid #1a1a1a", borderRadius: 3, position: "relative" }}>
+            <div style={{ width: 12, height: 8, background: "#1a1a1a", borderRadius: 1, position: "absolute", left: 2, top: 1 }} />
+          </div>
+        </div>
+      </div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflowY: "auto", overflowX: "hidden" }}>
+        {children}
+      </div>
+      {!hideNav && (
+        <div style={{
+          display: "flex", borderTop: "1px solid #e0e0e0", padding: "8px 0 28px",
+          background: "#fff", flexShrink: 0
+        }}>
+          {[
+            { id: "buy", label: "Buy Again", icon: "🔄" },
+            { id: "impact", label: "My Impact", icon: "📊" },
+            { id: "profile", label: "Profile", icon: "👤" },
+          ].map(tab => (
+            <div key={tab.id} style={{
+              flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
+              opacity: tab.id === "profile" ? 1 : 0.4
+            }}>
+              <span style={{ fontSize: 20 }}>{tab.icon}</span>
+              <span style={{ fontSize: 10, fontWeight: tab.id === "profile" ? 700 : 400 }}>{tab.label}</span>
+              {tab.id === "profile" && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1a1a1a" }} />}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+    </div>
+  );
+
+  const ProgressDots = ({ current, total = 4 }) => (
+    <div style={{ display: "flex", gap: 8, justifyContent: "center", padding: "20px 0 8px" }}>
+      {Array.from({ length: total }).map((_, i) => (
+        <div key={i} style={{
+          width: 8, height: 8, borderRadius: 4,
+          background: i === current ? "#1a1a1a" : "#ddd"
+        }} />
+      ))}
+    </div>
+  );
+
+  const InputField = ({ label, placeholder }) => (
+    <div style={{ marginBottom: 14 }}>
+      <div style={{ fontSize: 13, fontWeight: 600, color: "#666", marginBottom: 6 }}>{label}</div>
+      <div style={{
+        padding: "14px 16px", borderRadius: 12, border: "1.5px solid #ddd",
+        fontSize: 15, color: "#bbb"
+      }}>{placeholder}</div>
+    </div>
+  );
+
+  const CTAButton = ({ label, secondary, onClick }) => (
+    <div onClick={onClick} style={{
+      margin: "12px 24px", padding: "16px 0", borderRadius: 14,
+      background: secondary ? "transparent" : "#1a1a1a",
+      color: secondary ? "#1a1a1a" : "#fff",
+      border: secondary ? "2px solid #1a1a1a" : "none",
+      textAlign: "center", fontSize: 16, fontWeight: 600, cursor: "pointer"
+    }}>{label}</div>
+  );
+
+  // SCREENS
+
+  const WelcomeScreen = ({ onNext }) => (
+    <PhoneFrame>
+      <div style={{
+        flex: 1, display: "flex", flexDirection: "column",
+        alignItems: "center", justifyContent: "center", padding: "0 32px", textAlign: "center"
+      }}>
+        <div style={{
+          width: 100, height: 100, borderRadius: 24, background: "#1a1a1a",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          marginBottom: 32
+        }}>
+          <span style={{ fontSize: 48, fontWeight: 800, color: "#fff" }}>W</span>
+        </div>
+
+        <div style={{ fontSize: 20, fontWeight: 400, color: "#666", lineHeight: 1.5, marginBottom: 4 }}>
+          See what you throw away.
+        </div>
+        <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.5 }}>
+          Buy it back smarter.
+        </div>
+      </div>
+
+      <CTAButton label="Get Started" onClick={onNext} />
+      <div style={{
+        textAlign: "center", paddingBottom: 40, fontSize: 14, color: "#888"
+      }}>
+        Already have an account? <span style={{ fontWeight: 600, color: "#1a1a1a", cursor: "pointer" }}>Sign in</span>
+      </div>
+    </PhoneFrame>
+  );
+
+  const AccountScreen = ({ onBack, onNext }) => (
+    <PhoneFrame>
+      <div style={{ padding: "8px 24px 0" }}>
+        <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
+      </div>
+      <div style={{ flex: 1, padding: "16px 24px", overflowY: "auto" }}>
+        <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 24 }}>Create your account</div>
+
+        <InputField label="First name" placeholder="Darius" />
+        <InputField label="Email address" placeholder="darius@email.com" />
+        <InputField label="Password" placeholder="••••••••" />
+
+        <div style={{
+          display: "flex", alignItems: "center", gap: 16, padding: "16px 0",
+          color: "#888", fontSize: 14
+        }}>
+          <div style={{ flex: 1, height: 1, background: "#e0e0e0" }} />
+          <span>or</span>
+          <div style={{ flex: 1, height: 1, background: "#e0e0e0" }} />
+        </div>
+
+        <div style={{
+          padding: "14px 0", borderRadius: 12, border: "1.5px solid #ddd",
+          textAlign: "center", fontSize: 15, fontWeight: 500, marginBottom: 10,
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 10
+        }}>
+          <span style={{ fontSize: 18 }}>🍎</span> Continue with Apple
+        </div>
+        <div style={{
+          padding: "14px 0", borderRadius: 12, border: "1.5px solid #ddd",
+          textAlign: "center", fontSize: 15, fontWeight: 500, marginBottom: 20,
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 10
+        }}>
+          <span style={{ fontSize: 16, fontWeight: 700 }}>G</span> Continue with Google
+        </div>
+
+        <div style={{ height: 1, background: "#f0f0f0", margin: "8px 0 16px" }} />
+
+        <InputField label="Your community" placeholder="Parkside Apartments ▾" />
+        <InputField label="Unit number" placeholder="e.g., 204" />
+      </div>
+      <CTAButton label="Continue" onClick={onNext} />
+      <ProgressDots current={0} />
+    </PhoneFrame>
+  );
+
+  const PreferenceScreen = ({ onBack, onSelect }) => {
+    const [selectedPrefs, setSelectedPrefs] = useState(new Set());
+    const options = [
+      { icon: "💰", title: "Save Money", desc: "We'll find you cheaper brands that do the same job.", id: "money" },
+      { icon: "🥗", title: "Be Healthier", desc: "We'll suggest healthier options based on what you already buy.", id: "health" },
+      { icon: "🌍", title: "Save the Planet", desc: "We'll recommend products with less packaging and more recyclable materials.", id: "planet" },
+    ];
+
+    const togglePref = (id) => {
+      const newSet = new Set(selectedPrefs);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      setSelectedPrefs(newSet);
+    };
+
+    const isSelected = (id) => selectedPrefs.has(id);
+    const canContinue = selectedPrefs.size > 0;
+
+    return (
+      <PhoneFrame>
+        <div style={{ padding: "8px 24px 0" }}>
+          <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
+        </div>
+        <div style={{ flex: 1, padding: "16px 24px", overflowY: "auto" }}>
+          <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>What matters most to you?</div>
+          <div style={{ fontSize: 15, color: "#888", lineHeight: 1.5, marginBottom: 8 }}>
+            This helps us recommend the right alternatives when you reorder.
+          </div>
+          <div style={{ fontSize: 14, color: "#aaa", marginBottom: 24 }}>
+            Select one or more — we'll tailor your experience
+          </div>
+
+          {options.map((opt) => (
+            <div
+              key={opt.id}
+              onClick={() => togglePref(opt.id)}
+              style={{
+                padding: 20, borderRadius: 16, marginBottom: 12, cursor: "pointer",
+                border: isSelected(opt.id) ? "2.5px solid #1a1a1a" : "1.5px solid #e0e0e0",
+                background: isSelected(opt.id) ? "#f8f8f8" : "#fff",
+                transition: "all 0.2s",
+                position: "relative"
+              }}
+            >
+              {isSelected(opt.id) && (
+                <div style={{
+                  position: "absolute", top: 12, right: 12,
+                  width: 24, height: 24, borderRadius: 12,
+                  background: "#1a1a1a", display: "flex",
+                  alignItems: "center", justifyContent: "center",
+                  color: "#fff", fontSize: 14, fontWeight: 700
+                }}>✓</div>
+              )}
+              <div style={{ fontSize: 28, marginBottom: 8 }}>{opt.icon}</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "#1a1a1a", marginBottom: 6 }}>{opt.title}</div>
+              <div style={{ fontSize: 14, color: "#666", lineHeight: 1.5 }}>{opt.desc}</div>
+            </div>
+          ))}
+        </div>
+        <div
+          onClick={() => canContinue && onSelect && onSelect()}
+          style={{
+            margin: "12px 24px", padding: "16px 0", borderRadius: 14,
+            background: canContinue ? "#1a1a1a" : "#ccc",
+            color: "#fff",
+            textAlign: "center", fontSize: 16, fontWeight: 600, cursor: canContinue ? "pointer" : "not-allowed"
+          }}
+        >
+          Continue
+        </div>
+        <ProgressDots current={1} />
+      </PhoneFrame>
+    );
+  };
+
+  const NotificationScreen = ({ onBack, onAllow, onSkip }) => (
+    <PhoneFrame>
+      <div style={{ padding: "8px 24px 0" }}>
+        <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
+      </div>
+      <div style={{
+        flex: 1, display: "flex", flexDirection: "column",
+        alignItems: "center", justifyContent: "center", padding: "0 32px", textAlign: "center"
+      }}>
+        <div style={{
+          width: 80, height: 80, borderRadius: 40, background: "#f0f0f0",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 40, marginBottom: 24
+        }}>🔔</div>
+
+        <div style={{ fontSize: 24, fontWeight: 700, color: "#1a1a1a", marginBottom: 12 }}>
+          Turn on notifications
+        </div>
+        <div style={{ fontSize: 15, color: "#666", lineHeight: 1.6, marginBottom: 8 }}>
+          We'll let you know when your items have been collected so you can reorder with one tap.
+        </div>
+        <div style={{ fontSize: 14, color: "#999", lineHeight: 1.5 }}>
+          We only send notifications after your trash is picked up — no spam, no marketing.
+        </div>
+      </div>
+      <CTAButton label="Turn On Notifications" onClick={onAllow} />
+      <div onClick={onSkip} style={{
+        textAlign: "center", paddingBottom: 12, fontSize: 14,
+        color: "#888", cursor: "pointer"
+      }}>Maybe later</div>
+      <ProgressDots current={2} />
+    </PhoneFrame>
+  );
+
+  const DoneScreen = ({ onStart }) => (
+    <PhoneFrame>
+      <div style={{
+        flex: 1, display: "flex", flexDirection: "column",
+        alignItems: "center", justifyContent: "center", padding: "0 32px", textAlign: "center"
+      }}>
+        <div style={{
+          width: 72, height: 72, borderRadius: 36, background: "#1a1a1a",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 32, color: "#fff", marginBottom: 20
+        }}>✓</div>
+
+        <div style={{ fontSize: 26, fontWeight: 700, color: "#1a1a1a", marginBottom: 12 }}>
+          You're all set!
+        </div>
+        <div style={{ fontSize: 15, color: "#888", lineHeight: 1.6, marginBottom: 28 }}>
+          We'll notify you after your next trash collection. Just put your bag out tonight and we'll take care of the rest.
+        </div>
+
+        <div style={{
+          width: "100%", padding: 16, borderRadius: 14,
+          background: "#f8f8f8", border: "1.5px solid #e8e8e8", marginBottom: 8
+        }}>
+          <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a" }}>
+            Your preference: Save Money 💰
+          </div>
+          <div style={{ fontSize: 13, color: "#888", marginTop: 4 }}>
+            Change anytime in Profile
+          </div>
+        </div>
+      </div>
+      <CTAButton label="Start Exploring" onClick={onStart} />
+      <ProgressDots current={3} />
+    </PhoneFrame>
+  );
+
+  const ProfileScreen = () => (
+    <PhoneFrame hideNav={false}>
+      <div style={{
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "8px 20px 12px", borderBottom: "1px solid #f0f0f0"
+      }}>
+        <div style={{ width: 60 }} />
+        <span style={{ fontSize: 17, fontWeight: 600 }}>Profile</span>
+        <div style={{ width: 60 }} />
+      </div>
+
+      <div style={{ flex: 1, overflowY: "auto" }}>
+        {/* Account Header */}
+        <div style={{
+          display: "flex", alignItems: "center", gap: 16, padding: "20px 24px",
+          borderBottom: "1px solid #f0f0f0"
+        }}>
+          <div style={{
+            width: 56, height: 56, borderRadius: 28, background: "#f0f0f0",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 24
+          }}>👤</div>
+          <div>
+            <div style={{ fontSize: 18, fontWeight: 700 }}>Darius S.</div>
+            <div style={{ fontSize: 14, color: "#888" }}>Parkside Apartments, #204</div>
+            <div style={{ fontSize: 13, color: "#aaa" }}>darius@email.com</div>
+          </div>
+        </div>
+
+        {/* Menu Items */}
+        {[
+          { label: "My Preference", detail: "💰 Save Money", highlight: true },
+          { label: "Notification Settings", detail: "" },
+          { label: "About WasteFree", detail: "" },
+          { label: "Help & Support", detail: "" },
+        ].map((item, i) => (
+          <div key={i} style={{
+            display: "flex", justifyContent: "space-between", alignItems: "center",
+            padding: "18px 24px", borderBottom: "1px solid #f5f5f5", cursor: "pointer"
+          }}>
+            <div>
+              <div style={{ fontSize: 16, fontWeight: item.highlight ? 600 : 400, color: "#1a1a1a" }}>{item.label}</div>
+              {item.detail && <div style={{ fontSize: 13, color: "#888", marginTop: 2 }}>{item.detail}</div>}
+            </div>
+            <span style={{ fontSize: 18, color: "#ccc" }}>›</span>
+          </div>
+        ))}
+
+        <div style={{
+          padding: "18px 24px", cursor: "pointer"
+        }}>
+          <span style={{ fontSize: 16, color: "#cc0000" }}>Sign Out</span>
+        </div>
+      </div>
+    </PhoneFrame>
+  );
+
+  // MAIN
+  function WasteFreeFlow3() {
+    const [currentScreen, setCurrentScreen] = useState(SCREENS.WELCOME);
+
+    const screenComponents = {
+      [SCREENS.WELCOME]: <WelcomeScreen onNext={() => setCurrentScreen(SCREENS.ACCOUNT)} />,
+      [SCREENS.ACCOUNT]: (
+        <AccountScreen
+          onBack={() => setCurrentScreen(SCREENS.WELCOME)}
+          onNext={() => setCurrentScreen(SCREENS.PREFERENCE)}
+        />
+      ),
+      [SCREENS.PREFERENCE]: (
+        <PreferenceScreen
+          onBack={() => setCurrentScreen(SCREENS.ACCOUNT)}
+          onSelect={() => setCurrentScreen(SCREENS.NOTIFICATIONS)}
+        />
+      ),
+      [SCREENS.NOTIFICATIONS]: (
+        <NotificationScreen
+          onBack={() => setCurrentScreen(SCREENS.PREFERENCE)}
+          onAllow={() => setCurrentScreen(SCREENS.DONE)}
+          onSkip={() => setCurrentScreen(SCREENS.DONE)}
+        />
+      ),
+      [SCREENS.DONE]: <DoneScreen onStart={() => setCurrentScreen(SCREENS.PROFILE)} />,
+      [SCREENS.PROFILE]: <ProfileScreen />,
+    };
+
+    const screenLabels = {
+      [SCREENS.WELCOME]: "1. Welcome",
+      [SCREENS.ACCOUNT]: "2. Account Setup",
+      [SCREENS.PREFERENCE]: "3. Preference Selection",
+      [SCREENS.NOTIFICATIONS]: "4. Notifications",
+      [SCREENS.DONE]: "5. Done",
+      [SCREENS.PROFILE]: "6. Profile Tab",
+    };
+
+    return (
+      <div style={{
+        background: "#f5f5f5", padding: "16px 0",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+      }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+          {/* Screen Navigator */}
+          <div style={{
+            display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center", marginBottom: 16
+          }}>
+            {Object.entries(screenLabels).map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => setCurrentScreen(key)}
+                style={{
+                  padding: "6px 12px", borderRadius: 8, border: "1.5px solid",
+                  borderColor: currentScreen === key ? "#1a1a1a" : "#ddd",
+                  background: currentScreen === key ? "#1a1a1a" : "#fff",
+                  color: currentScreen === key ? "#fff" : "#666",
+                  fontSize: 12, fontWeight: currentScreen === key ? 700 : 400,
+                  cursor: "pointer", transition: "all 0.2s"
+                }}
+              >{label}</button>
+            ))}
+          </div>
+
+          {/* Phone + Notes side by side */}
+          <div style={{
+            display: "flex", justifyContent: "center", alignItems: "flex-start",
+            gap: 24
+          }}>
+            {screenComponents[currentScreen]}
+
+            <div style={{
+              maxWidth: 320, padding: 16, borderRadius: 12,
+              background: "#fff", border: "1px solid #e0e0e0", alignSelf: "flex-start"
+            }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#1a1a1a", marginBottom: 6 }}>
+                {screenLabels[currentScreen]}
+              </div>
+              <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
+                {currentScreen === SCREENS.WELCOME && "Logo + 2-line value prop. No feature tours, no carousels. Get in, get out."}
+                {currentScreen === SCREENS.ACCOUNT && "Minimal fields. SSO options for speed. Community + unit may be pre-filled via management invite link."}
+                {currentScreen === SCREENS.PREFERENCE && "The most important screen in onboarding. This single choice cascades through the entire app experience. Large tappable cards for Linda. 'You can change this anytime' reduces decision anxiety."}
+                {currentScreen === SCREENS.NOTIFICATIONS && "Dedicated pre-prompt before the system dialog. Trust copy ('no spam, no marketing') increases opt-in from ~35% to ~55%. 'Maybe later' is not 'No.'"}
+                {currentScreen === SCREENS.DONE && "Set expectations: the app is dormant until first collection. Preference confirmation with escape hatch to Profile."}
+                {currentScreen === SCREENS.PROFILE && "Low-frequency settings. My Preference is the most important row — it's the one setting that affects the entire app. Visit once, rarely return."}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('flow-1-root')).render(<WasteFreeFlow3 />);
+})()}
+</script>
+
+
+<!-- Flow 2: Repurchase -->
 <script type="text/babel">
 {(() => {
   const { useState } = React;
@@ -1783,11 +2330,12 @@
     );
   }
 
-  ReactDOM.createRoot(document.getElementById('flow-1-root')).render(<WasteFreeFlow1 />);
+  ReactDOM.createRoot(document.getElementById('flow-2-root')).render(<WasteFreeFlow1 />);
 })()}
 </script>
 
-<!-- Flow 2: Impact & Score -->
+
+<!-- Flow 3: Impact & Score -->
 <script type="text/babel">
 {(() => {
   const { useState } = React;
@@ -2078,494 +2626,9 @@
     );
   }
 
-  ReactDOM.createRoot(document.getElementById('flow-2-root')).render(<WasteFreeFlow2 />);
+  ReactDOM.createRoot(document.getElementById('flow-3-root')).render(<WasteFreeFlow2 />);
 })()}
 </script>
 
-<!-- Flow 3: Onboarding -->
-<script type="text/babel">
-{(() => {
-  const { useState } = React;
 
-  const SCREENS = {
-    WELCOME: "welcome",
-    ACCOUNT: "account",
-    PREFERENCE: "preference",
-    NOTIFICATIONS: "notifications",
-    DONE: "done",
-    PROFILE: "profile",
-  };
-
-  const PHONE_SCALE = 0.65;
-  const PHONE_W = 390;
-  const PHONE_H = 844;
-
-  const PhoneFrame = ({ children, hideNav = true }) => (
-    <div style={{
-      width: PHONE_W * PHONE_SCALE,
-      height: PHONE_H * PHONE_SCALE,
-      overflow: "hidden",
-      flexShrink: 0
-    }}>
-    <div style={{
-      width: PHONE_W, height: PHONE_H, background: "#fff", borderRadius: 40,
-      border: "3px solid #1a1a1a", position: "relative", overflow: "hidden",
-      display: "flex", flexDirection: "column",
-      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-      transform: `scale(${PHONE_SCALE})`, transformOrigin: "top left"
-    }}>
-      <div style={{
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        padding: "12px 24px 4px", fontSize: 14, fontWeight: 600, color: "#1a1a1a",
-        flexShrink: 0
-      }}>
-        <span>9:41</span>
-        <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-          <div style={{ width: 18, height: 12, border: "1.5px solid #1a1a1a", borderRadius: 3, position: "relative" }}>
-            <div style={{ width: 12, height: 8, background: "#1a1a1a", borderRadius: 1, position: "absolute", left: 2, top: 1 }} />
-          </div>
-        </div>
-      </div>
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflowY: "auto", overflowX: "hidden" }}>
-        {children}
-      </div>
-      {!hideNav && (
-        <div style={{
-          display: "flex", borderTop: "1px solid #e0e0e0", padding: "8px 0 28px",
-          background: "#fff", flexShrink: 0
-        }}>
-          {[
-            { id: "buy", label: "Buy Again", icon: "🔄" },
-            { id: "impact", label: "My Impact", icon: "📊" },
-            { id: "profile", label: "Profile", icon: "👤" },
-          ].map(tab => (
-            <div key={tab.id} style={{
-              flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
-              opacity: tab.id === "profile" ? 1 : 0.4
-            }}>
-              <span style={{ fontSize: 20 }}>{tab.icon}</span>
-              <span style={{ fontSize: 10, fontWeight: tab.id === "profile" ? 700 : 400 }}>{tab.label}</span>
-              {tab.id === "profile" && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1a1a1a" }} />}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-    </div>
-  );
-
-  const ProgressDots = ({ current, total = 4 }) => (
-    <div style={{ display: "flex", gap: 8, justifyContent: "center", padding: "20px 0 8px" }}>
-      {Array.from({ length: total }).map((_, i) => (
-        <div key={i} style={{
-          width: 8, height: 8, borderRadius: 4,
-          background: i === current ? "#1a1a1a" : "#ddd"
-        }} />
-      ))}
-    </div>
-  );
-
-  const InputField = ({ label, placeholder }) => (
-    <div style={{ marginBottom: 14 }}>
-      <div style={{ fontSize: 13, fontWeight: 600, color: "#666", marginBottom: 6 }}>{label}</div>
-      <div style={{
-        padding: "14px 16px", borderRadius: 12, border: "1.5px solid #ddd",
-        fontSize: 15, color: "#bbb"
-      }}>{placeholder}</div>
-    </div>
-  );
-
-  const CTAButton = ({ label, secondary, onClick }) => (
-    <div onClick={onClick} style={{
-      margin: "12px 24px", padding: "16px 0", borderRadius: 14,
-      background: secondary ? "transparent" : "#1a1a1a",
-      color: secondary ? "#1a1a1a" : "#fff",
-      border: secondary ? "2px solid #1a1a1a" : "none",
-      textAlign: "center", fontSize: 16, fontWeight: 600, cursor: "pointer"
-    }}>{label}</div>
-  );
-
-  // SCREENS
-
-  const WelcomeScreen = ({ onNext }) => (
-    <PhoneFrame>
-      <div style={{
-        flex: 1, display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center", padding: "0 32px", textAlign: "center"
-      }}>
-        <div style={{
-          width: 100, height: 100, borderRadius: 24, background: "#1a1a1a",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          marginBottom: 32
-        }}>
-          <span style={{ fontSize: 48, fontWeight: 800, color: "#fff" }}>W</span>
-        </div>
-
-        <div style={{ fontSize: 20, fontWeight: 400, color: "#666", lineHeight: 1.5, marginBottom: 4 }}>
-          See what you throw away.
-        </div>
-        <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.5 }}>
-          Buy it back smarter.
-        </div>
-      </div>
-
-      <CTAButton label="Get Started" onClick={onNext} />
-      <div style={{
-        textAlign: "center", paddingBottom: 40, fontSize: 14, color: "#888"
-      }}>
-        Already have an account? <span style={{ fontWeight: 600, color: "#1a1a1a", cursor: "pointer" }}>Sign in</span>
-      </div>
-    </PhoneFrame>
-  );
-
-  const AccountScreen = ({ onBack, onNext }) => (
-    <PhoneFrame>
-      <div style={{ padding: "8px 24px 0" }}>
-        <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
-      </div>
-      <div style={{ flex: 1, padding: "16px 24px", overflowY: "auto" }}>
-        <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 24 }}>Create your account</div>
-
-        <InputField label="First name" placeholder="Darius" />
-        <InputField label="Email address" placeholder="darius@email.com" />
-        <InputField label="Password" placeholder="••••••••" />
-
-        <div style={{
-          display: "flex", alignItems: "center", gap: 16, padding: "16px 0",
-          color: "#888", fontSize: 14
-        }}>
-          <div style={{ flex: 1, height: 1, background: "#e0e0e0" }} />
-          <span>or</span>
-          <div style={{ flex: 1, height: 1, background: "#e0e0e0" }} />
-        </div>
-
-        <div style={{
-          padding: "14px 0", borderRadius: 12, border: "1.5px solid #ddd",
-          textAlign: "center", fontSize: 15, fontWeight: 500, marginBottom: 10,
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 10
-        }}>
-          <span style={{ fontSize: 18 }}>🍎</span> Continue with Apple
-        </div>
-        <div style={{
-          padding: "14px 0", borderRadius: 12, border: "1.5px solid #ddd",
-          textAlign: "center", fontSize: 15, fontWeight: 500, marginBottom: 20,
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 10
-        }}>
-          <span style={{ fontSize: 16, fontWeight: 700 }}>G</span> Continue with Google
-        </div>
-
-        <div style={{ height: 1, background: "#f0f0f0", margin: "8px 0 16px" }} />
-
-        <InputField label="Your community" placeholder="Parkside Apartments ▾" />
-        <InputField label="Unit number" placeholder="e.g., 204" />
-      </div>
-      <CTAButton label="Continue" onClick={onNext} />
-      <ProgressDots current={0} />
-    </PhoneFrame>
-  );
-
-  const PreferenceScreen = ({ onBack, onSelect }) => {
-    const [selectedPrefs, setSelectedPrefs] = useState(new Set());
-    const options = [
-      { icon: "💰", title: "Save Money", desc: "We'll find you cheaper brands that do the same job.", id: "money" },
-      { icon: "🥗", title: "Be Healthier", desc: "We'll suggest healthier options based on what you already buy.", id: "health" },
-      { icon: "🌍", title: "Save the Planet", desc: "We'll recommend products with less packaging and more recyclable materials.", id: "planet" },
-    ];
-
-    const togglePref = (id) => {
-      const newSet = new Set(selectedPrefs);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      setSelectedPrefs(newSet);
-    };
-
-    const isSelected = (id) => selectedPrefs.has(id);
-    const canContinue = selectedPrefs.size > 0;
-
-    return (
-      <PhoneFrame>
-        <div style={{ padding: "8px 24px 0" }}>
-          <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
-        </div>
-        <div style={{ flex: 1, padding: "16px 24px", overflowY: "auto" }}>
-          <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>What matters most to you?</div>
-          <div style={{ fontSize: 15, color: "#888", lineHeight: 1.5, marginBottom: 8 }}>
-            This helps us recommend the right alternatives when you reorder.
-          </div>
-          <div style={{ fontSize: 14, color: "#aaa", marginBottom: 24 }}>
-            Select one or more — we'll tailor your experience
-          </div>
-
-          {options.map((opt) => (
-            <div
-              key={opt.id}
-              onClick={() => togglePref(opt.id)}
-              style={{
-                padding: 20, borderRadius: 16, marginBottom: 12, cursor: "pointer",
-                border: isSelected(opt.id) ? "2.5px solid #1a1a1a" : "1.5px solid #e0e0e0",
-                background: isSelected(opt.id) ? "#f8f8f8" : "#fff",
-                transition: "all 0.2s",
-                position: "relative"
-              }}
-            >
-              {isSelected(opt.id) && (
-                <div style={{
-                  position: "absolute", top: 12, right: 12,
-                  width: 24, height: 24, borderRadius: 12,
-                  background: "#1a1a1a", display: "flex",
-                  alignItems: "center", justifyContent: "center",
-                  color: "#fff", fontSize: 14, fontWeight: 700
-                }}>✓</div>
-              )}
-              <div style={{ fontSize: 28, marginBottom: 8 }}>{opt.icon}</div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#1a1a1a", marginBottom: 6 }}>{opt.title}</div>
-              <div style={{ fontSize: 14, color: "#666", lineHeight: 1.5 }}>{opt.desc}</div>
-            </div>
-          ))}
-        </div>
-        <div
-          onClick={() => canContinue && onSelect && onSelect()}
-          style={{
-            margin: "12px 24px", padding: "16px 0", borderRadius: 14,
-            background: canContinue ? "#1a1a1a" : "#ccc",
-            color: "#fff",
-            textAlign: "center", fontSize: 16, fontWeight: 600, cursor: canContinue ? "pointer" : "not-allowed"
-          }}
-        >
-          Continue
-        </div>
-        <ProgressDots current={1} />
-      </PhoneFrame>
-    );
-  };
-
-  const NotificationScreen = ({ onBack, onAllow, onSkip }) => (
-    <PhoneFrame>
-      <div style={{ padding: "8px 24px 0" }}>
-        <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
-      </div>
-      <div style={{
-        flex: 1, display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center", padding: "0 32px", textAlign: "center"
-      }}>
-        <div style={{
-          width: 80, height: 80, borderRadius: 40, background: "#f0f0f0",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 40, marginBottom: 24
-        }}>🔔</div>
-
-        <div style={{ fontSize: 24, fontWeight: 700, color: "#1a1a1a", marginBottom: 12 }}>
-          Turn on notifications
-        </div>
-        <div style={{ fontSize: 15, color: "#666", lineHeight: 1.6, marginBottom: 8 }}>
-          We'll let you know when your items have been collected so you can reorder with one tap.
-        </div>
-        <div style={{ fontSize: 14, color: "#999", lineHeight: 1.5 }}>
-          We only send notifications after your trash is picked up — no spam, no marketing.
-        </div>
-      </div>
-      <CTAButton label="Turn On Notifications" onClick={onAllow} />
-      <div onClick={onSkip} style={{
-        textAlign: "center", paddingBottom: 12, fontSize: 14,
-        color: "#888", cursor: "pointer"
-      }}>Maybe later</div>
-      <ProgressDots current={2} />
-    </PhoneFrame>
-  );
-
-  const DoneScreen = ({ onStart }) => (
-    <PhoneFrame>
-      <div style={{
-        flex: 1, display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center", padding: "0 32px", textAlign: "center"
-      }}>
-        <div style={{
-          width: 72, height: 72, borderRadius: 36, background: "#1a1a1a",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 32, color: "#fff", marginBottom: 20
-        }}>✓</div>
-
-        <div style={{ fontSize: 26, fontWeight: 700, color: "#1a1a1a", marginBottom: 12 }}>
-          You're all set!
-        </div>
-        <div style={{ fontSize: 15, color: "#888", lineHeight: 1.6, marginBottom: 28 }}>
-          We'll notify you after your next trash collection. Just put your bag out tonight and we'll take care of the rest.
-        </div>
-
-        <div style={{
-          width: "100%", padding: 16, borderRadius: 14,
-          background: "#f8f8f8", border: "1.5px solid #e8e8e8", marginBottom: 8
-        }}>
-          <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a" }}>
-            Your preference: Save Money 💰
-          </div>
-          <div style={{ fontSize: 13, color: "#888", marginTop: 4 }}>
-            Change anytime in Profile
-          </div>
-        </div>
-      </div>
-      <CTAButton label="Start Exploring" onClick={onStart} />
-      <ProgressDots current={3} />
-    </PhoneFrame>
-  );
-
-  const ProfileScreen = () => (
-    <PhoneFrame hideNav={false}>
-      <div style={{
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        padding: "8px 20px 12px", borderBottom: "1px solid #f0f0f0"
-      }}>
-        <div style={{ width: 60 }} />
-        <span style={{ fontSize: 17, fontWeight: 600 }}>Profile</span>
-        <div style={{ width: 60 }} />
-      </div>
-
-      <div style={{ flex: 1, overflowY: "auto" }}>
-        {/* Account Header */}
-        <div style={{
-          display: "flex", alignItems: "center", gap: 16, padding: "20px 24px",
-          borderBottom: "1px solid #f0f0f0"
-        }}>
-          <div style={{
-            width: 56, height: 56, borderRadius: 28, background: "#f0f0f0",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 24
-          }}>👤</div>
-          <div>
-            <div style={{ fontSize: 18, fontWeight: 700 }}>Darius S.</div>
-            <div style={{ fontSize: 14, color: "#888" }}>Parkside Apartments, #204</div>
-            <div style={{ fontSize: 13, color: "#aaa" }}>darius@email.com</div>
-          </div>
-        </div>
-
-        {/* Menu Items */}
-        {[
-          { label: "My Preference", detail: "💰 Save Money", highlight: true },
-          { label: "Notification Settings", detail: "" },
-          { label: "About WasteFree", detail: "" },
-          { label: "Help & Support", detail: "" },
-        ].map((item, i) => (
-          <div key={i} style={{
-            display: "flex", justifyContent: "space-between", alignItems: "center",
-            padding: "18px 24px", borderBottom: "1px solid #f5f5f5", cursor: "pointer"
-          }}>
-            <div>
-              <div style={{ fontSize: 16, fontWeight: item.highlight ? 600 : 400, color: "#1a1a1a" }}>{item.label}</div>
-              {item.detail && <div style={{ fontSize: 13, color: "#888", marginTop: 2 }}>{item.detail}</div>}
-            </div>
-            <span style={{ fontSize: 18, color: "#ccc" }}>›</span>
-          </div>
-        ))}
-
-        <div style={{
-          padding: "18px 24px", cursor: "pointer"
-        }}>
-          <span style={{ fontSize: 16, color: "#cc0000" }}>Sign Out</span>
-        </div>
-      </div>
-    </PhoneFrame>
-  );
-
-  // MAIN
-  function WasteFreeFlow3() {
-    const [currentScreen, setCurrentScreen] = useState(SCREENS.WELCOME);
-
-    const screenComponents = {
-      [SCREENS.WELCOME]: <WelcomeScreen onNext={() => setCurrentScreen(SCREENS.ACCOUNT)} />,
-      [SCREENS.ACCOUNT]: (
-        <AccountScreen
-          onBack={() => setCurrentScreen(SCREENS.WELCOME)}
-          onNext={() => setCurrentScreen(SCREENS.PREFERENCE)}
-        />
-      ),
-      [SCREENS.PREFERENCE]: (
-        <PreferenceScreen
-          onBack={() => setCurrentScreen(SCREENS.ACCOUNT)}
-          onSelect={() => setCurrentScreen(SCREENS.NOTIFICATIONS)}
-        />
-      ),
-      [SCREENS.NOTIFICATIONS]: (
-        <NotificationScreen
-          onBack={() => setCurrentScreen(SCREENS.PREFERENCE)}
-          onAllow={() => setCurrentScreen(SCREENS.DONE)}
-          onSkip={() => setCurrentScreen(SCREENS.DONE)}
-        />
-      ),
-      [SCREENS.DONE]: <DoneScreen onStart={() => setCurrentScreen(SCREENS.PROFILE)} />,
-      [SCREENS.PROFILE]: <ProfileScreen />,
-    };
-
-    const screenLabels = {
-      [SCREENS.WELCOME]: "1. Welcome",
-      [SCREENS.ACCOUNT]: "2. Account Setup",
-      [SCREENS.PREFERENCE]: "3. Preference Selection",
-      [SCREENS.NOTIFICATIONS]: "4. Notifications",
-      [SCREENS.DONE]: "5. Done",
-      [SCREENS.PROFILE]: "6. Profile Tab",
-    };
-
-    return (
-      <div style={{
-        background: "#f5f5f5", padding: "16px 0",
-        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-      }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-          {/* Screen Navigator */}
-          <div style={{
-            display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center", marginBottom: 16
-          }}>
-            {Object.entries(screenLabels).map(([key, label]) => (
-              <button
-                key={key}
-                onClick={() => setCurrentScreen(key)}
-                style={{
-                  padding: "6px 12px", borderRadius: 8, border: "1.5px solid",
-                  borderColor: currentScreen === key ? "#1a1a1a" : "#ddd",
-                  background: currentScreen === key ? "#1a1a1a" : "#fff",
-                  color: currentScreen === key ? "#fff" : "#666",
-                  fontSize: 12, fontWeight: currentScreen === key ? 700 : 400,
-                  cursor: "pointer", transition: "all 0.2s"
-                }}
-              >{label}</button>
-            ))}
-          </div>
-
-          {/* Phone + Notes side by side */}
-          <div style={{
-            display: "flex", justifyContent: "center", alignItems: "flex-start",
-            gap: 24
-          }}>
-            {screenComponents[currentScreen]}
-
-            <div style={{
-              maxWidth: 320, padding: 16, borderRadius: 12,
-              background: "#fff", border: "1px solid #e0e0e0", alignSelf: "flex-start"
-            }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#1a1a1a", marginBottom: 6 }}>
-                {screenLabels[currentScreen]}
-              </div>
-              <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
-                {currentScreen === SCREENS.WELCOME && "Logo + 2-line value prop. No feature tours, no carousels. Get in, get out."}
-                {currentScreen === SCREENS.ACCOUNT && "Minimal fields. SSO options for speed. Community + unit may be pre-filled via management invite link."}
-                {currentScreen === SCREENS.PREFERENCE && "The most important screen in onboarding. This single choice cascades through the entire app experience. Large tappable cards for Linda. 'You can change this anytime' reduces decision anxiety."}
-                {currentScreen === SCREENS.NOTIFICATIONS && "Dedicated pre-prompt before the system dialog. Trust copy ('no spam, no marketing') increases opt-in from ~35% to ~55%. 'Maybe later' is not 'No.'"}
-                {currentScreen === SCREENS.DONE && "Set expectations: the app is dormant until first collection. Preference confirmation with escape hatch to Profile."}
-                {currentScreen === SCREENS.PROFILE && "Low-frequency settings. My Preference is the most important row — it's the one setting that affects the entire app. Visit once, rarely return."}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  ReactDOM.createRoot(document.getElementById('flow-3-root')).render(<WasteFreeFlow3 />);
-})()}
-</script>
-
-</body>
 </html>

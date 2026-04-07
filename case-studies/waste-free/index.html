@@ -120,6 +120,64 @@
       --border-2: #3a3a3a;
       --surface:  #1c1c1c;
     }
+    /* Dark mode: table cells */
+    [data-theme="dark"] th {
+      color: var(--text);
+    }
+    [data-theme="dark"] td {
+      color: var(--text-2);
+      border-color: var(--border);
+    }
+    [data-theme="dark"] td strong {
+      color: var(--text);
+    }
+    /* Dark mode: meta grid */
+    [data-theme="dark"] .meta__item {
+      border-color: var(--border);
+    }
+    /* Dark mode: footer */
+    [data-theme="dark"] .footer {
+      border-color: var(--border);
+    }
+    /* Dark mode: inline flow diagram overrides */
+    [data-theme="dark"] .flow__step {
+      color: var(--text);
+    }
+    [data-theme="dark"] div[style*="font-size: 13px"] {
+      color: var(--text-2) !important;
+    }
+    /* Dark mode: React prototype wrapper areas */
+    [data-theme="dark"] #flow-1-root > div > div,
+    [data-theme="dark"] #flow-2-root > div > div,
+    [data-theme="dark"] #flow-3-root > div > div {
+      background: var(--surface) !important;
+    }
+    /* Dark mode: screen nav buttons in prototypes */
+    [data-theme="dark"] #flow-1-root button,
+    [data-theme="dark"] #flow-2-root button,
+    [data-theme="dark"] #flow-3-root button {
+      border-color: var(--border) !important;
+    }
+    [data-theme="dark"] #flow-1-root button:not([style*="background: rgb(26, 26, 26)"]),
+    [data-theme="dark"] #flow-2-root button:not([style*="background: rgb(26, 26, 26)"]),
+    [data-theme="dark"] #flow-3-root button:not([style*="background: rgb(26, 26, 26)"]) {
+      background: var(--bg) !important;
+      color: var(--text-3) !important;
+    }
+    /* Dark mode: notes card next to phone */
+    [data-theme="dark"] #flow-1-root div[style*="background: rgb(255, 255, 255)"],
+    [data-theme="dark"] #flow-2-root div[style*="background: rgb(255, 255, 255)"],
+    [data-theme="dark"] #flow-3-root div[style*="background: rgb(255, 255, 255)"] {
+      background: var(--surface) !important;
+      border-color: var(--border) !important;
+      color: var(--text-2) !important;
+    }
+    /* Dark mode: preference label text */
+    [data-theme="dark"] #flow-1-root > div > div > div[style*="color: rgb(102, 102, 102)"],
+    [data-theme="dark"] #flow-2-root > div > div > div[style*="color: rgb(102, 102, 102)"],
+    [data-theme="dark"] #flow-3-root > div > div > div[style*="color: rgb(102, 102, 102)"] {
+      color: var(--text-3) !important;
+    }
 
     /* --- Layout: sidebar + content ------------------------------------- */
     .layout {
@@ -650,18 +708,18 @@
         <tbody>
           <tr>
             <td><strong>1</strong></td>
+            <td><strong>Onboarding / Profile Setup</strong></td>
+            <td>Account creation, preference selection, notification permission</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
             <td><strong>Repurchase / Buy Again</strong></td>
             <td>Notification → tonight's items → 3 actions (buy again, buy WasteFree, add to cart) → checkout</td>
           </tr>
           <tr>
-            <td><strong>2</strong></td>
+            <td><strong>3</strong></td>
             <td><strong>Impact & WasteFree Score</strong></td>
             <td>Score, community ranking, waste breakdown, impact equivalencies — all with date toggles</td>
-          </tr>
-          <tr>
-            <td><strong>3</strong></td>
-            <td><strong>Onboarding / Profile Setup</strong></td>
-            <td>Account creation, preference selection, notification permission</td>
           </tr>
           <tr>
             <td><strong>4</strong></td>
@@ -801,7 +859,7 @@
         <div class="flow__arrow"></div>
         <div class="flow__step">Sees tonight's items</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step" style="border: 2px solid #1a1a1a; background: #f5f5f5;">User chooses action</div>
+        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">User chooses action</div>
       </div>
       <div style="display: flex; gap: 12px; margin: 12px 0 12px 0; flex-wrap: wrap; justify-content: center;">
         <!-- Buy Again path -->
@@ -812,7 +870,7 @@
         </div>
         <!-- Buy WasteFree path -->
         <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; min-width: 180px;">
-          <div class="flow__step" style="width: 100%; text-align: center; font-size: 13px; border: 2px solid #1a1a1a; background: #f5f5f5;">Buy it WasteFree</div>
+          <div class="flow__step" style="width: 100%; text-align: center; font-size: 13px; border: 2px solid var(--text); background: var(--surface);">Buy it WasteFree</div>
           <div class="flow__arrow"></div>
           <div class="flow__step" style="width: 100%; text-align: center; font-size: 12px;">💰 Save Money → cheaper alt<br>🥗 Be Healthier → healthier alt<br>🌍 Save Planet → eco-friendly alt</div>
         </div>
@@ -1662,7 +1720,7 @@
           name="Cherry Dr. Pepper"
           detail="12-pack, 12 oz cans"
           price="$5.99"
-          wfLabel="Buy WasteFree"
+          wfLabel="Save Money"
           onBuyAgain={onBuyAgain}
           onBuyWF={() => onBuyWF("money")}
           onAdd={onCart}
@@ -1680,7 +1738,7 @@
           name="Bounty Paper Towels"
           detail="8-roll, Select-A-Size"
           price="$8.49"
-          wfLabel="Sustainable Pick"
+          wfLabel="Buy WasteFree"
           onBuyAgain={onBuyAgain}
           onBuyWF={() => onBuyWF("planet")}
           onAdd={onCart}

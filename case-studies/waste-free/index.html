@@ -592,14 +592,30 @@
 
     /* --- Responsive ----------------------------------------------------- */
     @media (max-width: 768px) {
+      body {
+        font-size: 15px;
+        line-height: 1.65;
+      }
       .layout {
         grid-template-columns: 1fr;
         gap: 0;
+        padding: calc(var(--nav-h) + 24px) 20px 80px;
       }
       .sidebar { display: none; }
       .meta { grid-template-columns: 1fr; }
       .proto-links { grid-template-columns: 1fr; }
       .lessons { grid-template-columns: 1fr; }
+      section { margin-bottom: 56px; }
+      h1 { font-size: 1.75rem; margin-bottom: 16px; }
+      h2 { font-size: 12px; }
+      h3 { font-size: 1.25rem; }
+      h4 { font-size: 0.95rem; margin-top: 28px; }
+      .persona-grid { grid-template-columns: 1fr; }
+      .flow__track { overflow-x: auto; }
+      .footer { padding: 32px 0; }
+      .nav__inner { padding: 0 20px; }
+      table { font-size: 14px; }
+      td, th { padding: 10px 12px; }
     }
   </style>
 </head>
@@ -609,12 +625,7 @@
 <nav class="nav">
   <div class="nav__inner">
     <a href="../../" class="nav__logo">Darius.design</a>
-    <div class="nav__actions">
-      <span class="dark-toggle__label" id="darkToggleLabel">Dark Mode</span>
-      <button class="dark-toggle" id="darkToggle" role="switch" aria-checked="false" aria-label="Toggle dark mode">
-        <span class="dark-toggle__thumb"></span>
-      </button>
-    </div>
+    <div class="nav__actions"></div>
   </div>
 </nav>
 
@@ -631,8 +642,6 @@
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#wireframes">Wireframes</a></li>
       <li><a href="#prototype">Prototypes</a></li>
-      <li><a href="#gamification">Score Design</a></li>
-      <li><a href="#onboarding">Onboarding</a></li>
       <li><a href="#lessons">Lessons</a></li>
     </ul>
   </aside>
@@ -846,7 +855,7 @@
         <div class="flow__step">Done — app waits for first collection</div>
       </div>
 
-      <p>Onboarding happens before the app — leasing agents explain why WasteFree matters during move-in. The app just needs to collect one critical preference and get out of the way. That preference choice (Save Money, Be Healthier, or Save the Planet) shapes every "Buy it WasteFree" recommendation across the entire app. Target is under 60 seconds from open to done.</p>
+      <p>WasteFree onboarding happens before the user (resident) ever sees WasteFree — leasing agents explain why WasteFree matters during move-in and offer the WasteFree service to tenants as a complimentary service for being a resident at the property. The app just needs to collect one critical preference from the new resident and get out of the way to enter the resident's daily loop. That preference choice (Save Money, Be Healthier, or Save the Planet) shapes every product recommendation across the entire app. Target is for new residents signing up for an account and selecting their choices — goal is under 60 seconds from open to done.</p>
 
       <div id="flow-1-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
@@ -909,24 +918,11 @@
         <div class="flow__step">Shares or toggles date range</div>
       </div>
 
-      <p>This is a single scrollable page — not separate screens. The WasteFree Score works like a FICO score for waste. A sticky date toggle at the top (Last Pickup / This Week / This Month / YTD) controls all four sections at once. Community ranking is the primary engagement hook — residents see how their building compares. Impact equivalencies make the data tangible ("Your reduction equals 3 trees saved").</p>
+      <p>The WasteFree Score works like a FICO score for waste. A sticky date toggle at the top (Last Pickup / This Week / This Month / YTD) controls all four sections at once. Community ranking is the primary engagement hook — residents see how their building compares. Impact equivalencies make the data tangible ("Your reduction equals 3 trees saved").</p>
 
       <div id="flow-3-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
     </section>
 
-    <!-- ■ SCORE DESIGN ------------------------------------------------ -->
-    <section id="gamification">
-      <h2>Score Design</h2>
-      <h3><!-- Section title goes here --></h3>
-      <div class="empty-section">Content to be filled after Phase 2 reflection</div>
-    </section>
-
-    <!-- ■ ONBOARDING -------------------------------------------------- -->
-    <section id="onboarding">
-      <h2>Onboarding Design</h2>
-      <h3><!-- Section title goes here --></h3>
-      <div class="empty-section">Content to be filled after Phase 2 reflection</div>
-    </section>
 
     <!-- ■ LESSONS ----------------------------------------------------- -->
     <section id="lessons">
@@ -938,12 +934,7 @@
     <!-- ■ FOOTER ------------------------------------------------------ -->
     <footer class="footer">
       <p class="footer__name">Darius Shojaei</p>
-      <p class="footer__sub">UX Designer — Available for new projects</p>
-      <div class="footer__links">
-        <a href="mailto:darius@dariusshojaei.com">Email</a>
-        <a href="https://linkedin.com">LinkedIn</a>
-        <a href="../../">Portfolio</a>
-      </div>
+      <p class="footer__sub">Senior UX Designer</p>
     </footer>
 
   </main>
@@ -970,21 +961,7 @@
   window.addEventListener('scroll', updateActive);
   updateActive();
 
-  // Dark mode toggle
-  const darkToggle = document.getElementById('darkToggle');
-  const darkLabel = document.getElementById('darkToggleLabel');
-  const root = document.documentElement;
-
-  function setTheme(dark) {
-    root.setAttribute('data-theme', dark ? 'dark' : 'light');
-    darkToggle.setAttribute('aria-checked', dark);
-    darkLabel.textContent = dark ? 'Light Mode' : 'Dark Mode';
-  }
-
-  darkToggle.addEventListener('click', () => {
-    const isDark = darkToggle.getAttribute('aria-checked') === 'true';
-    setTheme(!isDark);
-  });
+  // Dark mode toggle removed for now
 </script>
 
 <!-- React & Babel for embedded prototypes -->
@@ -1470,7 +1447,7 @@
               <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
                 {currentScreen === SCREENS.WELCOME && "Logo + 2-line value prop. No feature tours, no carousels. Get in, get out."}
                 {currentScreen === SCREENS.ACCOUNT && "Minimal fields. SSO options for speed. Community + unit may be pre-filled via management invite link."}
-                {currentScreen === SCREENS.PREFERENCE && "The most important screen in onboarding. This single choice cascades through the entire app experience. Large tappable cards for Linda. 'You can change this anytime' reduces decision anxiety."}
+                {currentScreen === SCREENS.PREFERENCE && "The most important screen in onboarding. This single choice cascades through the entire app experience. Large tappable cards for accessibility. 'You can change this anytime' reduces decision anxiety."}
                 {currentScreen === SCREENS.NOTIFICATIONS && "Dedicated pre-prompt before the system dialog. Trust copy ('no spam, no marketing') increases opt-in from ~35% to ~55%. 'Maybe later' is not 'No.'"}
                 {currentScreen === SCREENS.DONE && "Set expectations: the app is dormant until first collection. Preference confirmation with escape hatch to Profile."}
                 {currentScreen === SCREENS.PROFILE && "Low-frequency settings. My Preference is the most important row — it's the one setting that affects the entire app. Visit once, rarely return."}
@@ -2673,9 +2650,8 @@
             }}>
               <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 6 }}>Design Notes</div>
               <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
-                Single scrollable page — not separate screens. All 4 sections update when the date toggle changes.
-                Community ranking is the primary engagement hook (Jordan persona). Score creates the "checking your sleep score"
-                daily loop. Impact equivalencies rotate to stay fresh. Share button targets organic growth.
+                All 4 sections update when the date toggle changes.
+                Community ranking is the primary engagement hook — residents see how their building compares. Impact equivalencies rotate to stay fresh. Share button targets organic growth.
               </div>
             </div>
           </div>

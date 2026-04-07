@@ -616,6 +616,38 @@
       .nav__inner { padding: 0 20px; }
       table { font-size: 14px; }
       td, th { padding: 10px 12px; }
+
+      /* Prototype wrappers on mobile */
+      #flow-1-root, #flow-2-root, #flow-3-root {
+        margin-left: -20px !important;
+        margin-right: -20px !important;
+        width: calc(100% + 40px) !important;
+        box-sizing: border-box;
+      }
+      #flow-1-root > div > div,
+      #flow-2-root > div > div,
+      #flow-3-root > div > div {
+        padding: 0 16px !important;
+      }
+      .proto-phone-notes {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 16px !important;
+      }
+      .proto-notes-card {
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box;
+      }
+      .proto-screen-btns {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        padding: 0 4px;
+      }
+      .proto-screen-btns button {
+        font-size: 11px !important;
+        padding: 5px 8px !important;
+      }
     }
   </style>
 </head>
@@ -1411,7 +1443,7 @@
       }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
           {/* Screen Navigator */}
-          <div style={{
+          <div className="proto-screen-btns" style={{
             display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center", marginBottom: 16
           }}>
             {Object.entries(screenLabels).map(([key, label]) => (
@@ -1431,13 +1463,13 @@
           </div>
 
           {/* Phone + Notes side by side */}
-          <div style={{
+          <div className="proto-phone-notes" style={{
             display: "flex", justifyContent: "center", alignItems: "flex-start",
             gap: 24
           }}>
             {screenComponents[currentScreen]}
 
-            <div style={{
+            <div className="proto-notes-card" style={{
               maxWidth: 320, padding: 16, borderRadius: 12,
               background: "#fff", border: "1px solid #e0e0e0", alignSelf: "flex-start"
             }}>
@@ -2312,7 +2344,7 @@
       }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
           {/* Screen Navigator */}
-          <div style={{
+          <div className="proto-screen-btns" style={{
             display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center",
             marginBottom: 16
           }}>
@@ -2333,7 +2365,7 @@
           </div>
 
           {/* Phone + Notes side by side */}
-          <div style={{
+          <div className="proto-phone-notes" style={{
             display: "flex", justifyContent: "center", alignItems: "flex-start",
             gap: 24
           }}>
@@ -2341,7 +2373,7 @@
             {screenComponents[currentScreen]}
 
             {/* Screen Notes */}
-            <div style={{
+            <div className="proto-notes-card" style={{
               maxWidth: 320, padding: 16, borderRadius: 12,
               background: "#fff", border: "1px solid #e0e0e0", alignSelf: "flex-start"
             }}>
@@ -2639,12 +2671,12 @@
       }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
           {/* Phone + Notes side by side */}
-          <div style={{
+          <div className="proto-phone-notes" style={{
             display: "flex", justifyContent: "center", alignItems: "flex-start",
             gap: 24
           }}>
             <ImpactScreen />
-            <div style={{
+            <div className="proto-notes-card" style={{
               maxWidth: 320, padding: 16, borderRadius: 12,
               background: "#fff", border: "1px solid #e0e0e0", alignSelf: "flex-start"
             }}>

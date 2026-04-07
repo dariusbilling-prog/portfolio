@@ -760,6 +760,7 @@
     if (input.value === '8891') {
       gate.style.display = 'none';
       sessionStorage.setItem('wf_unlocked', '1');
+      window.scrollTo(0, 0);
     } else {
       err.style.opacity = '1';
       input.style.borderColor = '#e53e3e';

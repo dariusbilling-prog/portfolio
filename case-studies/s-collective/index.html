@@ -26,6 +26,9 @@
       --font-nav:   'Work Sans', sans-serif;
 
       --radius: 8px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md: 0 2px 8px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.10);
+      --shadow-lg: 0 2px 8px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.12), 0 32px 64px rgba(0,0,0,0.08);
       --sidebar-w: 200px;
       --nav-h:  56px;
     }
@@ -265,7 +268,7 @@
     .back-to-top {
       position: fixed;
       bottom: 32px;
-      right: 32px;
+      left: 32px;
       width: 44px;
       height: 44px;
       background: var(--text);
@@ -287,6 +290,11 @@
 
     .back-to-top:hover {
       opacity: 0.8;
+    }
+
+    /* Scroll offset for fixed nav */
+    [id] {
+      scroll-margin-top: calc(var(--nav-h) + 16px);
     }
 
     /* --- Content sections ------------------------------------------- */
@@ -350,6 +358,179 @@
       line-height: 1.5;
     }
 
+    /* --- Hero banner video ------------------------------------------ */
+    .hero-banner-video {
+      width: 100%;
+      margin-top: 24px;
+      margin-bottom: 0;
+      border-radius: var(--radius);
+      display: block;
+    }
+
+    /* --- Audit CTA split --------------------------------------------- */
+    .audit-cta-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin: 48px 0;
+    }
+
+    .audit-cta-split__text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .audit-cta-split__image {
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .audit-cta-split__image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius);
+    }
+
+    .cs-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: 1.5px solid var(--text);
+      border-radius: var(--radius);
+      background: var(--text);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.25s ease, transform 0.15s ease;
+      width: fit-content;
+    }
+
+    .cs-btn:hover {
+      background: var(--text-2);
+      border-color: var(--text-2);
+    }
+
+    @media (max-width: 768px) {
+      .audit-cta-split {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .audit-cta-split__image { order: -1; }
+    }
+
+    /* --- Wireframe before/after blocks ------------------------------- */
+    .wf-block { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .wf-block__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .wf-block__label--before { color: var(--text-3); }
+    .wf-block__label--before::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--text-3);
+      display: inline-block;
+    }
+    .wf-block__label--after { color: #3b6347; }
+    .wf-block__label--after::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #4a7c59;
+      display: inline-block;
+    }
+    .wf-block__img-wrap {
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .wf-block__img-wrap--after {
+      border-color: color-mix(in srgb, #4a7c59 20%, transparent);
+    }
+    .wf-block__img-wrap img { width: 100%; height: auto; display: block; margin: 0; border-radius: 0; }
+    .wf-block__caption {
+      font-size: 18px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .wf-block__caption strong { font-weight: 600; color: var(--text); }
+
+    .wf-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      margin-bottom: 32px;
+    }
+    .wf-connector__line {
+      width: 1px;
+      height: 24px;
+      background: color-mix(in srgb, var(--text) 15%, transparent);
+    }
+    .wf-connector__label {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .wf-connector__arrow { font-size: 20px; color: var(--text-3); }
+
+    /* --- Side-by-side image pair ------------------------------------- */
+    .image-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .image-pair figure {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 0;
+    }
+
+    .image-pair img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 0;
+    }
+
+    .image-pair figcaption {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--text-3);
+    }
+
+    @media (max-width: 600px) {
+      .image-pair {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* --- Stat bar (dark metrics) ------------------------------------ */
     .cs-stat-bar {
       display: flex;
@@ -393,169 +574,6 @@
       flex-shrink: 0;
     }
 
-    /* --- Accordion (research findings) ----------------------------- */
-    .accordion-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin: 32px 0;
-    }
-
-    .accordion-item {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--bg);
-    }
-
-    .accordion-trigger {
-      width: 100%;
-      padding: 24px;
-      background: var(--bg);
-      border: none;
-      cursor: pointer;
-      text-align: left;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 24px;
-      transition: background 0.2s;
-    }
-
-    .accordion-trigger:hover {
-      background: var(--surface);
-    }
-
-    .accordion-trigger__labels {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .finding-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-    }
-
-    .finding-heading {
-      font-size: clamp(1.2rem, 2vw, 1.4rem);
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .accordion-impact {
-      font-size: 15px;
-      color: var(--text-2);
-      line-height: 1.5;
-    }
-
-    .accordion-chevron {
-      color: var(--text-3);
-      flex-shrink: 0;
-      transition: transform 0.2s;
-    }
-
-    .accordion-chevron--close {
-      display: none;
-    }
-
-    .accordion-item[data-open="true"] .accordion-chevron--open {
-      display: none;
-    }
-
-    .accordion-item[data-open="true"] .accordion-chevron--close {
-      display: block;
-    }
-
-    .accordion-body {
-      padding: 0 24px 24px;
-      border-top: 1px solid var(--border);
-      background: var(--bg);
-      display: none;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .accordion-item[data-open="true"] .accordion-body {
-      display: block;
-      max-height: 10000px;
-    }
-
-    .accordion-body > p {
-      margin-bottom: 20px;
-    }
-
-    .accordion-body h3 {
-      margin-top: 24px;
-      margin-bottom: 12px;
-    }
-
-    .accordion-body ul {
-      margin-bottom: 24px;
-    }
-
-    .accordion-body figure {
-      margin: 32px 0;
-    }
-
-    .obs-intro {
-      font-size: 14px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 12px;
-    }
-
-    .obs-list {
-      list-style: disc;
-      padding-left: 24px;
-    }
-
-    .obs-list li {
-      margin-bottom: 12px;
-    }
-
-    .cs-data-label {
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-3);
-      margin: 24px 0 12px;
-    }
-
-    .cs-visual {
-      margin: 32px 0;
-    }
-
-    .cs-visual img {
-      width: 100%;
-      height: auto;
-      border-radius: var(--radius);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.12);
-    }
-
-    .impact-block {
-      margin-top: 24px;
-      padding: 24px 32px;
-      background: color-mix(in srgb, var(--text-3) 6%, var(--bg));
-      border-radius: var(--radius);
-      border-left: 3px solid var(--text-3);
-    }
-
-    .impact-attribution {
-      display: block;
-      font-size: 12px;
-      color: var(--text-3);
-      font-style: normal;
-      margin-top: 12px;
-    }
 
     /* --- Before/After Slider ---------------------------------------- */
     .wf-slider-wrap {
@@ -572,7 +590,7 @@
       overflow: hidden;
       cursor: col-resize;
       user-select: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.12), 0 32px 64px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow-lg);
       touch-action: none;
       transform: translateZ(0);
       -webkit-transform: translateZ(0);
@@ -583,6 +601,8 @@
       width: 100%;
       height: auto;
       display: block;
+      margin: 0;
+      border-radius: 0;
     }
 
     .wf-slider__before {
@@ -595,25 +615,33 @@
     }
 
     .wf-slider__before img {
-      width: 100%;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
       height: 100%;
-      object-fit: cover;
+      max-width: none;
+      pointer-events: none;
       margin: 0;
       border-radius: 0;
     }
 
     .wf-slider__label {
       position: absolute;
-      top: 16px;
-      font-size: 12px;
+      bottom: 16px;
+      font-family: var(--font-sans);
+      font-size: 14px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #ffffff;
-      background: rgba(0,0,0,0.5);
-      padding: 6px 12px;
-      border-radius: 4px;
+      letter-spacing: 0.12em;
+      padding: 7px 18px;
+      border-radius: 100px;
       z-index: 2;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.6);
     }
 
     .wf-slider__label--before {
@@ -627,14 +655,110 @@
     .wf-slider__handle {
       position: absolute;
       top: 0;
+      bottom: 0;
       left: 35%;
-      width: 3px;
+      width: 2px;
       height: 100%;
-      background: #ffffff;
+      background: var(--text-2);
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px color-mix(in srgb, var(--text-2) 70%, transparent),
+                  0 0 24px color-mix(in srgb, var(--text-2) 35%, transparent);
+      pointer-events: none;
       cursor: col-resize;
       z-index: 3;
-      box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
     }
+
+    .wf-slider__handle::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--text-2);
+      box-shadow:
+        0 0 0 4px color-mix(in srgb, var(--text-2) 20%, transparent),
+        0 0 16px color-mix(in srgb, var(--text-2) 50%, transparent),
+        0 2px 10px rgba(0,0,0,0.18);
+    }
+
+    .wf-slider__handle::before {
+      content: '\2190\00a0\00a0\2192';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-2);
+      z-index: 4;
+      white-space: nowrap;
+      letter-spacing: 0;
+      line-height: 1;
+      text-align: center;
+    }
+
+    /* --- Premiere-style timeline panel ------------------------------- */
+    .pr {
+      background: #1c1c1e;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 12px 0;
+      font-family: var(--font-sans);
+      -webkit-user-select: none; user-select: none;
+      box-shadow: var(--shadow-md);
+    }
+    .pr__hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 12px;
+      background: #252527;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .pr__hdr-left { display: flex; align-items: center; gap: 7px; }
+    .pr__seq-dot { width: 10px; height: 10px; background: var(--text-3); border-radius: 2px; flex-shrink: 0; }
+    .pr__seq-name { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 0.03em; }
+    .pr__timecode { font-size: 13px; font-weight: 700; color: var(--text-3); letter-spacing: 0.09em; font-variant-numeric: tabular-nums; }
+    .pr__tl { display: flex; height: 140px; }
+    .pr__trk-hdrs { width: 52px; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,0.07); display: flex; flex-direction: column; }
+    .pr__ruler-spc { height: 22px; flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .pr__trk-hdr { flex: 1; display: flex; align-items: center; justify-content: flex-end; padding: 0 7px; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .pr__trk-label { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; color: rgba(255,255,255,0.3); }
+    .pr__v1-badge { font-size: 10px; font-weight: 700; background: #3d5f8f; color: rgba(255,255,255,0.9); padding: 1px 5px; border-radius: 2px; }
+    .pr__tl-body { flex: 1; position: relative; overflow: hidden; }
+    .pr__tl-inner { position: absolute; inset: 0; }
+    .pr__ruler { height: 22px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.08); background: #181818; cursor: pointer; overflow: hidden; }
+    .pr__rtick { position: absolute; bottom: 0; width: 1px; background: rgba(255,255,255,0.2); }
+    .pr__rtick--major { height: 100%; background: rgba(255,255,255,0.35); }
+    .pr__rtick--med   { height: 55%; }
+    .pr__rtick--minor { height: 33%; }
+    .pr__rlabel { position: absolute; top: 3px; font-size: 9px; color: rgba(255,255,255,0.42); letter-spacing: 0.03em; transform: translateX(-50%); white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .pr__ph { position: absolute; top: 0; bottom: 0; left: 0%; z-index: 10; width: 20px; transform: translateX(-50%); cursor: col-resize; pointer-events: none; display: flex; flex-direction: column; align-items: center; }
+    .pr__ph::before { content: ''; position: absolute; inset: 0; width: 20px; left: 50%; transform: translateX(-50%); cursor: col-resize; }
+    .pr__ph-head { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 8px solid var(--text-3); flex-shrink: 0; }
+    .pr__ph-line { width: 1px; flex: 1; background: var(--text-3); opacity: 0.85; }
+    .pr__tracks {
+      position: absolute; top: 22px; left: 0; right: 0; bottom: 0;
+      display: flex; flex-direction: column;
+      background: linear-gradient(90deg,
+        rgba(91,129,186,0.07) 0%, rgba(91,129,186,0.07) 33.3%,
+        rgba(201,69,40,0.07) 33.3%, rgba(201,69,40,0.07) 57.1%,
+        rgba(59,99,71,0.07) 57.1%, rgba(59,99,71,0.07) 95.3%,
+        transparent 95.3%);
+    }
+    .pr__lane { flex: 1; position: relative; border-bottom: 1px solid rgba(255,255,255,0.03); cursor: crosshair; }
+    .pr__lane:hover { background: rgba(255,255,255,0.01); }
+    .pr__clip { position: absolute; top: 3px; bottom: 3px; border-radius: 2px; overflow: hidden; cursor: pointer; display: flex; align-items: center; padding: 0 5px; transition: filter 0.14s; }
+    .pr__clip:hover { filter: brightness(1.25); }
+    .pr__clip::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-52deg, transparent, transparent 5px, rgba(255,255,255,0.03) 5px, rgba(255,255,255,0.03) 6px); pointer-events: none; }
+    .pr__clip--fx::after { content: 'fx'; position: absolute; top: 2px; right: 4px; font-size: 8px; font-weight: 700; letter-spacing: 0.04em; color: rgba(48,209,88,0.8); pointer-events: none; }
+    .pr__clip--v1 { background: linear-gradient(155deg, #38487a, #2a3660); border-left: 2px solid #5b81ba; }
+    .pr__clip--v2 { background: linear-gradient(155deg, #6b2828, #511e1e); border-left: 2px solid #c94528; }
+    .pr__clip--v3 { background: linear-gradient(155deg, #2a5438, #1e4028); border-left: 2px solid #3b6347; }
+    .pr__clip--audio { background: #1a3d5c; border-left: 2px solid #3a8fc0; background-image: repeating-linear-gradient(90deg, rgba(58,143,192,0.28) 0px, rgba(58,143,192,0.28) 1px, transparent 1px, transparent 3px), linear-gradient(to top, rgba(58,143,192,0.4) 0%, rgba(58,143,192,0.15) 40%, rgba(58,143,192,0.35) 60%, rgba(58,143,192,0.1) 80%, rgba(58,143,192,0.3) 100%); }
+    .pr__clip-name { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.6); letter-spacing: 0.04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: relative; z-index: 1; }
 
     /* --- Video Player (custom) -------------------------------------- */
     .vp {
@@ -645,7 +769,28 @@
       background: #1a1a1a;
       aspect-ratio: 16 / 9;
       margin: 32px 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.12);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* --- YouTube embed wrapper --------------------------------------- */
+    .yt-embed {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 32px 0;
+      box-shadow: var(--shadow-md);
+    }
+
+    .yt-embed iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      margin: 0;
+      border-radius: 0;
     }
 
     .vp__video {
@@ -709,200 +854,109 @@
       background: rgba(0,0,0,0.7);
     }
 
-    /* --- Premiere Timeline (video chapters) ----------------------- */
-    .pr {
+    /* --- Mobile wireframe phone mockups ----------------------------- */
+    .mobile-wf-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      align-items: start;
       margin: 32px 0;
+    }
+    .phone-mockup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .phone-mockup__frame {
+      width: 100%;
+      background: #1a1a1f;
+      border-radius: 28px;
+      padding: 10px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 8px 24px rgba(0,0,0,0.24), 0 24px 48px rgba(0,0,0,0.16);
+      position: relative;
+    }
+    .phone-mockup__frame::before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 5px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 3px;
+      z-index: 2;
+    }
+    .phone-mockup__screen {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 9/19;
+      background: #2d2d2f;
+    }
+    .phone-mockup__screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      margin: 0;
+      border-radius: 0;
+    }
+    .phone-mockup__label {
+      font-family: var(--font-serif);
+      font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+      font-weight: 700;
+      color: var(--text-3);
+      text-align: center;
+      letter-spacing: 0.02em;
+      margin-top: 16px;
+    }
+    @media (max-width: 900px) { .mobile-wf-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* --- Wireframe cards grid ---------------------------------------- */
+    .wf-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 32px 0;
+    }
+    .wf-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      background: var(--surface);
-      overflow: hidden;
+      padding: 24px;
     }
-
-    .pr__hdr {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg);
-    }
-
-    .pr__hdr-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--text-2);
-      font-family: 'Courier New', monospace;
-    }
-
-    .pr__seq-dot {
-      width: 8px;
-      height: 8px;
-      background: #30d158;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .pr__seq-name {
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .pr__timecode {
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      color: var(--text-3);
-      font-weight: 500;
-    }
-
-    .pr__tl {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      background: #f2f2f2;
-    }
-
-    .pr__trk-hdrs {
-      display: flex;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .pr__ruler-spc {
-      width: 120px;
-      flex-shrink: 0;
-      background: var(--bg);
-      border-right: 1px solid var(--border);
-    }
-
-    .pr__trk-hdr {
-      flex: 1;
-      padding: 8px;
-      background: var(--bg);
-      border-right: 1px solid var(--border);
+    .wf-card__label {
+      font-family: var(--font-sans);
       font-size: 11px;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .pr__trk-label {
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .pr__v1-badge {
-      color: var(--text);
-      background: var(--text);
-      color: var(--bg);
-      padding: 2px 6px;
-      border-radius: 3px;
       font-weight: 700;
-    }
-
-    .pr__tl-body {
-      position: relative;
-      overflow-x: auto;
-      overflow-y: hidden;
-      min-height: 160px;
-      background: linear-gradient(to right, var(--bg) 120px, #fafafa 120px);
-    }
-
-    .pr__tl-inner {
-      position: relative;
-      width: 100%;
-      min-width: fit-content;
-      height: 160px;
-    }
-
-    .pr__ruler {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 24px;
-      background: linear-gradient(to right, var(--bg) 120px, transparent 120px);
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-      z-index: 4;
-    }
-
-    .pr__ph {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 0;
-      height: 100%;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .pr__ph-head {
-      position: absolute;
-      top: 22px;
-      left: -4px;
-      width: 8px;
-      height: 8px;
-      background: #ff3b30;
-      border-radius: 50%;
-    }
-
-    .pr__ph-line {
-      position: absolute;
-      top: 0;
-      left: -1px;
-      width: 2px;
-      height: 100%;
-      background: #ff3b30;
-    }
-
-    .pr__tracks {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      margin-left: 120px;
-    }
-
-    .pr__lane {
-      flex: 1;
-      position: relative;
-      border-bottom: 1px solid var(--border);
-      background: transparent;
-    }
-
-    .pr__clip {
-      position: absolute;
-      top: 2px;
-      height: calc(100% - 4px);
-      border-radius: 3px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 600;
-      color: #ffffff;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      transition: opacity 0.2s;
-    }
-
-    .pr__clip--v1 { background: #5b81ba; }
-    .pr__clip--v2 { background: #4a7ba7; }
-    .pr__clip--v3 { background: #3a6a94; }
-    .pr__clip--audio { background: #888888; }
-
-    .pr__clip--fx {
-      position: relative;
-      border-right: 2px dashed rgba(255,255,255,0.4);
-    }
-
-    .pr__clip:hover {
-      opacity: 0.8;
-    }
-
-    .pr__clip-name {
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.12em;
+      color: var(--text-2);
+    }
+    .wf-card__img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      margin: 0;
+    }
+    .wf-card__caption {
+      font-size: 18px;
+      color: var(--text-2);
+      line-height: 1.55;
+      margin: 0;
+    }
+    @media (max-width: 600px) {
+      .wf-cards-grid { grid-template-columns: 1fr; }
     }
 
     /* --- Before/After improvement note ----------------------------- */
@@ -976,7 +1030,7 @@
       border-radius: var(--radius);
       overflow: hidden;
       background: #e8e8e8;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.12), 0 32px 64px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow-lg);
       transform: translateZ(0);
       -webkit-transform: translateZ(0);
       isolation: isolate;
@@ -986,6 +1040,7 @@
       position: relative;
       width: 100%;
       aspect-ratio: 4 / 3;
+      overflow: hidden;
     }
 
     .cs-jolt__screen iframe {
@@ -993,9 +1048,375 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: calc(100% + 96px);
+      height: calc(100% + 160px);
       border: none;
       display: block;
+    }
+
+    /* --- Live site desktop browser mockup --------------------------- */
+    .live-site-wrap {
+      background: var(--periwinkle);
+      border-radius: 16px;
+      padding: 40px 48px 48px;
+      margin: 32px 0;
+    }
+    .live-site-device {
+      background: #1c1c1e;
+      border-radius: 12px;
+      margin: 0;
+      box-shadow: var(--shadow-lg);
+    }
+    .live-site-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      background: #2a2a2c;
+      border-radius: 12px 12px 0 0;
+    }
+    .live-site-bar__dots {
+      display: flex;
+      gap: 6px;
+    }
+    .live-site-bar__dots i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: block;
+    }
+    .live-site-bar__dots i:nth-child(1) { background: #ff5f57; }
+    .live-site-bar__dots i:nth-child(2) { background: #febc2e; }
+    .live-site-bar__dots i:nth-child(3) { background: #28c840; }
+    .live-site-bar__url {
+      flex: 1;
+      background: #1c1c1e;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: 'Inter', sans-serif;
+      color: #999;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .live-site-screen {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 0 0 12px 12px;
+    }
+    .live-site-screen iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1440px;
+      height: 900px;
+      border: none;
+      transform-origin: top left;
+      /* scale is set by JS to fit container */
+    }
+
+    /* --- Audio Narration — Listen CTA ------------------------------- */
+    .listen-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px 10px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+      margin: 16px 0 8px;
+      font-family: var(--font-sans);
+      -webkit-user-select: none;
+      user-select: none;
+      z-index: 800;
+    }
+    .listen-cta:hover {
+      background: #fff;
+      border-color: var(--border-2);
+      box-shadow: var(--shadow-sm);
+    }
+    .listen-cta:active { transform: scale(0.98); }
+
+    /* Sticky state — desktop/tablet: compact pill on right edge */
+    .listen-cta.is-sticky {
+      position: fixed;
+      right: 16px;
+      bottom: 24px;
+      top: auto;
+      transform: none;
+      margin: 0;
+      padding: 8px 14px 8px 10px;
+      gap: 8px;
+      background: #fff;
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
+      animation: listen-slide-in 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .listen-cta.is-sticky .listen-cta__icon {
+      width: 28px;
+      height: 28px;
+    }
+    .listen-cta.is-sticky .listen-cta__icon svg {
+      width: 12px;
+      height: 12px;
+    }
+    .listen-cta.is-sticky .listen-cta__label {
+      font-size: 12px;
+    }
+    .listen-cta.is-sticky .listen-cta__meta {
+      font-size: 10px;
+    }
+    .listen-cta.is-sticky:active { transform: scale(0.97); }
+    @keyframes listen-slide-in {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* When audio player is open, hide the sticky CTA */
+    .listen-cta.is-sticky.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(20px);
+    }
+    .listen-cta__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .listen-cta__icon svg { color: #fff; }
+    .listen-cta__text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+    }
+    .listen-cta__label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .listen-cta__meta {
+      font-size: 11px;
+      color: var(--text-3);
+      font-weight: 400;
+    }
+    /* Loading state */
+    .listen-cta.is-loading .listen-cta__icon {
+      animation: listen-pulse 1s ease-in-out infinite;
+    }
+    @keyframes listen-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* --- Audio Player — Floating ------------------------------------- */
+    .audio-player {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 900;
+      width: 340px;
+      background: var(--text);
+      color: #fff;
+      border-radius: 16px;
+      padding: 16px 18px 14px;
+      box-shadow: var(--shadow-lg);
+      font-family: var(--font-sans);
+      transform: translateY(120%);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .audio-player.is-visible {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .audio-player__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .audio-player__title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .audio-player__section-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+    .audio-player__close {
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .audio-player__close:hover { background: rgba(255,255,255,0.2); }
+
+    /* Progress bar */
+    .audio-player__progress {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .audio-player__progress-fill {
+      height: 100%;
+      background: var(--periwinkle);
+      border-radius: 2px;
+      width: 0%;
+      position: relative;
+      transition: width 0.1s linear;
+    }
+    .audio-player__progress-fill::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .audio-player__progress:hover .audio-player__progress-fill::after {
+      opacity: 1;
+    }
+
+    /* Time + controls row */
+    .audio-player__controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .audio-player__time {
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+      color: rgba(255,255,255,0.5);
+      min-width: 72px;
+      white-space: nowrap;
+    }
+    .audio-player__btns {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-left: auto;
+    }
+    .ap-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.8);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.15s, color 0.15s;
+      padding: 0;
+    }
+    .ap-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .ap-btn--play {
+      width: 38px;
+      height: 38px;
+      background: rgba(255,255,255,0.15);
+    }
+    .ap-btn--play:hover { background: rgba(255,255,255,0.25); }
+    .ap-btn--speed {
+      font-size: 11px;
+      font-weight: 700;
+      width: auto;
+      padding: 0 8px;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      color: rgba(255,255,255,0.5);
+    }
+    .ap-btn--speed:hover { color: #fff; }
+    .ap-btn--follow.is-active {
+      background: var(--periwinkle);
+      color: #fff;
+    }
+    .ap-btn--follow.is-active:hover {
+      background: color-mix(in srgb, var(--periwinkle) 80%, #fff);
+    }
+
+    /* Section sync indicator on sidebar */
+    .sidebar__nav li.audio-active a::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--periwinkle);
+      border-radius: 50%;
+      margin-right: 6px;
+      animation: audio-dot-pulse 2s ease-in-out infinite;
+    }
+    @keyframes audio-dot-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Error state */
+    .audio-player__error {
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 8px 0;
+      display: none;
+    }
+    .audio-player.has-error .audio-player__error { display: block; }
+    .audio-player.has-error .audio-player__controls,
+    .audio-player.has-error .audio-player__progress { display: none; }
+
+    /* --- Paragraph highlight (read-along) --- */
+    [data-narrate].is-narrating {
+      font-weight: 600;
+    }
+
+    /* Mobile: full-width sticky bottom */
+    @media (max-width: 768px) {
+      .audio-player {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        border-radius: 16px 16px 0 0;
+        padding: 14px 16px 12px;
+      }
+
+      /* Sticky Listen CTA — compact bottom-right on mobile */
+      .listen-cta.is-sticky {
+        right: 12px;
+        bottom: 16px;
+      }
     }
 
     /* --- Module A/B cards ------------------------------------------- */
@@ -1011,12 +1432,14 @@
       overflow: hidden;
       background: var(--bg);
       border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow-sm);
     }
 
     .ba-module-card img {
       width: 100%;
-      height: auto;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      object-position: top;
       display: block;
       margin: 0;
       border-radius: 0;
@@ -1113,40 +1536,6 @@
       background: color-mix(in srgb, var(--text) 30%, #2d2d2f);
     }
 
-    [data-theme="dark"] .accordion-item {
-      border-color: rgba(255,255,255,0.1);
-      background: #1d1d1f;
-    }
-
-    [data-theme="dark"] .accordion-trigger {
-      background: #1d1d1f;
-    }
-
-    [data-theme="dark"] .accordion-trigger:hover {
-      background: #2d2d2f;
-    }
-
-    [data-theme="dark"] .accordion-body {
-      background: #1d1d1f;
-      border-top-color: rgba(255,255,255,0.08);
-    }
-
-    [data-theme="dark"] .finding-heading {
-      color: #f5f5f7;
-    }
-
-    [data-theme="dark"] .accordion-impact {
-      color: #a1a1a6;
-    }
-
-    [data-theme="dark"] .cs-data-label {
-      color: #a1a1a6;
-    }
-
-    [data-theme="dark"] .impact-block {
-      background: color-mix(in srgb, var(--text-3) 8%, #1d1d1f);
-      border-left-color: var(--text-3);
-    }
 
     [data-theme="dark"] .wf-impact {
       background: color-mix(in srgb, var(--text-3) 8%, #1d1d1f);
@@ -1180,6 +1569,59 @@
       border-top-color: var(--border);
     }
 
+    /* --- Lightbox ---------------------------------------------------- */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+    }
+    .lightbox-overlay.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lightbox-overlay img {
+      max-width: 92vw;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      margin: 0;
+      transform: scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+      touch-action: pinch-zoom pan-x pan-y;
+    }
+    .lightbox-overlay.is-open img {
+      transform: scale(1);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .lightbox-trigger {
+      cursor: zoom-in;
+    }
+
     /* --- Responsive ------------------------------------------------- */
     @media (max-width: 900px) {
       .layout {
@@ -1187,13 +1629,72 @@
         gap: 32px;
       }
 
+      /* Hide sidebar on tablet and mobile */
       .sidebar {
-        position: static;
-        top: auto;
+        display: none;
       }
 
       .ba-module-cards {
         grid-template-columns: 1fr;
+      }
+
+      /* Persona cards: stack vertically */
+      .persona-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+      }
+
+      /* Remove periwinkle wrap on tablet/mobile */
+      .live-site-wrap {
+        background: none;
+        padding: 0;
+        border-radius: 0;
+        margin: 24px 0;
+      }
+
+      /* Before/after slider — keep desktop hero proportions */
+      .wf-slider__after {
+        width: 100%;
+        height: auto;
+      }
+      .wf-slider__label {
+        font-size: 11px;
+        padding: 6px 14px;
+        bottom: 12px;
+      }
+      .wf-slider__label--before { left: 10px; }
+      .wf-slider__label--after { right: 10px; }
+
+      /* Touch-friendly slider handle */
+      .wf-slider__handle::after {
+        width: 54px !important;
+        height: 54px !important;
+      }
+      .wf-slider__handle::before {
+        font-size: 18px;
+      }
+
+      /* Touch-friendly Premiere timeline scrub area */
+      .pr__lane {
+        min-height: 28px;
+      }
+      .pr__ruler {
+        min-height: 24px;
+      }
+
+      /* Figma embeds — clean on mobile */
+      .cs-jolt__device {
+        background: #1c1c1e;
+        box-shadow: none;
+        border-radius: var(--radius);
+        margin: 24px 0;
+      }
+      .cs-jolt__screen {
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+      }
+      .cs-jolt__screen iframe {
+        height: calc(100% + 200px);
       }
     }
 
@@ -1226,12 +1727,19 @@
         margin: 24px 0;
       }
 
+      /* Slider keeps natural image ratio on phone */
+
       section > h2 {
         font-size: 1.8rem;
       }
 
       section > h3 {
         margin-bottom: 20px;
+      }
+
+      /* Image pair side-by-side → stack on mobile */
+      .image-pair {
+        grid-template-columns: 1fr !important;
       }
     }
   </style>
@@ -1255,14 +1763,13 @@
       <aside class="sidebar">
         <span class="sidebar__label">S Collective</span>
         <ul class="sidebar__nav">
-          <li><a href="#overview">Overview</a></li>
+          <li><a href="#overview-heading">Overview</a></li>
           <li><a href="#research">Research & Audit</a></li>
           <li><a href="#personas">Personas</a></li>
           <li><a href="#strategy">Strategy</a></li>
           <li><a href="#wireframes">Wireframes</a></li>
           <li><a href="#ui-design">UI Design</a></li>
           <li><a href="#racing-page">Racing Page</a></li>
-          <li><a href="#video-production">Video Production</a></li>
           <li><a href="#technology">Technology</a></li>
           <li><a href="#implementation">Implementation</a></li>
           <li><a href="#expected-impact">Expected Impact</a></li>
@@ -1300,6 +1807,18 @@
             </div>
           </div>
 
+          <!-- Banner video — full-width breakout -->
+          <video
+            class="hero-banner-video"
+            src="../../assets/videos/case-study-scollevtive-hero-video2.mp4"
+            muted
+            autoplay
+            loop
+            playsinline
+            preload="auto"
+            aria-label="S Collective redesigned website walkthrough"
+          ></video>
+
           <!-- Stat bar -->
           <div class="cs-stat-bar">
             <div class="cs-stat-bar__item">
@@ -1318,34 +1837,67 @@
             </div>
           </div>
 
+          <!-- Listen CTA — Audio Narration -->
+          <button class="listen-cta" id="listenCta" aria-label="Listen to case study narration" style="margin-top: 32px;">
+            <span class="listen-cta__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/>
+              </svg>
+            </span>
+            <span class="listen-cta__text">
+              <span class="listen-cta__label">Listen to this case study</span>
+              <span class="listen-cta__meta">12 min · Narrated by the designer</span>
+            </span>
+          </button>
+
           <!-- Section content -->
-          <h2 style="margin-top: 64px;">Overview</h2>
+          <h2 id="overview-heading" style="margin-top: 64px;">Overview</h2>
           <h3>Translating Real-World Demand Into a High-Performance Digital Experience</h3>
 
-          <p>S-Collective is a Plano, TX motorsport lifestyle brand operating at the intersection of high-performance driving and premium automotive services. With strong traffic and established brand credibility, the opportunity was to better align the digital experience with how high-intent users explore automotive services and make decisions.</p>
+          <p data-narrate="1">S Collective is a motorsport and automotive lifestyle brand based in Plano, Texas. They sit at the intersection of high-performance driving and premium vehicle services — think ceramic coatings, paint protection, track coaching, and vehicle sourcing for a clientele that cares deeply about their cars.</p>
 
-          <p>I was brought on as a Product Design Consultant to support a focused redesign across the Homepage, Racing Page, and new supporting pages—refining the information architecture, clarifying conversion pathways, and improving the overall on-page experience.</p>
+          <p data-narrate="2">They had strong traffic. They had a loyal customer base. But the website wasn't converting at the level the brand deserved. That's where I came in.</p>
 
-          <p>The objective was to create a more structured, conversion-focused foundation designed to increase engagement, improve lead quality, and support measurable growth post-launch.</p>
+          <p data-narrate="3">I was brought on as a Product Design Consultant for a six-week engagement, focused on redesigning the Homepage, the Racing page, and building out new supporting pages — all with one goal: turn more visitors into leads.</p>
 
-          <p>Performance tracking was planned through Google Analytics 4 and Microsoft Clarity to validate impact after launch.</p>
+          <p data-narrate="4">Performance tracking through Google Analytics 4 and Microsoft Clarity was planned from the start, so we could validate every decision with real data after launch.</p>
 
           <!-- The Problem -->
           <h2 style="margin-top: 64px;">The Problem</h2>
-          <h3>Clear Demand, Opportunity for a More Structured Conversion Experience</h3>
+          <h3>Clear Demand, but Friction Standing Between Visitors and Action</h3>
 
-          <p>S-Collective had strong demand and a well-established brand foundation, with an opportunity to better align the digital experience with how users evaluate high-trust, high-ticket services.</p>
+          <p data-narrate="5">The first thing I did was audit the existing site. Not a surface-level review — a structured analysis focused on three things: first impressions, trust signals, and conversion pathways. What I found shaped every design decision that came after.</p>
 
-          <p>Areas identified for improvement included:</p>
-          <ul>
-            <li>Clarifying service segmentation across track, automotive, and vehicle sales offerings</li>
-            <li>Strengthening visual hierarchy to better prioritize information and primary conversion points</li>
-            <li>Introducing more consistent trust signals at key decision moments</li>
-            <li>Structuring conversion pathways to better support different user intents</li>
-            <li>Adding new supporting pages to increase conversion and user retention</li>
-          </ul>
+          <p data-narrate="6">Service segmentation across track, automotive, and vehicle sales wasn't immediately clear. Visual hierarchy needed strengthening to better prioritize information and primary conversion points. Trust signals weren't showing up at the moments that mattered most. Conversion pathways needed restructuring to support different user intents. And the site needed new supporting pages to increase both conversion and user retention.</p>
 
-          <p>The focus was not to add more, but to refine the experience—reducing friction and guiding users with greater clarity and confidence.</p>
+          <p data-narrate="7">The focus wasn't to add more — it was to refine the experience. Reduce friction, and guide users with greater clarity and confidence.</p>
+
+          <!-- Live Site Interactive Preview -->
+          <h2 style="margin-top: 64px;">Live Experience</h2>
+          <h3>The Final Homepage in a Real-World Context</h3>
+
+          <div class="live-site-wrap">
+          <div class="cs-jolt__device live-site-device">
+            <div class="live-site-bar">
+              <span class="live-site-bar__dots">
+                <i></i><i></i><i></i>
+              </span>
+              <span class="live-site-bar__url">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><path d="M9.5 6.5v3a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h3" stroke="#999" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 1.5h4.5V6" stroke="#999" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                scollective.com
+              </span>
+            </div>
+            <div class="cs-jolt__screen live-site-screen">
+              <iframe
+                src="https://scollective.com/"
+                allowfullscreen
+                title="S Collective — Live Website Preview"
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-popups"
+              ></iframe>
+            </div>
+          </div>
+          </div><!-- /.live-site-wrap -->
         </section>
 
         <!-- ============================================================
@@ -1355,140 +1907,64 @@
           <h2>Research & Audit</h2>
           <h3>Early Insights That Shaped the Conversion Strategy</h3>
 
-          <p>The process began with a structured review of S-Collective's existing website, focused on understanding how the current experience supports first impressions, builds trust, and guides users toward inquiry.</p>
-          <p>This early discovery helped surface key areas where the experience could be further refined before moving into design exploration.</p>
+          <p data-narrate="8">The process began with a structured review of S Collective's existing website, focused on understanding how the current experience handles first impressions, builds trust, and guides users toward inquiry.</p>
+          <p data-narrate="9">This early discovery surfaced key areas where the experience could be refined before moving into design exploration.</p>
+
+          <!-- Audit CTA — two column -->
+          <div class="audit-cta-split">
+            <div class="audit-cta-split__text">
+              <p>The audit focused on first impressions, trust, and lead conversion — identifying where the experience could better guide high-intent users toward action.</p>
+              <a href="../../assets/files/S-Collective%20Website%20Audit%2012_22_25%20v1.1.pdf" target="_blank" rel="noopener noreferrer" class="cs-btn" aria-label="Download the full website audit PDF">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Download Full UX Audit (PDF)
+              </a>
+            </div>
+            <div class="audit-cta-split__image">
+              <img src="../../assets/images/audit-mockup 1.jpg" alt="S Collective Website Audit document mockup" />
+            </div>
+          </div>
 
           <h4>Key Focus Areas</h4>
-          <p>The review centered around three core areas:</p>
-          <p><strong>Messaging Clarity</strong> — How clearly the site communicates its services, positioning, and target audience</p>
-          <p><strong>Trust & Credibility</strong> — How effectively the experience builds confidence in high-value, high-trust services</p>
-          <p><strong>Conversion Pathways</strong> — How intuitively users move from initial exploration to taking action</p>
+          <p data-narrate="10">The review centered around three core areas. First, messaging clarity — how clearly the site communicates its services, positioning, and target audience. Second, trust and credibility — how effectively the experience builds confidence in high-value, high-trust services. And third, conversion pathways — how intuitively users move from initial exploration to taking action.</p>
 
           <h4>Research Approach</h4>
-          <p>Findings were organized to identify patterns across messaging, visual hierarchy, and conversion flow—helping inform a more structured and cohesive experience moving forward.</p>
+          <p data-narrate="11">Findings were organized to identify patterns across messaging, visual hierarchy, and conversion flow — helping inform a more structured and cohesive experience moving forward.</p>
 
-          <!-- Accordions for findings -->
-          <div class="accordion-wrap">
+          <!-- Finding 1 -->
+          <h4 style="font-family: var(--font-sans); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-top: 48px;">Audit Finding #1</h4>
+          <h3>Hero Section: Messaging & Calls-to-Action</h3>
+          <p data-narrate="12">The hero section had no clear value proposition. It was visually strong — beautiful cars, cinematic footage — but a first-time visitor had no idea what S Collective actually does, or what to do next. No primary call-to-action was visible on first load.</p>
+          <p data-narrate="13">There was an opportunity to more explicitly communicate S Collective's services and specialties. Users could engage with the visuals without ever understanding how to proceed.</p>
+          <img class="lightbox-trigger" src="../../assets/images/findings-1-diagram.png" alt="Annotated diagram of S Collective hero section highlighting UX issues" />
 
-            <!-- Finding 1 -->
-            <div class="accordion-item" data-open="true">
-              <button class="accordion-trigger" aria-expanded="true">
-                <div class="accordion-trigger__labels">
-                  <h3 class="finding-label">Audit Finding #1</h3>
-                  <h2 class="finding-heading">Hero Section: Messaging & Calls-to-Action</h2>
-                  <p class="accordion-impact">No clear value proposition or primary CTA was visible on first load, leaving users without direction.</p>
-                </div>
-                <svg class="accordion-chevron accordion-chevron--open" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <path d="M7 10.5l7 7 7-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg class="accordion-chevron accordion-chevron--close" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <path d="M7 7l14 14M21 7L7 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <div class="accordion-body">
-                <p class="cs-body">Visually strong, but no value proposition and no CTA above the fold. First-time visitors had no clear next step.</p>
-                <p class="obs-intro">Key Observations:</p>
-                <ul class="obs-list">
-                  <li>An opportunity to more explicitly communicate S Collective's services and specialties</li>
-                  <li>No primary or secondary call-to-action is visible on first load</li>
-                  <li>Users can engage with visuals without understanding how to proceed</li>
-                </ul>
-                <figure class="cs-visual">
-                  <img src="../../assets/images/findings-1-diagram.png" alt="Annotated diagram of S Collective hero section highlighting UX issues" />
-                </figure>
-                <h3 class="cs-data-label">Key Insight</h3>
-                <blockquote class="impact-block">
-                  <p>Without a clear value proposition or visible next step, users are forced to self-navigate. This increases friction early in the experience and reduces conversion potential.</p>
-                  <span class="impact-attribution">— Audit Finding #1</span>
-                </blockquote>
-              </div>
-            </div>
+          <!-- Finding 2 -->
+          <h4 style="font-family: var(--font-sans); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-top: 48px;">Audit Finding #2</h4>
+          <h3>Service Discovery & Carousels</h3>
+          <p data-narrate="14">Core services were hidden behind a carousel. Users had to click through to discover what was available — most never did. The full range of services had an opportunity to be more immediately visible, and high-value offerings were essentially invisible.</p>
+          <img class="lightbox-trigger" src="../../assets/images/findings-2-diagram.png" alt="Annotated diagram of S Collective services carousel" />
 
-            <!-- Finding 2 -->
-            <div class="accordion-item" data-open="false">
-              <button class="accordion-trigger" aria-expanded="false">
-                <div class="accordion-trigger__labels">
-                  <h3 class="finding-label">Audit Finding #2</h3>
-                  <h2 class="finding-heading">Service Discovery & Carousels</h2>
-                  <p class="accordion-impact">Core services hidden behind a carousel, reducing visibility and high-value service discovery.</p>
-                </div>
-                <svg class="accordion-chevron accordion-chevron--open" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <path d="M7 10.5l7 7 7-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg class="accordion-chevron accordion-chevron--close" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <path d="M7 7l14 14M21 7L7 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <div class="accordion-body">
-                <p class="cs-body">Services were hidden behind a carousel. Users had to interact before understanding what was on offer — most never did.</p>
-                <p class="obs-intro">Key Observations:</p>
-                <ul class="obs-list">
-                  <li>Users must interact to view the full range of services</li>
-                  <li>The full range of services had an opportunity to be more immediately visible</li>
-                  <li>High-value offerings may never be seen</li>
-                </ul>
-                <figure class="cs-visual">
-                  <img src="../../assets/images/findings-2-diagram.png" alt="Annotated diagram of S Collective services carousel" />
-                </figure>
-                <h3 class="cs-data-label">Key Insight</h3>
-                <blockquote class="impact-block">
-                  <p>Hiding core services behind interaction increases cognitive load and reduces clarity. Users should be able to scan all offerings instantly without requiring input.</p>
-                  <span class="impact-attribution">— Audit Finding #2</span>
-                </blockquote>
-              </div>
-            </div>
+          <!-- Finding 3 -->
+          <h4 style="font-family: var(--font-sans); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-top: 48px;">Audit Finding #3</h4>
+          <h3>Brand Authority & Trust Hierarchy</h3>
+          <p data-narrate="15">Trust signals — client logos, testimonials, credentials — were buried below the fold. For a business selling high-ticket services, credibility needs to show up in the first few seconds, not after three scrolls.</p>
+          <img class="lightbox-trigger" src="../../assets/images/Social Proof &amp; Hierarchy.png" alt="Annotated diagram showing trust signals and credibility indicators positioned below the fold on S Collective website" />
 
-            <!-- Finding 3 -->
-            <div class="accordion-item" data-open="false">
-              <button class="accordion-trigger" aria-expanded="false">
-                <div class="accordion-trigger__labels">
-                  <h3 class="finding-label">Audit Finding #3</h3>
-                  <h2 class="finding-heading">Brand Authority & Trust Hierarchy</h2>
-                  <p class="accordion-impact">Trust signals positioned too low on the page, delaying credibility at the critical first impression.</p>
-                </div>
-                <svg class="accordion-chevron accordion-chevron--open" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <path d="M7 10.5l7 7 7-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg class="accordion-chevron accordion-chevron--close" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <path d="M7 7l14 14M21 7L7 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <div class="accordion-body">
-                <p class="cs-body">Trust signals were buried below the fold, delaying credibility at the moment users form their first impression.</p>
-                <h3 class="cs-data-label">Key Insight</h3>
-                <blockquote class="impact-block">
-                  <p>Delayed trust validation increases hesitation for high-value services. Credibility signals are most effective immediately after the hero, where users are deciding whether to continue.</p>
-                  <span class="impact-attribution">— Audit Finding #3</span>
-                </blockquote>
-              </div>
-            </div>
-
-            <!-- Finding 4 -->
-            <div class="accordion-item" data-open="false">
-              <button class="accordion-trigger" aria-expanded="false">
-                <div class="accordion-trigger__labels">
-                  <h3 class="finding-label">Audit Finding #4</h3>
-                  <h2 class="finding-heading">Mobile Performance</h2>
-                  <p class="accordion-impact">80MB of hero assets caused 5-8 second load delays on mobile, increasing abandonment before any content was seen.</p>
-                </div>
-                <svg class="accordion-chevron accordion-chevron--open" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <path d="M7 10.5l7 7 7-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg class="accordion-chevron accordion-chevron--close" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                  <path d="M7 7l14 14M21 7L7 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <div class="accordion-body">
-                <p class="cs-body">~80MB of hero video assets caused significant mobile load delays, preventing content from reaching users at the most critical entry point.</p>
-                <h3 class="cs-data-label">Key Insight</h3>
-                <blockquote class="impact-block">
-                  <p>Performance degradation occurred before value or trust could be communicated, causing users to drop off prior to reaching meaningful content.</p>
-                  <span class="impact-attribution">— Audit Finding #4</span>
-                </blockquote>
-              </div>
-            </div>
-
-          </div><!-- /accordion-wrap -->
+          <!-- Finding 4 -->
+          <h4 style="font-family: var(--font-sans); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-top: 48px;">Audit Finding #4</h4>
+          <h3>Mobile Performance</h3>
+          <p data-narrate="16">And then there was performance. The homepage was loading around eighty megabytes of hero video on mobile. That meant five to eight second load times. Users were bouncing before they ever saw a word of content.</p>
+          <div class="image-pair">
+            <figure>
+              <img class="lightbox-trigger" src="../../assets/images/performance-metrics-data-findings-scollevtive-1.jpg" alt="Mobile performance analytics showing slow load times for S Collective website" />
+              <figcaption>Mobile Performance Analytics</figcaption>
+            </figure>
+            <figure>
+              <img class="lightbox-trigger" src="../../assets/images/performance-metrics-data-findings-scollevtive-2.jpg" alt="Desktop performance analytics showing stronger load times for S Collective website" />
+              <figcaption>Desktop Performance Analytics</figcaption>
+            </figure>
+          </div>
         </section>
 
         <!-- ============================================================
@@ -1498,10 +1974,12 @@
           <h2>Personas</h2>
           <h3>Three Distinct Visitor Mindsets, One Unified Experience</h3>
 
-          <p>Three core user personas emerged from the research, each with distinct motivations and decision-making criteria. The redesign needed to serve all three without forcing any single path.</p>
+          <p data-narrate="17">From the research, three distinct user personas emerged. First, the Exotic Owner — high-net-worth, protective of their vehicle, looking for premium quality and trust. They need to see proven results immediately. Second, the Track-Day Driver — performance-focused, technically minded, evaluating whether S Collective has the engineering expertise to support their goals. And third, the New Enthusiast — earlier in their journey, exploring upgrades, but with lower confidence. They need education, reassurance, and clear entry points.</p>
+
+          <p data-narrate="18">The redesign had to serve all three — without forcing any of them down a path that wasn't theirs.</p>
 
           <!-- Persona cards -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 48px;">
+          <div class="persona-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 48px;">
             <div style="border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
               <img src="../../assets/images/persona-1.jpg" alt="The Exotic Owner" style="width: 100%; height: auto; margin: 0; border-radius: 0;" />
               <div style="padding: 24px;">
@@ -1538,18 +2016,12 @@
           <h2>Three Strategic Focus Areas</h2>
           <h3>Clearer Value, Earlier Trust, and a More Direct Path to Conversion</h3>
 
-          <p>The redesign was guided by three core focus areas: clarifying the value proposition, introducing trust earlier in the experience, and creating a more direct path for users to take action.</p>
-          <p>These priorities helped translate early discovery insights into a more structured, conversion-focused direction across the site.</p>
+          <p data-narrate="19">That led to three strategic focus areas. One: clarify the value proposition — make it obvious within seconds what S Collective does and who it's for. Two: introduce trust earlier — move credibility signals like logos, results, and social proof up to where they matter, right after the hero, when users are deciding whether to stay. And three: create a more direct path to action — reduce friction, fewer clicks between interest and inquiry.</p>
+
+          <img src="../../assets/images/kanban.jpg" alt="S Collective project kanban board showing task progression across backlog, in-progress, and done columns" />
 
           <h4>Key Observations</h4>
-          <p>Through early discovery, several patterns emerged that informed the direction of the redesign:</p>
-          <ul>
-            <li>Opportunities to clarify messaging earlier, helping users quickly understand the offerings</li>
-            <li>Trust signals were more effective when introduced earlier in the experience</li>
-            <li>Some interaction-driven layouts limited visibility of core services</li>
-            <li>Conversion opportunities could be surfaced sooner for high-intent users</li>
-            <li>Mobile performance played a key role in first impressions and engagement</li>
-          </ul>
+          <p data-narrate="20">Through early discovery, several patterns confirmed this direction. Messaging needed to show up earlier so users could quickly understand the offerings. Trust signals were far more effective when introduced at the top of the experience. Interaction-driven layouts like carousels were limiting visibility of core services. Conversion opportunities could be surfaced much sooner for high-intent users. And mobile performance was playing a critical role in first impressions and engagement.</p>
         </section>
 
         <!-- ============================================================
@@ -1559,26 +2031,58 @@
           <h2>Wireframes</h2>
           <h3>From Discovery Insights to Structured, Conversion-Focused Layouts</h3>
 
-          <p>Wireframes were used to translate early discovery insights into clear, testable layouts—focusing on structure, hierarchy, and conversion flow before visual design.</p>
+          <p data-narrate="21">The wireframe phase was where everything started coming together. I used wireframes to translate discovery insights into clear, testable layouts — focusing on structure, hierarchy, and conversion flow before touching any visual design.</p>
 
           <h4>Restructuring Navigation Around User Intent</h4>
-          <p>The navigation was refined to better align with user intent—prioritizing core services, simplifying category structure, and reducing ambiguity.</p>
-          <p>The logo placement was adjusted to reinforce brand presence, while primary and secondary CTAs were introduced to support both immediate action and concierge-style engagement.</p>
+          <p data-narrate="22">I restructured the navigation around user intent — grouping services more clearly, simplifying labels, and elevating the primary call-to-action so it's always visible.</p>
+          <p data-narrate="23">The logo placement was adjusted to reinforce brand presence, while primary and secondary CTAs were introduced to support both immediate action and concierge-style engagement.</p>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0;">
-            <div style="border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
-              <img src="../../assets/images/wireframe-desktop-nav-before.svg" alt="Navigation wireframe before" style="width: 100%; margin: 0; border-radius: 0;" />
-              <p style="padding: 16px; margin: 0; background: var(--surface); text-align: center; font-size: 14px;">Before</p>
+          <!-- BEFORE -->
+          <div class="wf-block">
+            <span class="wf-block__label wf-block__label--before">Before — Friction</span>
+            <div class="wf-block__img-wrap wf-block__img-wrap--before">
+              <img src="../../assets/images/wireframe-desktop-nav-before.svg" alt="Navigation before redesign — unclear hierarchy and generic labels" />
             </div>
-            <div style="border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
-              <img src="../../assets/images/wireframe-desktop-nav-after.svg" alt="Navigation wireframe after" style="width: 100%; margin: 0; border-radius: 0;" />
-              <p style="padding: 16px; margin: 0; background: var(--surface); text-align: center; font-size: 14px;">After</p>
+            <p class="wf-block__caption"><strong>Unclear hierarchy and generic labels</strong> &rarr; Requires interpretation before action</p>
+          </div>
+
+          <!-- Transformation connector -->
+          <div class="wf-connector">
+            <div class="wf-connector__line"></div>
+            <span class="wf-connector__label">
+              <span class="wf-connector__arrow">&uarr;</span>
+              Before &mdash; After
+              <span class="wf-connector__arrow">&darr;</span>
+            </span>
+            <div class="wf-connector__line"></div>
+          </div>
+
+          <!-- AFTER -->
+          <div class="wf-block">
+            <span class="wf-block__label wf-block__label--after">After — Optimized</span>
+            <div class="wf-block__img-wrap wf-block__img-wrap--after">
+              <img src="../../assets/images/wireframe-desktop-nav-after.svg" alt="Navigation after redesign — clear service grouping and elevated CTA" />
             </div>
+            <p class="wf-block__caption"><strong>Clear service grouping and elevated CTA</strong> &rarr; Enables fast scanning and immediate action</p>
           </div>
 
           <h4>Redesigning the Hero</h4>
-          <p>The hero was restructured to prioritize clarity and immediate comprehension.</p>
-          <p>Early wireframe exploration focused on defining the value proposition, introducing trust cues, and establishing a clear conversion hierarchy.</p>
+          <p data-narrate="24">The hero was rebuilt from scratch. Instead of a static carousel, we designed a system that tells S Collective's story passively — aspiration, then credibility, then capability.</p>
+          <p data-narrate="25">Early wireframe exploration focused on defining the value proposition, introducing trust cues, and establishing a clear conversion hierarchy.</p>
+
+          <!-- Hand wireframe cards -->
+          <div class="wf-cards-grid">
+            <div class="wf-card">
+              <span class="wf-card__label">Component Planning</span>
+              <img class="wf-card__img" src="../../assets/images/hand-wire-frame-2.jpg" alt="Component planning wireframe for hero section" />
+              <p class="wf-card__caption">Component-first planning helped define the information hierarchy before visual design began.</p>
+            </div>
+            <div class="wf-card">
+              <span class="wf-card__label">Wireframe Iteration</span>
+              <img class="wf-card__img" src="../../assets/images/hand-wire-frame-1.jpg" alt="Wireframe iteration for hero layout and CTA placement" />
+              <p class="wf-card__caption">Rapid iteration refined layout, messaging, and CTA placement before moving into final UI.</p>
+            </div>
+          </div>
 
           <!-- Before/After Slider -->
           <div class="wf-slider-wrap">
@@ -1606,22 +2110,18 @@
           <p class="wf-hero-insight">The final hero translates early wireframe decisions into a clearer, trust-building first impression with a stronger path to action.</p>
 
           <h4>Designing a Hero Video</h4>
-          <p>The hero video was designed to support the experience without competing with it. Its role is to:</p>
-          <ul>
-            <li>Establish credibility within the first few seconds</li>
-            <li>Communicate brand tone and real-world capability</li>
-            <li>Reinforce the primary call-to-action through context, not distraction</li>
-          </ul>
+          <p data-narrate="26">The hero video was designed to support the experience without competing with it. Its role is to establish credibility within the first few seconds, communicate brand tone and real-world capability, and reinforce the primary call-to-action through context — not distraction.</p>
+          <p data-narrate="27">The intent was to build trust and aspiration quickly, while allowing the interface to remain clear and actionable.</p>
 
           <!-- Custom video player -->
-          <div class="vp" id="heroVideoPlayer">
+          <div class="vp is-paused" id="heroVideoPlayer">
             <video
               class="vp__video"
-              src="../../assets/videos/case-study-scollevtive-hero-video2.mp4"
+              src="../../assets/videos/s-collective-hero-vide-home-demo.mp4"
               muted
               playsinline
               preload="auto"
-              aria-label="S Collective hero video"
+              aria-label="S Collective hero video — 3 chapters, 21 seconds"
             ></video>
             <div class="vp__overlay" aria-hidden="true">
               <div class="vp__big-play">
@@ -1649,14 +2149,94 @@
             </div>
           </div>
 
-          <h4>Mobile-First Layouts</h4>
-          <p>Mobile layouts were designed with a focus on clarity, performance, and progressive disclosure.</p>
+          <!-- Premiere Timeline Panel -->
+          <div class="pr" id="prPanel" aria-label="Timeline editor — scrub or click clips to seek">
+            <div class="pr__hdr">
+              <div class="pr__hdr-left">
+                <span class="pr__seq-dot" aria-hidden="true"></span>
+                <span class="pr__seq-name">FinalVideo (5) — scollective hero video loop</span>
+              </div>
+              <span class="pr__timecode" id="prTimecode" aria-live="polite" aria-label="Timecode">00:00:00:00</span>
+            </div>
+            <div class="pr__tl">
+              <div class="pr__trk-hdrs" aria-hidden="true">
+                <div class="pr__ruler-spc"></div>
+                <div class="pr__trk-hdr"><span class="pr__trk-label">V3</span></div>
+                <div class="pr__trk-hdr"><span class="pr__trk-label">V2</span></div>
+                <div class="pr__trk-hdr"><span class="pr__v1-badge">V1</span></div>
+                <div class="pr__trk-hdr"><span class="pr__trk-label">A1</span></div>
+              </div>
+              <div class="pr__tl-body" id="prTlBody">
+                <div class="pr__tl-inner">
+                  <div class="pr__ruler" id="prRuler" role="slider" tabindex="0" aria-label="Seek video" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+                  <div class="pr__ph" id="prPh" aria-hidden="true">
+                    <div class="pr__ph-head"></div>
+                    <div class="pr__ph-line"></div>
+                  </div>
+                  <div class="pr__tracks">
+                    <div class="pr__lane" data-seek-lane>
+                      <div class="pr__clip pr__clip--v3 pr__clip--fx" style="left:57.1%;width:9.3%;"><span class="pr__clip-name">cap_01</span></div>
+                      <div class="pr__clip pr__clip--v3 pr__clip--fx" style="left:66.7%;width:9.3%;"><span class="pr__clip-name">cap_02</span></div>
+                      <div class="pr__clip pr__clip--v3" style="left:76.3%;width:9.3%;"><span class="pr__clip-name">cap_03</span></div>
+                      <div class="pr__clip pr__clip--v3" style="left:86%;width:9.3%;"><span class="pr__clip-name">cap_04</span></div>
+                    </div>
+                    <div class="pr__lane" data-seek-lane>
+                      <div class="pr__clip pr__clip--v2 pr__clip--fx" style="left:33.3%;width:11.6%;"><span class="pr__clip-name">cred_01</span></div>
+                      <div class="pr__clip pr__clip--v2" style="left:45.2%;width:11.6%;"><span class="pr__clip-name">cred_02</span></div>
+                    </div>
+                    <div class="pr__lane" data-seek-lane>
+                      <div class="pr__clip pr__clip--v1" style="left:0.5%;width:7.6%;"><span class="pr__clip-name">asp_01</span></div>
+                      <div class="pr__clip pr__clip--v1" style="left:8.4%;width:7.8%;"><span class="pr__clip-name">asp_02</span></div>
+                      <div class="pr__clip pr__clip--v1" style="left:16.5%;width:7.8%;"><span class="pr__clip-name">asp_03</span></div>
+                      <div class="pr__clip pr__clip--v1" style="left:24.6%;width:7.8%;"><span class="pr__clip-name">asp_04</span></div>
+                    </div>
+                    <div class="pr__lane" data-seek-lane>
+                      <div class="pr__clip pr__clip--audio" style="left:0.5%;width:94.5%;"><span class="pr__clip-name">audio_main</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; margin: 32px 0;">
-            <img src="../../assets/images/mobile-wireframe-scollective-1.jpg" alt="Mobile wireframe 1" style="border: 1px solid var(--border); border-radius: var(--radius);" />
-            <img src="../../assets/images/mobile-wireframe-scollective-2.jpg" alt="Mobile wireframe 2" style="border: 1px solid var(--border); border-radius: var(--radius);" />
-            <img src="../../assets/images/mobile-wireframe-scollective-3.jpg" alt="Mobile wireframe 3" style="border: 1px solid var(--border); border-radius: var(--radius);" />
-            <img src="../../assets/images/mobile-wireframe-scollective-4.jpg" alt="Mobile wireframe 4" style="border: 1px solid var(--border); border-radius: var(--radius);" />
+          <p data-narrate="28">The original homepage hero relied on a static carousel. We replaced it with a produced twenty-second video that tells S Collective's story passively — it plays automatically, communicates the brand, and supports the interface without competing with it. The video was built with a UX narrative structure: Aspiration, then Credibility, then Capability.</p>
+
+          <h4>Mobile-First Layouts</h4>
+          <p data-narrate="29">Mobile layouts were designed with a focus on clarity, performance, and progressive disclosure. Every screen was validated at 390px before moving to desktop.</p>
+
+          <div class="mobile-wf-grid">
+            <div class="phone-mockup">
+              <div class="phone-mockup__frame">
+                <div class="phone-mockup__screen">
+                  <img src="../../assets/images/mobile-wireframe-scollective-1.jpg" alt="Mobile wireframe — Services page layout" />
+                </div>
+              </div>
+              <span class="phone-mockup__label">Services</span>
+            </div>
+            <div class="phone-mockup">
+              <div class="phone-mockup__frame">
+                <div class="phone-mockup__screen">
+                  <img src="../../assets/images/mobile-wireframe-scollective-4.jpg" alt="Mobile wireframe — Blog page layout" />
+                </div>
+              </div>
+              <span class="phone-mockup__label">Blog</span>
+            </div>
+            <div class="phone-mockup">
+              <div class="phone-mockup__frame">
+                <div class="phone-mockup__screen">
+                  <img src="../../assets/images/mobile-wireframe-scollective-3.jpg" alt="Mobile wireframe — Social media page layout" />
+                </div>
+              </div>
+              <span class="phone-mockup__label">Social Media</span>
+            </div>
+            <div class="phone-mockup">
+              <div class="phone-mockup__frame">
+                <div class="phone-mockup__screen">
+                  <img src="../../assets/images/mobile-wireframe-scollective-2.jpg" alt="Mobile wireframe — Mobile navigation layout" />
+                </div>
+              </div>
+              <span class="phone-mockup__label">Mobile Navigation</span>
+            </div>
           </div>
         </section>
 
@@ -1667,10 +2247,10 @@
           <h2>UI Design</h2>
           <h3>Every Module Designed to Keep Users Moving Toward Conversion</h3>
 
-          <p>The homepage was rebuilt as a conversion system — not a brochure. Each module serves a specific role in the user journey.</p>
+          <p data-narrate="30">The homepage was rebuilt as a conversion system — not a brochure. Each module serves a specific role in the user journey, and every element earns its place on the page.</p>
 
           <h4>Dual Conversion System</h4>
-          <p>Each module tested a different conversion hypothesis — authority-first vs. intent-first.</p>
+          <p data-narrate="31">Below the hero, I designed a dual conversion system. Two modules, each testing a different hypothesis. Module A leads with authority — credentials and trust signals at the top. Module B leads with intent — services and CTAs front and center. This gives us a framework to measure which approach converts better post-launch.</p>
 
           <div class="ba-module-cards">
             <div class="ba-module-card">
@@ -1683,18 +2263,14 @@
             </div>
           </div>
 
-          <h4>Social Media Integration</h4>
-          <p>We added a live social media feed to the homepage, pulling S Collective's most recent posts directly into the browsing experience. This shows visitors the brand is active and current (a trust signal), and creates a content loop.</p>
-
-          <!-- Note: social media module image would go here -->
-
-          <h4>Blog & Content System</h4>
-          <p>We built an entire blog into the S Collective website and surfaced it through a homepage blog module. This increases user retention, establishes authority, and creates an SEO foundation. When blog posts embed YouTube videos, it creates a content loop across Google and YouTube.</p>
+          <h4>Social Media Integration & Blog System</h4>
+          <p data-narrate="32">We also added a live social media feed directly on the homepage. It pulls in S Collective's most recent posts, showing visitors the brand is active and current. That's a trust signal in itself.</p>
+          <p data-narrate="33">And we built an entire blog system — surfaced through a homepage module — to drive SEO, establish authority, and keep users engaged longer. When blog posts embed YouTube videos, it creates a content loop across Google and YouTube.</p>
+          <img src="../../assets/images/social-blog-live.png" alt="S Collective social media feed and blog module — live implementation" />
 
           <h4>Intent-Based Contact Page</h4>
-          <p>We replaced the generic contact form with an intent-based system routing users by need: Mechanical Services, Race Prep & Coaching, or Vehicle Sourcing & Sales.</p>
-
-          <!-- Note: contact page image would go here -->
+          <p data-narrate="34">The contact page got a complete rethink. Instead of a generic form, we designed an intent-based system. Users select their need — Mechanical Services, Race Prep and Coaching, or Vehicle Sourcing — and the form adapts. This routes higher-quality leads and gives the team immediate context.</p>
+          <img src="../../assets/images/CRO%20-%20Form%20-%20Desktop%20-%20Vehicle%20Services.jpg" alt="S Collective intent-based contact page with service routing" />
         </section>
 
         <!-- ============================================================
@@ -1704,13 +2280,13 @@
           <h2>Racing Page</h2>
           <h3>Designed for Two Audiences at Once</h3>
 
-          <p>Two audiences, one page. First-timers needed reassurance; enthusiasts needed credentials. Both find their path without scrolling past content that isn't for them.</p>
+          <p data-narrate="35">The Racing page was one of the most interesting design challenges. Two very different audiences — first-timers who are curious but hesitant, and experienced enthusiasts who already know the sport. First-timers need approachability and reassurance. Enthusiasts need credentials, technical depth, and proof that S Collective operates at their level.</p>
 
           <!-- Figma embed -->
           <div class="cs-jolt__device">
             <div class="cs-jolt__screen">
               <iframe
-                src="https://embed.figma.com/proto/qmPSXw4ULTsVKI2nyT7flK/Portfolio-Website?node-id=226-389&viewport=571%2C152%2C0.11&scaling=scale-down&content-scaling=fixed&page-id=3%3A7&embed-host=share"
+                src="https://embed.figma.com/proto/qmPSXw4ULTsVKI2nyT7flK/Portfolio-Website?node-id=226-389&viewport=571%2C152%2C0.11&scaling=scale-down&content-scaling=fixed&page-id=3%3A7&embed-host=share&hide-ui=1"
                 allowfullscreen
                 title="S Collective Racing Page — High Fidelity Prototype"
                 loading="lazy"
@@ -1718,21 +2294,11 @@
             </div>
           </div>
 
-          <p>The dual-audience structure held — both user types reached their primary action without additional navigation. The Racing page became one of the highest-converting pages in the redesigned site.</p>
+          <p data-narrate="36">The solution was a single page that serves both. The structure leads with approachability, then layers in credibility. Both user types reach their primary action without scrolling past content that isn't relevant to them. It became one of the highest-converting pages in the redesign.</p>
 
           <blockquote>
             <p>The Racing page structure was validated against both personas — reducing hesitation for first-timers by leading with approachability, and increasing confidence for enthusiasts by surfacing professional credibility before conversion. A single page serving two distinct intents, without compromise.</p>
           </blockquote>
-        </section>
-
-        <!-- ============================================================
-             VIDEO PRODUCTION
-             ============================================================ -->
-        <section id="video-production">
-          <h2>Video Production</h2>
-          <h3>A 20-Second Story That Does the Selling Before a Single Word Is Read</h3>
-
-          <p>The original homepage hero relied on a static carousel. We replaced it with a produced hero video that tells S Collective's story in 20 seconds — establishing desire, credibility, and capability passively. The video was built with a UX narrative structure: aspiration → capability → invitation.</p>
         </section>
 
         <!-- ============================================================
@@ -1742,10 +2308,25 @@
           <h2>Technology & Optimization</h2>
           <h3>Under-the-Hood Upgrades That Make the Site Faster, Lighter, and Scalable</h3>
 
-          <p>A redesign that looks better but performs worse isn't a redesign — it's a liability.</p>
+          <p data-narrate="37">On the technology side, performance was non-negotiable. A redesign that looks better but performs worse isn't a redesign — it's a liability.</p>
 
-          <h4>MUX — Enterprise Video Infrastructure</h4>
-          <p>We integrated MUX to handle all video content. Instead of loading from the web server, MUX streams through an optimized CDN with adaptive bitrate delivery — faster loads, smoother playback, and no performance degradation as more video content gets added.</p>
+          <h4>Mux — Video Performance Optimization</h4>
+          <h3>Replacing Heavy Video Assets With Streaming Infrastructure to Improve Load Speed</h3>
+
+          <p data-narrate="38">The biggest win was replacing those heavy video files with Mux — a streaming-based solution that dynamically serves optimized video quality based on the user's device and network conditions. Same visual impact, dramatically faster load times.</p>
+
+          <!-- Mux explainer YouTube embed -->
+          <div class="yt-embed">
+            <iframe
+              src="https://www.youtube.com/embed/0QjH1NbcE7U?si=4Iy3-ygTtqAqAnJA"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
         </section>
 
         <!-- ============================================================
@@ -1755,22 +2336,10 @@
           <h2>Implementation</h2>
           <h3>Concept to Delivery in Six Weeks</h3>
 
-          <p>Design, development handoff, and content migration ran in parallel across a six-week timeline.</p>
+          <p data-narrate="39">Design, development handoff, and content migration ran in parallel across a six-week timeline.</p>
 
           <h4>Deliverables</h4>
-          <ul>
-            <li>Full UX audit with annotated findings</li>
-            <li>User personas and journey mapping</li>
-            <li>Desktop and mobile wireframes</li>
-            <li>High-fidelity Figma prototypes (desktop + mobile)</li>
-            <li>Navigation and IA restructure</li>
-            <li>Hero video production</li>
-            <li>Blog system and homepage blog module</li>
-            <li>Social media homepage module</li>
-            <li>Intent-based contact page</li>
-            <li>MUX video streaming integration</li>
-            <li>Developer handoff documentation</li>
-          </ul>
+          <p data-narrate="40">The full engagement delivered a UX audit with annotated findings, user personas and journey mapping, desktop and mobile wireframes, high-fidelity Figma prototypes, a complete navigation and information architecture restructure, a produced hero video, a blog system, a social media integration module, an intent-based contact page, Mux video streaming integration, and full developer handoff documentation. All in six weeks.</p>
         </section>
 
         <!-- ============================================================
@@ -1780,29 +2349,25 @@
           <h2>Expected Impact</h2>
           <h3>Designed to Convert — Built to Measure</h3>
 
-          <p>Every design decision was made to reduce friction, build trust faster, and shorten the path from interest to action. Our target is a 20–40% increase in conversions within 90 days of launch, validated through GA4 and Microsoft Clarity.</p>
+          <p data-narrate="41">Every design decision in this project was made to reduce friction, build trust faster, and shorten the path from interest to action. Our target is a twenty to forty percent increase in conversions within ninety days of launch. And we're not guessing — we're measuring.</p>
 
           <h4>What We're Measuring</h4>
-          <p>We've configured two tracking platforms to monitor the site for the first 90 days:</p>
 
           <h4>GA4 (Google Analytics 4):</h4>
-          <ul>
-            <li>CTA click-through rate across service pages and homepage hero</li>
-            <li>Form completion rate measured against the pre-launch baseline</li>
-            <li>Session duration and exit rates on mobile vs desktop</li>
-            <li>Scroll depth tracking to confirm users reach key conversion sections</li>
-            <li>Full user path analysis from landing to form submission</li>
-          </ul>
+          <p data-narrate="42">We've configured Google Analytics 4 to track CTA click-through rates, form completion rates, session duration, scroll depth, and full user path analysis from landing to form submission.</p>
+
+          <figure>
+            <img class="lightbox-trigger" src="../../assets/images/Ga4%20Demo%20Screenshot.png" alt="GA4 Analytics dashboard showing conversion tracking configuration for S Collective" loading="lazy">
+          </figure>
 
           <h4>Microsoft Clarity:</h4>
-          <ul>
-            <li>Session recordings showing real user behavior, clicks, and scroll patterns</li>
-            <li>Heatmaps revealing where users engage and drop off</li>
-            <li>Rage click and dead click detection</li>
-            <li>Mobile vs desktop behavior comparison</li>
-          </ul>
+          <p data-narrate="43">We've set up Microsoft Clarity for session recordings, heatmaps, rage click detection, and mobile versus desktop behavior comparison.</p>
 
-          <p>At the 30, 60, and 90-day marks, we'll review the data against the 20–40% conversion target and optimize. This isn't a launch-and-leave project.</p>
+          <figure>
+            <img class="lightbox-trigger" src="../../assets/images/Microsoft%20Clairty%20Screenshot.png" alt="Microsoft Clarity heatmap showing user engagement patterns on S Collective website" loading="lazy">
+          </figure>
+
+          <p data-narrate="44">At the thirty, sixty, and ninety day marks, we'll review the data against that conversion target and optimize. This isn't a launch-and-leave project.</p>
         </section>
 
         <!-- ============================================================
@@ -1812,7 +2377,7 @@
           <h2>What's Next</h2>
           <h3>The Launch Is the Starting Line — Not the Finish</h3>
 
-          <p>With the redesign complete and tracking in place, the next phase is optimization. Based on the first 90 days of data, we'll identify which conversion paths are performing, which pages have the highest drop-off, and where the next round of improvements should focus.</p>
+          <p data-narrate="45">The launch is the starting line — not the finish. With the redesign complete and tracking in place, the next phase is optimization. Based on the first ninety days of data, we'll identify which conversion paths are performing, which pages have the highest drop-off, and where the next round of improvements should focus.</p>
         </section>
 
         <!-- Footer -->
@@ -1837,9 +2402,73 @@
       </svg>
     </button>
 
+    <!-- Lightbox overlay -->
+    <div class="lightbox-overlay" id="lightbox" aria-hidden="true">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">&times;</button>
+      <img src="" alt="" id="lightboxImg" />
+    </div>
+
+    <!-- ============================================================
+         AUDIO NARRATION PLAYER (floating)
+         ============================================================ -->
+    <div class="audio-player" id="audioPlayer" role="region" aria-label="Audio narration player">
+      <div class="audio-player__header">
+        <div>
+          <div class="audio-player__title">Case Study Narration</div>
+          <div class="audio-player__section-label" id="apSectionLabel">Overview</div>
+        </div>
+        <button class="audio-player__close" id="apClose" aria-label="Close audio player">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l8 8M11 3l-8 8"/></svg>
+        </button>
+      </div>
+      <div class="audio-player__progress" id="apProgress" role="slider" aria-label="Audio progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+        <div class="audio-player__progress-fill" id="apFill"></div>
+      </div>
+      <div class="audio-player__controls">
+        <span class="audio-player__time" id="apTime">0:00 / 0:00</span>
+        <div class="audio-player__btns">
+          <button class="ap-btn" id="apBack" aria-label="Skip back 10 seconds" title="Back 10s">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/><text x="12" y="16" text-anchor="middle" fill="currentColor" stroke="none" font-size="8" font-weight="700">10</text></svg>
+          </button>
+          <button class="ap-btn ap-btn--play" id="apPlay" aria-label="Play">
+            <svg class="ap-icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+            <svg class="ap-icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="5" y="3" width="4" height="18" rx="1"/><rect x="15" y="3" width="4" height="18" rx="1"/></svg>
+          </button>
+          <button class="ap-btn" id="apForward" aria-label="Skip forward 10 seconds" title="Forward 10s">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.13-9.36L23 10"/><text x="12" y="16" text-anchor="middle" fill="currentColor" stroke="none" font-size="8" font-weight="700">10</text></svg>
+          </button>
+          <button class="ap-btn ap-btn--speed" id="apSpeed" aria-label="Playback speed" title="Change speed">1x</button>
+          <button class="ap-btn ap-btn--follow is-active" id="apFollow" aria-label="Disable follow along scrolling" title="Following along">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="audio-player__error">
+        <p>Audio couldn't load. <button id="apRetry" style="background:none;border:none;color:var(--periwinkle);cursor:pointer;font:inherit;text-decoration:underline;">Try again</button></p>
+      </div>
+    </div>
+
   </div><!-- /.site-desktop -->
 
   <script>
+    /* -- Live site iframe desktop scaling ----------------------------- */
+    (() => {
+      const screen = document.querySelector('.live-site-screen');
+      const iframe = screen && screen.querySelector('iframe');
+      if (!screen || !iframe) return;
+      const DESKTOP_W = 1440;
+      function scaleIframe() {
+        const scale = screen.offsetWidth / DESKTOP_W;
+        iframe.style.transform = `scale(${scale})`;
+        iframe.style.width = DESKTOP_W + 'px';
+        iframe.style.height = Math.round(screen.offsetHeight / scale) + 'px';
+      }
+      scaleIframe();
+      window.addEventListener('resize', scaleIframe);
+      // re-calc after fonts/images settle
+      window.addEventListener('load', scaleIframe);
+    })();
+
     (() => {
       /* -- Disabled nav links --- */
       document.querySelectorAll('a[aria-disabled="true"]').forEach(a => {
@@ -1861,18 +2490,17 @@
       /* -- Scroll spy ------------------------------------------------- */
       const navItems = document.querySelectorAll('.sidebar__nav li');
       const sectionMap = [
-        { id: 'overview',        li: navItems[0] },
+        { id: 'overview-heading', li: navItems[0] },
         { id: 'research',        li: navItems[1] },
         { id: 'personas',        li: navItems[2] },
         { id: 'strategy',        li: navItems[3] },
         { id: 'wireframes',      li: navItems[4] },
         { id: 'ui-design',       li: navItems[5] },
         { id: 'racing-page',     li: navItems[6] },
-        { id: 'video-production',li: navItems[7] },
-        { id: 'technology',      li: navItems[8] },
-        { id: 'implementation',  li: navItems[9] },
-        { id: 'expected-impact', li: navItems[10] },
-        { id: 'whats-next',      li: navItems[11] },
+        { id: 'technology',      li: navItems[7] },
+        { id: 'implementation',  li: navItems[8] },
+        { id: 'expected-impact', li: navItems[9] },
+        { id: 'whats-next',      li: navItems[10] },
       ];
 
       const scrollObserver = new IntersectionObserver(entries => {
@@ -1898,7 +2526,20 @@
           const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
           backToTop.classList.toggle('visible', pct > 0.5);
         }, { passive: true });
-        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        backToTop.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // Reset audio narration if playing
+          const audioEl = document.querySelector('audio');
+          if (audioEl) {
+            audioEl.pause();
+            audioEl.currentTime = 0;
+          }
+          // Hide the player
+          const ap = document.getElementById('audioPlayer');
+          if (ap) ap.classList.remove('is-visible');
+          // Clear saved position
+          try { sessionStorage.removeItem('sc-audio-pos'); } catch(e) {}
+        });
       }
     })();
 
@@ -1907,8 +2548,13 @@
       const slider   = document.getElementById('heroSlider');
       if (!slider) return;
       const before   = slider.querySelector('.wf-slider__before');
+      const beforeImg = before.querySelector('img');
       const handle   = document.getElementById('heroSliderHandle');
       let dragging   = false;
+
+      function syncImageWidth() {
+        beforeImg.style.width = slider.offsetWidth + 'px';
+      }
 
       function setPos(clientX) {
         const rect = slider.getBoundingClientRect();
@@ -1919,70 +2565,634 @@
       }
 
       const init = () => {
+        syncImageWidth();
         const rect = slider.getBoundingClientRect();
         setPos(rect.left + rect.width * 0.35);
       };
       window.addEventListener('load', init);
+      window.addEventListener('resize', syncImageWidth);
       setTimeout(init, 100);
 
-      slider.addEventListener('mousedown', e => { dragging = true; setPos(e.clientX); });
-      window.addEventListener('mousemove', e => { if (dragging) setPos(e.clientX); });
+      slider.addEventListener('mousedown', e => { e.preventDefault(); dragging = true; setPos(e.clientX); });
+      window.addEventListener('mousemove', e => { if (dragging) { e.preventDefault(); setPos(e.clientX); } });
       window.addEventListener('mouseup',   () => { dragging = false; });
 
       slider.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
       window.addEventListener('touchmove',  e => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
       window.addEventListener('touchend',   () => { dragging = false; });
+
+      /* Prevent native image drag */
+      slider.addEventListener('dragstart', e => e.preventDefault());
     })();
 
-    /* -- Accordion expand/collapse ----------------------------------- */
-    (() => {
-      document.querySelectorAll('.accordion-trigger').forEach(trigger => {
-        trigger.addEventListener('click', () => {
-          const item   = trigger.closest('.accordion-item');
-          const isOpen = item.dataset.open === 'true';
-          if (isOpen) return;
-          item.dataset.open = 'true';
-          trigger.setAttribute('aria-expanded', 'true');
+
+    /* -- Custom video player — scroll-triggered + controls ----------- */
+    (function () {
+      const player  = document.getElementById('heroVideoPlayer');
+      if (!player) return;
+
+      const video   = player.querySelector('.vp__video');
+      const playBtn = document.getElementById('vpPlayBtn');
+      const replayBtn = document.getElementById('vpReplayBtn');
+      let userPaused = false;
+
+      function setPlaying(playing) {
+        player.classList.toggle('is-paused', !playing);
+        player.classList.toggle('is-playing', playing);
+        playBtn.querySelector('.vp-icon-play').style.display  = playing ? 'none' : '';
+        playBtn.querySelector('.vp-icon-pause').style.display = playing ? ''     : 'none';
+        playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+      }
+
+      player.addEventListener('click', e => {
+        if (e.target.closest('.vp__play-pill')) return;
+        if (video.paused) { userPaused = false; video.play().catch(() => {}); }
+        else              { userPaused = true;  video.pause(); }
+      });
+      playBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        if (video.paused) { userPaused = false; video.play().catch(() => {}); }
+        else              { userPaused = true;  video.pause(); }
+      });
+      replayBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        video.currentTime = 0;
+        userPaused = false;
+        video.play().catch(() => {});
+      });
+
+      video.addEventListener('play',  () => setPlaying(true));
+      video.addEventListener('pause', () => setPlaying(false));
+      video.addEventListener('ended', () => {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      });
+
+      /* Scroll-triggered playback */
+      const vpObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!userPaused) video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
         });
+      }, { threshold: 0.25 });
+      vpObs.observe(player);
+
+      video.muted = true;
+      setPlaying(false);
+    })();
+
+    /* -- Premiere timeline panel ------------------------------------- */
+    (function () {
+      const video    = document.querySelector('#heroVideoPlayer .vp__video');
+      const prPh     = document.getElementById('prPh');
+      const prRuler  = document.getElementById('prRuler');
+      const prTlBody = document.getElementById('prTlBody');
+      const tcEl     = document.getElementById('prTimecode');
+      if (!video || !prPh) return;
+
+      const DURATION = 21;
+
+      function toTC(secs) {
+        const f = Math.round((secs % 1) * 24) % 24;
+        const s = Math.floor(secs) % 60;
+        const m = Math.floor(secs / 60) % 60;
+        const h = Math.floor(secs / 3600);
+        return [h,m,s].map(v => String(v).padStart(2,'0')).join(':')
+             + ':' + String(f).padStart(2,'0');
+      }
+
+      function syncPh() {
+        const dur = video.duration || DURATION;
+        const pct = (video.currentTime / dur) * 100;
+        prPh.style.left = pct + '%';
+        prRuler.setAttribute('aria-valuenow', Math.round(pct));
+        tcEl.textContent = toTC(video.currentTime);
+      }
+
+      video.addEventListener('timeupdate', syncPh);
+      video.addEventListener('play',       syncPh);
+      video.addEventListener('pause',      syncPh);
+      video.addEventListener('ended',      syncPh);
+
+      function buildRuler() {
+        prRuler.innerHTML = '';
+        const dur = video.duration || DURATION;
+        for (let t = 0; t <= Math.ceil(dur) + 0.1; t += 0.5) {
+          if (t > dur + 0.1) break;
+          const pct     = (t / dur) * 100;
+          const isMajor = (Math.round(t * 10) % 50 === 0);
+          const isMed   = Number.isInteger(Math.round(t * 2) / 2) && t % 1 === 0 && !isMajor;
+          const tick    = document.createElement('div');
+          tick.className = 'pr__rtick' +
+            (isMajor ? ' pr__rtick--major' : isMed ? ' pr__rtick--med' : ' pr__rtick--minor');
+          tick.style.left = pct + '%';
+          prRuler.appendChild(tick);
+          if (isMajor) {
+            const lbl = document.createElement('span');
+            lbl.className   = 'pr__rlabel';
+            lbl.style.left  = pct + '%';
+            lbl.textContent = Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2,'0');
+            prRuler.appendChild(lbl);
+          }
+        }
+      }
+      video.addEventListener('loadedmetadata', buildRuler);
+      buildRuler();
+
+      function seekFromX(clientX) {
+        const rect = prTlBody.getBoundingClientRect();
+        const pct  = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+        video.currentTime = pct * (video.duration || DURATION);
+      }
+
+      let dragging  = false;
+      let wasPaused = true;
+
+      function startDrag(e) {
+        wasPaused = video.paused;
+        dragging  = true;
+        video.pause();
+        seekFromX(e.clientX);
+        e.preventDefault();
+      }
+
+      prRuler.addEventListener('mousedown', startDrag);
+      prPh.style.pointerEvents = 'all';
+      prPh.addEventListener('mousedown', startDrag);
+
+      document.addEventListener('mousemove', e => { if (dragging) seekFromX(e.clientX); });
+      document.addEventListener('mouseup', () => {
+        if (!dragging) return;
+        dragging = false;
+        if (!wasPaused) video.play().catch(() => {});
+      });
+
+      syncPh();
+    })();
+
+    /* ================================================================
+       LISTEN CTA — sticky on scroll
+       ================================================================ */
+    (() => {
+      const cta = document.getElementById('listenCta');
+      const player = document.getElementById('audioPlayer');
+      if (!cta) return;
+
+      // Remember original position
+      const ctaOriginalParent = cta.parentElement;
+      let ctaRect = cta.getBoundingClientRect();
+      let ctaTop = ctaRect.top + window.scrollY;
+
+      // Observe when the CTA scrolls out of view
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            // Scrolled past — make sticky
+            cta.classList.add('is-sticky');
+          } else {
+            // Back in view — remove sticky
+            cta.classList.remove('is-sticky');
+          }
+        });
+      }, { threshold: 0, rootMargin: '-80px 0px 0px 0px' });
+
+      // Create a sentinel element at the CTA's original position
+      const sentinel = document.createElement('div');
+      sentinel.style.height = '1px';
+      sentinel.style.width = '1px';
+      sentinel.style.pointerEvents = 'none';
+      sentinel.setAttribute('aria-hidden', 'true');
+      cta.parentElement.insertBefore(sentinel, cta);
+      observer.observe(sentinel);
+
+      // Hide sticky CTA when audio player is visible
+      const playerObserver = new MutationObserver(() => {
+        if (player && player.classList.contains('is-visible')) {
+          cta.classList.add('is-hidden');
+        } else {
+          cta.classList.remove('is-hidden');
+        }
+      });
+      if (player) {
+        playerObserver.observe(player, { attributes: true, attributeFilter: ['class'] });
+      }
+    })();
+
+    /* ================================================================
+       LIGHTBOX — tap-to-enlarge for audit images
+       ================================================================ */
+    (() => {
+      const overlay  = document.getElementById('lightbox');
+      const lbImg    = document.getElementById('lightboxImg');
+      const lbClose  = document.getElementById('lightboxClose');
+      if (!overlay) return;
+
+      document.querySelectorAll('.lightbox-trigger').forEach(img => {
+        img.addEventListener('click', () => {
+          lbImg.src = img.src;
+          lbImg.alt = img.alt;
+          overlay.classList.add('is-open');
+          overlay.setAttribute('aria-hidden', 'false');
+          lbClose.focus();
+        });
+      });
+
+      function close() {
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+        lbImg.src = '';
+      }
+
+      lbClose.addEventListener('click', close);
+      overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) close();
       });
     })();
 
-    /* -- Video player controls -------------------------------------- */
+    /* ================================================================
+       AUDIO NARRATION PLAYER
+       — Lazy-loaded, persisted, section-synced, accessible
+       ================================================================ */
     (() => {
-      const player = document.getElementById('heroVideoPlayer');
-      if (!player) return;
-      const video = player.querySelector('.vp__video');
-      const playBtn = document.getElementById('vpPlayBtn');
-      const replayBtn = document.getElementById('vpReplayBtn');
+      const AUDIO_SRC = '../../assets/audio/narration-combined.mp3';
+      const STORAGE_KEY = 'sc-audio-pos';
+      const SPEEDS = [1, 1.25, 1.5, 1.75, 2];
 
-      playBtn.addEventListener('click', () => {
-        if (video.paused) {
-          video.play();
-          player.classList.add('is-playing');
+      // Section timestamps (seconds) — calibrated to ~12:01 combined audio
+      const SECTION_MAP = [
+        { id: 'overview-heading', label: 'Overview',          start: 0 },
+        { id: 'research',        label: 'Research & Audit',  start: 107.4 },
+        { id: 'personas',        label: 'Personas',          start: 236.9 },
+        { id: 'strategy',        label: 'Strategy',          start: 278.3 },
+        { id: 'wireframes',      label: 'Wireframes',        start: 339.4 },
+        { id: 'ui-design',       label: 'UI Design',         start: 457.0 },
+        { id: 'racing-page',     label: 'Racing Page',       start: 536.1 },
+        { id: 'technology',      label: 'Technology',        start: 581.4 },
+        { id: 'implementation',  label: 'Implementation',    start: 608.8 },
+        { id: 'expected-impact', label: 'Expected Impact',   start: 645.9 },
+        { id: 'whats-next',      label: 'What\'s Next',      start: 698.6 },
+      ];
+
+      // Paragraph-level timestamps for read-along highlighting
+      const PARA_MAP = [
+        { p: 1, start: 0.0 },
+        { p: 2, start: 19.8 },
+        { p: 3, start: 29.5 },
+        { p: 4, start: 43.9 },
+        { p: 5, start: 54.6 },
+        { p: 6, start: 70.7 },
+        { p: 7, start: 98.7 },
+        { p: 8, start: 107.4 },
+        { p: 9, start: 120.9 },
+        { p: 10, start: 128.5 },
+        { p: 11, start: 153.1 },
+        { p: 12, start: 164.6 },
+        { p: 13, start: 181.2 },
+        { p: 14, start: 192.8 },
+        { p: 15, start: 209.3 },
+        { p: 16, start: 223.2 },
+        { p: 17, start: 236.9 },
+        { p: 18, start: 272.0 },
+        { p: 19, start: 278.3 },
+        { p: 20, start: 307.3 },
+        { p: 21, start: 339.4 },
+        { p: 22, start: 354.9 },
+        { p: 23, start: 365.9 },
+        { p: 24, start: 377.3 },
+        { p: 25, start: 388.9 },
+        { p: 26, start: 398.2 },
+        { p: 27, start: 416.2 },
+        { p: 28, start: 423.7 },
+        { p: 29, start: 446.7 },
+        { p: 30, start: 457.0 },
+        { p: 31, start: 468.1 },
+        { p: 32, start: 489.3 },
+        { p: 33, start: 502.0 },
+        { p: 34, start: 517.1 },
+        { p: 35, start: 536.1 },
+        { p: 36, start: 561.0 },
+        { p: 37, start: 581.4 },
+        { p: 38, start: 591.4 },
+        { p: 39, start: 608.8 },
+        { p: 40, start: 615.5 },
+        { p: 41, start: 645.9 },
+        { p: 42, start: 665.1 },
+        { p: 43, start: 678.4 },
+        { p: 44, start: 687.9 },
+        { p: 45, start: 698.6 },
+      ];
+
+      // DOM refs
+      const cta        = document.getElementById('listenCta');
+      const player     = document.getElementById('audioPlayer');
+      const apPlay     = document.getElementById('apPlay');
+      const apBack     = document.getElementById('apBack');
+      const apForward  = document.getElementById('apForward');
+      const apSpeed    = document.getElementById('apSpeed');
+      const apClose    = document.getElementById('apClose');
+      const apProgress = document.getElementById('apProgress');
+      const apFill     = document.getElementById('apFill');
+      const apTime     = document.getElementById('apTime');
+      const apSection  = document.getElementById('apSectionLabel');
+      const apRetry    = document.getElementById('apRetry');
+      const iconPlay   = apPlay.querySelector('.ap-icon-play');
+      const iconPause  = apPlay.querySelector('.ap-icon-pause');
+      const sidebarItems = document.querySelectorAll('.sidebar__nav li');
+
+      const apFollow   = document.getElementById('apFollow');
+
+      if (!cta || !player) return;
+
+      let audio = null;
+      let speedIdx = 0;
+      let loaded = false;
+      let loadAttempts = 0;
+      let followMode = true;
+      let lastScrolledSection = null;
+      let userScrolling = false;
+      let userScrollTimer = null;
+
+      // Helpers
+      function fmt(s) {
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return m + ':' + String(sec).padStart(2, '0');
+      }
+
+      function setPlayState(playing) {
+        iconPlay.style.display  = playing ? 'none' : '';
+        iconPause.style.display = playing ? ''     : 'none';
+        apPlay.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+      }
+
+      function showPlayer() {
+        player.classList.add('is-visible');
+        player.classList.remove('has-error');
+      }
+
+      function hidePlayer() {
+        player.classList.remove('is-visible');
+      }
+
+      function updateProgress() {
+        if (!audio || !audio.duration) return;
+        const pct = (audio.currentTime / audio.duration) * 100;
+        apFill.style.width = pct + '%';
+        apProgress.setAttribute('aria-valuenow', Math.round(pct));
+        apTime.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+      }
+
+      function getCurrentSection() {
+        if (!audio) return SECTION_MAP[0];
+        for (let i = SECTION_MAP.length - 1; i >= 0; i--) {
+          if (audio.currentTime >= SECTION_MAP[i].start) return SECTION_MAP[i];
+        }
+        return SECTION_MAP[0];
+      }
+
+      let lastHighlightedPara = null;
+
+      function getCurrentPara() {
+        if (!audio) return PARA_MAP[0];
+        for (let i = PARA_MAP.length - 1; i >= 0; i--) {
+          if (audio.currentTime >= PARA_MAP[i].start) return PARA_MAP[i];
+        }
+        return PARA_MAP[0];
+      }
+
+      function syncSection() {
+        const sec = getCurrentSection();
+        apSection.textContent = sec.label;
+
+        // Highlight matching sidebar item
+        sidebarItems.forEach(li => li.classList.remove('audio-active'));
+        const idx = SECTION_MAP.indexOf(sec);
+        if (sidebarItems[idx]) sidebarItems[idx].classList.add('audio-active');
+
+        // Paragraph-level highlighting
+        const para = getCurrentPara();
+        if (para.p !== lastHighlightedPara) {
+          // Remove previous highlights
+          document.querySelectorAll('[data-narrate].is-narrating').forEach(el => {
+            el.classList.remove('is-narrating');
+            el.classList.add('was-narrated');
+          });
+          // Add current highlight
+          const paraEl = document.querySelector('[data-narrate="' + para.p + '"]');
+          if (paraEl) {
+            paraEl.classList.add('is-narrating');
+            paraEl.classList.remove('was-narrated');
+
+            // Follow-along: scroll to paragraph (not just section)
+            if (followMode && !userScrolling) {
+              paraEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }
+          lastHighlightedPara = para.p;
+        }
+      }
+
+      function savePosition() {}
+      function restorePosition() {}
+
+      // Create audio element lazily
+      function initAudio() {
+        if (audio) return audio;
+        audio = new Audio();
+        audio.preload = 'auto';
+
+        audio.addEventListener('timeupdate', () => {
+          updateProgress();
+          syncSection();
+        });
+        audio.addEventListener('loadedmetadata', () => {
+          updateProgress();
+          restorePosition();
+          loaded = true;
+          cta.classList.remove('is-loading');
+        });
+        audio.addEventListener('play',  () => setPlayState(true));
+        audio.addEventListener('pause', () => { setPlayState(false); savePosition(); });
+        audio.addEventListener('ended', () => {
+          setPlayState(false);
+          try { sessionStorage.removeItem(STORAGE_KEY); } catch(e) {}
+          sidebarItems.forEach(li => li.classList.remove('audio-active'));
+          document.querySelectorAll('[data-narrate]').forEach(el => {
+            el.classList.remove('is-narrating', 'was-narrated');
+          });
+          lastHighlightedPara = null;
+        });
+        audio.addEventListener('error', () => {
+          cta.classList.remove('is-loading');
+          player.classList.add('has-error');
+          showPlayer();
+          loadAttempts++;
+        });
+
+        return audio;
+      }
+
+      // Load and play
+      function loadAndPlay() {
+        cta.classList.add('is-loading');
+        const a = initAudio();
+
+        function tryPlay() {
+          a.play().then(() => {
+            showPlayer();
+            cta.classList.remove('is-loading');
+            // Auto-scroll to Overview on first play
+            if (followMode && a.currentTime < 1) {
+              const overview = document.getElementById('overview-heading');
+              if (overview) overview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }).catch(() => {
+            // Autoplay blocked — show player with pause state
+            showPlayer();
+            cta.classList.remove('is-loading');
+          });
+        }
+
+        if (!loaded) {
+          a.src = AUDIO_SRC;
+          a.addEventListener('canplay', function onCanPlay() {
+            a.removeEventListener('canplay', onCanPlay);
+            tryPlay();
+          });
+          a.load();
         } else {
-          video.pause();
-          player.classList.remove('is-playing');
+          tryPlay();
+        }
+      }
+
+      // CTA click
+      cta.addEventListener('click', () => {
+        if (audio && !audio.paused) {
+          audio.pause();
+          return;
+        }
+        if (audio && audio.paused && loaded) {
+          audio.play().catch(() => {});
+          showPlayer();
+          return;
+        }
+        loadAndPlay();
+      });
+
+      // Play / Pause
+      apPlay.addEventListener('click', () => {
+        if (!audio) return;
+        if (audio.paused) audio.play().catch(() => {});
+        else audio.pause();
+      });
+
+      // Skip back/forward 10s
+      apBack.addEventListener('click', () => {
+        if (!audio) return;
+        audio.currentTime = Math.max(0, audio.currentTime - 10);
+        lastHighlightedPara = null; // force re-sync
+      });
+      apForward.addEventListener('click', () => {
+        if (!audio) return;
+        audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10);
+        lastHighlightedPara = null; // force re-sync
+      });
+
+      // Playback speed
+      apSpeed.addEventListener('click', () => {
+        if (!audio) return;
+        speedIdx = (speedIdx + 1) % SPEEDS.length;
+        audio.playbackRate = SPEEDS[speedIdx];
+        apSpeed.textContent = SPEEDS[speedIdx] + 'x';
+      });
+
+      // Follow-along toggle
+      apFollow.addEventListener('click', () => {
+        followMode = !followMode;
+        apFollow.classList.toggle('is-active', followMode);
+        apFollow.setAttribute('aria-label', followMode ? 'Disable follow along' : 'Enable follow along');
+        if (followMode) {
+          lastScrolledSection = null; // trigger immediate scroll to current section
+          syncSection();
         }
       });
 
-      replayBtn.addEventListener('click', () => {
-        video.currentTime = 0;
-        video.play();
-        player.classList.add('is-playing');
+      // Detect user manual scroll — pause follow-along temporarily
+      window.addEventListener('scroll', () => {
+        if (!followMode) return;
+        userScrolling = true;
+        clearTimeout(userScrollTimer);
+        userScrollTimer = setTimeout(() => { userScrolling = false; }, 2000);
+      }, { passive: true });
+
+      // Progress bar seek (click + drag)
+      let seekDragging = false;
+      function seekTo(e) {
+        if (!audio || !audio.duration) return;
+        const rect = apProgress.getBoundingClientRect();
+        let pct = (e.clientX - rect.left) / rect.width;
+        pct = Math.max(0, Math.min(1, pct));
+        audio.currentTime = pct * audio.duration;
+        // Reset paragraph highlights on seek
+        document.querySelectorAll('[data-narrate]').forEach(el => {
+          el.classList.remove('is-narrating', 'was-narrated');
+        });
+        lastHighlightedPara = null;
+        updateProgress();
+        syncSection();
+      }
+      apProgress.addEventListener('mousedown', e => { seekDragging = true; seekTo(e); });
+      window.addEventListener('mousemove', e => { if (seekDragging) seekTo(e); });
+      window.addEventListener('mouseup', () => { seekDragging = false; });
+      apProgress.addEventListener('touchstart', e => { seekTo(e.touches[0]); }, { passive: true });
+      apProgress.addEventListener('touchmove', e => { seekTo(e.touches[0]); }, { passive: true });
+
+      // Keyboard controls on progress bar
+      apProgress.addEventListener('keydown', e => {
+        if (!audio) return;
+        if (e.key === 'ArrowRight') { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
+        if (e.key === 'ArrowLeft')  { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
       });
 
-      video.addEventListener('play', () => {
-        player.classList.add('is-playing');
+      // Close player
+      apClose.addEventListener('click', () => {
+        if (audio && !audio.paused) audio.pause();
+        hidePlayer();
+        sidebarItems.forEach(li => li.classList.remove('audio-active'));
+        document.querySelectorAll('[data-narrate]').forEach(el => {
+          el.classList.remove('is-narrating', 'was-narrated');
+        });
+        lastHighlightedPara = null;
+        savePosition();
       });
 
-      video.addEventListener('pause', () => {
-        player.classList.remove('is-playing');
+      // Retry on error
+      apRetry.addEventListener('click', () => {
+        player.classList.remove('has-error');
+        loaded = false;
+        if (audio) { audio.src = ''; }
+        loadAndPlay();
       });
 
-      video.addEventListener('ended', () => {
-        player.classList.remove('is-playing');
+      // Save position on page unload
+      window.addEventListener('beforeunload', savePosition);
+
+      // Global keyboard shortcut: Space to toggle when player visible
+      document.addEventListener('keydown', e => {
+        if (!player.classList.contains('is-visible')) return;
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+        if (e.code === 'Space') {
+          e.preventDefault();
+          if (audio.paused) audio.play().catch(() => {});
+          else audio.pause();
+        }
       });
     })();
+
   </script>
 </body>
 </html>

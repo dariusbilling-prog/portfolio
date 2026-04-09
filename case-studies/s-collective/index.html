@@ -1059,12 +1059,16 @@
       border-radius: 16px;
       padding: 40px 48px 48px;
       margin: 32px 0;
+      display: flex;
+      justify-content: center;
     }
     .live-site-device {
       background: #1c1c1e;
       border-radius: 12px;
       margin: 0;
       box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 960px;
     }
     .live-site-bar {
       display: flex;
@@ -1644,11 +1648,9 @@
         gap: 24px !important;
       }
 
-      /* Remove periwinkle wrap on tablet/mobile */
+      /* Reduce periwinkle wrap padding on tablet/mobile */
       .live-site-wrap {
-        background: none;
-        padding: 0;
-        border-radius: 0;
+        padding: 24px;
         margin: 24px 0;
       }
 

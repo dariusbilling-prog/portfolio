@@ -1,0 +1,21 @@
+The Racing page was one of the most interesting design challenges. Two very different audiences — first-timers who are curious but hesitant, and experienced enthusiasts who already know the sport. First-timers need approachability and reassurance. Enthusiasts need credentials, technical depth, and proof that S Collective operates at their level.
+
+The solution was a single page that serves both. The structure leads with approachability, then layers in credibility. Both user types reach their primary action without scrolling past content that isn't relevant to them. It became one of the highest-converting pages in the redesign.
+
+On the technology side, performance was non-negotiable. A redesign that looks better but performs worse isn't a redesign — it's a liability.
+
+The biggest win was replacing those heavy video files with Mux — a streaming-based solution that dynamically serves optimized video quality based on the user's device and network conditions. Same visual impact, dramatically faster load times.
+
+Design, development handoff, and content migration ran in parallel across a six-week timeline.
+
+The full engagement delivered a UX audit with annotated findings, user personas and journey mapping, desktop and mobile wireframes, high-fidelity Figma prototypes, a complete navigation and information architecture restructure, a produced hero video, a blog system, a social media integration module, an intent-based contact page, Mux video streaming integration, and full developer handoff documentation. All in six weeks.
+
+Every design decision in this project was made to reduce friction, build trust faster, and shorten the path from interest to action. Our target is a twenty to forty percent increase in conversions within ninety days of launch. And we're not guessing — we're measuring.
+
+We've configured Google Analytics 4 to track CTA click-through rates, form completion rates, session duration, scroll depth, and full user path analysis from landing to form submission.
+
+We've set up Microsoft Clarity for session recordings, heatmaps, rage click detection, and mobile versus desktop behavior comparison.
+
+At the thirty, sixty, and ninety day marks, we'll review the data against that conversion target and optimize. This isn't a launch-and-leave project.
+
+The launch is the starting line — not the finish. With the redesign complete and tracking in place, the next phase is optimization. Based on the first ninety days of data, we'll identify which conversion paths are performing, which pages have the highest drop-off, and where the next round of improvements should focus.

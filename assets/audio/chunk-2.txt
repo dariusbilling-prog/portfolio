@@ -1,0 +1,35 @@
+From the research, three distinct user personas emerged. First, the Exotic Owner — high-net-worth, protective of their vehicle, looking for premium quality and trust. They need to see proven results immediately. Second, the Track-Day Driver — performance-focused, technically minded, evaluating whether S Collective has the engineering expertise to support their goals. And third, the New Enthusiast — earlier in their journey, exploring upgrades, but with lower confidence. They need education, reassurance, and clear entry points.
+
+The redesign had to serve all three — without forcing any of them down a path that wasn't theirs.
+
+That led to three strategic focus areas. One: clarify the value proposition — make it obvious within seconds what S Collective does and who it's for. Two: introduce trust earlier — move credibility signals like logos, results, and social proof up to where they matter, right after the hero, when users are deciding whether to stay. And three: create a more direct path to action — reduce friction, fewer clicks between interest and inquiry.
+
+Through early discovery, several patterns confirmed this direction. Messaging needed to show up earlier so users could quickly understand the offerings. Trust signals were far more effective when introduced at the top of the experience. Interaction-driven layouts like carousels were limiting visibility of core services. Conversion opportunities could be surfaced much sooner for high-intent users. And mobile performance was playing a critical role in first impressions and engagement.
+
+The wireframe phase was where everything started coming together. I used wireframes to translate discovery insights into clear, testable layouts — focusing on structure, hierarchy, and conversion flow before touching any visual design.
+
+I restructured the navigation around user intent — grouping services more clearly, simplifying labels, and elevating the primary call-to-action so it's always visible.
+
+The logo placement was adjusted to reinforce brand presence, while primary and secondary CTAs were introduced to support both immediate action and concierge-style engagement.
+
+The hero was rebuilt from scratch. Instead of a static carousel, we designed a system that tells S Collective's story passively — aspiration, then credibility, then capability.
+
+Early wireframe exploration focused on defining the value proposition, introducing trust cues, and establishing a clear conversion hierarchy.
+
+The hero video was designed to support the experience without competing with it. Its role is to establish credibility within the first few seconds, communicate brand tone and real-world capability, and reinforce the primary call-to-action through context — not distraction.
+
+The intent was to build trust and aspiration quickly, while allowing the interface to remain clear and actionable.
+
+The original homepage hero relied on a static carousel. We replaced it with a produced twenty-second video that tells S Collective's story passively — it plays automatically, communicates the brand, and supports the interface without competing with it. The video was built with a UX narrative structure: Aspiration, then Credibility, then Capability.
+
+Mobile layouts were designed with a focus on clarity, performance, and progressive disclosure. Every screen was validated at 390px before moving to desktop.
+
+The homepage was rebuilt as a conversion system — not a brochure. Each module serves a specific role in the user journey, and every element earns its place on the page.
+
+Below the hero, I designed a dual conversion system. Two modules, each testing a different hypothesis. Module A leads with authority — credentials and trust signals at the top. Module B leads with intent — services and CTAs front and center. This gives us a framework to measure which approach converts better post-launch.
+
+We also added a live social media feed directly on the homepage. It pulls in S Collective's most recent posts, showing visitors the brand is active and current. That's a trust signal in itself.
+
+And we built an entire blog system — surfaced through a homepage module — to drive SEO, establish authority, and keep users engaged longer. When blog posts embed YouTube videos, it creates a content loop across Google and YouTube.
+
+The contact page got a complete rethink. Instead of a generic form, we designed an intent-based system. Users select their need — Mechanical Services, Race Prep and Coaching, or Vehicle Sourcing — and the form adapts. This routes higher-quality leads and gives the team immediate context.

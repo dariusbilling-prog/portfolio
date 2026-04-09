@@ -1,0 +1,31 @@
+S Collective is a motorsport and automotive lifestyle brand based in Plano, Texas. They sit at the intersection of high-performance driving and premium vehicle services — think ceramic coatings, paint protection, track coaching, and vehicle sourcing for a clientele that cares deeply about their cars.
+
+They had strong traffic. They had a loyal customer base. But the website wasn't converting at the level the brand deserved. That's where I came in.
+
+I was brought on as a Product Design Consultant for a six-week engagement, focused on redesigning the Homepage, the Racing page, and building out new supporting pages — all with one goal: turn more visitors into leads.
+
+Performance tracking through Google Analytics 4 and Microsoft Clarity was planned from the start, so we could validate every decision with real data after launch.
+
+The first thing I did was audit the existing site. Not a surface-level review — a structured analysis focused on three things: first impressions, trust signals, and conversion pathways. What I found shaped every design decision that came after.
+
+Service segmentation across track, automotive, and vehicle sales wasn't immediately clear. Visual hierarchy needed strengthening to better prioritize information and primary conversion points. Trust signals weren't showing up at the moments that mattered most. Conversion pathways needed restructuring to support different user intents. And the site needed new supporting pages to increase both conversion and user retention.
+
+The focus wasn't to add more — it was to refine the experience. Reduce friction, and guide users with greater clarity and confidence.
+
+The process began with a structured review of S Collective's existing website, focused on understanding how the current experience handles first impressions, builds trust, and guides users toward inquiry.
+
+This early discovery surfaced key areas where the experience could be refined before moving into design exploration.
+
+The review centered around three core areas. First, messaging clarity — how clearly the site communicates its services, positioning, and target audience. Second, trust and credibility — how effectively the experience builds confidence in high-value, high-trust services. And third, conversion pathways — how intuitively users move from initial exploration to taking action.
+
+Findings were organized to identify patterns across messaging, visual hierarchy, and conversion flow — helping inform a more structured and cohesive experience moving forward.
+
+The hero section had no clear value proposition. It was visually strong — beautiful cars, cinematic footage — but a first-time visitor had no idea what S Collective actually does, or what to do next. No primary call-to-action was visible on first load.
+
+There was an opportunity to more explicitly communicate S Collective's services and specialties. Users could engage with the visuals without ever understanding how to proceed.
+
+Core services were hidden behind a carousel. Users had to click through to discover what was available — most never did. The full range of services had an opportunity to be more immediately visible, and high-value offerings were essentially invisible.
+
+Trust signals — client logos, testimonials, credentials — were buried below the fold. For a business selling high-ticket services, credibility needs to show up in the first few seconds, not after three scrolls.
+
+And then there was performance. The homepage was loading around eighty megabytes of hero video on mobile. That meant five to eight second load times. Users were bouncing before they ever saw a word of content.

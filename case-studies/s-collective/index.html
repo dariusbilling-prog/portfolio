@@ -1744,10 +1744,90 @@
         grid-template-columns: 1fr !important;
       }
     }
+
+    /* --- Mobile Gate --------------------------------------------------- */
+    .mobile-gate {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--periwinkle);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 32px;
+    }
+    .mobile-gate__icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .mobile-gate__icon svg {
+      width: 32px;
+      height: 32px;
+      color: #fff;
+    }
+    .mobile-gate__title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .mobile-gate__body {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      max-width: 320px;
+      margin-bottom: 36px;
+    }
+    .mobile-gate__btn {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mobile-gate__btn:hover {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    @media (max-width: 768px) {
+      .mobile-gate { display: flex; }
+      .site-desktop { display: none; }
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- Mobile gate — shown only on small screens -->
+  <div class="mobile-gate" id="mobileGate">
+    <div class="mobile-gate__icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+        <line x1="8" y1="21" x2="16" y2="21"/>
+        <line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+    </div>
+    <h1 class="mobile-gate__title">Best Experienced on Desktop</h1>
+    <p class="mobile-gate__body">This case study features interactive prototypes, detailed visual comparisons, and an audio narration system designed for a larger screen. For the full experience, please revisit on a desktop or laptop.</p>
+    <button class="mobile-gate__btn" id="mobileGateBtn">Continue on mobile anyway</button>
+  </div>
+
   <div class="site-desktop">
 
     <!-- Fixed navigation -->
@@ -2385,7 +2465,7 @@
         <!-- Footer -->
         <footer class="footer">
           <p class="footer__name">Darius Shojaei</p>
-          <p class="footer__sub">Senior UX Designer</p>
+          <p class="footer__sub">Product Designer</p>
         </footer>
 
       </div><!-- /main content -->
@@ -2453,6 +2533,19 @@
   </div><!-- /.site-desktop -->
 
   <script>
+    /* -- Mobile gate bypass ------------------------------------------- */
+    (() => {
+      const btn = document.getElementById('mobileGateBtn');
+      const gate = document.getElementById('mobileGate');
+      const site = document.querySelector('.site-desktop');
+      if (btn && gate && site) {
+        btn.addEventListener('click', () => {
+          gate.style.display = 'none';
+          site.style.display = '';
+        });
+      }
+    })();
+
     /* -- Live site iframe desktop scaling ----------------------------- */
     (() => {
       const screen = document.querySelector('.live-site-screen');
@@ -2888,6 +2981,33 @@
         { p: 45, start: 698.6 },
       ];
 
+      // Visual pause points — after these paragraphs, pause so user can view the visual
+      // selector: the visual element to scroll into view during pause
+      // duration: seconds to pause (0 = pause until user hits play)
+      const PAUSE_AFTER = [
+        { p: 9,  selector: '.audit-cta-split',      duration: 4 },
+        { p: 13, selector: 'img[src*="findings-1"]', duration: 4 },
+        { p: 14, selector: 'img[src*="findings-2"]', duration: 4 },
+        { p: 15, selector: 'img[src*="Social Proof"]', duration: 4 },
+        { p: 16, selector: '.image-pair',            duration: 5 },
+        { p: 18, selector: '.persona-grid',          duration: 5 },
+        { p: 19, selector: 'img[src*="kanban"]',     duration: 4 },
+        { p: 23, selector: '.wf-block',              duration: 5 },
+        { p: 25, selector: '.wf-slider-wrap',        duration: 5 },
+        { p: 27, selector: '.vp',                    duration: 4 },
+        { p: 29, selector: '.mobile-wf-grid',        duration: 5 },
+        { p: 31, selector: '.ba-module-cards',        duration: 5 },
+        { p: 33, selector: 'img[src*="social-blog"]', duration: 4 },
+        { p: 34, selector: 'img[src*="CRO"]',        duration: 4 },
+        { p: 35, selector: '.cs-jolt__device:last-of-type', duration: 5 },
+        { p: 38, selector: '.yt-embed',              duration: 4 },
+        { p: 42, selector: 'img[src*="Ga4"]',        duration: 4 },
+        { p: 43, selector: 'img[src*="Clairty"]',    duration: 4 },
+      ];
+
+      let pausedForVisual = false;
+      let pausedParas = new Set(); // track which pauses already fired
+
       // DOM refs
       const cta        = document.getElementById('listenCta');
       const player     = document.getElementById('audioPlayer');
@@ -2958,6 +3078,44 @@
 
       let lastHighlightedPara = null;
 
+      function checkVisualPause() {
+        if (!audio || audio.paused || pausedForVisual) return;
+        const para = getCurrentPara();
+        const pausePoint = PAUSE_AFTER.find(p => p.p === para.p);
+        if (!pausePoint || pausedParas.has(para.p)) return;
+
+        // Check if we're near the END of this paragraph (close to next paragraph's start)
+        const paraIdx = PARA_MAP.findIndex(pm => pm.p === para.p);
+        const nextPara = PARA_MAP[paraIdx + 1];
+        if (!nextPara) return;
+        const timeUntilNext = nextPara.start - audio.currentTime;
+        if (timeUntilNext > 1.5 || timeUntilNext < 0) return; // only trigger near the transition
+
+        // Pause for visual
+        pausedForVisual = true;
+        pausedParas.add(para.p);
+        audio.pause();
+
+        // Scroll the visual into view
+        const visualEl = document.querySelector(pausePoint.selector);
+        if (visualEl && followMode) {
+          visualEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Update section label to show viewing visual
+        apSection.textContent = apSection.textContent + ' — Viewing visual';
+
+        // Auto-resume after duration
+        if (pausePoint.duration > 0) {
+          setTimeout(() => {
+            if (pausedForVisual) {
+              pausedForVisual = false;
+              audio.play().catch(() => {});
+            }
+          }, pausePoint.duration * 1000);
+        }
+      }
+
       function getCurrentPara() {
         if (!audio) return PARA_MAP[0];
         for (let i = PARA_MAP.length - 1; i >= 0; i--) {
@@ -3010,6 +3168,7 @@
         audio.addEventListener('timeupdate', () => {
           updateProgress();
           syncSection();
+          checkVisualPause();
         });
         audio.addEventListener('loadedmetadata', () => {
           updateProgress();
@@ -3088,6 +3247,7 @@
       // Play / Pause
       apPlay.addEventListener('click', () => {
         if (!audio) return;
+        pausedForVisual = false; // user override
         if (audio.paused) audio.play().catch(() => {});
         else audio.pause();
       });
@@ -3139,11 +3299,13 @@
         let pct = (e.clientX - rect.left) / rect.width;
         pct = Math.max(0, Math.min(1, pct));
         audio.currentTime = pct * audio.duration;
-        // Reset paragraph highlights on seek
+        // Reset paragraph highlights and visual pauses on seek
         document.querySelectorAll('[data-narrate]').forEach(el => {
           el.classList.remove('is-narrating', 'was-narrated');
         });
         lastHighlightedPara = null;
+        pausedParas.clear();
+        pausedForVisual = false;
         updateProgress();
         syncSection();
       }

@@ -66,8 +66,8 @@
     }
 
     h1 { font-size: clamp(2.5rem, 8vw, 3.8rem); line-height: 1.1; }
-    h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); line-height: 1.2; }
-    h3 { font-size: clamp(1.3rem, 2.5vw, 1.6rem); line-height: 1.3; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); line-height: 1.2; color: var(--periwinkle); }
+    h3 { font-size: clamp(1.3rem, 2.5vw, 1.6rem); line-height: 1.3; color: var(--periwinkle); }
     h4 { font-size: 18px; line-height: 1.4; }
 
     p {
@@ -1402,7 +1402,7 @@
 
     /* --- Paragraph highlight (read-along) --- */
     [data-narrate].is-narrating {
-      font-weight: 600;
+      color: var(--periwinkle);
     }
 
     /* Mobile: full-width sticky bottom */
@@ -2985,24 +2985,24 @@
       // selector: the visual element to scroll into view during pause
       // duration: seconds to pause (0 = pause until user hits play)
       const PAUSE_AFTER = [
-        { p: 9,  selector: '.audit-cta-split',      duration: 4 },
-        { p: 13, selector: 'img[src*="findings-1"]', duration: 4 },
-        { p: 14, selector: 'img[src*="findings-2"]', duration: 4 },
-        { p: 15, selector: 'img[src*="Social Proof"]', duration: 4 },
-        { p: 16, selector: '.image-pair',            duration: 5 },
-        { p: 18, selector: '.persona-grid',          duration: 5 },
-        { p: 19, selector: 'img[src*="kanban"]',     duration: 4 },
-        { p: 23, selector: '.wf-block',              duration: 5 },
-        { p: 25, selector: '.wf-slider-wrap',        duration: 5 },
-        { p: 27, selector: '.vp',                    duration: 4 },
-        { p: 29, selector: '.mobile-wf-grid',        duration: 5 },
-        { p: 31, selector: '.ba-module-cards',        duration: 5 },
-        { p: 33, selector: 'img[src*="social-blog"]', duration: 4 },
-        { p: 34, selector: 'img[src*="CRO"]',        duration: 4 },
-        { p: 35, selector: '.cs-jolt__device:last-of-type', duration: 5 },
-        { p: 38, selector: '.yt-embed',              duration: 4 },
-        { p: 42, selector: 'img[src*="Ga4"]',        duration: 4 },
-        { p: 43, selector: 'img[src*="Clairty"]',    duration: 4 },
+        { p: 9,  selector: '.audit-cta-split',       duration: 5 },
+        { p: 13, selector: 'img[src*="findings-1"]',  duration: 5 },
+        { p: 14, selector: 'img[src*="findings-2"]',  duration: 5 },
+        { p: 15, selector: 'img[src*="Social Proof"]',duration: 5 },
+        { p: 16, selector: '.image-pair',             duration: 6 },
+        { p: 18, selector: '.persona-grid',           duration: 6 },
+        { p: 19, selector: 'img[src*="kanban"]',      duration: 5 },
+        { p: 23, selector: '.wf-block',               duration: 6 },
+        { p: 25, selector: '.wf-slider-wrap',         duration: 6 },
+        { p: 27, selector: '.vp',                     duration: 5 },
+        { p: 29, selector: '.mobile-wf-grid',         duration: 6 },
+        { p: 31, selector: '.ba-module-cards',         duration: 6 },
+        { p: 33, selector: 'img[src*="social-blog"]', duration: 5 },
+        { p: 34, selector: 'img[src*="CRO"]',         duration: 5 },
+        { p: 35, selector: '.cs-jolt__device:last-of-type', duration: 6 },
+        { p: 38, selector: '.yt-embed',               duration: 5 },
+        { p: 42, selector: 'img[src*="Ga4"]',         duration: 5 },
+        { p: 43, selector: 'img[src*="Clairty"]',     duration: 5 },
       ];
 
       let pausedForVisual = false;
@@ -3078,44 +3078,6 @@
 
       let lastHighlightedPara = null;
 
-      function checkVisualPause() {
-        if (!audio || audio.paused || pausedForVisual) return;
-        const para = getCurrentPara();
-        const pausePoint = PAUSE_AFTER.find(p => p.p === para.p);
-        if (!pausePoint || pausedParas.has(para.p)) return;
-
-        // Check if we're near the END of this paragraph (close to next paragraph's start)
-        const paraIdx = PARA_MAP.findIndex(pm => pm.p === para.p);
-        const nextPara = PARA_MAP[paraIdx + 1];
-        if (!nextPara) return;
-        const timeUntilNext = nextPara.start - audio.currentTime;
-        if (timeUntilNext > 1.5 || timeUntilNext < 0) return; // only trigger near the transition
-
-        // Pause for visual
-        pausedForVisual = true;
-        pausedParas.add(para.p);
-        audio.pause();
-
-        // Scroll the visual into view
-        const visualEl = document.querySelector(pausePoint.selector);
-        if (visualEl && followMode) {
-          visualEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        // Update section label to show viewing visual
-        apSection.textContent = apSection.textContent + ' — Viewing visual';
-
-        // Auto-resume after duration
-        if (pausePoint.duration > 0) {
-          setTimeout(() => {
-            if (pausedForVisual) {
-              pausedForVisual = false;
-              audio.play().catch(() => {});
-            }
-          }, pausePoint.duration * 1000);
-        }
-      }
-
       function getCurrentPara() {
         if (!audio) return PARA_MAP[0];
         for (let i = PARA_MAP.length - 1; i >= 0; i--) {
@@ -3136,6 +3098,8 @@
         // Paragraph-level highlighting
         const para = getCurrentPara();
         if (para.p !== lastHighlightedPara) {
+          const prevPara = lastHighlightedPara;
+
           // Remove previous highlights
           document.querySelectorAll('[data-narrate].is-narrating').forEach(el => {
             el.classList.remove('is-narrating');
@@ -3153,6 +3117,34 @@
             }
           }
           lastHighlightedPara = para.p;
+
+          // Visual pause: check if the PREVIOUS paragraph had a visual after it
+          if (prevPara !== null && !pausedForVisual) {
+            const pausePoint = PAUSE_AFTER.find(pp => pp.p === prevPara);
+            if (pausePoint && !pausedParas.has(prevPara) && audio && !audio.paused) {
+              pausedForVisual = true;
+              pausedParas.add(prevPara);
+              audio.pause();
+
+              // Scroll the visual into view
+              const visualEl = document.querySelector(pausePoint.selector);
+              if (visualEl && followMode) {
+                visualEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+
+              // Show pause label
+              apSection.textContent = sec.label + ' — Viewing';
+
+              // Auto-resume after duration
+              setTimeout(() => {
+                if (pausedForVisual) {
+                  pausedForVisual = false;
+                  apSection.textContent = sec.label;
+                  audio.play().catch(() => {});
+                }
+              }, pausePoint.duration * 1000);
+            }
+          }
         }
       }
 
@@ -3168,7 +3160,6 @@
         audio.addEventListener('timeupdate', () => {
           updateProgress();
           syncSection();
-          checkVisualPause();
         });
         audio.addEventListener('loadedmetadata', () => {
           updateProgress();

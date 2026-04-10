@@ -3006,8 +3006,8 @@
         { p: 43, selector: 'img[src*="Clairty"]',      duration: 2 },
       ];
 
-      let pausedForVisual = false;
-      let pausedParas = new Set(); // track which pauses already fired
+      let peekingVisual = false;   // true while doing a scroll-peek
+      let peekedParas = new Set(); // track which peeks already fired
 
       // DOM refs
       const cta        = document.getElementById('listenCta');
@@ -3113,37 +3113,34 @@
             paraEl.classList.remove('was-narrated');
 
             // Follow-along: scroll to paragraph (not just section)
-            if (followMode && !userScrolling) {
+            // Skip if we're currently peeking at a visual element
+            if (followMode && !userScrolling && !peekingVisual) {
               paraEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
           }
           lastHighlightedPara = para.p;
 
-          // Visual pause: check if the PREVIOUS paragraph had a visual after it
-          if (prevPara !== null && !pausedForVisual) {
+          // Visual peek: briefly scroll to the visual, then scroll back
+          if (prevPara !== null && !peekingVisual) {
             const pausePoint = PAUSE_AFTER.find(pp => pp.p === prevPara);
-            if (pausePoint && !pausedParas.has(prevPara) && audio && !audio.paused) {
-              pausedForVisual = true;
-              pausedParas.add(prevPara);
-              audio.pause();
-
-              // Scroll the visual into view
+            if (pausePoint && !peekedParas.has(prevPara) && audio && !audio.paused) {
+              peekedParas.add(prevPara);
               const visualEl = document.querySelector(pausePoint.selector);
               if (visualEl && followMode) {
+                peekingVisual = true;
+                apSection.textContent = sec.label + ' — Viewing';
                 visualEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }
 
-              // Show pause label
-              apSection.textContent = sec.label + ' — Viewing';
-
-              // Auto-resume after duration
-              setTimeout(() => {
-                if (pausedForVisual) {
-                  pausedForVisual = false;
+                // After 2s, scroll back to whatever paragraph is currently narrating
+                setTimeout(() => {
+                  const currentNarrating = document.querySelector('[data-narrate].is-narrating');
+                  if (currentNarrating && followMode) {
+                    currentNarrating.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }
                   apSection.textContent = sec.label;
-                  audio.play().catch(() => {});
-                }
-              }, pausePoint.duration * 1000);
+                  peekingVisual = false;
+                }, pausePoint.duration * 1000);
+              }
             }
           }
         }
@@ -3239,7 +3236,7 @@
       // Play / Pause
       apPlay.addEventListener('click', () => {
         if (!audio) return;
-        pausedForVisual = false; // user override
+        peekingVisual = false; // user override
         if (audio.paused) audio.play().catch(() => {});
         else audio.pause();
       });
@@ -3296,8 +3293,8 @@
           el.classList.remove('is-narrating', 'was-narrated');
         });
         lastHighlightedPara = null;
-        pausedParas.clear();
-        pausedForVisual = false;
+        peekedParas.clear();
+        peekingVisual = false;
         updateProgress();
         syncSection();
       }

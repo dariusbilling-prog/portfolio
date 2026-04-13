@@ -1742,6 +1742,28 @@
         grid-template-columns: 1fr !important;
       }
     }
+
+    /* ── Mobile gate ── */
+    .mobile-gate {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 9999;
+      background: #fff;
+      flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 40px 32px; gap: 16px;
+    }
+    .mobile-gate__icon { width: 80px; height: 80px; color: #1a1a1a; }
+    .mobile-gate__icon svg { width: 100%; height: 100%; }
+    .mobile-gate__title { font-size: 22px; font-weight: 700; color: #1a1a1a; margin: 0; }
+    .mobile-gate__body { font-size: 15px; color: #5f6368; line-height: 1.6; max-width: 360px; margin: 0; }
+    .mobile-gate__btn {
+      margin-top: 12px; padding: 14px 28px; border: 2px solid #1a1a1a; border-radius: 10px;
+      background: transparent; color: #1a1a1a; font-size: 15px; font-weight: 600; cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .mobile-gate { display: flex; }
+      .mobile-gate.dismissed { display: none; }
+    }
   </style>
 </head>
 
@@ -3207,6 +3229,11 @@
         }
       });
     })();
+
+    // Mobile gate dismiss
+    document.getElementById('mobileGateBtn')?.addEventListener('click', function() {
+      document.getElementById('mobileGate').classList.add('dismissed');
+    });
 
   </script>
 </body>

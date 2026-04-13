@@ -12,3 +12,8 @@
 *-backup-*.html
 *-research-done.html
 assets/test.txt
+
+# Temp and lock files
+*.tmp
+.~lock.*
+*.bundle

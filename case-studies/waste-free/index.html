@@ -149,34 +149,44 @@
     }
     /* Dark mode: React prototype wrapper areas */
     [data-theme="dark"] #flow-1-root > div > div,
-    [data-theme="dark"] #flow-2-root > div > div,
-    [data-theme="dark"] #flow-3-root > div > div {
+    [data-theme="dark"] #flow-2a-root > div > div,
+    [data-theme="dark"] #flow-2b-root > div > div,
+    [data-theme="dark"] #flow-3-root > div > div,
+    [data-theme="dark"] #flow-4-root > div > div {
       background: var(--surface) !important;
     }
     /* Dark mode: screen nav buttons in prototypes */
     [data-theme="dark"] #flow-1-root button,
-    [data-theme="dark"] #flow-2-root button,
-    [data-theme="dark"] #flow-3-root button {
+    [data-theme="dark"] #flow-2a-root button,
+    [data-theme="dark"] #flow-2b-root button,
+    [data-theme="dark"] #flow-3-root button,
+    [data-theme="dark"] #flow-4-root button {
       border-color: var(--border) !important;
     }
     [data-theme="dark"] #flow-1-root button:not([style*="background: rgb(26, 26, 26)"]),
-    [data-theme="dark"] #flow-2-root button:not([style*="background: rgb(26, 26, 26)"]),
-    [data-theme="dark"] #flow-3-root button:not([style*="background: rgb(26, 26, 26)"]) {
+    [data-theme="dark"] #flow-2a-root button:not([style*="background: rgb(26, 26, 26)"]),
+    [data-theme="dark"] #flow-2b-root button:not([style*="background: rgb(26, 26, 26)"]),
+    [data-theme="dark"] #flow-3-root button:not([style*="background: rgb(26, 26, 26)"]),
+    [data-theme="dark"] #flow-4-root button:not([style*="background: rgb(26, 26, 26)"]) {
       background: var(--bg) !important;
       color: var(--text-3) !important;
     }
     /* Dark mode: notes card next to phone */
     [data-theme="dark"] #flow-1-root div[style*="background: rgb(255, 255, 255)"],
-    [data-theme="dark"] #flow-2-root div[style*="background: rgb(255, 255, 255)"],
-    [data-theme="dark"] #flow-3-root div[style*="background: rgb(255, 255, 255)"] {
+    [data-theme="dark"] #flow-2a-root div[style*="background: rgb(255, 255, 255)"],
+    [data-theme="dark"] #flow-2b-root div[style*="background: rgb(255, 255, 255)"],
+    [data-theme="dark"] #flow-3-root div[style*="background: rgb(255, 255, 255)"],
+    [data-theme="dark"] #flow-4-root div[style*="background: rgb(255, 255, 255)"] {
       background: var(--surface) !important;
       border-color: var(--border) !important;
       color: var(--text-2) !important;
     }
     /* Dark mode: preference label text */
     [data-theme="dark"] #flow-1-root > div > div > div[style*="color: rgb(102, 102, 102)"],
-    [data-theme="dark"] #flow-2-root > div > div > div[style*="color: rgb(102, 102, 102)"],
-    [data-theme="dark"] #flow-3-root > div > div > div[style*="color: rgb(102, 102, 102)"] {
+    [data-theme="dark"] #flow-2a-root > div > div > div[style*="color: rgb(102, 102, 102)"],
+    [data-theme="dark"] #flow-2b-root > div > div > div[style*="color: rgb(102, 102, 102)"],
+    [data-theme="dark"] #flow-3-root > div > div > div[style*="color: rgb(102, 102, 102)"],
+    [data-theme="dark"] #flow-4-root > div > div > div[style*="color: rgb(102, 102, 102)"] {
       color: var(--text-3) !important;
     }
 
@@ -676,15 +686,17 @@
       .empty-section { padding: 24px 16px; }
 
       /* Prototype wrappers on mobile */
-      #flow-1-root, #flow-2-root, #flow-3-root {
+      #flow-1-root, #flow-2a-root, #flow-2b-root, #flow-3-root, #flow-4-root {
         margin-left: -20px !important;
         margin-right: -20px !important;
         width: calc(100% + 40px) !important;
         box-sizing: border-box;
       }
       #flow-1-root > div > div,
-      #flow-2-root > div > div,
-      #flow-3-root > div > div {
+      #flow-2a-root > div > div,
+      #flow-2b-root > div > div,
+      #flow-3-root > div > div,
+      #flow-4-root > div > div {
         padding: 0 16px !important;
       }
       .proto-phone-notes {
@@ -890,7 +902,7 @@
           <tr>
             <td><strong>4</strong></td>
             <td><strong>Collection & Service Data</strong></td>
-            <td>Lowest priority — WasteFree said this is a low priority flow for the first prototype</td>
+            <td>Added in Phase 2 per WasteFree request — collection transparency, item detail with recycling journey, and pickup history</td>
           </tr>
         </tbody>
       </table>
@@ -1004,21 +1016,25 @@
         <div class="flow__arrow"></div>
         <div class="flow__step">User opens app</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step">Creates account</div>
+        <div class="flow__step">Creates account + resident info</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step">Chooses preference (Save Money / Be Healthier / Save the Planet)</div>
+        <div class="flow__step">Quick survey (grocery, delivery, Prime)</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Chooses global preference (Save Money / Be Healthier / Save the Planet)</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Customizes per category (optional)</div>
         <div class="flow__arrow"></div>
         <div class="flow__step">Grants notification permission</div>
         <div class="flow__arrow"></div>
         <div class="flow__step">Done — app waits for first collection</div>
       </div>
 
-      <p>WasteFree onboarding happens before the user (resident) ever sees WasteFree — leasing agents explain why WasteFree matters during move-in and offer the WasteFree service to tenants as a complimentary service for being a resident at the property. The app just needs to collect one critical preference from the new resident and get out of the way to enter the resident's daily loop. That preference choice (Save Money, Be Healthier, or Save the Planet) shapes every product recommendation across the entire app. Target is for new residents signing up for an account and selecting their choices — goal is under 60 seconds from open to done.</p>
+      <p>WasteFree onboarding happens before the user (resident) ever sees WasteFree — leasing agents explain why WasteFree matters during move-in and offer the WasteFree service to tenants as a complimentary service for being a resident at the property. The app collects resident info, a quick survey about their shopping habits (to power fulfillment options), and one critical preference that shapes every product recommendation. Per-category preference refinement (e.g., "Save Money on groceries, Be Healthier on cosmetics") is introduced later in-app through progressive disclosure — keeping onboarding fast while still capturing the data WasteFree needs. Target: under 60 seconds from open to done.</p>
 
       <div id="flow-1-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
-      <!-- FLOW 2: Repurchase -->
-      <h3>Flow 2 — Repurchase</h3>
+      <!-- FLOW 2A: Repurchase — Smart Default Fulfillment -->
+      <h3>Flow 2 — Repurchase (A): Smart Default Fulfillment</h3>
       <div class="flow">
         <div class="flow__step">Push notification arrives</div>
         <div class="flow__arrow"></div>
@@ -1039,7 +1055,7 @@
         <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; min-width: 140px;">
           <div class="flow__step" style="width: 100%; text-align: center; font-size: 13px; border: 2px solid var(--text); background: var(--surface);">Buy it WasteFree</div>
           <div class="flow__arrow"></div>
-          <div class="flow__step" style="width: 100%; text-align: center; font-size: 12px;">💰 Save Money → cheaper alt<br>🥗 Be Healthier → healthier alt<br>🌍 Save Planet → eco-friendly alt</div>
+          <div class="flow__step" style="width: 100%; text-align: center; font-size: 12px;">💰 Save Money → cheaper alt<br>🥦 Be Healthier → healthier alt<br>🌍 Save Planet → eco-friendly alt</div>
         </div>
         <!-- Add to Cart path -->
         <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; min-width: 140px;">
@@ -1051,14 +1067,29 @@
       <div class="flow" style="justify-content: center;">
         <div class="flow__step">Cart</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step">Checkout</div>
+        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Checkout (Smart Default)</div>
         <div class="flow__arrow"></div>
         <div class="flow__step">Confirmation + Impact</div>
       </div>
 
-      <p>This is 90% of the app's expected activity. A resident gets a push notification after their trash is collected, taps it, and lands directly on their item list. Each item offers three actions — buy the same thing again, buy a WasteFree alternative based on their onboarding preference, or add to cart for later. The "Buy it WasteFree" path is where the preference from onboarding (Flow 1) comes to life — the alternative product changes based on whether the resident chose Save Money, Be Healthier, or Save the Planet. Use the preference toggle in the prototype below to see how the experience shifts.</p>
+      <p>This is 90% of the app's expected activity. A resident gets a push notification after their trash is collected, taps it, and lands directly on their item list. Each item offers three actions — buy the same thing again, buy a WasteFree alternative based on their onboarding preference, or add to cart for later. The "Buy it WasteFree" path is where the preference from onboarding (Flow 1) comes to life — the alternative product changes based on whether the resident chose Save Money, Be Healthier, or Save the Planet. Use the preference toggle in the prototype to see how the experience shifts.</p>
+      <p><strong>Approach A — Smart Default:</strong> The checkout pre-selects a single fulfillment provider based on the resident's onboarding profile (e.g., Amazon Prime). A "From your profile" badge builds trust, and an expandable "Change" dropdown keeps the UI clean for the majority of users who won't need to switch. This is the fastest path to checkout and the recommended approach for V1.</p>
 
-      <div id="flow-2-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
+      <div id="flow-2a-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
+
+      <!-- FLOW 2B: Repurchase — Per-Item Fulfillment -->
+      <h3>Flow 2 — Repurchase (B): Per-Item Fulfillment</h3>
+      <div class="flow" style="justify-content: center;">
+        <div class="flow__step">Cart</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Checkout (Per-Item)</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Confirmation + Impact</div>
+      </div>
+
+      <p><strong>Approach B — Per-Item Fulfillment:</strong> Same flow as above, but at checkout each cart item gets its own fulfillment selector (Amazon, Instacart, DoorDash, HEB). This gives residents maximum flexibility but adds cognitive load. A yellow warning tells residents items from different stores may arrive separately. Compare the complexity with Approach A above — navigate both to the Checkout screen (step 7) to feel the difference.</p>
+
+      <div id="flow-2b-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
       <!-- FLOW 3: Impact & Score -->
       <h3>Flow 3 — Impact & Score</h3>
@@ -1069,16 +1100,34 @@
         <div class="flow__arrow"></div>
         <div class="flow__step">Scrolls to community ranking</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step">Sees waste breakdown</div>
+        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Sees waste breakdown by material</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Taps category → sees recycling method</div>
         <div class="flow__arrow"></div>
         <div class="flow__step">Views tangible impact</div>
         <div class="flow__arrow"></div>
         <div class="flow__step">Shares or toggles date range</div>
       </div>
 
-      <p>The WasteFree Score works like a FICO score for waste. A sticky date toggle at the top (Last Pickup / This Week / This Month / YTD) controls all four sections at once. Community ranking is the primary engagement hook — residents see how their building compares. Impact equivalencies make the data tangible ("Your reduction equals 3 trees saved").</p>
+      <p>The WasteFree Score works like a FICO score for waste. A sticky date toggle at the top (Last Pickup / This Week / This Month / YTD) controls all four sections at once. Community ranking is the primary engagement hook — residents see how their building compares. The waste-stream breakdown was revised based on WasteFree's feedback to use real material designations (PET, HDPE, OCC, Ferrous, Non-Ferrous, Glass, Organic) with friendly names for resident comprehension. "Non-recyclable" was renamed to "Landfilled" for transparency, and "Composted" was added as its own stream. Tapping any category reveals how that material was recycled (Closed-Loop, Downcycled, Remelted, Composted) with a plain-English explanation — progressive disclosure keeps the default view clean while giving depth on demand. A glossary link explains all recycling terms.</p>
 
       <div id="flow-3-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
+
+      <!-- FLOW 4: Collection & Service Data -->
+      <h3>Flow 4 — Collection & Service Data</h3>
+      <div class="flow">
+        <div class="flow__step">Resident taps "Collection" tab</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Sees all collected items + unidentified</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Taps item → sees detail + recycling method</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Views collection history timeline</div>
+      </div>
+
+      <p>Originally scoped as low priority, WasteFree requested this flow be added after reviewing the Phase 2 wireframes. This is the raw data transparency layer — while Flow 2 (Repurchase) only shows identified products the resident can rebuy, Flow 4 shows everything WasteFree collected, including unidentified trash with photos. Each item displays its waste-stream designation (PET, OCC, Organic, etc.) and how it was processed. Unidentified items get a trash bag icon with a photo badge — tapping reveals the photo WasteFree captured during sorting. A collection history timeline lets residents track pickup patterns over time. This flow builds trust through radical transparency: residents can see exactly what happened to every item in their bag.</p>
+
+      <div id="flow-4-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
     </section>
 
 
@@ -1148,7 +1197,9 @@
   const SCREENS = {
     WELCOME: "welcome",
     ACCOUNT: "account",
+    SURVEY: "survey",
     PREFERENCE: "preference",
+    CATEGORY_PREFS: "category_prefs",
     NOTIFICATIONS: "notifications",
     DONE: "done",
     PROFILE: "profile",
@@ -1237,9 +1288,9 @@
   const CTAButton = ({ label, secondary, onClick }) => (
     <div onClick={onClick} style={{
       margin: "12px 24px", padding: "16px 0", borderRadius: 14,
-      background: secondary ? "transparent" : "#1a1a1a",
-      color: secondary ? "#1a1a1a" : "#fff",
-      border: secondary ? "2px solid #1a1a1a" : "none",
+      background: secondary ? "transparent" : "#1D9100",
+      color: secondary ? "#1D9100" : "#fff",
+      border: secondary ? "2px solid #1D9100" : "none",
       textAlign: "center", fontSize: 16, fontWeight: 600, cursor: "pointer"
     }}>{label}</div>
   );
@@ -1252,18 +1303,20 @@
         flex: 1, display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center", padding: "0 32px", textAlign: "center"
       }}>
+        {/* WasteFree logo on dark background */}
         <div style={{
-          width: 100, height: 100, borderRadius: 24, background: "#1a1a1a",
+          width: 200, height: 72, borderRadius: 20, background: "#1a1a1a",
           display: "flex", alignItems: "center", justifyContent: "center",
-          marginBottom: 32
+          padding: "16px 28px", marginBottom: 32,
+          boxShadow: "0 4px 16px rgba(0,0,0,0.12)"
         }}>
-          <span style={{ fontSize: 48, fontWeight: 800, color: "#fff" }}>W</span>
+          <img src="logo.svg" alt="WasteFree" style={{ height: 34, width: "auto" }} />
         </div>
 
         <div style={{ fontSize: 20, fontWeight: 400, color: "#666", lineHeight: 1.5, marginBottom: 4 }}>
           See what you throw away.
         </div>
-        <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.5 }}>
+        <div style={{ fontSize: 20, fontWeight: 700, color: "#1D9100", lineHeight: 1.5 }}>
           Buy it back smarter.
         </div>
       </div>
@@ -1272,7 +1325,7 @@
       <div style={{
         textAlign: "center", paddingBottom: 40, fontSize: 14, color: "#888"
       }}>
-        Already have an account? <span style={{ fontWeight: 600, color: "#1a1a1a", cursor: "pointer" }}>Sign in</span>
+        Already have an account? <span style={{ fontWeight: 600, color: "#1D9100", cursor: "pointer" }}>Sign in</span>
       </div>
     </PhoneFrame>
   );
@@ -1317,17 +1370,109 @@
 
         <InputField label="Your community" placeholder="Parkside Apartments ▾" />
         <InputField label="Unit number" placeholder="e.g., 204" />
+
+        <div style={{ marginBottom: 14 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: "#666", marginBottom: 8 }}>Number of occupants</div>
+          <div style={{ display: "flex", gap: 8 }}>
+            {["1", "2", "3", "4+"].map((n, i) => (
+              <div key={n} style={{
+                flex: 1, padding: "12px 0", textAlign: "center", borderRadius: 10,
+                border: i === 1 ? "2px solid #1a1a1a" : "1.5px solid #ddd",
+                background: i === 1 ? "#f8f8f8" : "#fff",
+                fontSize: 15, fontWeight: i === 1 ? 700 : 400,
+                color: "#1a1a1a", cursor: "pointer"
+              }}>{n}</div>
+            ))}
+          </div>
+        </div>
       </div>
       <CTAButton label="Continue" onClick={onNext} />
-      <ProgressDots current={0} />
+      <ProgressDots current={0} total={6} />
     </PhoneFrame>
   );
+
+  const SurveyScreen = ({ onBack, onNext }) => {
+    const [grocerySelected, setGrocerySelected] = useState(new Set());
+    const [appsSelected, setAppsSelected] = useState(new Set());
+    const [hasPrime, setHasPrime] = useState(null);
+
+    const toggleChip = (set, setter, val) => {
+      const next = new Set(set);
+      if (next.has(val)) next.delete(val); else next.add(val);
+      setter(next);
+    };
+
+    const Chip = ({ label, selected, onClick }) => (
+      <div onClick={onClick} style={{
+        padding: "8px 16px", borderRadius: 20, cursor: "pointer",
+        border: selected ? "2px solid #1a1a1a" : "1.5px solid #ddd",
+        background: selected ? "#f8f8f8" : "#fff",
+        fontSize: 13, fontWeight: selected ? 600 : 400,
+        color: "#1a1a1a", transition: "all 0.15s"
+      }}>{label}</div>
+    );
+
+    return (
+      <PhoneFrame>
+        <div style={{ padding: "8px 24px 0" }}>
+          <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
+        </div>
+        <div style={{ flex: 1, padding: "16px 24px", overflowY: "auto" }}>
+          <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>Quick questions</div>
+          <div style={{ fontSize: 15, color: "#888", lineHeight: 1.5, marginBottom: 24 }}>
+            This helps us connect you to the right products and retailers.
+          </div>
+
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Where do you usually buy groceries?</div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {["HEB", "Walmart", "Target", "Kroger", "Whole Foods", "Other"].map(s => (
+                <Chip key={s} label={s} selected={grocerySelected.has(s)} onClick={() => toggleChip(grocerySelected, setGrocerySelected, s)} />
+              ))}
+            </div>
+          </div>
+
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Do you use delivery apps?</div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {["Amazon", "Instacart", "DoorDash", "Uber Eats", "None"].map(s => (
+                <Chip key={s} label={s} selected={appsSelected.has(s)} onClick={() => toggleChip(appsSelected, setAppsSelected, s)} />
+              ))}
+            </div>
+          </div>
+
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Do you have Amazon Prime?</div>
+            <div style={{ display: "flex", gap: 10 }}>
+              {[{ label: "Yes", val: true }, { label: "No", val: false }].map(opt => (
+                <div key={opt.label} onClick={() => setHasPrime(opt.val)} style={{
+                  flex: 1, padding: "14px 0", textAlign: "center", borderRadius: 10, cursor: "pointer",
+                  border: hasPrime === opt.val ? "2px solid #1a1a1a" : "1.5px solid #ddd",
+                  background: hasPrime === opt.val ? "#f8f8f8" : "#fff",
+                  fontSize: 15, fontWeight: hasPrime === opt.val ? 700 : 400, color: "#1a1a1a"
+                }}>{opt.label}</div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{
+            padding: 12, borderRadius: 10, background: "#f8f8f8",
+            border: "1px solid #eee", fontSize: 12, color: "#999", lineHeight: 1.5
+          }}>
+            You can update these anytime in your Profile settings.
+          </div>
+        </div>
+        <CTAButton label="Continue" onClick={onNext} />
+        <ProgressDots current={1} total={6} />
+      </PhoneFrame>
+    );
+  };
 
   const PreferenceScreen = ({ onBack, onSelect }) => {
     const [selectedPrefs, setSelectedPrefs] = useState(new Set());
     const options = [
       { icon: "💰", title: "Save Money", desc: "We'll find you cheaper brands that do the same job.", id: "money" },
-      { icon: "🥗", title: "Be Healthier", desc: "We'll suggest healthier options based on what you already buy.", id: "health" },
+      { icon: "🥦", title: "Be Healthier", desc: "We'll suggest healthier options based on what you already buy.", id: "health" },
       { icon: "🌍", title: "Save the Planet", desc: "We'll recommend products with less packaging and more recyclable materials.", id: "planet" },
     ];
 
@@ -1374,7 +1519,7 @@
                 <div style={{
                   position: "absolute", top: 12, right: 12,
                   width: 24, height: 24, borderRadius: 12,
-                  background: "#1a1a1a", display: "flex",
+                  background: "#1D9100", display: "flex",
                   alignItems: "center", justifyContent: "center",
                   color: "#fff", fontSize: 14, fontWeight: 700
                 }}>✓</div>
@@ -1396,7 +1541,107 @@
         >
           Continue
         </div>
-        <ProgressDots current={1} />
+        <ProgressDots current={2} total={6} />
+      </PhoneFrame>
+    );
+  };
+
+  const CategoryPrefsScreen = ({ onBack, onNext }) => {
+    const categories = [
+      { label: "Food & Grocery", icon: "🛒" },
+      { label: "Cosmetics & Personal Care", icon: "🧴" },
+      { label: "Cleaning & Household", icon: "🧹" },
+      { label: "Electronics", icon: "🔌" },
+      { label: "Clothing & Textiles", icon: "👕" },
+      { label: "Toys & Games", icon: "🎮" },
+    ];
+    const prefOptions = [
+      { key: "money", icon: "💰", label: "Save Money" },
+      { key: "health", icon: "🥦", label: "Healthier" },
+      { key: "planet", icon: "🌍", label: "Planet" },
+    ];
+    // Pre-fill some categories to show the interaction in action
+    const [selections, setSelections] = useState(["money", "health", "planet", "money", "", ""]);
+
+    const selectPref = (catIdx, prefKey) => {
+      const next = [...selections];
+      next[catIdx] = next[catIdx] === prefKey ? "" : prefKey;
+      setSelections(next);
+    };
+
+    /* WasteFree brand green for selected state */
+    const GREEN = "#1D9100";
+    const GREEN_BG = "#E8F2E3";
+
+    return (
+      <PhoneFrame>
+        <div style={{ padding: "8px 24px 0" }}>
+          <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
+        </div>
+        <div style={{ flex: 1, padding: "16px 24px", overflowY: "auto" }}>
+          <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Get more specific</div>
+          <div style={{ fontSize: 14, color: "#888", lineHeight: 1.5, marginBottom: 4 }}>
+            Different categories, different priorities.
+          </div>
+          <div style={{ fontSize: 12, color: "#aaa", marginBottom: 16 }}>
+            Optional — skip if you're happy with your default
+          </div>
+
+          {categories.map((cat, i) => {
+            const val = selections[i];
+            return (
+              <div key={cat.label} style={{
+                padding: 16, marginBottom: 8, borderRadius: 12,
+                border: "1.5px solid #e0e0e0", background: "#fff"
+              }}>
+                {/* Category label row */}
+                <div style={{
+                  display: "flex", alignItems: "center", gap: 12, marginBottom: 12
+                }}>
+                  <span style={{ fontSize: 22, width: 28, textAlign: "center", flexShrink: 0 }}>{cat.icon}</span>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", lineHeight: 1.3 }}>{cat.label}</div>
+                </div>
+                {/* Segmented control — stacked icon + label, equal width pills */}
+                <div style={{
+                  display: "flex", gap: 8,
+                  background: "#f5f5f5", borderRadius: 10, padding: 4
+                }}>
+                  {prefOptions.map((opt) => {
+                    const isSelected = val === opt.key;
+                    return (
+                      <div
+                        key={opt.key}
+                        onClick={() => selectPref(i, opt.key)}
+                        style={{
+                          flex: 1, display: "flex", flexDirection: "column",
+                          alignItems: "center", justifyContent: "center",
+                          gap: 2, padding: "8px 4px", borderRadius: 8,
+                          cursor: "pointer", textAlign: "center",
+                          background: isSelected ? GREEN_BG : "transparent",
+                          border: isSelected ? `1.5px solid ${GREEN}` : "1.5px solid transparent",
+                          transition: "all 0.15s ease"
+                        }}
+                      >
+                        <span style={{ fontSize: 18, lineHeight: 1 }}>{opt.icon}</span>
+                        <span style={{
+                          fontSize: 11, fontWeight: isSelected ? 600 : 400,
+                          color: isSelected ? "#167000" : "#888",
+                          lineHeight: 1.2
+                        }}>{opt.label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <CTAButton label="Continue" onClick={onNext} />
+        <div onClick={onNext} style={{
+          textAlign: "center", paddingBottom: 8, fontSize: 14,
+          color: "#888", cursor: "pointer"
+        }}>Skip — use my default for all</div>
+        <ProgressDots current={3} total={6} />
       </PhoneFrame>
     );
   };
@@ -1431,7 +1676,7 @@
         textAlign: "center", paddingBottom: 12, fontSize: 14,
         color: "#888", cursor: "pointer"
       }}>Maybe later</div>
-      <ProgressDots current={2} />
+      <ProgressDots current={4} total={6} />
     </PhoneFrame>
   );
 
@@ -1442,7 +1687,7 @@
         alignItems: "center", justifyContent: "center", padding: "0 32px", textAlign: "center"
       }}>
         <div style={{
-          width: 72, height: 72, borderRadius: 36, background: "#1a1a1a",
+          width: 72, height: 72, borderRadius: 36, background: "#1D9100",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: 32, color: "#fff", marginBottom: 20
         }}>✓</div>
@@ -1467,7 +1712,7 @@
         </div>
       </div>
       <CTAButton label="Start Exploring" onClick={onStart} />
-      <ProgressDots current={3} />
+      <ProgressDots current={5} total={6} />
     </PhoneFrame>
   );
 
@@ -1537,18 +1782,30 @@
       [SCREENS.ACCOUNT]: (
         <AccountScreen
           onBack={() => setCurrentScreen(SCREENS.WELCOME)}
+          onNext={() => setCurrentScreen(SCREENS.SURVEY)}
+        />
+      ),
+      [SCREENS.SURVEY]: (
+        <SurveyScreen
+          onBack={() => setCurrentScreen(SCREENS.ACCOUNT)}
           onNext={() => setCurrentScreen(SCREENS.PREFERENCE)}
         />
       ),
       [SCREENS.PREFERENCE]: (
         <PreferenceScreen
-          onBack={() => setCurrentScreen(SCREENS.ACCOUNT)}
-          onSelect={() => setCurrentScreen(SCREENS.NOTIFICATIONS)}
+          onBack={() => setCurrentScreen(SCREENS.SURVEY)}
+          onSelect={() => setCurrentScreen(SCREENS.CATEGORY_PREFS)}
+        />
+      ),
+      [SCREENS.CATEGORY_PREFS]: (
+        <CategoryPrefsScreen
+          onBack={() => setCurrentScreen(SCREENS.PREFERENCE)}
+          onNext={() => setCurrentScreen(SCREENS.NOTIFICATIONS)}
         />
       ),
       [SCREENS.NOTIFICATIONS]: (
         <NotificationScreen
-          onBack={() => setCurrentScreen(SCREENS.PREFERENCE)}
+          onBack={() => setCurrentScreen(SCREENS.CATEGORY_PREFS)}
           onAllow={() => setCurrentScreen(SCREENS.DONE)}
           onSkip={() => setCurrentScreen(SCREENS.DONE)}
         />
@@ -1559,11 +1816,13 @@
 
     const screenLabels = {
       [SCREENS.WELCOME]: "1. Welcome",
-      [SCREENS.ACCOUNT]: "2. Account Setup",
-      [SCREENS.PREFERENCE]: "3. Preference Selection",
-      [SCREENS.NOTIFICATIONS]: "4. Notifications",
-      [SCREENS.DONE]: "5. Done",
-      [SCREENS.PROFILE]: "6. Profile Tab",
+      [SCREENS.ACCOUNT]: "2. Account",
+      [SCREENS.SURVEY]: "3. Survey",
+      [SCREENS.PREFERENCE]: "4. Preference",
+      [SCREENS.CATEGORY_PREFS]: "5. By Category",
+      [SCREENS.NOTIFICATIONS]: "6. Notifications",
+      [SCREENS.DONE]: "7. Done",
+      [SCREENS.PROFILE]: "8. Profile",
     };
 
     return (
@@ -1608,11 +1867,13 @@
               </div>
               <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
                 {currentScreen === SCREENS.WELCOME && "Logo + 2-line value prop. No feature tours, no carousels. Get in, get out."}
-                {currentScreen === SCREENS.ACCOUNT && "Minimal fields. SSO options for speed. Community + unit may be pre-filled via management invite link."}
-                {currentScreen === SCREENS.PREFERENCE && "The most important screen in onboarding. This single choice cascades through the entire app experience. Large tappable cards for accessibility. 'You can change this anytime' reduces decision anxiety."}
+                {currentScreen === SCREENS.ACCOUNT && "Revised: added number of occupants (helps WasteFree estimate household waste volume). SSO options for speed. Community + unit may be pre-filled via management invite link."}
+                {currentScreen === SCREENS.SURVEY && "New screen based on client feedback. Captures grocery/delivery preferences to power the fulfillment options in the Repurchase flow. Chip-style multi-select keeps it fast. All optional — 'update anytime' reduces pressure."}
+                {currentScreen === SCREENS.PREFERENCE && "The most important screen in onboarding. This single global choice sets the default for all categories. Large tappable cards for accessibility. 'You can change this anytime' reduces decision anxiety."}
+                {currentScreen === SCREENS.CATEGORY_PREFS && "New screen based on client feedback. Residents can override their global preference per category — e.g., 'Save Money on groceries, Be Healthier on cosmetics.' Tap-to-cycle interaction keeps it fast. Skip option for residents who want to keep it simple. This is the key differentiation in WasteFree's recommendation engine."}
                 {currentScreen === SCREENS.NOTIFICATIONS && "Dedicated pre-prompt before the system dialog. Trust copy ('no spam, no marketing') increases opt-in from ~35% to ~55%. 'Maybe later' is not 'No.'"}
                 {currentScreen === SCREENS.DONE && "Set expectations: the app is dormant until first collection. Preference confirmation with escape hatch to Profile."}
-                {currentScreen === SCREENS.PROFILE && "Low-frequency settings. My Preference is the most important row — it's the one setting that affects the entire app. Visit once, rarely return."}
+                {currentScreen === SCREENS.PROFILE && "Low-frequency settings. My Preference is the most important row — it's the one setting that affects the entire app. Per-category preferences accessible here for power users."}
               </div>
             </div>
           </div>
@@ -1747,7 +2008,7 @@
       {count > 0 && (
         <div style={{
           position: "absolute", top: -6, right: -10, width: 18, height: 18,
-          borderRadius: 9, background: "#1a1a1a", color: "#fff",
+          borderRadius: 9, background: "#1D9100", color: "#fff",
           fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center"
         }}>{count}</div>
       )}
@@ -1774,14 +2035,14 @@
       </div>
       <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
         <div onClick={onBuyAgain} style={{
-          flex: "1 1 0", minWidth: 0, padding: "10px 8px", borderRadius: 10, background: "#1a1a1a",
+          flex: "1 1 0", minWidth: 0, padding: "10px 8px", borderRadius: 10, background: "#1D9100",
           color: "#fff", textAlign: "center", fontSize: 12, fontWeight: 600, cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "center"
         }}>Buy it Again</div>
         {hasAlt && (
           <div onClick={onBuyWF} style={{
             flex: "1 1 0", minWidth: 0, padding: "10px 8px", borderRadius: 10, background: "transparent",
-            border: "1.5px solid #1a1a1a", color: "#1a1a1a", textAlign: "center",
+            border: "1.5px solid #1D9100", color: "#1D9100", textAlign: "center",
             fontSize: 12, fontWeight: 600, cursor: "pointer",
             display: "flex", alignItems: "center", justifyContent: "center"
           }}>{wfLabel || "Buy WasteFree"}</div>
@@ -1806,10 +2067,10 @@
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
             <div style={{
-              width: 36, height: 36, borderRadius: 8, background: "#1a1a1a",
+              width: 36, height: 36, borderRadius: 8, background: "#1D9100",
               display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#fff", fontSize: 16, fontWeight: 700
-            }}>W</div>
+              overflow: "hidden"
+            }}><img src="logo.svg" alt="WF" style={{ height: 14, width: "auto" }} /></div>
             <div style={{ flex: 1 }}>
               <span style={{ fontSize: 14, fontWeight: 600 }}>WasteFree</span>
             </div>
@@ -2008,7 +2269,7 @@
       health: {
         product: "Seventh Generation Free & Clear",
         price: "$13.49",
-        emoji: "🥗",
+        emoji: "🥦",
         headline: "Hypoallergenic, no dyes or fragrances",
         detail: "vs. Tide Pods (contains synthetic fragrances + dyes)",
         sub: "Dermatologist recommended for sensitive skin",
@@ -2172,8 +2433,8 @@
                 {item.wf && (
                   <div style={{
                     display: "inline-block", marginTop: 6, padding: "2px 10px",
-                    borderRadius: 10, background: "#f0f0f0", fontSize: 11,
-                    fontWeight: 600, color: "#666"
+                    borderRadius: 10, background: "#E8F2E3", fontSize: 11,
+                    fontWeight: 600, color: "#1D9100"
                   }}>WasteFree pick</div>
                 )}
               </div>
@@ -2213,86 +2474,57 @@
     );
   };
 
-  // SCREEN: Checkout
-  const CheckoutScreen = ({ onBack, onPlace, preference = "money" }) => {
+  // SCREEN: Checkout — Approach B (Smart Default)
+  const CheckoutScreenB = ({ onBack, onPlace, preference = "money" }) => {
+    const [showOptions, setShowOptions] = useState(false);
+    const [selectedFulfillment, setSelectedFulfillment] = useState("amazon");
+
+    const fulfillmentOptions = [
+      { id: "amazon", icon: "📦", name: "Amazon", badge: "Prime", detail: "Free 2-day delivery", fee: "Free" },
+      { id: "instacart", icon: "🛒", name: "Instacart", badge: null, detail: "Delivery in 2 hours", fee: "$3.99" },
+      { id: "doordash", icon: "🚗", name: "DoorDash", badge: null, detail: "Delivery in 45 min", fee: "$5.99" },
+      { id: "heb", icon: "🏪", name: "HEB", badge: null, detail: "In-store pickup", fee: "Free" },
+    ];
+
+    const selected = fulfillmentOptions.find(f => f.id === selectedFulfillment);
+
     const checkoutData = {
-      money: {
-        itemName: "RC Cherry Cola (1)",
-        itemPrice: "$3.49",
-        subtotal: "$29.96",
-        savings: "WasteFree savings",
-        savingsAmount: "−$2.50",
-        total: "$29.73",
-        nudge: "💰 This order saves $2.50 and prevents 1.2 lbs of waste.",
-      },
-      health: {
-        itemName: "Seventh Generation Free & Clear (1)",
-        itemPrice: "$13.49",
-        subtotal: "$32.96",
-        savings: "Healthier choice",
-        savingsAmount: "+$0.50",
-        total: "$35.73",
-        nudge: "🥗 This order swaps synthetic chemicals for plant-based cleaning — better for your skin.",
-      },
-      planet: {
-        itemName: "Who Gives a Crap Paper Towels (1)",
-        itemPrice: "$9.99",
-        subtotal: "$33.96",
-        savings: "Eco-friendly choice",
-        savingsAmount: "+$1.50",
-        total: "$36.73",
-        nudge: "🌍 This order eliminates 2.1 lbs of plastic packaging with recycled alternatives.",
-      },
+      money: { subtotal: "$29.96", savings: "WasteFree savings", savingsAmount: "−$2.50", total: "$29.73", nudge: "💰 This order saves $2.50 and prevents 1.2 lbs of waste." },
+      health: { subtotal: "$32.96", savings: "Healthier choice", savingsAmount: "+$0.50", total: "$35.73", nudge: "🥦 This order swaps synthetic chemicals for plant-based cleaning — better for your skin." },
+      planet: { subtotal: "$33.96", savings: "Eco-friendly choice", savingsAmount: "+$1.50", total: "$36.73", nudge: "🌍 This order eliminates 2.1 lbs of plastic packaging with recycled alternatives." },
     };
 
     const checkout = checkoutData[preference];
+    const items = [
+      preference === "money" ? { name: "RC Cherry Cola (1)", price: "$3.49" } : { name: "Cherry Dr. Pepper (1)", price: "$5.99" },
+      preference === "health" ? { name: "Seventh Generation (1)", price: "$13.49" } : { name: "Tide Pods (1)", price: "$12.99" },
+      preference === "planet" ? { name: "Who Gives a Crap (1)", price: "$9.99" } : { name: "Bounty Paper Towels (1)", price: "$8.49" },
+      { name: "Crest Toothpaste (1)", price: "$4.99" },
+    ];
 
     return (
     <PhoneFrame>
-      <Header
-        left={<span onClick={onBack} style={{ fontSize: 14, cursor: "pointer" }}>← Back</span>}
-        title="Checkout"
-        right=""
-      />
+      <Header left={<span onClick={onBack} style={{ fontSize: 14, cursor: "pointer" }}>← Back</span>} title="Checkout" right="" />
       <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px" }}>
         <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 16 }}>Order Summary</div>
-
-        {[
-          preference === "money"
-            ? { name: checkout.itemName, price: checkout.itemPrice }
-            : { name: "Cherry Dr. Pepper (1)", price: "$5.99" },
-          preference === "health"
-            ? { name: checkout.itemName, price: checkout.itemPrice }
-            : { name: "Tide Pods (1)", price: "$12.99" },
-          preference === "planet"
-            ? { name: checkout.itemName, price: checkout.itemPrice }
-            : { name: "Bounty Paper Towels (1)", price: "$8.49" },
-          { name: "Crest Toothpaste (1)", price: "$4.99" },
-        ].map((item, i) => (
-          <div key={i} style={{
-            display: "flex", justifyContent: "space-between", padding: "8px 0",
-            fontSize: 15, color: "#444"
-          }}>
-            <span>{item.name}</span>
-            <span>{item.price}</span>
+        {items.map((item, i) => (
+          <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", fontSize: 15, color: "#444" }}>
+            <span>{item.name}</span><span>{item.price}</span>
           </div>
         ))}
 
         <div style={{ height: 1, background: "#e0e0e0", margin: "12px 0" }} />
-
         {[
-          { label: "Subtotal", value: checkout.subtotal, bold: false },
-          { label: checkout.savings, value: checkout.savingsAmount, bold: false },
-          { label: "Estimated tax", value: "$2.27", bold: false },
+          { label: "Subtotal", value: checkout.subtotal },
+          { label: checkout.savings, value: checkout.savingsAmount },
+          { label: "Delivery", value: selected.fee === "Free" ? "Free" : selected.fee },
+          { label: "Estimated tax", value: "$2.27" },
         ].map((line, i) => (
-          <div key={i} style={{
-            display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: 15
-          }}>
+          <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: 15 }}>
             <span style={{ color: "#666" }}>{line.label}</span>
-            <span style={{ fontWeight: line.bold ? 700 : 400 }}>{line.value}</span>
+            <span style={{ fontWeight: 400, color: line.value === "Free" ? "#1D9100" : "#1a1a1a" }}>{line.value}</span>
           </div>
         ))}
-
         <div style={{ height: 1, background: "#e0e0e0", margin: "12px 0" }} />
         <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0" }}>
           <span style={{ fontSize: 18, fontWeight: 700 }}>Total</span>
@@ -2301,31 +2533,170 @@
 
         <div style={{ height: 1, background: "#f0f0f0", margin: "20px 0" }} />
 
-        {/* Fulfillment */}
-        <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 12 }}>Fulfillment</div>
-        <div style={{
-          padding: 16, borderRadius: 14, border: "1.5px solid #e0e0e0",
+        {/* Smart Default Fulfillment */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+          <div style={{ fontSize: 15, fontWeight: 600 }}>Delivering via</div>
+          <span style={{ fontSize: 11, padding: "2px 8px", borderRadius: 10, background: "#E8F2E3", color: "#1D9100", fontWeight: 600 }}>From your profile</span>
+        </div>
+        <div onClick={() => setShowOptions(!showOptions)} style={{
+          padding: 16, borderRadius: 14, border: showOptions ? "2px solid #1a1a1a" : "1.5px solid #e0e0e0",
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          marginBottom: 8, cursor: "pointer"
+          cursor: "pointer", transition: "all 0.2s"
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span style={{ fontSize: 24 }}>🛒</span>
+            <span style={{ fontSize: 24 }}>{selected.icon}</span>
             <div>
-              <div style={{ fontSize: 15, fontWeight: 600 }}>Instacart</div>
-              <div style={{ fontSize: 13, color: "#888" }}>Delivery to your door</div>
+              <div style={{ fontSize: 15, fontWeight: 600 }}>
+                {selected.name}
+                {selected.badge && <span style={{ marginLeft: 6, fontSize: 10, padding: "2px 6px", borderRadius: 4, background: "#1a1a1a", color: "#fff", fontWeight: 700 }}>{selected.badge}</span>}
+              </div>
+              <div style={{ fontSize: 13, color: "#888" }}>{selected.detail} · {selected.fee}</div>
             </div>
           </div>
-          <span style={{ fontSize: 18, color: "#ccc" }}>›</span>
-        </div>
-        <div style={{ fontSize: 12, color: "#999", marginBottom: 20, lineHeight: 1.4 }}>
-          Note: This will open Instacart to complete your purchase.
+          <span style={{ fontSize: 14, color: "#888", fontWeight: 500 }}>{showOptions ? "▲" : "Change ▼"}</span>
         </div>
 
-        {/* Impact nudge */}
+        {showOptions && (
+          <div style={{ marginTop: 8, borderRadius: 14, border: "1.5px solid #e0e0e0", overflow: "hidden" }}>
+            {fulfillmentOptions.filter(f => f.id !== selectedFulfillment).map((opt) => (
+              <div key={opt.id} onClick={() => { setSelectedFulfillment(opt.id); setShowOptions(false); }} style={{
+                padding: "14px 16px", display: "flex", alignItems: "center", gap: 12,
+                borderBottom: "1px solid #f0f0f0", cursor: "pointer", transition: "background 0.15s"
+              }}>
+                <span style={{ fontSize: 22 }}>{opt.icon}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 14, fontWeight: 600 }}>
+                    {opt.name}
+                    {opt.badge && <span style={{ marginLeft: 6, fontSize: 10, padding: "2px 6px", borderRadius: 4, background: "#1a1a1a", color: "#fff", fontWeight: 700 }}>{opt.badge}</span>}
+                  </div>
+                  <div style={{ fontSize: 12, color: "#888" }}>{opt.detail} · {opt.fee}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div style={{ fontSize: 11, color: "#999", marginTop: 8, marginBottom: 16, lineHeight: 1.4 }}>
+          Your default is based on your profile preferences. Change anytime.
+        </div>
+
+        <div style={{ padding: 14, borderRadius: 12, background: "#f8f8f8", textAlign: "center", fontSize: 13, color: "#666", lineHeight: 1.5 }}>
+          {checkout.nudge}
+        </div>
+      </div>
+      <CTAButton label={`Place Order — ${checkout.total}`} />
+    </PhoneFrame>
+    );
+  };
+
+  // SCREEN: Checkout — Approach C (Per-Item Fulfillment)
+  const CheckoutScreenC = ({ onBack, onPlace, preference = "money" }) => {
+    const [itemFulfillments, setItemFulfillments] = useState(["amazon", "amazon", "heb", "amazon"]);
+    const [expandedItem, setExpandedItem] = useState(null);
+
+    const fulfillmentOptions = [
+      { id: "amazon", icon: "📦", name: "Amazon", short: "Amazon Prime", fee: "Free" },
+      { id: "instacart", icon: "🛒", name: "Instacart", short: "Instacart", fee: "$3.99" },
+      { id: "doordash", icon: "🚗", name: "DoorDash", short: "DoorDash", fee: "$5.99" },
+      { id: "heb", icon: "🏪", name: "HEB", short: "HEB Pickup", fee: "Free" },
+    ];
+
+    const getFulfillment = (id) => fulfillmentOptions.find(f => f.id === id);
+
+    const checkoutData = {
+      money: { subtotal: "$29.96", total: "$29.73", nudge: "💰 This order saves $2.50 and prevents 1.2 lbs of waste." },
+      health: { subtotal: "$32.96", total: "$35.73", nudge: "🥦 This order swaps synthetic chemicals for plant-based cleaning." },
+      planet: { subtotal: "$33.96", total: "$36.73", nudge: "🌍 This order eliminates 2.1 lbs of plastic packaging." },
+    };
+
+    const checkout = checkoutData[preference];
+    const items = [
+      preference === "money" ? { name: "RC Cherry Cola", price: "$3.49" } : { name: "Cherry Dr. Pepper", price: "$5.99" },
+      preference === "health" ? { name: "Seventh Generation", price: "$13.49" } : { name: "Tide Pods", price: "$12.99" },
+      preference === "planet" ? { name: "Who Gives a Crap", price: "$9.99" } : { name: "Bounty Paper Towels", price: "$8.49" },
+      { name: "Crest Toothpaste", price: "$4.99" },
+    ];
+
+    return (
+    <PhoneFrame>
+      <Header left={<span onClick={onBack} style={{ fontSize: 14, cursor: "pointer" }}>← Back</span>} title="Checkout" right="" />
+      <div style={{ flex: 1, overflowY: "auto", padding: "12px 16px" }}>
+        <div style={{ fontSize: 17, fontWeight: 700, marginBottom: 4 }}>Order Summary</div>
+        <div style={{ fontSize: 12, color: "#888", marginBottom: 12 }}>Choose where to buy each item</div>
+
+        {items.map((item, i) => {
+          const ful = getFulfillment(itemFulfillments[i]);
+          const isExpanded = expandedItem === i;
+          return (
+            <div key={i} style={{ marginBottom: 10, borderRadius: 12, border: "1.5px solid #e0e0e0", overflow: "hidden" }}>
+              <div style={{ padding: "12px 14px", display: "flex", gap: 10, alignItems: "flex-start" }}>
+                <div style={{ width: 44, height: 44, borderRadius: 8, background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, color: "#aaa", flexShrink: 0 }}>Img</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <span style={{ fontSize: 14, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.name}</span>
+                    <span style={{ fontSize: 14, fontWeight: 600, flexShrink: 0, marginLeft: 8 }}>{item.price}</span>
+                  </div>
+                  <div onClick={() => setExpandedItem(isExpanded ? null : i)} style={{
+                    marginTop: 6, display: "inline-flex", alignItems: "center", gap: 6,
+                    padding: "4px 10px", borderRadius: 6, background: "#f7f7f7",
+                    border: "1px solid #e0e0e0", cursor: "pointer", fontSize: 12
+                  }}>
+                    <span>{ful.icon}</span>
+                    <span style={{ fontWeight: 500 }}>{ful.short}</span>
+                    <span style={{ color: ful.fee === "Free" ? "#1D9100" : "#666", fontWeight: 500 }}>{ful.fee}</span>
+                    <span style={{ color: "#ccc", fontSize: 10 }}>{isExpanded ? "▲" : "▼"}</span>
+                  </div>
+                </div>
+              </div>
+              {isExpanded && (
+                <div style={{ borderTop: "1px solid #f0f0f0", background: "#fafafa" }}>
+                  {fulfillmentOptions.map(opt => (
+                    <div key={opt.id} onClick={() => {
+                      const next = [...itemFulfillments];
+                      next[i] = opt.id;
+                      setItemFulfillments(next);
+                      setExpandedItem(null);
+                    }} style={{
+                      padding: "10px 14px", display: "flex", alignItems: "center", gap: 10,
+                      borderBottom: "1px solid #f0f0f0", cursor: "pointer",
+                      background: opt.id === itemFulfillments[i] ? "#E8F2E3" : "transparent"
+                    }}>
+                      <span style={{ fontSize: 18 }}>{opt.icon}</span>
+                      <span style={{ flex: 1, fontSize: 13, fontWeight: opt.id === itemFulfillments[i] ? 600 : 400 }}>{opt.name}</span>
+                      <span style={{ fontSize: 12, color: opt.fee === "Free" ? "#1D9100" : "#888" }}>{opt.fee}</span>
+                      {opt.id === itemFulfillments[i] && <span style={{ color: "#1D9100", fontWeight: 700 }}>✓</span>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+
         <div style={{
-          padding: 14, borderRadius: 12, background: "#f8f8f8",
-          textAlign: "center", fontSize: 13, color: "#666", lineHeight: 1.5
+          margin: "8px 0 12px", padding: 10, borderRadius: 8,
+          background: "#fff8e1", border: "1px solid #ffe082", fontSize: 12, color: "#f57f17", lineHeight: 1.4
         }}>
+          ⚠️ Items from different stores may arrive separately and incur separate delivery fees.
+        </div>
+
+        <div style={{ height: 1, background: "#e0e0e0", margin: "8px 0" }} />
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: 15 }}>
+          <span style={{ color: "#666" }}>Subtotal</span><span>{checkout.subtotal}</span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: 15 }}>
+          <span style={{ color: "#666" }}>Delivery fees (multiple)</span><span style={{ color: "#888" }}>$3.99</span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", fontSize: 15 }}>
+          <span style={{ color: "#666" }}>Tax</span><span>$2.27</span>
+        </div>
+        <div style={{ height: 1, background: "#e0e0e0", margin: "8px 0" }} />
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0" }}>
+          <span style={{ fontSize: 18, fontWeight: 700 }}>Total</span>
+          <span style={{ fontSize: 18, fontWeight: 700 }}>{checkout.total}</span>
+        </div>
+
+        <div style={{ padding: 14, borderRadius: 12, background: "#f8f8f8", textAlign: "center", fontSize: 13, color: "#666", lineHeight: 1.5, marginTop: 12 }}>
           {checkout.nudge}
         </div>
       </div>
@@ -2335,7 +2706,7 @@
   };
 
   // SCREEN: Order Confirmation
-  const ConfirmationScreen = ({ onViewImpact, onBackToItems, preference = "money" }) => {
+  const ConfirmationScreen = ({ onViewImpact, onBackToItems, preference = "money", fulfillmentMode = "B" }) => {
     const confirmationData = {
       money: [
         "Saves you $2.50",
@@ -2364,7 +2735,7 @@
         textAlign: "center"
       }}>
         <div style={{
-          width: 72, height: 72, borderRadius: 36, background: "#1a1a1a",
+          width: 72, height: 72, borderRadius: 36, background: "#1D9100",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: 32, color: "#fff", marginBottom: 20
         }}>✓</div>
@@ -2373,7 +2744,10 @@
           Order Placed!
         </div>
         <div style={{ fontSize: 15, color: "#888", marginBottom: 28 }}>
-          Your 4 items are on their way via Instacart.
+          {fulfillmentMode === "B"
+            ? "Your 4 items are on their way via Amazon Prime."
+            : "Your 4 items are on their way via multiple stores."
+          }
         </div>
 
         <div style={{
@@ -2395,7 +2769,7 @@
 
         <div onClick={onViewImpact} style={{
           width: "100%", padding: "16px 0", borderRadius: 14,
-          background: "#1a1a1a", color: "#fff", textAlign: "center",
+          background: "#1D9100", color: "#fff", textAlign: "center",
           fontSize: 16, fontWeight: 600, cursor: "pointer", marginBottom: 12
         }}>View Your Impact</div>
 
@@ -2407,10 +2781,12 @@
     );
   };
 
-  // MAIN APP
-  function WasteFreeFlow1() {
+  // MAIN APP — parameterized by fulfillment mode
+  function WasteFreeFlow2({ fulfillmentMode = "B" }) {
     const [currentScreen, setCurrentScreen] = useState(SCREENS.NOTIFICATION);
     const [preference, setPreference] = useState("money");
+
+    const CheckoutComponent = fulfillmentMode === "B" ? CheckoutScreenB : CheckoutScreenC;
 
     const screenComponents = {
       [SCREENS.NOTIFICATION]: (
@@ -2441,7 +2817,7 @@
         />
       ),
       [SCREENS.CHECKOUT]: (
-        <CheckoutScreen
+        <CheckoutComponent
           onBack={() => setCurrentScreen(SCREENS.CART)}
           onPlace={() => setCurrentScreen(SCREENS.CONFIRMATION)}
           preference={preference}
@@ -2452,6 +2828,7 @@
           onViewImpact={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)}
           onBackToItems={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)}
           preference={preference}
+          fulfillmentMode={fulfillmentMode}
         />
       ),
     };
@@ -2466,6 +2843,14 @@
       [SCREENS.CHECKOUT]: "7. Checkout",
       [SCREENS.CONFIRMATION]: "8. Confirmation",
     };
+
+    const checkoutNotes = fulfillmentMode === "B"
+      ? "Smart Default: Pre-selects fulfillment from the resident's profile (set during onboarding survey). 'From your profile' badge builds trust. Expandable 'Change' dropdown keeps the UI clean — most users won't need it. Fastest path to checkout. Recommended for V1."
+      : "Per-Item: Each cart item gets its own fulfillment selector. Maximum flexibility but more cognitive load. Yellow warning about split deliveries sets expectations. Best for power users who want granular control. Compare complexity with Approach A above.";
+
+    const confirmationNotes = fulfillmentMode === "B"
+      ? "Impact card creates the emotional payoff. 'View Your Impact' cross-links to My Impact tab — closes the engagement loop. Shows single fulfillment provider from profile default."
+      : "Impact card creates the emotional payoff. 'View Your Impact' cross-links to My Impact tab — closes the engagement loop. Acknowledges multiple stores for per-item fulfillment.";
 
     return (
       <div style={{
@@ -2517,8 +2902,8 @@
                 {currentScreen === SCREENS.DETAIL_SAME && "Confirm repurchase with quantity/size/flavor adjustments. Only shown when user actively taps 'Buy it Again.'"}
                 {currentScreen === SCREENS.DETAIL_ALT && `Preference-driven alternative with comparison card. Shows ${preference === "money" ? "Save Money" : preference === "health" ? "Be Healthier" : "Save the Planet"} variant. 'Buy the original instead' escape hatch.`}
                 {currentScreen === SCREENS.CART && "Persistent cart across sessions. WasteFree picks get a badge. Savings line only appears when WasteFree items are present."}
-                {currentScreen === SCREENS.CHECKOUT && "Order summary + fulfillment selector (TBD with WasteFree). Impact nudge at bottom reinforces the WasteFree value prop."}
-                {currentScreen === SCREENS.CONFIRMATION && "Impact card creates the emotional payoff. 'View Your Impact' cross-links to My Impact tab — closes the engagement loop."}
+                {currentScreen === SCREENS.CHECKOUT && checkoutNotes}
+                {currentScreen === SCREENS.CONFIRMATION && confirmationNotes}
               </div>
             </div>
           </div>
@@ -2527,7 +2912,9 @@
     );
   }
 
-  ReactDOM.createRoot(document.getElementById('flow-2-root')).render(<WasteFreeFlow1 />);
+  // Render Flow 2A (Smart Default) and Flow 2B (Per-Item) as separate prototypes
+  ReactDOM.createRoot(document.getElementById('flow-2a-root')).render(<WasteFreeFlow2 fulfillmentMode="B" />);
+  ReactDOM.createRoot(document.getElementById('flow-2b-root')).render(<WasteFreeFlow2 fulfillmentMode="C" />);
 })()}
 </script>
 
@@ -2622,7 +3009,48 @@
     }}>{label}</div>
   );
 
-  const ImpactScreen = () => (
+  const ImpactScreen = () => {
+    const [expandedCat, setExpandedCat] = useState(null);
+    const [showGlossary, setShowGlossary] = useState(false);
+
+    /* Waste-stream categories with real designations + recycling methods */
+    const wasteCategories = [
+      { code: "PET", name: "Plastic Bottles", pct: 18, deg: [0, 64.8], color: "#1D9100",
+        method: "Closed-Loop", methodDesc: "Melted and reformed into new PET bottles — true bottle-to-bottle recycling." },
+      { code: "HDPE", name: "Jugs & Containers", pct: 10, deg: [64.8, 100.8], color: "#167000",
+        method: "Downcycled", methodDesc: "Shredded into flakes and molded into lumber, playground equipment, and drainage pipes." },
+      { code: "OCC", name: "Cardboard", pct: 16, deg: [100.8, 158.4], color: "#66BB6A",
+        method: "Closed-Loop", methodDesc: "Pulped and re-formed into new corrugated cardboard — the most recycled material in the U.S." },
+      { code: "Mixed Paper", name: "Paperboard & Mail", pct: 8, deg: [158.4, 187.2], color: "#A5D6A7",
+        method: "Downcycled", methodDesc: "Blended into tissue products, egg cartons, and insulation material." },
+      { code: "Ferrous", name: "Steel & Tin Cans", pct: 6, deg: [187.2, 208.8], color: "#4E342E",
+        method: "Remelted", methodDesc: "Magnetically sorted, smelted, and recast into new steel products. Infinitely recyclable." },
+      { code: "Non-Ferrous", name: "Aluminum Cans", pct: 4, deg: [208.8, 223.2], color: "#8D6E63",
+        method: "Closed-Loop", methodDesc: "Melted at 660°C and rolled into new cans within 60 days — one of the most efficient loops." },
+      { code: "Organic", name: "Composted", pct: 14, deg: [223.2, 273.6], color: "#F9A825",
+        method: "Composted", methodDesc: "Broken down aerobically into nutrient-rich soil amendment for community gardens and landscaping." },
+      { code: "Glass", name: "Glass Bottles", pct: 6, deg: [273.6, 295.2], color: "#42A5F5",
+        method: "Remelted", methodDesc: "Crushed into cullet, melted at 1500°C, and blown into new bottles. Color-sorted for purity." },
+      { code: "Landfilled", name: "Landfilled", pct: 18, deg: [295.2, 360], color: "#BDBDBD",
+        method: "Landfilled", methodDesc: "Could not be recycled or composted with current infrastructure. We're working to reduce this." },
+    ];
+
+    /* Build conic-gradient from categories */
+    const gradient = wasteCategories.map(c => `${c.color} ${c.deg[0]}deg ${c.deg[1]}deg`).join(", ");
+    const recycledPct = wasteCategories.filter(c => c.code !== "Landfilled").reduce((s, c) => s + c.pct, 0);
+
+    /* Glossary definitions */
+    const glossaryTerms = [
+      { term: "Closed-Loop", def: "Material is recycled back into the same product type (bottle → bottle)." },
+      { term: "Downcycled", def: "Recycled into a lower-value product (paper → egg carton)." },
+      { term: "Remelted", def: "Metal or glass melted and re-formed. Can repeat indefinitely." },
+      { term: "Composted", def: "Organic matter broken down into soil nutrients." },
+      { term: "Pyrolysis", def: "Plastic heated without oxygen to produce fuel or chemical feedstock." },
+      { term: "WTE", def: "Waste-to-Energy — incinerated to generate electricity." },
+      { term: "Upcycled", def: "Transformed into a higher-value product (tires → playground surface)." },
+    ];
+
+    return (
     <PhoneFrame>
       <div style={{
         display: "flex", justifyContent: "space-between", alignItems: "center",
@@ -2639,7 +3067,7 @@
         <SectionDivider label="WasteFree Score" />
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "16px 20px 8px" }}>
           <div style={{
-            width: 140, height: 140, borderRadius: 70, border: "6px solid #1a1a1a",
+            width: 140, height: 140, borderRadius: 70, border: "6px solid #1D9100",
             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"
           }}>
             <span style={{ fontSize: 48, fontWeight: 800, color: "#1a1a1a" }}>742</span>
@@ -2683,7 +3111,7 @@
             </div>
             <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Top 14%</div>
             <div style={{ height: 8, borderRadius: 4, background: "#f0f0f0", overflow: "hidden" }}>
-              <div style={{ width: "86%", height: "100%", borderRadius: 4, background: "#1a1a1a" }} />
+              <div style={{ width: "86%", height: "100%", borderRadius: 4, background: "#1D9100" }} />
             </div>
           </div>
           <div style={{
@@ -2704,53 +3132,108 @@
           </div>
         </div>
 
-        {/* Waste Stream Breakdown */}
+        {/* Waste Stream Breakdown — revised per client feedback */}
         <SectionDivider label="Waste Stream Breakdown" />
         <div style={{ padding: "8px 20px" }}>
           <div style={{
             padding: 20, borderRadius: 14, border: "1.5px solid #e8e8e8", marginBottom: 10
           }}>
-            {/* Donut chart placeholder */}
+            {/* Donut chart with real waste-stream segments */}
             <div style={{
               width: 160, height: 160, margin: "0 auto 16px",
               borderRadius: 80, position: "relative",
-              background: `conic-gradient(#1a1a1a 0deg 223deg, #ccc 223deg 360deg)`
+              background: `conic-gradient(${gradient})`
             }}>
               <div style={{
                 position: "absolute", top: 30, left: 30, width: 100, height: 100,
                 borderRadius: 50, background: "#fff",
                 display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"
               }}>
-                <span style={{ fontSize: 11, color: "#888" }}>Recyclable</span>
-                <span style={{ fontSize: 24, fontWeight: 800 }}>62%</span>
+                <span style={{ fontSize: 11, color: "#888" }}>Diverted</span>
+                <span style={{ fontSize: 24, fontWeight: 800 }}>{recycledPct}%</span>
               </div>
             </div>
-            <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <div style={{ width: 10, height: 10, borderRadius: 5, background: "#1a1a1a" }} />
-                <span style={{ fontSize: 13 }}>62% Recyclable</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <div style={{ width: 10, height: 10, borderRadius: 5, background: "#ccc" }} />
-                <span style={{ fontSize: 13 }}>38% Non-Recyclable</span>
-              </div>
-            </div>
-          </div>
 
-          <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Top categories this month:</div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 8 }}>
-            {[
-              { label: "Plastics", pct: "34%" },
-              { label: "Paper", pct: "22%" },
-              { label: "Glass", pct: "18%" },
-              { label: "Food", pct: "15%" },
-              { label: "Other", pct: "11%" },
-            ].map((cat, i) => (
-              <div key={i} style={{
-                padding: "8px 14px", borderRadius: 20, background: "#f0f0f0",
-                fontSize: 13, fontWeight: 600, color: "#444"
-              }}>{cat.label} {cat.pct}</div>
+            {/* Legend — tap to expand recycling method */}
+            <div style={{ fontSize: 11, color: "#888", textAlign: "center", marginBottom: 10 }}>
+              Tap a category to see how it was recycled
+            </div>
+            {wasteCategories.map((cat, i) => (
+              <div key={cat.code}>
+                <div
+                  onClick={() => setExpandedCat(expandedCat === i ? null : i)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 8,
+                    padding: "8px 0", cursor: "pointer",
+                    borderTop: i > 0 ? "1px solid #f0f0f0" : "none"
+                  }}
+                >
+                  <div style={{
+                    width: 10, height: 10, borderRadius: 5,
+                    background: cat.color, flexShrink: 0
+                  }} />
+                  <span style={{ flex: 1, fontSize: 13, fontWeight: 500, color: "#1a1a1a" }}>
+                    {cat.name} <span style={{ color: "#999", fontWeight: 400 }}>({cat.code})</span>
+                  </span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a", marginRight: 4 }}>{cat.pct}%</span>
+                  <span style={{
+                    fontSize: 10, color: "#999",
+                    transform: expandedCat === i ? "rotate(90deg)" : "none",
+                    transition: "transform 0.15s ease"
+                  }}>›</span>
+                </div>
+                {/* Expanded: recycling method detail */}
+                {expandedCat === i && (
+                  <div style={{
+                    marginLeft: 18, marginBottom: 8, padding: "8px 12px",
+                    borderRadius: 8, background: "#f8f8f8", border: "1px solid #f0f0f0"
+                  }}>
+                    <div style={{
+                      fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4,
+                      display: "flex", alignItems: "center", gap: 6
+                    }}>
+                      <span style={{
+                        display: "inline-block", padding: "2px 8px", borderRadius: 4,
+                        background: cat.code === "Landfilled" ? "#f5f5f5" : "#E8F2E3",
+                        color: cat.code === "Landfilled" ? "#999" : "#167000",
+                        fontSize: 11, fontWeight: 600
+                      }}>{cat.method}</span>
+                    </div>
+                    <div style={{ fontSize: 12, color: "#666", lineHeight: 1.5 }}>
+                      {cat.methodDesc}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
+
+            {/* Glossary link */}
+            <div
+              onClick={() => setShowGlossary(!showGlossary)}
+              style={{
+                marginTop: 8, padding: "10px 0", textAlign: "center",
+                fontSize: 13, color: "#1D9100", fontWeight: 500, cursor: "pointer",
+                borderTop: "1px solid #f0f0f0"
+              }}
+            >
+              {showGlossary ? "Hide glossary" : "What do these terms mean?"}
+            </div>
+            {showGlossary && (
+              <div style={{
+                padding: "8px 12px", borderRadius: 8, background: "#f8f8f8",
+                border: "1px solid #f0f0f0"
+              }}>
+                {glossaryTerms.map((g, i) => (
+                  <div key={g.term} style={{
+                    padding: "6px 0",
+                    borderTop: i > 0 ? "1px solid #eee" : "none"
+                  }}>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a" }}>{g.term}: </span>
+                    <span style={{ fontSize: 12, color: "#666" }}>{g.def}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -2791,7 +3274,8 @@
         </div>
       </div>
     </PhoneFrame>
-  );
+    );
+  };
 
   function WasteFreeFlow2() {
     return (
@@ -2812,8 +3296,11 @@
             }}>
               <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 6 }}>Design Notes</div>
               <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
-                All 4 sections update when the date toggle changes.
-                Community ranking is the primary engagement hook — residents see how their building compares. Impact equivalencies rotate to stay fresh. Share button targets organic growth.
+                <strong>Revised per WasteFree feedback.</strong> Waste-stream breakdown now uses real material designations (PET, HDPE, OCC, Ferrous, etc.) with friendly names first for resident comprehension. "Non-recyclable" → "Landfilled" for honesty. "Composted" added as its own positive stream.
+                <br/><br/>
+                <strong>Progressive disclosure:</strong> Tap any category to expand and see <em>how</em> that material was recycled (Closed-Loop, Downcycled, Remelted, Composted). Plain-English explanation below each method. "What do these terms mean?" glossary link at the bottom for full definitions.
+                <br/><br/>
+                The donut chart center now shows "Diverted" percentage (everything except Landfilled) — reframes the metric as positive action. All 4 sections still update on date toggle. Community ranking remains the primary engagement hook.
               </div>
             </div>
           </div>
@@ -2823,6 +3310,565 @@
   }
 
   ReactDOM.createRoot(document.getElementById('flow-3-root')).render(<WasteFreeFlow2 />);
+})()}
+</script>
+
+
+<!-- Flow 4: Collection & Service Data -->
+<script type="text/babel">
+{(() => {
+  const { useState } = React;
+
+  const PHONE_SCALE = 0.65;
+  const PHONE_W = 390;
+  const PHONE_H = 844;
+
+  const PhoneFrame = ({ children, activeTab = "collection" }) => (
+    <div style={{
+      width: PHONE_W * PHONE_SCALE,
+      height: PHONE_H * PHONE_SCALE,
+      overflow: "hidden",
+      flexShrink: 0
+    }}>
+    <div style={{
+      width: PHONE_W, height: PHONE_H, background: "#fff", borderRadius: 40,
+      border: "3px solid #1a1a1a", position: "relative", overflow: "hidden",
+      display: "flex", flexDirection: "column",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+      transform: `scale(${PHONE_SCALE})`, transformOrigin: "top left"
+    }}>
+      <div style={{
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "12px 24px 4px", fontSize: 14, fontWeight: 600, color: "#1a1a1a",
+        flexShrink: 0
+      }}>
+        <span>9:41</span>
+        <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+          <div style={{ width: 18, height: 12, border: "1.5px solid #1a1a1a", borderRadius: 3, position: "relative" }}>
+            <div style={{ width: 12, height: 8, background: "#1a1a1a", borderRadius: 1, position: "absolute", left: 2, top: 1 }} />
+          </div>
+        </div>
+      </div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "auto" }}>
+        {children}
+      </div>
+      <div style={{
+        display: "flex", borderTop: "1px solid #e0e0e0", padding: "8px 0 28px",
+        background: "#fff", flexShrink: 0
+      }}>
+        {[
+          { id: "buy", label: "Buy Again", icon: "🔄" },
+          { id: "collection", label: "Collection", icon: "📋" },
+          { id: "impact", label: "My Impact", icon: "📊" },
+          { id: "profile", label: "Profile", icon: "👤" },
+        ].map(tab => (
+          <div key={tab.id} style={{
+            flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
+            opacity: tab.id === activeTab ? 1 : 0.4
+          }}>
+            <span style={{ fontSize: 18 }}>{tab.icon}</span>
+            <span style={{ fontSize: 9, fontWeight: tab.id === activeTab ? 700 : 400 }}>{tab.label}</span>
+            {tab.id === activeTab && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1a1a1a" }} />}
+          </div>
+        ))}
+      </div>
+    </div>
+    </div>
+  );
+
+  const SCREENS = {
+    SUMMARY: "summary",
+    DETAIL_IDENTIFIED: "detail_identified",
+    DETAIL_UNIDENTIFIED: "detail_unidentified",
+    HISTORY: "history",
+  };
+
+  /* Sample collection data */
+  const collectionItems = [
+    { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true },
+    { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤" },
+    { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
+    { id: 4, name: "Unidentified Item", identified: false, code: "Organic", method: "Composted", time: "Yesterday, 4:22 PM", icon: "🗑️", photo: true },
+    { id: 5, name: "Mixed Paper Bundle", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Yesterday, 3:15 PM", icon: "📄" },
+    { id: 6, name: "Seventh Generation Dish Soap", identified: true, code: "HDPE", method: "Downcycled", time: "Yesterday, 1:02 PM", icon: "🧴" },
+    { id: 7, name: "Topo Chico 4pk Glass", identified: true, code: "Glass", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🍾" },
+    { id: 8, name: "Steel Can (Beans)", identified: true, code: "Ferrous", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🥫" },
+    { id: 9, name: "Unidentified Item", identified: false, code: "Non-Ferrous", method: "Remelted", time: "Apr 10, 9:15 AM", icon: "🗑️", photo: true },
+    { id: 10, name: "Banana Peels & Scraps", identified: true, code: "Organic", method: "Composted", time: "Apr 9, 6:30 PM", icon: "🍌" },
+  ];
+
+  const methodColors = {
+    "Closed-Loop": { bg: "#E8F2E3", text: "#167000" },
+    "Downcycled": { bg: "#FFF3E0", text: "#E65100" },
+    "Remelted": { bg: "#E3F2FD", text: "#1565C0" },
+    "Composted": { bg: "#F9FBE7", text: "#827717" },
+    "Landfilled": { bg: "#f5f5f5", text: "#999" },
+  };
+
+  /* Screen 1: Collection Summary */
+  const SummaryScreen = ({ onTapItem }) => {
+    const [dateFilter, setDateFilter] = useState(0);
+    const dateOptions = ["This Service", "This Week", "This Month"];
+    const identified = collectionItems.filter(i => i.identified).length;
+    const unidentified = collectionItems.filter(i => !i.identified).length;
+
+    return (
+      <PhoneFrame>
+        <div style={{
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          padding: "8px 20px 12px", borderBottom: "1px solid #f0f0f0"
+        }}>
+          <div style={{ width: 40 }} />
+          <span style={{ fontSize: 17, fontWeight: 600 }}>Collection Data</span>
+          <div style={{ width: 40 }} />
+        </div>
+
+        {/* Date toggle */}
+        <div style={{
+          display: "flex", gap: 6, padding: "12px 16px",
+          background: "#fafafa", borderBottom: "1px solid #f0f0f0",
+          position: "sticky", top: 0, zIndex: 10
+        }}>
+          {dateOptions.map((opt, i) => (
+            <div key={i} onClick={() => setDateFilter(i)} style={{
+              flex: 1, textAlign: "center", padding: "6px 2px", borderRadius: 20,
+              fontSize: 11, fontWeight: i === dateFilter ? 700 : 400, cursor: "pointer",
+              background: i === dateFilter ? "#1a1a1a" : "transparent",
+              color: i === dateFilter ? "#fff" : "#888"
+            }}>{opt}</div>
+          ))}
+        </div>
+
+        <div style={{ flex: 1, overflowY: "auto" }}>
+          {/* Summary bar */}
+          <div style={{
+            padding: "12px 20px", display: "flex", justifyContent: "space-between",
+            alignItems: "center", borderBottom: "1px solid #f0f0f0"
+          }}>
+            <span style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a" }}>
+              {collectionItems.length} Items Collected
+            </span>
+            <div style={{ display: "flex", gap: 12 }}>
+              <span style={{ fontSize: 12, color: "#1D9100", fontWeight: 500 }}>{identified} identified</span>
+              <span style={{ fontSize: 12, color: "#999", fontWeight: 500 }}>{unidentified} unidentified</span>
+            </div>
+          </div>
+
+          {/* Item list */}
+          {collectionItems.map((item) => {
+            const mc = methodColors[item.method] || methodColors["Landfilled"];
+            return (
+              <div
+                key={item.id}
+                onClick={() => onTapItem(item)}
+                style={{
+                  display: "flex", alignItems: "center", gap: 12,
+                  padding: "12px 20px", borderBottom: "1px solid #f5f5f5",
+                  cursor: "pointer"
+                }}
+              >
+                {/* Icon */}
+                <div style={{
+                  width: 44, height: 44, borderRadius: 10, flexShrink: 0,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 22, position: "relative",
+                  background: !item.identified ? "#E8F2E3" : "#f5f5f5"
+                }}>
+                  {item.icon}
+                  {item.photo && (
+                    <div style={{
+                      position: "absolute", bottom: -2, right: -2,
+                      width: 16, height: 16, borderRadius: 8,
+                      background: "#1a1a1a", border: "2px solid #fff",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 8, color: "#fff"
+                    }}>📷</div>
+                  )}
+                </div>
+
+                {/* Info */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{
+                    fontSize: 14, fontWeight: 500, color: "#1a1a1a",
+                    whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"
+                  }}>{item.name}</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 3 }}>
+                    <span style={{
+                      fontSize: 10, fontWeight: 600, padding: "1px 6px", borderRadius: 4,
+                      background: mc.bg, color: mc.text
+                    }}>{item.method}</span>
+                    <span style={{ fontSize: 11, color: "#999" }}>{item.code}</span>
+                  </div>
+                </div>
+
+                {/* Time + chevron */}
+                <div style={{ textAlign: "right", flexShrink: 0 }}>
+                  <div style={{ fontSize: 11, color: "#bbb" }}>{item.time}</div>
+                  <span style={{ fontSize: 12, color: "#ccc" }}>›</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </PhoneFrame>
+    );
+  };
+
+  /* Screen 2: Item Detail — Identified */
+  const DetailIdentifiedScreen = ({ item, onBack }) => {
+    const mc = methodColors[item.method] || methodColors["Landfilled"];
+    const methodDescriptions = {
+      "Closed-Loop": "This material was recycled back into the same product type. Bottle → bottle, box → box.",
+      "Downcycled": "Recycled into a lower-value product like insulation, lumber, or egg cartons.",
+      "Remelted": "Melted down and re-formed into new products. Metals and glass can repeat this indefinitely.",
+      "Composted": "Broken down aerobically into nutrient-rich soil for community gardens and landscaping.",
+      "Landfilled": "Could not be recycled or composted with current infrastructure.",
+    };
+
+    return (
+      <PhoneFrame>
+        <div style={{ padding: "8px 20px 0" }}>
+          <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
+        </div>
+        <div style={{ flex: 1, padding: "16px 20px", overflowY: "auto" }}>
+          {/* Product header */}
+          <div style={{ textAlign: "center", marginBottom: 24 }}>
+            <div style={{
+              width: 80, height: 80, borderRadius: 16, background: "#f5f5f5",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 40, margin: "0 auto 12px"
+            }}>{item.icon}</div>
+            <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>{item.name}</div>
+            <div style={{ fontSize: 13, color: "#888" }}>Collected {item.time}</div>
+          </div>
+
+          {/* Material classification card */}
+          <div style={{
+            padding: 16, borderRadius: 12, border: "1.5px solid #e8e8e8", marginBottom: 12
+          }}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: "#888", textTransform: "uppercase", marginBottom: 10 }}>
+              Material Classification
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+              <span style={{ fontSize: 15, fontWeight: 600, color: "#1a1a1a" }}>{item.code}</span>
+              <span style={{
+                fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 6,
+                background: mc.bg, color: mc.text
+              }}>{item.method}</span>
+            </div>
+            <div style={{ fontSize: 13, color: "#666", lineHeight: 1.5 }}>
+              {methodDescriptions[item.method]}
+            </div>
+          </div>
+
+          {/* Recycling journey */}
+          <div style={{
+            padding: 16, borderRadius: 12, border: "1.5px solid #e8e8e8", marginBottom: 12
+          }}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: "#888", textTransform: "uppercase", marginBottom: 12 }}>
+              Recycling Journey
+            </div>
+            {[
+              { step: "Collected", desc: "Picked up from your unit", icon: "📦", done: true },
+              { step: "Sorted", desc: "Identified and categorized", icon: "🔍", done: true },
+              { step: "Processed", desc: item.method === "Composted" ? "Sent to composting facility" : item.method === "Landfilled" ? "Sent to landfill" : "Sent to recycling facility", icon: "🏭", done: true },
+              { step: "New Life", desc: item.method === "Closed-Loop" ? "Became a new " + item.code + " product" : item.method === "Composted" ? "Became nutrient-rich soil" : item.method === "Landfilled" ? "End of lifecycle" : "Transformed into new material", icon: item.method === "Landfilled" ? "⚠️" : "✅", done: item.method !== "Landfilled" },
+            ].map((s, i) => (
+              <div key={i} style={{ display: "flex", gap: 12, marginBottom: i < 3 ? 16 : 0 }}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <div style={{
+                    width: 28, height: 28, borderRadius: 14, fontSize: 14,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    background: s.done ? "#E8F2E3" : "#f5f5f5"
+                  }}>{s.icon}</div>
+                  {i < 3 && <div style={{ width: 2, height: 16, background: s.done ? "#1D9100" : "#e0e0e0", marginTop: 4 }} />}
+                </div>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a" }}>{s.step}</div>
+                  <div style={{ fontSize: 12, color: "#888" }}>{s.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Buy it WasteFree CTA */}
+          <div style={{
+            padding: "14px 0", borderRadius: 14, background: "#1D9100",
+            textAlign: "center", fontSize: 15, fontWeight: 600, color: "#fff",
+            cursor: "pointer", marginBottom: 12
+          }}>Buy it WasteFree Next Time</div>
+          <div style={{ textAlign: "center", fontSize: 13, color: "#888" }}>
+            We'll suggest a better alternative based on your preference
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  };
+
+  /* Screen 3: Item Detail — Unidentified */
+  const DetailUnidentifiedScreen = ({ item, onBack }) => {
+    const mc = methodColors[item.method] || methodColors["Landfilled"];
+    const methodDescriptions = {
+      "Closed-Loop": "This material was recycled back into the same product type.",
+      "Downcycled": "Recycled into a lower-value product.",
+      "Remelted": "Melted down and re-formed into new products.",
+      "Composted": "Broken down into nutrient-rich soil for community use.",
+      "Landfilled": "Could not be recycled or composted with current infrastructure.",
+    };
+
+    return (
+      <PhoneFrame>
+        <div style={{ padding: "8px 20px 0" }}>
+          <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
+        </div>
+        <div style={{ flex: 1, padding: "16px 20px", overflowY: "auto" }}>
+          {/* Photo placeholder */}
+          <div style={{
+            width: "100%", height: 200, borderRadius: 16, background: "#f0f0f0",
+            display: "flex", flexDirection: "column", alignItems: "center",
+            justifyContent: "center", marginBottom: 16, border: "1.5px dashed #ddd"
+          }}>
+            <span style={{ fontSize: 48, marginBottom: 8 }}>📷</span>
+            <span style={{ fontSize: 13, color: "#999" }}>Photo captured during sorting</span>
+            <span style={{ fontSize: 11, color: "#bbb", marginTop: 4 }}>Tap to enlarge</span>
+          </div>
+
+          <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>Unidentified Item</div>
+          <div style={{ fontSize: 13, color: "#888", marginBottom: 20 }}>Collected {item.time}</div>
+
+          {/* Classification card */}
+          <div style={{
+            padding: 16, borderRadius: 12, border: "1.5px solid #e8e8e8", marginBottom: 12
+          }}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: "#888", textTransform: "uppercase", marginBottom: 10 }}>
+              How We Processed This
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+              <span style={{ fontSize: 15, fontWeight: 600, color: "#1a1a1a" }}>{item.code}</span>
+              <span style={{
+                fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 6,
+                background: mc.bg, color: mc.text
+              }}>{item.method}</span>
+            </div>
+            <div style={{ fontSize: 13, color: "#666", lineHeight: 1.5 }}>
+              {methodDescriptions[item.method]}
+            </div>
+          </div>
+
+          {/* Help identify */}
+          <div style={{
+            padding: 16, borderRadius: 12, background: "#FFF8E1",
+            border: "1.5px solid #FFE082", marginBottom: 12
+          }}>
+            <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 6 }}>
+              Know what this is?
+            </div>
+            <div style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 12 }}>
+              Help us identify it so we can track this product and suggest better alternatives next time.
+            </div>
+            <div style={{
+              padding: "10px 0", borderRadius: 10, border: "1.5px solid #1a1a1a",
+              textAlign: "center", fontSize: 14, fontWeight: 600, color: "#1a1a1a",
+              cursor: "pointer"
+            }}>Help Identify This Item</div>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  };
+
+  /* Screen 4: Collection History */
+  const HistoryScreen = ({ onBack }) => {
+    const pickups = [
+      { date: "Apr 12, 2026", items: 10, diverted: "82%", lbs: "4.2 lbs" },
+      { date: "Apr 9, 2026", items: 8, diverted: "75%", lbs: "3.1 lbs" },
+      { date: "Apr 5, 2026", items: 12, diverted: "91%", lbs: "5.8 lbs" },
+      { date: "Apr 2, 2026", items: 6, diverted: "67%", lbs: "2.4 lbs" },
+      { date: "Mar 29, 2026", items: 9, diverted: "88%", lbs: "3.9 lbs" },
+      { date: "Mar 26, 2026", items: 11, diverted: "78%", lbs: "4.5 lbs" },
+    ];
+
+    return (
+      <PhoneFrame>
+        <div style={{ padding: "8px 20px 0" }}>
+          <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
+        </div>
+        <div style={{
+          display: "flex", justifyContent: "center", padding: "12px 20px 8px",
+          borderBottom: "1px solid #f0f0f0"
+        }}>
+          <span style={{ fontSize: 17, fontWeight: 600 }}>Collection History</span>
+        </div>
+
+        <div style={{ flex: 1, overflowY: "auto" }}>
+          {/* Trend summary */}
+          <div style={{ padding: "16px 20px", borderBottom: "1px solid #f0f0f0" }}>
+            <div style={{ display: "flex", gap: 12 }}>
+              <div style={{
+                flex: 1, padding: 12, borderRadius: 10, background: "#E8F2E3", textAlign: "center"
+              }}>
+                <div style={{ fontSize: 22, fontWeight: 800, color: "#167000" }}>6</div>
+                <div style={{ fontSize: 11, color: "#167000", fontWeight: 500 }}>Pickups</div>
+              </div>
+              <div style={{
+                flex: 1, padding: 12, borderRadius: 10, background: "#f5f5f5", textAlign: "center"
+              }}>
+                <div style={{ fontSize: 22, fontWeight: 800, color: "#1a1a1a" }}>56</div>
+                <div style={{ fontSize: 11, color: "#666", fontWeight: 500 }}>Items</div>
+              </div>
+              <div style={{
+                flex: 1, padding: 12, borderRadius: 10, background: "#f5f5f5", textAlign: "center"
+              }}>
+                <div style={{ fontSize: 22, fontWeight: 800, color: "#1a1a1a" }}>23.9</div>
+                <div style={{ fontSize: 11, color: "#666", fontWeight: 500 }}>Lbs Total</div>
+              </div>
+            </div>
+            <div style={{ marginTop: 12, fontSize: 13, color: "#1D9100", fontWeight: 500, textAlign: "center" }}>
+              ↑ Diversion rate improving — 82% this week vs. 75% avg
+            </div>
+          </div>
+
+          {/* Pickup timeline */}
+          <div style={{ padding: "16px 20px" }}>
+            <div style={{
+              fontSize: 11, fontWeight: 700, letterSpacing: 1, color: "#888",
+              textTransform: "uppercase", marginBottom: 12
+            }}>All Pickups</div>
+            {pickups.map((p, i) => (
+              <div key={i} style={{
+                display: "flex", gap: 12, marginBottom: 16
+              }}>
+                {/* Timeline dot + line */}
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <div style={{
+                    width: 12, height: 12, borderRadius: 6,
+                    background: i === 0 ? "#1D9100" : "#e0e0e0", flexShrink: 0
+                  }} />
+                  {i < pickups.length - 1 && <div style={{ width: 2, flex: 1, background: "#e0e0e0", marginTop: 4 }} />}
+                </div>
+                {/* Pickup card */}
+                <div style={{
+                  flex: 1, padding: 14, borderRadius: 12,
+                  border: i === 0 ? "1.5px solid #1D9100" : "1.5px solid #e8e8e8",
+                  background: i === 0 ? "#FAFFF5" : "#fff"
+                }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                    <span style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a" }}>{p.date}</span>
+                    {i === 0 && <span style={{
+                      fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 4,
+                      background: "#E8F2E3", color: "#167000"
+                    }}>Latest</span>}
+                  </div>
+                  <div style={{ display: "flex", gap: 16 }}>
+                    <span style={{ fontSize: 12, color: "#666" }}>{p.items} items</span>
+                    <span style={{ fontSize: 12, color: "#666" }}>{p.lbs}</span>
+                    <span style={{ fontSize: 12, color: "#1D9100", fontWeight: 500 }}>{p.diverted} diverted</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  };
+
+  /* Main Flow 4 App */
+  function WasteFreeFlow4() {
+    const [currentScreen, setCurrentScreen] = useState(SCREENS.SUMMARY);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const handleTapItem = (item) => {
+      setSelectedItem(item);
+      setCurrentScreen(item.identified ? SCREENS.DETAIL_IDENTIFIED : SCREENS.DETAIL_UNIDENTIFIED);
+    };
+
+    const goBack = () => {
+      setCurrentScreen(SCREENS.SUMMARY);
+      setSelectedItem(null);
+    };
+
+    const screenComponents = {
+      [SCREENS.SUMMARY]: <SummaryScreen onTapItem={handleTapItem} />,
+      [SCREENS.DETAIL_IDENTIFIED]: selectedItem ? <DetailIdentifiedScreen item={selectedItem} onBack={goBack} /> : null,
+      [SCREENS.DETAIL_UNIDENTIFIED]: selectedItem ? <DetailUnidentifiedScreen item={selectedItem} onBack={goBack} /> : null,
+      [SCREENS.HISTORY]: <HistoryScreen onBack={goBack} />,
+    };
+
+    const screenLabels = {
+      [SCREENS.SUMMARY]: "1. Collection Summary",
+      [SCREENS.DETAIL_IDENTIFIED]: "2. Item Detail (Identified)",
+      [SCREENS.DETAIL_UNIDENTIFIED]: "3. Item Detail (Unidentified)",
+      [SCREENS.HISTORY]: "4. Collection History",
+    };
+
+    const screenNotes = {
+      [SCREENS.SUMMARY]: "The raw data transparency layer. Shows ALL items from the latest collection — identified products and unidentified trash. Each item displays its waste-stream code (PET, OCC, Ferrous, etc.) and recycling method (Closed-Loop, Downcycled, Remelted, Composted, Landfilled). Unidentified items get a camera badge indicating a photo was captured during sorting. Summary bar gives quick stats. Date toggle filters by service, week, or month.",
+      [SCREENS.DETAIL_IDENTIFIED]: "Full detail for an identified product. Shows material classification (waste-stream code), recycling method with plain-English explanation, and a 4-step 'Recycling Journey' timeline showing the item's lifecycle from collection to new life. 'Buy it WasteFree Next Time' CTA connects back to Flow 2 — closing the loop between what you threw away and what you buy next.",
+      [SCREENS.DETAIL_UNIDENTIFIED]: "Unidentified items show the photo WasteFree captured during sorting (placeholder in prototype). Yellow 'Know what this is?' card lets residents help identify items — crowdsourcing data improves WasteFree's recognition over time. Still shows how the item was processed even without identification.",
+      [SCREENS.HISTORY]: "Timeline of all past pickups with trend data. Summary cards show total pickups, items, and weight. Each pickup card shows item count, weight, and diversion rate. Green highlight on latest pickup. Trend line at top tells residents if they're improving ('Diversion rate improving — 82% this week vs. 75% avg').",
+    };
+
+    return (
+      <div style={{
+        background: "#f5f5f5", padding: "16px 0",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+      }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+          {/* Screen Navigator */}
+          <div className="proto-screen-btns" style={{
+            display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center",
+            marginBottom: 16
+          }}>
+            {Object.entries(screenLabels).map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => {
+                  if (key === SCREENS.DETAIL_IDENTIFIED) {
+                    setSelectedItem(collectionItems[1]);
+                  } else if (key === SCREENS.DETAIL_UNIDENTIFIED) {
+                    setSelectedItem(collectionItems[0]);
+                  }
+                  setCurrentScreen(key);
+                }}
+                style={{
+                  padding: "6px 12px", borderRadius: 8, border: "1.5px solid",
+                  borderColor: currentScreen === key ? "#1a1a1a" : "#ddd",
+                  background: currentScreen === key ? "#1a1a1a" : "#fff",
+                  color: currentScreen === key ? "#fff" : "#666",
+                  fontSize: 12, fontWeight: currentScreen === key ? 700 : 400,
+                  cursor: "pointer", transition: "all 0.2s"
+                }}
+              >{label}</button>
+            ))}
+          </div>
+
+          {/* Phone + Notes side by side */}
+          <div className="proto-phone-notes" style={{
+            display: "flex", justifyContent: "center", alignItems: "flex-start",
+            gap: 24
+          }}>
+            {screenComponents[currentScreen]}
+
+            <div className="proto-notes-card" style={{
+              maxWidth: 320, padding: 16, borderRadius: 12,
+              background: "#fff", border: "1px solid #e0e0e0", alignSelf: "flex-start"
+            }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#1a1a1a", marginBottom: 6 }}>
+                {screenLabels[currentScreen]}
+              </div>
+              <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
+                {screenNotes[currentScreen]}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('flow-4-root')).render(<WasteFreeFlow4 />);
 })()}
 </script>
 

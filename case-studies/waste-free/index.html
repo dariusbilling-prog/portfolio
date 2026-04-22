@@ -1118,14 +1118,14 @@
       <div class="flow">
         <div class="flow__step">Resident taps "Collection" tab</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Sees all collected items + unidentified</div>
+        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Sees bag metadata + all collected items</div>
         <div class="flow__arrow"></div>
         <div class="flow__step">Taps item → sees detail + recycling method</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step">Views collection history timeline</div>
+        <div class="flow__step">Can help identify unknown items (3-field form)</div>
       </div>
 
-      <p>Originally scoped as low priority, WasteFree requested this flow be added after reviewing the Phase 2 wireframes. This is the raw data transparency layer — while Flow 2 (Repurchase) only shows identified products the resident can rebuy, Flow 4 shows everything WasteFree collected, including unidentified trash with photos. Each item displays its waste-stream designation (PET, OCC, Organic, etc.) and how it was processed. Unidentified items get a trash bag icon with a photo badge — tapping reveals the photo WasteFree captured during sorting. A collection history timeline lets residents track pickup patterns over time. This flow builds trust through radical transparency: residents can see exactly what happened to every item in their bag.</p>
+      <p>Originally scoped as low priority, WasteFree requested this flow be added after reviewing the Phase 2 wireframes. This is the raw data transparency layer — while Flow 2 (Repurchase) only shows identified products the resident can rebuy, Flow 4 shows everything WasteFree collected, including unidentified trash with photos. The lead screen now combines collection history with the item summary: residents first see bag-level metadata (number of bags, collection time, collector name/employee ID, violation status) before scrolling into individual items. Each item displays its waste-stream designation (PET, OCC, Organic, etc.) and how it was processed. Unidentified items get a photo badge — tapping reveals the sorting photo and a simplified 3-field identification form (brand, product category, recycling category) so residents can crowdsource item recognition. This flow builds trust through radical transparency: residents see exactly what happened to every item in their bag.</p>
 
       <div id="flow-4-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
     </section>
@@ -1245,7 +1245,7 @@
           background: "#fff", flexShrink: 0
         }}>
           {[
-            { id: "buy", label: "Buy Again", icon: "🔄" },
+            { id: "buy", label: "My Items", icon: "🔄" },
             { id: "impact", label: "My Impact", icon: "📊" },
             { id: "profile", label: "Profile", icon: "👤" },
           ].map(tab => (
@@ -1303,21 +1303,14 @@
         flex: 1, display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center", padding: "0 32px", textAlign: "center"
       }}>
-        {/* WasteFree logo on dark background */}
-        <div style={{
-          width: 200, height: 72, borderRadius: 20, background: "#1a1a1a",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          padding: "16px 28px", marginBottom: 32,
-          boxShadow: "0 4px 16px rgba(0,0,0,0.12)"
-        }}>
-          <img src="logo.svg" alt="WasteFree" style={{ height: 34, width: "auto" }} />
-        </div>
+        {/* WasteFree logo — transparent bg version */}
+        <img src="logo-green.png" alt="WasteFree" style={{ height: 120, width: "auto", marginBottom: 24 }} />
 
-        <div style={{ fontSize: 20, fontWeight: 400, color: "#666", lineHeight: 1.5, marginBottom: 4 }}>
-          See what you throw away.
+        <div style={{ fontSize: 20, fontWeight: 600, color: "#1a1a1a", lineHeight: 1.5, marginBottom: 4 }}>
+          See your Impact. Transform your Footprint.
         </div>
-        <div style={{ fontSize: 20, fontWeight: 700, color: "#1D9100", lineHeight: 1.5 }}>
-          Buy it back smarter.
+        <div style={{ fontSize: 15, fontWeight: 500, color: "#666", lineHeight: 1.6, fontStyle: "italic", marginTop: 8 }}>
+          What we do in the dark, shines in the light.
         </div>
       </div>
 
@@ -1338,8 +1331,9 @@
       <div style={{ flex: 1, padding: "16px 24px", overflowY: "auto" }}>
         <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 24 }}>Create your account</div>
 
-        <InputField label="First name" placeholder="Darius" />
-        <InputField label="Email address" placeholder="darius@email.com" />
+        <InputField label="First name" placeholder="Ashley" />
+        <InputField label="Last name" placeholder="Williams" />
+        <InputField label="Email address" placeholder="ashley@email.com" />
         <InputField label="Password" placeholder="••••••••" />
 
         <div style={{
@@ -1373,16 +1367,13 @@
 
         <div style={{ marginBottom: 14 }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: "#666", marginBottom: 8 }}>Number of occupants</div>
-          <div style={{ display: "flex", gap: 8 }}>
-            {["1", "2", "3", "4+"].map((n, i) => (
-              <div key={n} style={{
-                flex: 1, padding: "12px 0", textAlign: "center", borderRadius: 10,
-                border: i === 1 ? "2px solid #1a1a1a" : "1.5px solid #ddd",
-                background: i === 1 ? "#f8f8f8" : "#fff",
-                fontSize: 15, fontWeight: i === 1 ? 700 : 400,
-                color: "#1a1a1a", cursor: "pointer"
-              }}>{n}</div>
-            ))}
+          <div style={{
+            padding: "14px 16px", borderRadius: 12, border: "1.5px solid #ddd",
+            background: "#fff", fontSize: 15, color: "#1a1a1a",
+            display: "flex", justifyContent: "space-between", alignItems: "center"
+          }}>
+            <span>2</span>
+            <span style={{ color: "#999", fontSize: 12 }}>▾ 1–8</span>
           </div>
         </div>
       </div>
@@ -1426,16 +1417,16 @@
           <div style={{ marginBottom: 20 }}>
             <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Where do you usually buy groceries?</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {["HEB", "Walmart", "Target", "Kroger", "Whole Foods", "Other"].map(s => (
+              {["HEB", "Walmart", "Target", "Kroger", "Whole Foods", "H Mart", "Fiesta", "Central Market", "Albertson's", "Sprouts", "Tom Thumb", "Other"].map(s => (
                 <Chip key={s} label={s} selected={grocerySelected.has(s)} onClick={() => toggleChip(grocerySelected, setGrocerySelected, s)} />
               ))}
             </div>
           </div>
 
           <div style={{ marginBottom: 20 }}>
-            <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Do you use delivery apps?</div>
+            <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Are you a member of any delivery services?</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {["Amazon", "Instacart", "DoorDash", "Uber Eats", "None"].map(s => (
+              {["Amazon Fresh", "Instacart+", "DoorDash DashPass", "Uber Eats Pass", "Walmart+", "Shipt", "None"].map(s => (
                 <Chip key={s} label={s} selected={appsSelected.has(s)} onClick={() => toggleChip(appsSelected, setAppsSelected, s)} />
               ))}
             </div>
@@ -1469,78 +1460,77 @@
   };
 
   const PreferenceScreen = ({ onBack, onSelect }) => {
-    const [selectedPrefs, setSelectedPrefs] = useState(new Set());
-    const options = [
-      { icon: "💰", title: "Save Money", desc: "We'll find you cheaper brands that do the same job.", id: "money" },
-      { icon: "🥦", title: "Be Healthier", desc: "We'll suggest healthier options based on what you already buy.", id: "health" },
-      { icon: "🌍", title: "Save the Planet", desc: "We'll recommend products with less packaging and more recyclable materials.", id: "planet" },
-    ];
-
-    const togglePref = (id) => {
-      const newSet = new Set(selectedPrefs);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      setSelectedPrefs(newSet);
+    const [ranking, setRanking] = useState(["money", "planet", "health"]);
+    const options = {
+      money: { icon: "💰", title: "Save Money", desc: "Find cheaper brands, bulk deals, and smarter substitutes that do the same job for less." },
+      health: { icon: "🥦", title: "Be Healthier", desc: "Fewer dyes, chemicals, and artificial ingredients — not just fewer calories. Cleaner products for your household." },
+      planet: { icon: "🌍", title: "Save the Planet", desc: "Buy local, reduce packaging weight, and choose products made from recycled or recyclable materials." },
     };
 
-    const isSelected = (id) => selectedPrefs.has(id);
-    const canContinue = selectedPrefs.size > 0;
+    const moveUp = (idx) => {
+      if (idx === 0) return;
+      const next = [...ranking];
+      [next[idx - 1], next[idx]] = [next[idx], next[idx - 1]];
+      setRanking(next);
+    };
+    const moveDown = (idx) => {
+      if (idx === ranking.length - 1) return;
+      const next = [...ranking];
+      [next[idx], next[idx + 1]] = [next[idx + 1], next[idx]];
+      setRanking(next);
+    };
 
     return (
       <PhoneFrame>
         <div style={{ padding: "8px 24px 0" }}>
           <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
         </div>
-        <div style={{ flex: 1, padding: "16px 24px", overflowY: "auto" }}>
-          <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>What matters most to you?</div>
-          <div style={{ fontSize: 15, color: "#888", lineHeight: 1.5, marginBottom: 8 }}>
-            This helps us recommend the right alternatives when you reorder.
-          </div>
-          <div style={{ fontSize: 14, color: "#aaa", marginBottom: 24 }}>
-            Select one or more — we'll tailor your experience
+        <div style={{ flex: 1, padding: "16px 24px" }}>
+          <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Rank your priorities</div>
+          <div style={{ fontSize: 14, color: "#888", lineHeight: 1.5, marginBottom: 20 }}>
+            Drag to reorder — your #1 priority shapes your WasteFree recommendations most.
           </div>
 
-          {options.map((opt) => (
-            <div
-              key={opt.id}
-              onClick={() => togglePref(opt.id)}
-              style={{
-                padding: 20, borderRadius: 16, marginBottom: 12, cursor: "pointer",
-                border: isSelected(opt.id) ? "2.5px solid #1a1a1a" : "1.5px solid #e0e0e0",
-                background: isSelected(opt.id) ? "#f8f8f8" : "#fff",
-                transition: "all 0.2s",
-                position: "relative"
-              }}
-            >
-              {isSelected(opt.id) && (
+          {ranking.map((id, idx) => {
+            const opt = options[id];
+            const rankColors = ["#1D9100", "#4CAF50", "#999"];
+            return (
+              <div key={id} style={{
+                padding: "14px 16px", borderRadius: 14, marginBottom: 10,
+                border: idx === 0 ? "2px solid #1D9100" : "1.5px solid #e0e0e0",
+                background: idx === 0 ? "#E8F2E3" : "#fff",
+                display: "flex", alignItems: "center", gap: 12
+              }}>
                 <div style={{
-                  position: "absolute", top: 12, right: 12,
-                  width: 24, height: 24, borderRadius: 12,
-                  background: "#1D9100", display: "flex",
-                  alignItems: "center", justifyContent: "center",
-                  color: "#fff", fontSize: 14, fontWeight: 700
-                }}>✓</div>
-              )}
-              <div style={{ fontSize: 28, marginBottom: 8 }}>{opt.icon}</div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#1a1a1a", marginBottom: 6 }}>{opt.title}</div>
-              <div style={{ fontSize: 14, color: "#666", lineHeight: 1.5 }}>{opt.desc}</div>
-            </div>
-          ))}
+                  width: 28, height: 28, borderRadius: 14,
+                  background: rankColors[idx], color: "#fff",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 13, fontWeight: 700, flexShrink: 0
+                }}>{idx + 1}</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
+                    <span style={{ fontSize: 18 }}>{opt.icon}</span>
+                    <span style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a" }}>{opt.title}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: "#666", lineHeight: 1.4 }}>{opt.desc}</div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 4, flexShrink: 0 }}>
+                  <div onClick={() => moveUp(idx)} style={{
+                    width: 28, height: 28, borderRadius: 8, border: "1px solid #ddd",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    cursor: idx === 0 ? "default" : "pointer", color: idx === 0 ? "#ddd" : "#666", fontSize: 12
+                  }}>▲</div>
+                  <div onClick={() => moveDown(idx)} style={{
+                    width: 28, height: 28, borderRadius: 8, border: "1px solid #ddd",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    cursor: idx === ranking.length - 1 ? "default" : "pointer", color: idx === ranking.length - 1 ? "#ddd" : "#666", fontSize: 12
+                  }}>▼</div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-        <div
-          onClick={() => canContinue && onSelect && onSelect()}
-          style={{
-            margin: "12px 24px", padding: "16px 0", borderRadius: 14,
-            background: canContinue ? "#1a1a1a" : "#ccc",
-            color: "#fff",
-            textAlign: "center", fontSize: 16, fontWeight: 600, cursor: canContinue ? "pointer" : "not-allowed"
-          }}
-        >
-          Continue
-        </div>
+        <CTAButton label="Continue" onClick={() => onSelect && onSelect()} />
         <ProgressDots current={2} total={6} />
       </PhoneFrame>
     );
@@ -1550,9 +1540,13 @@
     const categories = [
       { label: "Food & Grocery", icon: "🛒" },
       { label: "Cosmetics & Personal Care", icon: "🧴" },
-      { label: "Cleaning & Household", icon: "🧹" },
+      { label: "Pet Food & Supplies", icon: "🐾" },
+      { label: "Kids & Babies", icon: "🍼" },
+      { label: "Cleaning Supplies", icon: "🧹" },
+      { label: "Home Goods", icon: "🏠" },
       { label: "Electronics", icon: "🔌" },
       { label: "Clothing & Textiles", icon: "👕" },
+      { label: "Furniture", icon: "🪑" },
       { label: "Toys & Games", icon: "🎮" },
     ];
     const prefOptions = [
@@ -1561,7 +1555,7 @@
       { key: "planet", icon: "🌍", label: "Planet" },
     ];
     // Pre-fill some categories to show the interaction in action
-    const [selections, setSelections] = useState(["money", "health", "planet", "money", "", ""]);
+    const [selections, setSelections] = useState(["money", "health", "planet", "money", "", "health", "", "money", "", ""]);
 
     const selectPref = (catIdx, prefKey) => {
       const next = [...selections];
@@ -1945,7 +1939,7 @@
       background: "#fff", flexShrink: 0
     }}>
       {[
-        { id: "buy", label: "Buy Again", icon: "🔄" },
+        { id: "buy", label: "My Items", icon: "🔄" },
         { id: "impact", label: "My Impact", icon: "📊" },
         { id: "profile", label: "Profile", icon: "👤" },
       ].map(tab => (
@@ -2016,7 +2010,7 @@
   );
 
   // Item Card Component
-  const ItemCard = ({ name, detail, price, hasAlt = true, wfLabel, onBuyAgain, onBuyWF, onAdd }) => (
+  const ItemCard = ({ name, detail, price, hasAlt = true, wfLabel, onBuyAgain, onBuyWF }) => (
     <div style={{
       margin: "0 16px 12px", padding: 16, borderRadius: 14,
       border: "1.5px solid #e8e8e8", background: "#fff"
@@ -2045,13 +2039,9 @@
             border: "1.5px solid #1D9100", color: "#1D9100", textAlign: "center",
             fontSize: 12, fontWeight: 600, cursor: "pointer",
             display: "flex", alignItems: "center", justifyContent: "center"
-          }}>{wfLabel || "Buy WasteFree"}</div>
+          }}>Buy it WasteFree</div>
         )}
       </div>
-      <div onClick={onAdd} style={{
-        textAlign: "center", marginTop: 10, fontSize: 13,
-        color: "#666", cursor: "pointer"
-      }}>+ Add to Cart</div>
     </div>
   );
 
@@ -2104,11 +2094,11 @@
   );
 
   // SCREEN: Tonight's Items
-  const TonightItemsScreen = ({ onBuyAgain, onBuyWF, onCart }) => (
+  const TonightItemsScreen = ({ onBuyAgain, onBuyWF, onViewPrevious }) => (
     <PhoneFrame>
       <Header
         left=""
-        title="Buy Again"
+        title="My Items"
         right={<CartBadge count={0} />}
       />
       <DateToggle selected={0} />
@@ -2120,28 +2110,22 @@
           name="Cherry Dr. Pepper"
           detail="12-pack, 12 oz cans"
           price="$5.99"
-          wfLabel="Save Money"
           onBuyAgain={onBuyAgain}
           onBuyWF={() => onBuyWF("money")}
-          onAdd={onCart}
         />
         <ItemCard
           name="Tide Pods"
           detail="42-count, Original"
           price="$12.99"
-          wfLabel="Buy Healthier"
           onBuyAgain={onBuyAgain}
           onBuyWF={() => onBuyWF("health")}
-          onAdd={onCart}
         />
         <ItemCard
           name="Bounty Paper Towels"
           detail="8-roll, Select-A-Size"
           price="$8.49"
-          wfLabel="Buy WasteFree"
           onBuyAgain={onBuyAgain}
           onBuyWF={() => onBuyWF("planet")}
-          onAdd={onCart}
         />
         <ItemCard
           name="Crest Toothpaste"
@@ -2149,8 +2133,20 @@
           price="$4.99"
           hasAlt={false}
           onBuyAgain={onBuyAgain}
-          onAdd={onCart}
         />
+
+        {/* Link to previous pick-ups */}
+        <div style={{
+          margin: "8px 16px 0", padding: "14px 16px", borderRadius: 12,
+          background: "#f8f8f8", textAlign: "center", cursor: "pointer"
+        }}>
+          <div style={{ fontSize: 14, fontWeight: 600, color: "#1D9100" }}>
+            View other items from previous pick-ups →
+          </div>
+          <div style={{ fontSize: 12, color: "#888", marginTop: 4 }}>
+            Browse items from your last 30 days of collections
+          </div>
+        </div>
       </div>
     </PhoneFrame>
   );
@@ -2158,16 +2154,29 @@
   // SCREEN: Tonight's Items — Empty State
   const TonightEmptyScreen = () => (
     <PhoneFrame>
-      <Header left="" title="Buy Again" right={<CartBadge count={0} />} />
+      <Header left="" title="My Items" right={<CartBadge count={0} />} />
       <DateToggle selected={0} />
       <div style={{
         flex: 1, display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center", padding: "0 40px", textAlign: "center"
+        alignItems: "center", justifyContent: "center", padding: "0 32px", textAlign: "center"
       }}>
+        {/* Search bar */}
+        <div style={{
+          width: "100%", padding: "12px 16px", borderRadius: 12,
+          border: "1.5px solid #ddd", background: "#f8f8f8",
+          display: "flex", alignItems: "center", gap: 10, marginBottom: 28
+        }}>
+          <span style={{ fontSize: 16, color: "#aaa" }}>🔍</span>
+          <span style={{ fontSize: 14, color: "#aaa" }}>Search products from your store...</span>
+        </div>
+
         <div style={{ fontSize: 48, marginBottom: 16 }}>📦</div>
         <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", marginBottom: 8 }}>No items yet</div>
         <div style={{ fontSize: 15, color: "#888", lineHeight: 1.5 }}>
           We'll notify you after your next collection — just put your trash out tonight and we'll scan everything for you.
+        </div>
+        <div style={{ fontSize: 14, color: "#1D9100", fontWeight: 600, marginTop: 16, cursor: "pointer" }}>
+          Browse products →
         </div>
       </div>
     </PhoneFrame>
@@ -2254,113 +2263,197 @@
     </PhoneFrame>
   );
 
-  // SCREEN: Item Detail — WasteFree Alternative
+  // SCREEN: Item Detail — WasteFree Suggested Replacements (multiple options)
   const DetailAltScreen = ({ onBack, preference = "money" }) => {
-    const ALT_DATA = {
-      money: {
-        product: "RC Cherry Cola",
-        price: "$3.49",
-        emoji: "💰",
-        headline: "You save $2.50 per purchase",
-        detail: "vs. Cherry Dr. Pepper ($5.99)",
-        sub: "That's $130/year if you buy weekly",
-        badge: "Save Money",
-      },
-      health: {
-        product: "Seventh Generation Free & Clear",
-        price: "$13.49",
-        emoji: "🥦",
-        headline: "Hypoallergenic, no dyes or fragrances",
-        detail: "vs. Tide Pods (contains synthetic fragrances + dyes)",
-        sub: "Dermatologist recommended for sensitive skin",
-        badge: "Be Healthier",
-      },
-      planet: {
-        product: "Who Gives a Crap Paper Towels",
-        price: "$9.99",
-        emoji: "🌍",
-        headline: "100% recycled, plastic-free packaging",
-        detail: "vs. Bounty (virgin fiber, plastic wrap)",
-        sub: "50% of profits donated to build toilets in developing countries",
-        badge: "Save the Planet",
-      },
+    const [selectedAlt, setSelectedAlt] = useState(0);
+
+    const ALT_OPTIONS = {
+      money: [
+        {
+          product: "RC Cherry Cola", price: "$3.49", sizes: ["12-pack", "24-pack (+$4)", "6-pack (−$1.50)"],
+          flavors: ["Cherry", "Original", "Diet Cherry"],
+          emoji: "💰", headline: "You save $2.50 per purchase",
+          detail: "vs. Cherry Dr. Pepper ($5.99)", sub: "That's $130/year if you buy weekly",
+          reason: "Lowest price per oz in this flavor category"
+        },
+        {
+          product: "Great Value Cherry Cola", price: "$2.99", sizes: ["12-pack", "24-pack (+$3)"],
+          flavors: ["Cherry", "Regular"],
+          emoji: "💰", headline: "You save $3.00 per purchase",
+          detail: "vs. Cherry Dr. Pepper ($5.99)", sub: "Store brand, same great taste",
+          reason: "Best value — Walmart store brand"
+        },
+        {
+          product: "Zevia Cherry Cola", price: "$5.49", sizes: ["8-pack", "12-pack (+$2.50)"],
+          flavors: ["Cherry Cola", "Cola", "Ginger Root Beer"],
+          emoji: "💰", headline: "You save $0.50 and go zero-sugar",
+          detail: "vs. Cherry Dr. Pepper ($5.99)", sub: "Zero sugar, naturally sweetened with stevia",
+          reason: "Saves money + healthier — no artificial sweeteners"
+        },
+      ],
+      health: [
+        {
+          product: "Seventh Generation Free & Clear", price: "$13.49", sizes: ["42-ct pods", "90-ct pods (+$14)", "Liquid 100oz (+$2)"],
+          flavors: ["Unscented", "Lavender", "Fresh Citrus"],
+          emoji: "🥦", headline: "Hypoallergenic, no dyes or fragrances",
+          detail: "vs. Tide Pods (synthetic fragrances + dyes)", sub: "Dermatologist recommended for sensitive skin",
+          reason: "Top-rated plant-based formula, EPA Safer Choice certified"
+        },
+        {
+          product: "Dropps Stain & Odor Pods", price: "$12.99", sizes: ["42-ct", "64-ct (+$6)", "120-ct (+$16)"],
+          flavors: ["Unscented", "Clean Scent"],
+          emoji: "🥦", headline: "Enzyme-powered, no synthetic chemicals",
+          detail: "vs. Tide Pods (contains 1,4-dioxane traces)", sub: "B-Corp certified, compostable packaging",
+          reason: "Plastic-free packaging + effective enzyme cleaning"
+        },
+      ],
+      planet: [
+        {
+          product: "Who Gives a Crap Paper Towels", price: "$9.99", sizes: ["6-roll", "12-roll (+$8)", "24-roll (+$18)"],
+          flavors: [],
+          emoji: "🌍", headline: "100% recycled, plastic-free packaging",
+          detail: "vs. Bounty (virgin fiber, plastic wrap)", sub: "50% of profits donated to sanitation projects",
+          reason: "Zero plastic, 100% recycled fibers, carbon-neutral shipping"
+        },
+        {
+          product: "Bamboo Babe Paper Towels", price: "$8.49", sizes: ["4-roll", "8-roll (+$6)", "12-roll (+$10)"],
+          flavors: [],
+          emoji: "🌍", headline: "Bamboo-based, grows back 30x faster than trees",
+          detail: "vs. Bounty (old-growth wood pulp)", sub: "Compostable rolls, soy-based inks",
+          reason: "Renewable bamboo source — no deforestation"
+        },
+        {
+          product: "Marley's Monsters Reusable Towels", price: "$24.99", sizes: ["12-pack", "24-pack (+$18)"],
+          flavors: ["White", "Prints", "Earth Tones"],
+          emoji: "🌍", headline: "Replaces 6+ months of disposable towels",
+          detail: "vs. Bounty (single-use, goes to landfill)", sub: "Machine washable, lasts 2+ years",
+          reason: "Zero-waste long-term — eliminates paper towel purchases entirely"
+        },
+      ],
     };
 
-    const data = ALT_DATA[preference];
+    const options = ALT_OPTIONS[preference];
+    const selected = options[selectedAlt];
 
     return (
     <PhoneFrame>
       <Header
         left={<span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>}
-        title=""
+        title="Suggested Replacements"
         right={<CartBadge count={2} />}
       />
       <div style={{ flex: 1, overflowY: "auto" }}>
-        <div style={{ padding: "12px 24px 0" }}>
+        <div style={{ padding: "12px 20px 0" }}>
           <div style={{
             fontSize: 11, fontWeight: 700, letterSpacing: 1.5,
-            color: "#888", textTransform: "uppercase", marginBottom: 4
-          }}>Your WasteFree Alternative</div>
-          <div style={{
-            display: "inline-block", padding: "4px 12px", borderRadius: 20,
-            background: "#f0f0f0", fontSize: 12, fontWeight: 600, color: "#666"
-          }}>Based on your preference: {data.badge}</div>
+            color: "#888", textTransform: "uppercase", marginBottom: 8
+          }}>Buy it WasteFree</div>
+
+          {/* Option selector tabs */}
+          <div style={{ display: "flex", gap: 6, marginBottom: 16, overflowX: "auto" }}>
+            {options.map((opt, i) => (
+              <div key={i} onClick={() => setSelectedAlt(i)} style={{
+                flex: "0 0 auto", padding: "8px 14px", borderRadius: 20, cursor: "pointer",
+                background: selectedAlt === i ? "#1D9100" : "#f0f0f0",
+                color: selectedAlt === i ? "#fff" : "#666",
+                fontSize: 12, fontWeight: 600, whiteSpace: "nowrap",
+                transition: "all 0.2s"
+              }}>
+                {opt.product.length > 20 ? opt.product.substring(0, 18) + "…" : opt.product}
+              </div>
+            ))}
+          </div>
         </div>
 
         <div style={{
-          width: 180, height: 180, margin: "16px auto", borderRadius: 16,
+          width: 140, height: 140, margin: "0 auto 12px", borderRadius: 16,
           background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 14, color: "#aaa"
+          fontSize: 12, color: "#aaa"
         }}>Product Image</div>
 
-        <div style={{ padding: "0 24px" }}>
-          <div style={{ fontSize: 24, fontWeight: 700, color: "#1a1a1a" }}>{data.product}</div>
-          <div style={{ fontSize: 15, color: "#888", marginTop: 4 }}>{preference === "money" ? "12-pack, 12 oz cans" : preference === "health" ? "Laundry detergent liquid" : "8-roll, eco-friendly"}</div>
-          <div style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", marginTop: 8 }}>{data.price}</div>
+        <div style={{ padding: "0 20px" }}>
+          <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a" }}>{selected.product}</div>
+          <div style={{ fontSize: 15, color: "#888", marginTop: 2 }}>{selected.sizes[0]}</div>
+          <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", marginTop: 6 }}>{selected.price}</div>
 
-          {/* Comparison Card */}
+          {/* Rationale Card */}
           <div style={{
-            margin: "20px 0", padding: 16, borderRadius: 14,
-            background: "#f8f8f8", border: "1.5px solid #e0e0e0"
+            margin: "14px 0", padding: 14, borderRadius: 12,
+            background: "#E8F2E3", border: "1.5px solid #c8e6b8"
           }}>
-            <div style={{ fontSize: 20, marginBottom: 6 }}>{data.emoji}</div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>
-              {data.headline}
+            <div style={{ fontSize: 18, marginBottom: 4 }}>{selected.emoji}</div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a", marginBottom: 3 }}>
+              {selected.headline}
             </div>
-            <div style={{ fontSize: 14, color: "#666", marginBottom: 2 }}>
-              {data.detail}
-            </div>
-            <div style={{ fontSize: 14, color: "#888" }}>
-              {data.sub}
-            </div>
+            <div style={{ fontSize: 13, color: "#444", marginBottom: 2 }}>{selected.detail}</div>
+            <div style={{ fontSize: 13, color: "#666" }}>{selected.sub}</div>
           </div>
 
           <div style={{
-            fontSize: 14, color: "#666", cursor: "pointer", marginBottom: 20
-          }}>▸ Why this recommendation?</div>
+            padding: "8px 12px", borderRadius: 8, background: "#f8f8f8",
+            fontSize: 12, color: "#666", marginBottom: 14, lineHeight: 1.4
+          }}>
+            <strong style={{ color: "#1D9100" }}>Why this option:</strong> {selected.reason}
+          </div>
 
-          <div style={{ height: 1, background: "#f0f0f0", marginBottom: 20 }} />
+          <div style={{ height: 1, background: "#f0f0f0", marginBottom: 14 }} />
+
+          {/* Size selector */}
+          <div style={{ marginBottom: 14 }}>
+            <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 8 }}>Size</div>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              {selected.sizes.map((size, i) => (
+                <div key={i} style={{
+                  padding: "8px 14px", borderRadius: 8,
+                  border: i === 0 ? "2px solid #1D9100" : "1.5px solid #ddd",
+                  background: i === 0 ? "#E8F2E3" : "#fff",
+                  fontSize: 13, fontWeight: i === 0 ? 600 : 400, color: "#1a1a1a",
+                  cursor: "pointer"
+                }}>{size}</div>
+              ))}
+            </div>
+          </div>
+
+          {/* Flavor selector (if applicable) */}
+          {selected.flavors.length > 0 && (
+            <div style={{ marginBottom: 14 }}>
+              <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 8 }}>
+                {preference === "health" ? "Scent" : "Flavor"}
+              </div>
+              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                {selected.flavors.map((flavor, i) => (
+                  <div key={i} style={{
+                    padding: "8px 14px", borderRadius: 8,
+                    border: i === 0 ? "2px solid #1D9100" : "1.5px solid #ddd",
+                    background: i === 0 ? "#E8F2E3" : "#fff",
+                    fontSize: 13, fontWeight: i === 0 ? 600 : 400, color: "#1a1a1a",
+                    cursor: "pointer"
+                  }}>{flavor}</div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Quantity */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-            <span style={{ fontSize: 15, color: "#666" }}>Quantity</span>
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <span style={{ fontSize: 14, color: "#666" }}>Quantity</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <div style={{
-                width: 36, height: 36, borderRadius: 18, border: "1.5px solid #ddd",
-                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18
+                width: 32, height: 32, borderRadius: 16, border: "1.5px solid #ddd",
+                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16
               }}>−</div>
-              <span style={{ fontSize: 18, fontWeight: 600 }}>1</span>
+              <span style={{ fontSize: 16, fontWeight: 600 }}>1</span>
               <div style={{
-                width: 36, height: 36, borderRadius: 18, border: "1.5px solid #ddd",
-                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18
+                width: 32, height: 32, borderRadius: 16, border: "1.5px solid #ddd",
+                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16
               }}>+</div>
             </div>
           </div>
         </div>
       </div>
-      <CTAButton label={`Add to Cart — ${data.price}`} />
+      <CTAButton label={`Add to Cart — ${selected.price}`} />
       <div onClick={onBack} style={{
-        textAlign: "center", padding: "0 0 16px", fontSize: 14,
+        textAlign: "center", padding: "0 0 14px", fontSize: 13,
         color: "#888", cursor: "pointer"
       }}>Or: Buy the original instead</div>
     </PhoneFrame>
@@ -2484,6 +2577,8 @@
       { id: "instacart", icon: "🛒", name: "Instacart", badge: null, detail: "Delivery in 2 hours", fee: "$3.99" },
       { id: "doordash", icon: "🚗", name: "DoorDash", badge: null, detail: "Delivery in 45 min", fee: "$5.99" },
       { id: "heb", icon: "🏪", name: "HEB", badge: null, detail: "In-store pickup", fee: "Free" },
+      { id: "fedex", icon: "📬", name: "FedEx / UPS / USPS", badge: null, detail: "Standard shipping 3-5 days", fee: "$4.99" },
+      { id: "community", icon: "🏘️", name: "Community Delivery Day", badge: "New", detail: "Weekly batch delivery to your building", fee: "Free" },
     ];
 
     const selected = fulfillmentOptions.find(f => f.id === selectedFulfillment);
@@ -2599,6 +2694,8 @@
       { id: "instacart", icon: "🛒", name: "Instacart", short: "Instacart", fee: "$3.99" },
       { id: "doordash", icon: "🚗", name: "DoorDash", short: "DoorDash", fee: "$5.99" },
       { id: "heb", icon: "🏪", name: "HEB", short: "HEB Pickup", fee: "Free" },
+      { id: "fedex", icon: "📬", name: "FedEx / UPS / USPS", short: "Ship to home", fee: "$4.99" },
+      { id: "community", icon: "🏘️", name: "Community Delivery", short: "Comm. Delivery", fee: "Free" },
     ];
 
     const getFulfillment = (id) => fulfillmentOptions.find(f => f.id === id);
@@ -2755,7 +2852,7 @@
           background: "#f8f8f8", border: "1.5px solid #e8e8e8",
           textAlign: "left", marginBottom: 28
         }}>
-          <div style={{ fontSize: 18, marginBottom: 10 }}>🌍 Nice work!</div>
+          <div style={{ fontSize: 18, marginBottom: 10 }}>🌍 Nice work, Ashley!</div>
           <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 12 }}>This order:</div>
           {stats.map((stat, i) => (
             <div key={i} style={{
@@ -2796,7 +2893,6 @@
         <TonightItemsScreen
           onBuyAgain={() => setCurrentScreen(SCREENS.DETAIL_SAME)}
           onBuyWF={(pref) => { setPreference(pref); setCurrentScreen(SCREENS.DETAIL_ALT); }}
-          onCart={() => setCurrentScreen(SCREENS.CART)}
         />
       ),
       [SCREENS.TONIGHT_EMPTY]: <TonightEmptyScreen />,
@@ -2838,7 +2934,7 @@
       [SCREENS.TONIGHT_ITEMS]: "2. Tonight's Items",
       [SCREENS.TONIGHT_EMPTY]: "3. Empty State",
       [SCREENS.DETAIL_SAME]: "4. Buy it Again (Detail)",
-      [SCREENS.DETAIL_ALT]: "5. Buy it WasteFree (Detail)",
+      [SCREENS.DETAIL_ALT]: "5. Suggested Replacements",
       [SCREENS.CART]: "6. Cart",
       [SCREENS.CHECKOUT]: "7. Checkout",
       [SCREENS.CONFIRMATION]: "8. Confirmation",
@@ -2963,7 +3059,7 @@
         background: "#fff", flexShrink: 0
       }}>
         {[
-          { id: "buy", label: "Buy Again", icon: "🔄" },
+          { id: "buy", label: "My Items", icon: "🔄" },
           { id: "impact", label: "My Impact", icon: "📊" },
           { id: "profile", label: "Profile", icon: "👤" },
         ].map(tab => (
@@ -3010,44 +3106,82 @@
   );
 
   const ImpactScreen = () => {
-    const [expandedCat, setExpandedCat] = useState(null);
-    const [showGlossary, setShowGlossary] = useState(false);
+    const [rankView, setRankView] = useState("community"); // community | zip | network
 
-    /* Waste-stream categories with real designations + recycling methods */
-    const wasteCategories = [
-      { code: "PET", name: "Plastic Bottles", pct: 18, deg: [0, 64.8], color: "#1D9100",
-        method: "Closed-Loop", methodDesc: "Melted and reformed into new PET bottles — true bottle-to-bottle recycling." },
-      { code: "HDPE", name: "Jugs & Containers", pct: 10, deg: [64.8, 100.8], color: "#167000",
-        method: "Downcycled", methodDesc: "Shredded into flakes and molded into lumber, playground equipment, and drainage pipes." },
-      { code: "OCC", name: "Cardboard", pct: 16, deg: [100.8, 158.4], color: "#66BB6A",
-        method: "Closed-Loop", methodDesc: "Pulped and re-formed into new corrugated cardboard — the most recycled material in the U.S." },
-      { code: "Mixed Paper", name: "Paperboard & Mail", pct: 8, deg: [158.4, 187.2], color: "#A5D6A7",
-        method: "Downcycled", methodDesc: "Blended into tissue products, egg cartons, and insulation material." },
-      { code: "Ferrous", name: "Steel & Tin Cans", pct: 6, deg: [187.2, 208.8], color: "#4E342E",
-        method: "Remelted", methodDesc: "Magnetically sorted, smelted, and recast into new steel products. Infinitely recyclable." },
-      { code: "Non-Ferrous", name: "Aluminum Cans", pct: 4, deg: [208.8, 223.2], color: "#8D6E63",
-        method: "Closed-Loop", methodDesc: "Melted at 660°C and rolled into new cans within 60 days — one of the most efficient loops." },
-      { code: "Organic", name: "Composted", pct: 14, deg: [223.2, 273.6], color: "#F9A825",
-        method: "Composted", methodDesc: "Broken down aerobically into nutrient-rich soil amendment for community gardens and landscaping." },
-      { code: "Glass", name: "Glass Bottles", pct: 6, deg: [273.6, 295.2], color: "#42A5F5",
-        method: "Remelted", methodDesc: "Crushed into cullet, melted at 1500°C, and blown into new bottles. Color-sorted for purity." },
-      { code: "Landfilled", name: "Landfilled", pct: 18, deg: [295.2, 360], color: "#BDBDBD",
-        method: "Landfilled", methodDesc: "Could not be recycled or composted with current infrastructure. We're working to reduce this." },
+    /* ── CHART 1: Trash / Recycled / Composted (most basic split) ── */
+    const chart1Data = [
+      { label: "Recycled", pct: 64, color: "#1D9100" },
+      { label: "Composted", pct: 14, color: "#F9A825" },
+      { label: "Landfilled", pct: 22, color: "#BDBDBD" },
     ];
+    const chart1Gradient = "conic-gradient(#1D9100 0deg 230.4deg, #F9A825 230.4deg 280.8deg, #BDBDBD 280.8deg 360deg)";
 
-    /* Build conic-gradient from categories */
-    const gradient = wasteCategories.map(c => `${c.color} ${c.deg[0]}deg ${c.deg[1]}deg`).join(", ");
-    const recycledPct = wasteCategories.filter(c => c.code !== "Landfilled").reduce((s, c) => s + c.pct, 0);
+    /* ── CHART 2: Recyclable material breakdown (% of recyclable portion only) ── */
+    const chart2Data = [
+      { code: "PET", name: "Plastic Bottles", pct: 28, color: "#1D9100" },
+      { code: "HDPE", name: "Jugs & Containers", pct: 16, color: "#167000" },
+      { code: "OCC", name: "Cardboard", pct: 25, color: "#66BB6A" },
+      { code: "Mixed Paper", name: "Paperboard & Mail", pct: 12, color: "#A5D6A7" },
+      { code: "Ferrous", name: "Steel & Tin Cans", pct: 9, color: "#4E342E" },
+      { code: "Non-Ferrous", name: "Aluminum", pct: 6, color: "#8D6E63" },
+      { code: "Glass", name: "Glass Bottles", pct: 4, color: "#42A5F5" },
+    ];
+    let c2Deg = 0;
+    const chart2Gradient = "conic-gradient(" + chart2Data.map(c => {
+      const start = c2Deg; c2Deg += c.pct * 3.6;
+      return `${c.color} ${start}deg ${c2Deg}deg`;
+    }).join(", ") + ")";
 
-    /* Glossary definitions */
-    const glossaryTerms = [
-      { term: "Closed-Loop", def: "Material is recycled back into the same product type (bottle → bottle)." },
-      { term: "Downcycled", def: "Recycled into a lower-value product (paper → egg carton)." },
-      { term: "Remelted", def: "Metal or glass melted and re-formed. Can repeat indefinitely." },
-      { term: "Composted", def: "Organic matter broken down into soil nutrients." },
-      { term: "Pyrolysis", def: "Plastic heated without oxygen to produce fuel or chemical feedstock." },
-      { term: "WTE", def: "Waste-to-Energy — incinerated to generate electricity." },
-      { term: "Upcycled", def: "Transformed into a higher-value product (tires → playground surface)." },
+    /* ── CHART 3: How it was recycled (processing methods) ── */
+    const chart3Data = [
+      { method: "Closed-Loop", pct: 38, color: "#1D9100", desc: "Back into the same product type" },
+      { method: "Downcycled", pct: 22, color: "#66BB6A", desc: "Into lower-value products" },
+      { method: "Remelted", pct: 18, color: "#42A5F5", desc: "Metal/glass melted and re-formed" },
+      { method: "Composted", pct: 14, color: "#F9A825", desc: "Organic → soil nutrients" },
+      { method: "Waste-to-Energy", pct: 5, color: "#FF7043", desc: "Incinerated to generate electricity" },
+      { method: "Landfilled", pct: 3, color: "#BDBDBD", desc: "Could not be processed" },
+    ];
+    let c3Deg = 0;
+    const chart3Gradient = "conic-gradient(" + chart3Data.map(c => {
+      const start = c3Deg; c3Deg += c.pct * 3.6;
+      return `${c.color} ${start}deg ${c3Deg}deg`;
+    }).join(", ") + ")";
+
+    /* Mini donut helper */
+    const MiniDonut = ({ size, gradient, centerLabel, centerValue }) => (
+      <div style={{
+        width: size, height: size, borderRadius: size / 2, position: "relative",
+        background: gradient, margin: "0 auto 12px"
+      }}>
+        <div style={{
+          position: "absolute", top: size * 0.19, left: size * 0.19,
+          width: size * 0.62, height: size * 0.62,
+          borderRadius: size * 0.31, background: "#fff",
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"
+        }}>
+          <span style={{ fontSize: 10, color: "#888" }}>{centerLabel}</span>
+          <span style={{ fontSize: size > 130 ? 22 : 18, fontWeight: 800 }}>{centerValue}</span>
+        </div>
+      </div>
+    );
+
+    /* Legend row helper */
+    const LegendRow = ({ color, label, pct, sub }) => (
+      <div style={{
+        display: "flex", alignItems: "center", gap: 8, padding: "5px 0"
+      }}>
+        <div style={{ width: 8, height: 8, borderRadius: 4, background: color, flexShrink: 0 }} />
+        <span style={{ flex: 1, fontSize: 12, color: "#1a1a1a" }}>
+          {label} {sub && <span style={{ color: "#999" }}>({sub})</span>}
+        </span>
+        <span style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a" }}>{pct}%</span>
+      </div>
+    );
+
+    const rankViews = [
+      { id: "community", label: "My community" },
+      { id: "zip", label: "My zip code" },
+      { id: "network", label: "All communities" },
     ];
 
     return (
@@ -3057,7 +3191,7 @@
         padding: "8px 20px 12px", borderBottom: "1px solid #f0f0f0"
       }}>
         <div style={{ width: 60 }} />
-        <span style={{ fontSize: 17, fontWeight: 600 }}>My Impact</span>
+        <span style={{ fontSize: 18, fontWeight: 700 }}>Ashley's Impact</span>
         <div style={{ width: 60, textAlign: "right", position: "relative", fontSize: 20 }}>🛒</div>
       </div>
       <DateToggle selected={2} />
@@ -3098,31 +3232,51 @@
           </div>
         </div>
 
-        {/* Community Ranking */}
+        {/* Community Ranking — now with zip code option */}
         <SectionDivider label="Community Ranking" />
         <div style={{ padding: "8px 20px" }}>
+          {/* Rank view toggle */}
+          <div style={{ display: "flex", gap: 0, marginBottom: 12, borderRadius: 10, overflow: "hidden", border: "1.5px solid #ddd" }}>
+            {rankViews.map(rv => (
+              <div key={rv.id} onClick={() => setRankView(rv.id)} style={{
+                flex: 1, padding: "8px 4px", textAlign: "center", cursor: "pointer",
+                fontSize: 11, fontWeight: 600,
+                background: rankView === rv.id ? "#1D9100" : "#fff",
+                color: rankView === rv.id ? "#fff" : "#666",
+                transition: "all 0.2s"
+              }}>{rv.label}</div>
+            ))}
+          </div>
+
           <div style={{
             padding: 16, borderRadius: 14, border: "1.5px solid #e8e8e8", marginBottom: 10
           }}>
-            <div style={{ fontSize: 13, color: "#888", marginBottom: 8 }}>Your rank in Parkside Apartments</div>
+            <div style={{ fontSize: 13, color: "#888", marginBottom: 8 }}>
+              {rankView === "community" ? "Ashley's rank in Parkside Apartments" :
+               rankView === "zip" ? "Ashley's rank in 75214" :
+               "Parkside Apartments vs. other communities"}
+            </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 4 }}>
-              <span style={{ fontSize: 32, fontWeight: 800, color: "#1a1a1a" }}>#12</span>
-              <span style={{ fontSize: 15, color: "#666" }}>out of 87 residents</span>
+              <span style={{ fontSize: 32, fontWeight: 800, color: "#1a1a1a" }}>
+                {rankView === "community" ? "#12" : rankView === "zip" ? "#47" : "#3"}
+              </span>
+              <span style={{ fontSize: 15, color: "#666" }}>
+                {rankView === "community" ? "out of 87 residents" :
+                 rankView === "zip" ? "out of 312 residents" :
+                 "of 12 communities"}
+              </span>
             </div>
-            <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Top 14%</div>
+            <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>
+              {rankView === "community" ? "Top 14%" : rankView === "zip" ? "Top 15%" : "Top 25%"}
+            </div>
             <div style={{ height: 8, borderRadius: 4, background: "#f0f0f0", overflow: "hidden" }}>
-              <div style={{ width: "86%", height: "100%", borderRadius: 4, background: "#1D9100" }} />
+              <div style={{
+                width: rankView === "community" ? "86%" : rankView === "zip" ? "85%" : "75%",
+                height: "100%", borderRadius: 4, background: "#1D9100"
+              }} />
             </div>
           </div>
-          <div style={{
-            padding: 16, borderRadius: 14, border: "1.5px solid #e8e8e8", marginBottom: 10
-          }}>
-            <div style={{ fontSize: 13, color: "#888", marginBottom: 8 }}>Your community vs. others</div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-              <span style={{ fontSize: 24, fontWeight: 800, color: "#1a1a1a" }}>#3</span>
-              <span style={{ fontSize: 14, color: "#666" }}>of 12 communities in the WasteFree network</span>
-            </div>
-          </div>
+
           <div style={{
             padding: "12px 16px", borderRadius: 12, border: "1.5px solid #e8e8e8",
             display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer"
@@ -3132,119 +3286,64 @@
           </div>
         </div>
 
-        {/* Waste Stream Breakdown — revised per client feedback */}
-        <SectionDivider label="Waste Stream Breakdown" />
+        {/* ── THREE-TIER WASTE BREAKDOWN ── */}
+        <SectionDivider label="Waste Breakdown" />
         <div style={{ padding: "8px 20px" }}>
+
+          {/* CHART 1: Trash / Recycled / Composted */}
           <div style={{
-            padding: 20, borderRadius: 14, border: "1.5px solid #e8e8e8", marginBottom: 10
+            padding: 16, borderRadius: 14, border: "1.5px solid #e8e8e8", marginBottom: 10
           }}>
-            {/* Donut chart with real waste-stream segments */}
-            <div style={{
-              width: 160, height: 160, margin: "0 auto 16px",
-              borderRadius: 80, position: "relative",
-              background: `conic-gradient(${gradient})`
-            }}>
-              <div style={{
-                position: "absolute", top: 30, left: 30, width: 100, height: 100,
-                borderRadius: 50, background: "#fff",
-                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"
-              }}>
-                <span style={{ fontSize: 11, color: "#888" }}>Diverted</span>
-                <span style={{ fontSize: 24, fontWeight: 800 }}>{recycledPct}%</span>
-              </div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a", marginBottom: 12 }}>
+              Where did Ashley's waste go?
             </div>
-
-            {/* Legend — tap to expand recycling method */}
-            <div style={{ fontSize: 11, color: "#888", textAlign: "center", marginBottom: 10 }}>
-              Tap a category to see how it was recycled
-            </div>
-            {wasteCategories.map((cat, i) => (
-              <div key={cat.code}>
-                <div
-                  onClick={() => setExpandedCat(expandedCat === i ? null : i)}
-                  style={{
-                    display: "flex", alignItems: "center", gap: 8,
-                    padding: "8px 0", cursor: "pointer",
-                    borderTop: i > 0 ? "1px solid #f0f0f0" : "none"
-                  }}
-                >
-                  <div style={{
-                    width: 10, height: 10, borderRadius: 5,
-                    background: cat.color, flexShrink: 0
-                  }} />
-                  <span style={{ flex: 1, fontSize: 13, fontWeight: 500, color: "#1a1a1a" }}>
-                    {cat.name} <span style={{ color: "#999", fontWeight: 400 }}>({cat.code})</span>
-                  </span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a", marginRight: 4 }}>{cat.pct}%</span>
-                  <span style={{
-                    fontSize: 10, color: "#999",
-                    transform: expandedCat === i ? "rotate(90deg)" : "none",
-                    transition: "transform 0.15s ease"
-                  }}>›</span>
-                </div>
-                {/* Expanded: recycling method detail */}
-                {expandedCat === i && (
-                  <div style={{
-                    marginLeft: 18, marginBottom: 8, padding: "8px 12px",
-                    borderRadius: 8, background: "#f8f8f8", border: "1px solid #f0f0f0"
-                  }}>
-                    <div style={{
-                      fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4,
-                      display: "flex", alignItems: "center", gap: 6
-                    }}>
-                      <span style={{
-                        display: "inline-block", padding: "2px 8px", borderRadius: 4,
-                        background: cat.code === "Landfilled" ? "#f5f5f5" : "#E8F2E3",
-                        color: cat.code === "Landfilled" ? "#999" : "#167000",
-                        fontSize: 11, fontWeight: 600
-                      }}>{cat.method}</span>
-                    </div>
-                    <div style={{ fontSize: 12, color: "#666", lineHeight: 1.5 }}>
-                      {cat.methodDesc}
-                    </div>
-                  </div>
-                )}
-              </div>
+            <MiniDonut size={150} gradient={chart1Gradient} centerLabel="Diverted" centerValue="78%" />
+            {chart1Data.map(c => (
+              <LegendRow key={c.label} color={c.color} label={c.label} pct={c.pct} />
             ))}
+          </div>
 
-            {/* Glossary link */}
-            <div
-              onClick={() => setShowGlossary(!showGlossary)}
-              style={{
-                marginTop: 8, padding: "10px 0", textAlign: "center",
-                fontSize: 13, color: "#1D9100", fontWeight: 500, cursor: "pointer",
-                borderTop: "1px solid #f0f0f0"
-              }}
-            >
-              {showGlossary ? "Hide glossary" : "What do these terms mean?"}
+          {/* CHART 2: Material Breakdown of recyclables */}
+          <div style={{
+            padding: 16, borderRadius: 14, border: "1.5px solid #e8e8e8", marginBottom: 10
+          }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>
+              What was recycled?
             </div>
-            {showGlossary && (
-              <div style={{
-                padding: "8px 12px", borderRadius: 8, background: "#f8f8f8",
-                border: "1px solid #f0f0f0"
-              }}>
-                {glossaryTerms.map((g, i) => (
-                  <div key={g.term} style={{
-                    padding: "6px 0",
-                    borderTop: i > 0 ? "1px solid #eee" : "none"
-                  }}>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a" }}>{g.term}: </span>
-                    <span style={{ fontSize: 12, color: "#666" }}>{g.def}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div style={{ fontSize: 12, color: "#888", marginBottom: 10 }}>
+              Breakdown of recyclable materials only
+            </div>
+            <MiniDonut size={120} gradient={chart2Gradient} centerLabel="Materials" centerValue="7" />
+            {chart2Data.map(c => (
+              <LegendRow key={c.code} color={c.color} label={c.name} sub={c.code} pct={c.pct} />
+            ))}
+          </div>
+
+          {/* CHART 3: How it was recycled */}
+          <div style={{
+            padding: 16, borderRadius: 14, border: "1.5px solid #e8e8e8", marginBottom: 10
+          }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>
+              How was it processed?
+            </div>
+            <div style={{ fontSize: 12, color: "#888", marginBottom: 10 }}>
+              Processing method for all diverted waste
+            </div>
+            <MiniDonut size={120} gradient={chart3Gradient} centerLabel="Methods" centerValue="6" />
+            {chart3Data.map(c => (
+              <LegendRow key={c.method} color={c.color} label={c.method} sub={c.desc} pct={c.pct} />
+            ))}
           </div>
         </div>
 
-        {/* Your Impact */}
-        <SectionDivider label="Your Impact" />
+        {/* Ashley's Impact */}
+        <SectionDivider label="Ashley's Impact" />
         <div style={{ padding: "8px 20px 24px" }}>
           <div style={{
             padding: 20, borderRadius: 14, background: "#f8f8f8",
             border: "1.5px solid #e8e8e8"
           }}>
-            <div style={{ fontSize: 18, marginBottom: 12 }}>🌍 This month, you've:</div>
+            <div style={{ fontSize: 18, marginBottom: 12 }}>🌍 This month, Ashley has:</div>
             <div style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>
               Diverted 23 lbs of waste
             </div>
@@ -3270,7 +3369,7 @@
             marginTop: 16, padding: "14px 0", borderRadius: 14,
             border: "1.5px solid #1a1a1a", textAlign: "center",
             fontSize: 15, fontWeight: 600, color: "#1a1a1a", cursor: "pointer"
-          }}>Share Your Impact</div>
+          }}>Share Ashley's Impact</div>
         </div>
       </div>
     </PhoneFrame>
@@ -3358,7 +3457,7 @@
         background: "#fff", flexShrink: 0
       }}>
         {[
-          { id: "buy", label: "Buy Again", icon: "🔄" },
+          { id: "buy", label: "My Items", icon: "🔄" },
           { id: "collection", label: "Collection", icon: "📋" },
           { id: "impact", label: "My Impact", icon: "📊" },
           { id: "profile", label: "Profile", icon: "👤" },
@@ -3378,10 +3477,9 @@
   );
 
   const SCREENS = {
-    SUMMARY: "summary",
+    COLLECTED: "collected",
     DETAIL_IDENTIFIED: "detail_identified",
     DETAIL_UNIDENTIFIED: "detail_unidentified",
-    HISTORY: "history",
   };
 
   /* Sample collection data */
@@ -3406,8 +3504,8 @@
     "Landfilled": { bg: "#f5f5f5", text: "#999" },
   };
 
-  /* Screen 1: Collection Summary */
-  const SummaryScreen = ({ onTapItem }) => {
+  /* Screen 1: Collected Items (combined history + summary — history first per client request) */
+  const CollectedItemsScreen = ({ onTapItem }) => {
     const [dateFilter, setDateFilter] = useState(0);
     const dateOptions = ["This Service", "This Week", "This Month"];
     const identified = collectionItems.filter(i => i.identified).length;
@@ -3420,7 +3518,7 @@
           padding: "8px 20px 12px", borderBottom: "1px solid #f0f0f0"
         }}>
           <div style={{ width: 40 }} />
-          <span style={{ fontSize: 17, fontWeight: 600 }}>Collection Data</span>
+          <span style={{ fontSize: 18, fontWeight: 700 }}>Ashley's Waste Summary</span>
           <div style={{ width: 40 }} />
         </div>
 
@@ -3441,9 +3539,49 @@
         </div>
 
         <div style={{ flex: 1, overflowY: "auto" }}>
-          {/* Summary bar */}
+
+          {/* ── Bag-level collection metadata (NEW per client request) ── */}
+          <div style={{ padding: "14px 20px", borderBottom: "1px solid #f0f0f0" }}>
+            <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+              <div style={{ flex: 1, padding: 10, borderRadius: 10, background: "#E8F2E3", textAlign: "center" }}>
+                <div style={{ fontSize: 20, fontWeight: 800, color: "#167000" }}>3</div>
+                <div style={{ fontSize: 10, color: "#167000", fontWeight: 500 }}>Bags</div>
+              </div>
+              <div style={{ flex: 1, padding: 10, borderRadius: 10, background: "#f5f5f5", textAlign: "center" }}>
+                <div style={{ fontSize: 20, fontWeight: 800, color: "#1a1a1a" }}>10</div>
+                <div style={{ fontSize: 10, color: "#666", fontWeight: 500 }}>Items</div>
+              </div>
+              <div style={{ flex: 1, padding: 10, borderRadius: 10, background: "#f5f5f5", textAlign: "center" }}>
+                <div style={{ fontSize: 20, fontWeight: 800, color: "#1a1a1a" }}>4.2</div>
+                <div style={{ fontSize: 10, color: "#666", fontWeight: 500 }}>Lbs</div>
+              </div>
+            </div>
+
+            {/* Service details */}
+            <div style={{ padding: 12, borderRadius: 10, border: "1.5px solid #e8e8e8", fontSize: 13 }}>
+              {[
+                { label: "Collection Time", value: "Today, 2:34 PM" },
+                { label: "Collector", value: "Marcus T. (EMP-0247)" },
+                { label: "Violation Assessed", value: "No" },
+              ].map((row, i) => (
+                <div key={i} style={{
+                  display: "flex", justifyContent: "space-between", padding: "5px 0",
+                  borderTop: i > 0 ? "1px solid #f0f0f0" : "none"
+                }}>
+                  <span style={{ color: "#888" }}>{row.label}</span>
+                  <span style={{ fontWeight: 500, color: row.value === "No" ? "#1D9100" : "#1a1a1a" }}>{row.value}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ marginTop: 10, fontSize: 12, color: "#1D9100", fontWeight: 500, textAlign: "center" }}>
+              ↑ Diversion rate improving — 82% this week vs. 75% avg
+            </div>
+          </div>
+
+          {/* ── Item counts bar ── */}
           <div style={{
-            padding: "12px 20px", display: "flex", justifyContent: "space-between",
+            padding: "10px 20px", display: "flex", justifyContent: "space-between",
             alignItems: "center", borderBottom: "1px solid #f0f0f0"
           }}>
             <span style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a" }}>
@@ -3468,7 +3606,6 @@
                   cursor: "pointer"
                 }}
               >
-                {/* Icon */}
                 <div style={{
                   width: 44, height: 44, borderRadius: 10, flexShrink: 0,
                   display: "flex", alignItems: "center", justifyContent: "center",
@@ -3486,8 +3623,6 @@
                     }}>📷</div>
                   )}
                 </div>
-
-                {/* Info */}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{
                     fontSize: 14, fontWeight: 500, color: "#1a1a1a",
@@ -3501,8 +3636,6 @@
                     <span style={{ fontSize: 11, color: "#999" }}>{item.code}</span>
                   </div>
                 </div>
-
-                {/* Time + chevron */}
                 <div style={{ textAlign: "right", flexShrink: 0 }}>
                   <div style={{ fontSize: 11, color: "#bbb" }}>{item.time}</div>
                   <span style={{ fontSize: 12, color: "#ccc" }}>›</span>
@@ -3656,7 +3789,7 @@
             </div>
           </div>
 
-          {/* Help identify */}
+          {/* Help identify — simplified to 3 fields per client request */}
           <div style={{
             padding: 16, borderRadius: 12, background: "#FFF8E1",
             border: "1.5px solid #FFE082", marginBottom: 12
@@ -3664,119 +3797,61 @@
             <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 6 }}>
               Know what this is?
             </div>
-            <div style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 12 }}>
-              Help us identify it so we can track this product and suggest better alternatives next time.
+            <div style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 14 }}>
+              Help us identify it so we can track and suggest better alternatives.
             </div>
+
+            {/* Brand Name */}
+            <div style={{ marginBottom: 10 }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4 }}>Brand Name</div>
+              <div style={{
+                padding: "10px 12px", borderRadius: 8, border: "1.5px solid #ddd",
+                background: "#fff", fontSize: 13, color: "#aaa"
+              }}>e.g. Tide, Bounty, Dr Pepper...</div>
+            </div>
+
+            {/* Product Category */}
+            <div style={{ marginBottom: 10 }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4 }}>Product Category</div>
+              <div style={{
+                padding: "10px 12px", borderRadius: 8, border: "1.5px solid #ddd",
+                background: "#fff", fontSize: 13, color: "#1a1a1a",
+                display: "flex", justifyContent: "space-between", alignItems: "center"
+              }}>
+                <span style={{ color: "#aaa" }}>Select category...</span>
+                <span style={{ color: "#999", fontSize: 11 }}>▾</span>
+              </div>
+            </div>
+
+            {/* Recycling Category */}
+            <div style={{ marginBottom: 14 }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4 }}>Recycling Category</div>
+              <div style={{
+                padding: "10px 12px", borderRadius: 8, border: "1.5px solid #ddd",
+                background: "#fff", fontSize: 13, color: "#1a1a1a",
+                display: "flex", justifyContent: "space-between", alignItems: "center"
+              }}>
+                <span style={{ color: "#aaa" }}>PET, HDPE, OCC, Glass...</span>
+                <span style={{ color: "#999", fontSize: 11 }}>▾</span>
+              </div>
+            </div>
+
             <div style={{
-              padding: "10px 0", borderRadius: 10, border: "1.5px solid #1a1a1a",
-              textAlign: "center", fontSize: 14, fontWeight: 600, color: "#1a1a1a",
+              padding: "10px 0", borderRadius: 10, background: "#1a1a1a",
+              textAlign: "center", fontSize: 14, fontWeight: 600, color: "#fff",
               cursor: "pointer"
-            }}>Help Identify This Item</div>
+            }}>Submit Identification</div>
           </div>
         </div>
       </PhoneFrame>
     );
   };
 
-  /* Screen 4: Collection History */
-  const HistoryScreen = ({ onBack }) => {
-    const pickups = [
-      { date: "Apr 12, 2026", items: 10, diverted: "82%", lbs: "4.2 lbs" },
-      { date: "Apr 9, 2026", items: 8, diverted: "75%", lbs: "3.1 lbs" },
-      { date: "Apr 5, 2026", items: 12, diverted: "91%", lbs: "5.8 lbs" },
-      { date: "Apr 2, 2026", items: 6, diverted: "67%", lbs: "2.4 lbs" },
-      { date: "Mar 29, 2026", items: 9, diverted: "88%", lbs: "3.9 lbs" },
-      { date: "Mar 26, 2026", items: 11, diverted: "78%", lbs: "4.5 lbs" },
-    ];
-
-    return (
-      <PhoneFrame>
-        <div style={{ padding: "8px 20px 0" }}>
-          <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
-        </div>
-        <div style={{
-          display: "flex", justifyContent: "center", padding: "12px 20px 8px",
-          borderBottom: "1px solid #f0f0f0"
-        }}>
-          <span style={{ fontSize: 17, fontWeight: 600 }}>Collection History</span>
-        </div>
-
-        <div style={{ flex: 1, overflowY: "auto" }}>
-          {/* Trend summary */}
-          <div style={{ padding: "16px 20px", borderBottom: "1px solid #f0f0f0" }}>
-            <div style={{ display: "flex", gap: 12 }}>
-              <div style={{
-                flex: 1, padding: 12, borderRadius: 10, background: "#E8F2E3", textAlign: "center"
-              }}>
-                <div style={{ fontSize: 22, fontWeight: 800, color: "#167000" }}>6</div>
-                <div style={{ fontSize: 11, color: "#167000", fontWeight: 500 }}>Pickups</div>
-              </div>
-              <div style={{
-                flex: 1, padding: 12, borderRadius: 10, background: "#f5f5f5", textAlign: "center"
-              }}>
-                <div style={{ fontSize: 22, fontWeight: 800, color: "#1a1a1a" }}>56</div>
-                <div style={{ fontSize: 11, color: "#666", fontWeight: 500 }}>Items</div>
-              </div>
-              <div style={{
-                flex: 1, padding: 12, borderRadius: 10, background: "#f5f5f5", textAlign: "center"
-              }}>
-                <div style={{ fontSize: 22, fontWeight: 800, color: "#1a1a1a" }}>23.9</div>
-                <div style={{ fontSize: 11, color: "#666", fontWeight: 500 }}>Lbs Total</div>
-              </div>
-            </div>
-            <div style={{ marginTop: 12, fontSize: 13, color: "#1D9100", fontWeight: 500, textAlign: "center" }}>
-              ↑ Diversion rate improving — 82% this week vs. 75% avg
-            </div>
-          </div>
-
-          {/* Pickup timeline */}
-          <div style={{ padding: "16px 20px" }}>
-            <div style={{
-              fontSize: 11, fontWeight: 700, letterSpacing: 1, color: "#888",
-              textTransform: "uppercase", marginBottom: 12
-            }}>All Pickups</div>
-            {pickups.map((p, i) => (
-              <div key={i} style={{
-                display: "flex", gap: 12, marginBottom: 16
-              }}>
-                {/* Timeline dot + line */}
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                  <div style={{
-                    width: 12, height: 12, borderRadius: 6,
-                    background: i === 0 ? "#1D9100" : "#e0e0e0", flexShrink: 0
-                  }} />
-                  {i < pickups.length - 1 && <div style={{ width: 2, flex: 1, background: "#e0e0e0", marginTop: 4 }} />}
-                </div>
-                {/* Pickup card */}
-                <div style={{
-                  flex: 1, padding: 14, borderRadius: 12,
-                  border: i === 0 ? "1.5px solid #1D9100" : "1.5px solid #e8e8e8",
-                  background: i === 0 ? "#FAFFF5" : "#fff"
-                }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-                    <span style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a" }}>{p.date}</span>
-                    {i === 0 && <span style={{
-                      fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 4,
-                      background: "#E8F2E3", color: "#167000"
-                    }}>Latest</span>}
-                  </div>
-                  <div style={{ display: "flex", gap: 16 }}>
-                    <span style={{ fontSize: 12, color: "#666" }}>{p.items} items</span>
-                    <span style={{ fontSize: 12, color: "#666" }}>{p.lbs}</span>
-                    <span style={{ fontSize: 12, color: "#1D9100", fontWeight: 500 }}>{p.diverted} diverted</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </PhoneFrame>
-    );
-  };
+  /* HistoryScreen removed — merged into CollectedItemsScreen per client request (4.1) */
 
   /* Main Flow 4 App */
   function WasteFreeFlow4() {
-    const [currentScreen, setCurrentScreen] = useState(SCREENS.SUMMARY);
+    const [currentScreen, setCurrentScreen] = useState(SCREENS.COLLECTED);
     const [selectedItem, setSelectedItem] = useState(null);
 
     const handleTapItem = (item) => {
@@ -3785,29 +3860,26 @@
     };
 
     const goBack = () => {
-      setCurrentScreen(SCREENS.SUMMARY);
+      setCurrentScreen(SCREENS.COLLECTED);
       setSelectedItem(null);
     };
 
     const screenComponents = {
-      [SCREENS.SUMMARY]: <SummaryScreen onTapItem={handleTapItem} />,
+      [SCREENS.COLLECTED]: <CollectedItemsScreen onTapItem={handleTapItem} />,
       [SCREENS.DETAIL_IDENTIFIED]: selectedItem ? <DetailIdentifiedScreen item={selectedItem} onBack={goBack} /> : null,
       [SCREENS.DETAIL_UNIDENTIFIED]: selectedItem ? <DetailUnidentifiedScreen item={selectedItem} onBack={goBack} /> : null,
-      [SCREENS.HISTORY]: <HistoryScreen onBack={goBack} />,
     };
 
     const screenLabels = {
-      [SCREENS.SUMMARY]: "1. Collection Summary",
+      [SCREENS.COLLECTED]: "1. Collected Items",
       [SCREENS.DETAIL_IDENTIFIED]: "2. Item Detail (Identified)",
       [SCREENS.DETAIL_UNIDENTIFIED]: "3. Item Detail (Unidentified)",
-      [SCREENS.HISTORY]: "4. Collection History",
     };
 
     const screenNotes = {
-      [SCREENS.SUMMARY]: "The raw data transparency layer. Shows ALL items from the latest collection — identified products and unidentified trash. Each item displays its waste-stream code (PET, OCC, Ferrous, etc.) and recycling method (Closed-Loop, Downcycled, Remelted, Composted, Landfilled). Unidentified items get a camera badge indicating a photo was captured during sorting. Summary bar gives quick stats. Date toggle filters by service, week, or month.",
+      [SCREENS.COLLECTED]: "Combined collection summary + history (formerly two screens). Leads with bag-level metadata: number of bags, collection time, collector name/employee ID, and violation status (Y/N). Then shows all collected items with waste-stream codes and recycling methods. Diversion rate trend displayed prominently. Date toggle filters by service, week, or month.",
       [SCREENS.DETAIL_IDENTIFIED]: "Full detail for an identified product. Shows material classification (waste-stream code), recycling method with plain-English explanation, and a 4-step 'Recycling Journey' timeline showing the item's lifecycle from collection to new life. 'Buy it WasteFree Next Time' CTA connects back to Flow 2 — closing the loop between what you threw away and what you buy next.",
-      [SCREENS.DETAIL_UNIDENTIFIED]: "Unidentified items show the photo WasteFree captured during sorting (placeholder in prototype). Yellow 'Know what this is?' card lets residents help identify items — crowdsourcing data improves WasteFree's recognition over time. Still shows how the item was processed even without identification.",
-      [SCREENS.HISTORY]: "Timeline of all past pickups with trend data. Summary cards show total pickups, items, and weight. Each pickup card shows item count, weight, and diversion rate. Green highlight on latest pickup. Trend line at top tells residents if they're improving ('Diversion rate improving — 82% this week vs. 75% avg').",
+      [SCREENS.DETAIL_UNIDENTIFIED]: "Unidentified items show the photo WasteFree captured during sorting. Simplified 'Know what this is?' form with 3 fields only: Brand Name, Product Category, and Recycling Category (PET, HDPE, etc.). Crowdsourcing data improves WasteFree's recognition over time.",
     };
 
     return (

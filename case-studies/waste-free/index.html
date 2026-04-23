@@ -1323,7 +1323,11 @@
     </PhoneFrame>
   );
 
-  const AccountScreen = ({ onBack, onNext }) => (
+  const AccountScreen = ({ onBack, onNext }) => {
+    const [occupants, setOccupants] = useState(2);
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    return (
     <PhoneFrame>
       <div style={{ padding: "8px 24px 0" }}>
         <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
@@ -1365,26 +1369,50 @@
         <InputField label="Your community" placeholder="Parkside Apartments ▾" />
         <InputField label="Unit number" placeholder="e.g., 204" />
 
-        <div style={{ marginBottom: 14 }}>
+        <div style={{ marginBottom: 14, position: "relative" }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: "#666", marginBottom: 8 }}>Number of occupants</div>
-          <div style={{
-            padding: "14px 16px", borderRadius: 12, border: "1.5px solid #ddd",
+          <div onClick={() => setShowDropdown(!showDropdown)} style={{
+            padding: "14px 16px", borderRadius: 12,
+            border: showDropdown ? "2px solid #1D9100" : "1.5px solid #ddd",
             background: "#f8f8f8", fontSize: 15, color: "#1a1a1a",
             display: "flex", justifyContent: "space-between", alignItems: "center",
-            cursor: "pointer"
+            cursor: "pointer", transition: "border 0.2s"
           }}>
-            <span>2</span>
+            <span>{occupants}</span>
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <span style={{ fontSize: 11, color: "#888", borderRight: "1px solid #ddd", paddingRight: 8 }}>1–8</span>
-              <span style={{ fontSize: 16, color: "#666" }}>▼</span>
+              <span style={{ fontSize: 16, color: "#666", transform: showDropdown ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>▼</span>
             </div>
           </div>
+
+          {showDropdown && (
+            <div style={{
+              position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
+              background: "#fff", borderRadius: 12, border: "1.5px solid #ddd",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.12)", zIndex: 20, overflow: "hidden"
+            }}>
+              {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
+                <div key={n} onClick={() => { setOccupants(n); setShowDropdown(false); }} style={{
+                  padding: "12px 16px", fontSize: 15, cursor: "pointer",
+                  display: "flex", justifyContent: "space-between", alignItems: "center",
+                  background: n === occupants ? "#E8F2E3" : "#fff",
+                  borderBottom: n < 8 ? "1px solid #f0f0f0" : "none",
+                  fontWeight: n === occupants ? 600 : 400,
+                  color: "#1a1a1a"
+                }}>
+                  <span>{n}</span>
+                  {n === occupants && <span style={{ color: "#1D9100", fontWeight: 700 }}>✓</span>}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <CTAButton label="Continue" onClick={onNext} />
       <ProgressDots current={0} total={6} />
     </PhoneFrame>
-  );
+    );
+  };
 
   const SurveyScreen = ({ onBack, onNext }) => {
     const [grocerySelected, setGrocerySelected] = useState(new Set());

@@ -1128,6 +1128,15 @@
       <p>Originally scoped as low priority, WasteFree requested this flow be added after reviewing the Phase 2 wireframes. This is the raw data transparency layer — while Flow 2 (Repurchase) only shows identified products the resident can rebuy, Flow 4 shows everything WasteFree collected, including unidentified trash with photos. The lead screen now combines collection history with the item summary: residents first see bag-level metadata (number of bags, collection time, collector name/employee ID, violation status) before scrolling into individual items. Each item displays its waste-stream designation (PET, OCC, Organic, etc.) and how it was processed. Unidentified items get a photo badge — tapping reveals the sorting photo and a simplified 3-field identification form (brand, product category, recycling category) so residents can crowdsource item recognition. This flow builds trust through radical transparency: residents see exactly what happened to every item in their bag.</p>
 
       <div id="flow-4-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
+
+      <h3>Flow 5 — Notifications</h3>
+      <p class="flow-description">
+        Centralized notification inbox with three categories: <strong>Collection Training</strong> (educational tips on sorting and recycling),
+        <strong>Resident & Community Messages</strong> (schedule changes, milestones, property manager comms), and
+        <strong>Bulk & Capital Improvement Offers</strong> (community group buys, infrastructure upgrades).
+        Gives WasteFree a persistent communication channel with residents beyond push notifications.
+      </p>
+      <div id="flow-5-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
     </section>
 
 
@@ -4338,6 +4347,315 @@
   }
 
   ReactDOM.createRoot(document.getElementById('flow-4-root')).render(<WasteFreeFlow4 />);
+})()}
+</script>
+
+
+<!-- Flow 5: Notifications -->
+<script type="text/babel">
+{(() => {
+  const { useState } = React;
+
+  const PHONE_SCALE = 0.65;
+  const PHONE_W = 390;
+  const PHONE_H = 844;
+
+  const PhoneFrame = ({ children, activeTab = "notifications" }) => (
+    <div style={{
+      width: PHONE_W * PHONE_SCALE,
+      height: PHONE_H * PHONE_SCALE,
+      overflow: "hidden",
+      flexShrink: 0
+    }}>
+    <div style={{
+      width: PHONE_W, height: PHONE_H, background: "#fff", borderRadius: 40,
+      border: "3px solid #1a1a1a", position: "relative", overflow: "hidden",
+      display: "flex", flexDirection: "column",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+      transform: `scale(${PHONE_SCALE})`, transformOrigin: "top left"
+    }}>
+      <div style={{
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "12px 24px 4px", fontSize: 14, fontWeight: 600, color: "#1a1a1a",
+        flexShrink: 0
+      }}>
+        <span>9:41</span>
+        <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+          <div style={{ width: 18, height: 12, border: "1.5px solid #1a1a1a", borderRadius: 3, position: "relative" }}>
+            <div style={{ width: 12, height: 8, background: "#1a1a1a", borderRadius: 1, position: "absolute", left: 2, top: 1 }} />
+          </div>
+        </div>
+      </div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "auto" }}>
+        {children}
+      </div>
+      <div style={{
+        display: "flex", borderTop: "1px solid #e0e0e0", padding: "8px 0 28px",
+        background: "#fff", flexShrink: 0
+      }}>
+        {[
+          { id: "buy", label: "My Items", icon: "🔄" },
+          { id: "collection", label: "Collection", icon: "📋" },
+          { id: "impact", label: "My Impact", icon: "📊" },
+          { id: "notifications", label: "Notifications", icon: "🔔" },
+          { id: "profile", label: "Profile", icon: "👤" },
+        ].map(tab => (
+          <div key={tab.id} style={{
+            flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
+            opacity: tab.id === activeTab ? 1 : 0.4
+          }}>
+            <span style={{ fontSize: 18, position: "relative" }}>
+              {tab.icon}
+              {tab.id === "notifications" && (
+                <div style={{
+                  position: "absolute", top: -4, right: -8, width: 16, height: 16,
+                  borderRadius: 8, background: "#FF3B30", color: "#fff",
+                  fontSize: 9, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center"
+                }}>5</div>
+              )}
+            </span>
+            <span style={{ fontSize: 9, fontWeight: tab.id === activeTab ? 700 : 400 }}>{tab.label}</span>
+            {tab.id === activeTab && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1a1a1a" }} />}
+          </div>
+        ))}
+      </div>
+    </div>
+    </div>
+  );
+
+  const CATEGORIES = {
+    ALL: "all",
+    TRAINING: "training",
+    COMMUNITY: "community",
+    OFFERS: "offers",
+  };
+
+  const notifications = [
+    {
+      id: 1, cat: "training", read: false, time: "2h ago",
+      icon: "♻️", title: "Sorting tip: Pizza boxes",
+      body: "Greasy pizza boxes go in compost, not recycling. The grease contaminates paper recycling batches. Tear off clean lids for recycling!",
+      tag: "Collection Training", tagColor: "#1D9100"
+    },
+    {
+      id: 2, cat: "community", read: false, time: "5h ago",
+      icon: "🏆", title: "Parkside hit 80% diversion!",
+      body: "Your community reached an 80% waste diversion rate this month — up from 72% last month. You're in the top 15% of contributors!",
+      tag: "Community", tagColor: "#007AFF"
+    },
+    {
+      id: 3, cat: "offers", read: false, time: "1d ago",
+      icon: "🪣", title: "Community bulk order: Compost bins",
+      body: "Join 14 neighbors in a group buy — countertop compost bins at 40% off ($12.99 vs. $21.99). Order closes Friday.",
+      tag: "Bulk Offer", tagColor: "#FF9500",
+      cta: "View Offer"
+    },
+    {
+      id: 4, cat: "training", read: true, time: "2d ago",
+      icon: "📦", title: "Flatten your cardboard",
+      body: "Flattened boxes take up 75% less space in recycling bins. This helps collectors process more in each pickup.",
+      tag: "Collection Training", tagColor: "#1D9100"
+    },
+    {
+      id: 5, cat: "community", read: true, time: "3d ago",
+      icon: "📅", title: "Collection moved to Thursday",
+      body: "Due to the holiday on Wednesday, this week's collection is moved to Thursday, April 24. Please have bags out by 7 AM.",
+      tag: "Community", tagColor: "#007AFF"
+    },
+    {
+      id: 6, cat: "offers", read: true, time: "4d ago",
+      icon: "🏗️", title: "Free recycling station upgrade",
+      body: "Parkside Apartments qualifies for a free 3-bin sorting station in the parking garage. Vote to approve by April 30.",
+      tag: "Capital Improvement", tagColor: "#FF9500",
+      cta: "Vote Now"
+    },
+    {
+      id: 7, cat: "training", read: true, time: "5d ago",
+      icon: "🧴", title: "Rinse containers before recycling",
+      body: "A quick rinse removes food residue that can contaminate an entire recycling batch. No need to scrub — just rinse.",
+      tag: "Collection Training", tagColor: "#1D9100"
+    },
+    {
+      id: 8, cat: "community", read: true, time: "1w ago",
+      icon: "👋", title: "Welcome to WasteFree, Ashley!",
+      body: "Your account is set up and your first collection is scheduled. Put your waste out tonight and we'll handle the rest.",
+      tag: "Community", tagColor: "#007AFF"
+    },
+  ];
+
+  const NotificationsScreen = () => {
+    const [activeCategory, setActiveCategory] = useState(CATEGORIES.ALL);
+    const [readState, setReadState] = useState(() => {
+      const state = {};
+      notifications.forEach(n => { state[n.id] = n.read; });
+      return state;
+    });
+
+    const categories = [
+      { id: CATEGORIES.ALL, label: "All" },
+      { id: CATEGORIES.TRAINING, label: "Training" },
+      { id: CATEGORIES.COMMUNITY, label: "Community" },
+      { id: CATEGORIES.OFFERS, label: "Offers" },
+    ];
+
+    const filtered = activeCategory === CATEGORIES.ALL
+      ? notifications
+      : notifications.filter(n => n.cat === activeCategory);
+
+    const unreadCount = notifications.filter(n => !readState[n.id]).length;
+
+    const markRead = (id) => {
+      setReadState(prev => ({ ...prev, [id]: true }));
+    };
+
+    return (
+      <PhoneFrame>
+        {/* Header */}
+        <div style={{
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          padding: "8px 20px 12px", borderBottom: "1px solid #f0f0f0"
+        }}>
+          <div style={{ width: 60 }} />
+          <span style={{ fontSize: 18, fontWeight: 700 }}>Notifications</span>
+          <div style={{ width: 60, textAlign: "right" }}>
+            {unreadCount > 0 && (
+              <span style={{ fontSize: 12, color: "#007AFF", fontWeight: 600, cursor: "pointer" }}
+                onClick={() => {
+                  const updated = { ...readState };
+                  notifications.forEach(n => { updated[n.id] = true; });
+                  setReadState(updated);
+                }}
+              >Mark all read</span>
+            )}
+          </div>
+        </div>
+
+        {/* Category tabs */}
+        <div style={{
+          display: "flex", gap: 6, padding: "10px 16px",
+          background: "#fafafa", borderBottom: "1px solid #f0f0f0"
+        }}>
+          {categories.map(cat => {
+            const catUnread = cat.id === CATEGORIES.ALL
+              ? unreadCount
+              : notifications.filter(n => n.cat === cat.id && !readState[n.id]).length;
+            return (
+              <div key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{
+                flex: 1, textAlign: "center", padding: "7px 2px", borderRadius: 20,
+                fontSize: 11, fontWeight: activeCategory === cat.id ? 700 : 400,
+                background: activeCategory === cat.id ? "#1a1a1a" : "transparent",
+                color: activeCategory === cat.id ? "#fff" : "#888",
+                cursor: "pointer", position: "relative"
+              }}>
+                {cat.label}
+                {catUnread > 0 && (
+                  <span style={{
+                    display: "inline-block", marginLeft: 4,
+                    width: 16, height: 16, borderRadius: 8, lineHeight: "16px",
+                    background: activeCategory === cat.id ? "#FF3B30" : "#FF3B30",
+                    color: "#fff", fontSize: 9, fontWeight: 700, textAlign: "center",
+                    verticalAlign: "middle"
+                  }}>{catUnread}</span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Notification list */}
+        <div style={{ flex: 1, overflowY: "auto" }}>
+          {filtered.map(n => (
+            <div key={n.id} onClick={() => markRead(n.id)} style={{
+              display: "flex", gap: 12, padding: "14px 20px",
+              borderBottom: "1px solid #f5f5f5", cursor: "pointer",
+              background: readState[n.id] ? "#fff" : "#F0F7EE",
+              transition: "background 0.3s ease"
+            }}>
+              {/* Unread dot */}
+              <div style={{ width: 8, display: "flex", alignItems: "flex-start", paddingTop: 6, flexShrink: 0 }}>
+                {!readState[n.id] && (
+                  <div style={{ width: 8, height: 8, borderRadius: 4, background: "#1D9100" }} />
+                )}
+              </div>
+              {/* Icon */}
+              <div style={{
+                width: 40, height: 40, borderRadius: 10, background: "#f5f5f5",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 20, flexShrink: 0
+              }}>{n.icon}</div>
+              {/* Content */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 3 }}>
+                  <span style={{ fontSize: 14, fontWeight: readState[n.id] ? 500 : 700, color: "#1a1a1a", flex: 1, marginRight: 8 }}>{n.title}</span>
+                  <span style={{ fontSize: 11, color: "#bbb", flexShrink: 0, whiteSpace: "nowrap" }}>{n.time}</span>
+                </div>
+                <div style={{ fontSize: 12, color: "#666", lineHeight: 1.4, marginBottom: 6 }}>{n.body}</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{
+                    fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 4,
+                    background: n.tagColor + "18", color: n.tagColor
+                  }}>{n.tag}</span>
+                  {n.cta && (
+                    <span style={{
+                      fontSize: 11, fontWeight: 600, color: "#1D9100", cursor: "pointer"
+                    }}>{n.cta} →</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Bottom spacer with empty state hint */}
+          <div style={{ padding: "20px 20px 16px", textAlign: "center" }}>
+            <div style={{ fontSize: 12, color: "#ccc" }}>
+              {filtered.length === 0
+                ? "No notifications in this category yet."
+                : `Showing ${filtered.length} notification${filtered.length !== 1 ? "s" : ""}`
+              }
+            </div>
+          </div>
+        </div>
+      </PhoneFrame>
+    );
+  };
+
+  function WasteFreeFlow5() {
+    return (
+      <div style={{
+        background: "#f5f5f5", padding: "16px 0",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+      }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+          <div className="proto-phone-notes" style={{
+            display: "flex", justifyContent: "center", alignItems: "flex-start",
+            gap: 24
+          }}>
+            <NotificationsScreen />
+            <div className="proto-notes-card" style={{
+              maxWidth: 320, padding: 16, borderRadius: 12,
+              background: "#fff", border: "1px solid #e0e0e0", alignSelf: "flex-start"
+            }}>
+              <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 6 }}>Design Notes</div>
+              <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
+                <strong>Three notification categories</strong> give WasteFree a persistent communication channel with residents:
+                <br/><br/>
+                <strong>Collection Training</strong> — educational tips that improve sorting accuracy over time. Reduces contamination rates and makes the service more effective for the whole community.
+                <br/><br/>
+                <strong>Community</strong> — messages from property management and WasteFree. Schedule changes, milestones, welcome messages. Builds community identity around waste reduction.
+                <br/><br/>
+                <strong>Offers</strong> — bulk purchasing and infrastructure upgrades. Revenue opportunity for WasteFree while delivering genuine value (group discounts, free equipment).
+                <br/><br/>
+                <strong>Try it:</strong> Tap a notification to mark it as read. Use the category tabs to filter. "Mark all read" clears the unread badges. Unread count badges on each tab show at-a-glance volume.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('flow-5-root')).render(<WasteFreeFlow5 />);
 })()}
 </script>
 

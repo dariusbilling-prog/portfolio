@@ -3849,19 +3849,45 @@
     DETAIL_UNIDENTIFIED: "detail_unidentified",
   };
 
-  /* Sample collection data */
-  const collectionItems = [
-    { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true },
-    { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤" },
-    { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
-    { id: 4, name: "Unidentified Item", identified: false, code: "Organic", method: "Composted", time: "Yesterday, 4:22 PM", icon: "🗑️", photo: true },
-    { id: 5, name: "Mixed Paper Bundle", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Yesterday, 3:15 PM", icon: "📄" },
-    { id: 6, name: "Seventh Generation Dish Soap", identified: true, code: "HDPE", method: "Downcycled", time: "Yesterday, 1:02 PM", icon: "🧴" },
-    { id: 7, name: "Topo Chico 4pk Glass", identified: true, code: "Glass", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🍾" },
-    { id: 8, name: "Steel Can (Beans)", identified: true, code: "Ferrous", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🥫" },
-    { id: 9, name: "Unidentified Item", identified: false, code: "Non-Ferrous", method: "Remelted", time: "Apr 10, 9:15 AM", icon: "🗑️", photo: true },
-    { id: 10, name: "Banana Peels & Scraps", identified: true, code: "Organic", method: "Composted", time: "Apr 9, 6:30 PM", icon: "🍌" },
-  ];
+  /* Sample collection data — per time range */
+  const collectionByRange = {
+    service: [
+      { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true },
+      { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤" },
+      { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
+    ],
+    week: [
+      { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true },
+      { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤" },
+      { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
+      { id: 4, name: "Unidentified Item", identified: false, code: "Organic", method: "Composted", time: "Yesterday, 4:22 PM", icon: "🗑️", photo: true },
+      { id: 5, name: "Mixed Paper Bundle", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Yesterday, 3:15 PM", icon: "📄" },
+      { id: 6, name: "Seventh Generation Dish Soap", identified: true, code: "HDPE", method: "Downcycled", time: "Yesterday, 1:02 PM", icon: "🧴" },
+      { id: 7, name: "Topo Chico 4pk Glass", identified: true, code: "Glass", method: "Remelted", time: "Mon, 9:17 AM", icon: "🍾" },
+    ],
+    month: [
+      { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true },
+      { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤" },
+      { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
+      { id: 4, name: "Unidentified Item", identified: false, code: "Organic", method: "Composted", time: "Yesterday, 4:22 PM", icon: "🗑️", photo: true },
+      { id: 5, name: "Mixed Paper Bundle", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Yesterday, 3:15 PM", icon: "📄" },
+      { id: 6, name: "Seventh Generation Dish Soap", identified: true, code: "HDPE", method: "Downcycled", time: "Yesterday, 1:02 PM", icon: "🧴" },
+      { id: 7, name: "Topo Chico 4pk Glass", identified: true, code: "Glass", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🍾" },
+      { id: 8, name: "Steel Can (Beans)", identified: true, code: "Ferrous", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🥫" },
+      { id: 9, name: "Unidentified Item", identified: false, code: "Non-Ferrous", method: "Remelted", time: "Apr 10, 9:15 AM", icon: "🗑️", photo: true },
+      { id: 10, name: "Banana Peels & Scraps", identified: true, code: "Organic", method: "Composted", time: "Apr 9, 6:30 PM", icon: "🍌" },
+      { id: 11, name: "Tide Pods Container", identified: true, code: "HDPE", method: "Downcycled", time: "Apr 7, 3:45 PM", icon: "🧺" },
+      { id: 12, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Apr 5, 11:20 AM", icon: "🗑️", photo: true },
+      { id: 13, name: "Oatly Carton", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Apr 3, 2:10 PM", icon: "🥛" },
+      { id: 14, name: "Wine Bottle", identified: true, code: "Glass", method: "Remelted", time: "Apr 1, 7:55 PM", icon: "🍷" },
+    ],
+  };
+
+  const summaryByRange = {
+    service: { bags: 1, items: 3, lbs: "1.4", collections: "Today, 2:34 PM", collector: "Marcus T. (EMP-0247)", violation: "No", trend: "↑ Diversion rate: 67% this pickup" },
+    week: { bags: 3, items: 7, lbs: "3.1", collections: "Apr 21–23", collector: "Marcus T. (EMP-0247)", violation: "No", trend: "↑ Diversion rate improving — 82% this week vs. 75% avg" },
+    month: { bags: 8, items: 14, lbs: "6.8", collections: "Apr 1–23", collector: "Multiple", violation: "No", trend: "↑ Diversion rate improving — 79% this month vs. 72% last month" },
+  };
 
   const methodColors = {
     "Closed-Loop": { bg: "#E8F2E3", text: "#167000" },
@@ -3875,6 +3901,10 @@
   const CollectedItemsScreen = ({ onTapItem }) => {
     const [dateFilter, setDateFilter] = useState(0);
     const dateOptions = ["This Service", "This Week", "This Month"];
+    const rangeKeys = ["service", "week", "month"];
+    const currentRange = rangeKeys[dateFilter];
+    const collectionItems = collectionByRange[currentRange];
+    const summary = summaryByRange[currentRange];
     const identified = collectionItems.filter(i => i.identified).length;
     const unidentified = collectionItems.filter(i => !i.identified).length;
 
@@ -3907,19 +3937,19 @@
 
         <div style={{ flex: 1, overflowY: "auto" }}>
 
-          {/* ── Bag-level collection metadata (NEW per client request) ── */}
+          {/* ── Bag-level collection metadata ── */}
           <div style={{ padding: "14px 20px", borderBottom: "1px solid #f0f0f0" }}>
             <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
               <div style={{ flex: 1, padding: 10, borderRadius: 10, background: "#E8F2E3", textAlign: "center" }}>
-                <div style={{ fontSize: 20, fontWeight: 800, color: "#167000" }}>3</div>
+                <div style={{ fontSize: 20, fontWeight: 800, color: "#167000" }}>{summary.bags}</div>
                 <div style={{ fontSize: 10, color: "#167000", fontWeight: 500 }}>Bags</div>
               </div>
               <div style={{ flex: 1, padding: 10, borderRadius: 10, background: "#f5f5f5", textAlign: "center" }}>
-                <div style={{ fontSize: 20, fontWeight: 800, color: "#1a1a1a" }}>10</div>
+                <div style={{ fontSize: 20, fontWeight: 800, color: "#1a1a1a" }}>{summary.items}</div>
                 <div style={{ fontSize: 10, color: "#666", fontWeight: 500 }}>Items</div>
               </div>
               <div style={{ flex: 1, padding: 10, borderRadius: 10, background: "#f5f5f5", textAlign: "center" }}>
-                <div style={{ fontSize: 20, fontWeight: 800, color: "#1a1a1a" }}>4.2</div>
+                <div style={{ fontSize: 20, fontWeight: 800, color: "#1a1a1a" }}>{summary.lbs}</div>
                 <div style={{ fontSize: 10, color: "#666", fontWeight: 500 }}>Lbs</div>
               </div>
             </div>
@@ -3927,9 +3957,9 @@
             {/* Service details */}
             <div style={{ padding: 12, borderRadius: 10, border: "1.5px solid #e8e8e8", fontSize: 13 }}>
               {[
-                { label: "Collection Time", value: "Today, 2:34 PM" },
-                { label: "Collector", value: "Marcus T. (EMP-0247)" },
-                { label: "Violation Assessed", value: "No" },
+                { label: dateFilter === 0 ? "Collection Time" : "Date Range", value: summary.collections },
+                { label: dateFilter === 2 ? "Collectors" : "Collector", value: summary.collector },
+                { label: "Violation Assessed", value: summary.violation },
               ].map((row, i) => (
                 <div key={i} style={{
                   display: "flex", justifyContent: "space-between", padding: "5px 0",
@@ -3942,7 +3972,7 @@
             </div>
 
             <div style={{ marginTop: 10, fontSize: 12, color: "#1D9100", fontWeight: 500, textAlign: "center" }}>
-              ↑ Diversion rate improving — 82% this week vs. 75% avg
+              {summary.trend}
             </div>
           </div>
 

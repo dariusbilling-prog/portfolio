@@ -1493,23 +1493,40 @@
 
   const PreferenceScreen = ({ onBack, onSelect }) => {
     const [ranking, setRanking] = useState(["money", "planet", "health"]);
+    const [dragging, setDragging] = useState(null);
+    const [dragOver, setDragOver] = useState(null);
     const options = {
       money: { icon: "💰", title: "Save Money", desc: "Find cheaper brands, bulk deals, and smarter substitutes that do the same job for less." },
       health: { icon: "🥦", title: "Be Healthier", desc: "Fewer dyes, chemicals, and artificial ingredients — not just fewer calories. Cleaner products for your household." },
       planet: { icon: "🌍", title: "Save the Planet", desc: "Buy local, reduce packaging weight, and choose products made from recycled or recyclable materials." },
     };
 
-    const moveUp = (idx) => {
-      if (idx === 0) return;
+    const handleDragStart = (idx) => { setDragging(idx); };
+    const handleDragOver = (e, idx) => { e.preventDefault(); setDragOver(idx); };
+    const handleDrop = (idx) => {
+      if (dragging === null || dragging === idx) { setDragging(null); setDragOver(null); return; }
       const next = [...ranking];
-      [next[idx - 1], next[idx]] = [next[idx], next[idx - 1]];
+      const [moved] = next.splice(dragging, 1);
+      next.splice(idx, 0, moved);
       setRanking(next);
+      setDragging(null);
+      setDragOver(null);
     };
-    const moveDown = (idx) => {
-      if (idx === ranking.length - 1) return;
-      const next = [...ranking];
-      [next[idx], next[idx + 1]] = [next[idx + 1], next[idx]];
-      setRanking(next);
+    const handleDragEnd = () => { setDragging(null); setDragOver(null); };
+
+    /* Tap-to-swap for click-based interaction (select first, tap second to swap) */
+    const [selected, setSelected] = useState(null);
+    const handleTap = (idx) => {
+      if (selected === null) {
+        setSelected(idx);
+      } else if (selected === idx) {
+        setSelected(null);
+      } else {
+        const next = [...ranking];
+        [next[selected], next[idx]] = [next[idx], next[selected]];
+        setRanking(next);
+        setSelected(null);
+      }
     };
 
     return (
@@ -1520,19 +1537,49 @@
         <div style={{ flex: 1, padding: "16px 24px" }}>
           <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Rank your priorities</div>
           <div style={{ fontSize: 14, color: "#888", lineHeight: 1.5, marginBottom: 20 }}>
-            Drag to reorder — your #1 priority shapes your WasteFree recommendations most.
+            {selected !== null
+              ? "Now tap another to swap positions."
+              : "Tap a card to select it, then tap another to swap. Or drag to reorder."}
           </div>
 
           {ranking.map((id, idx) => {
             const opt = options[id];
             const rankColors = ["#1D9100", "#4CAF50", "#999"];
+            const isSelected = selected === idx;
+            const isDragTarget = dragOver === idx && dragging !== idx;
             return (
-              <div key={id} style={{
-                padding: "14px 16px", borderRadius: 14, marginBottom: 10,
-                border: idx === 0 ? "2px solid #1D9100" : "1.5px solid #e0e0e0",
-                background: idx === 0 ? "#E8F2E3" : "#fff",
-                display: "flex", alignItems: "center", gap: 12
-              }}>
+              <div
+                key={id}
+                draggable
+                onDragStart={() => handleDragStart(idx)}
+                onDragOver={(e) => handleDragOver(e, idx)}
+                onDrop={() => handleDrop(idx)}
+                onDragEnd={handleDragEnd}
+                onClick={() => handleTap(idx)}
+                style={{
+                  padding: "14px 16px", borderRadius: 14, marginBottom: 10,
+                  border: isSelected ? "2px solid #1a1a1a"
+                    : isDragTarget ? "2px dashed #1D9100"
+                    : idx === 0 ? "2px solid #1D9100" : "1.5px solid #e0e0e0",
+                  background: isSelected ? "#f0f0f0"
+                    : isDragTarget ? "#E8F2E3"
+                    : idx === 0 ? "#E8F2E3" : "#fff",
+                  display: "flex", alignItems: "center", gap: 12,
+                  cursor: "grab", userSelect: "none",
+                  transform: isSelected ? "scale(1.02)" : dragging === idx ? "scale(0.97)" : "none",
+                  opacity: dragging === idx ? 0.5 : 1,
+                  transition: "all 0.15s ease",
+                  boxShadow: isSelected ? "0 2px 12px rgba(0,0,0,0.1)" : "none"
+                }}
+              >
+                {/* Drag handle */}
+                <div style={{
+                  display: "flex", flexDirection: "column", gap: 2, flexShrink: 0,
+                  color: "#bbb", fontSize: 10, lineHeight: 1, padding: "0 2px"
+                }}>
+                  <span>⠿</span>
+                </div>
+
                 <div style={{
                   width: 28, height: 28, borderRadius: 14,
                   background: rankColors[idx], color: "#fff",
@@ -1546,21 +1593,13 @@
                   </div>
                   <div style={{ fontSize: 12, color: "#666", lineHeight: 1.4 }}>{opt.desc}</div>
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 4, flexShrink: 0 }}>
-                  <div onClick={() => moveUp(idx)} style={{
-                    width: 28, height: 28, borderRadius: 8, border: "1px solid #ddd",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    cursor: idx === 0 ? "default" : "pointer", color: idx === 0 ? "#ddd" : "#666", fontSize: 12
-                  }}>▲</div>
-                  <div onClick={() => moveDown(idx)} style={{
-                    width: 28, height: 28, borderRadius: 8, border: "1px solid #ddd",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    cursor: idx === ranking.length - 1 ? "default" : "pointer", color: idx === ranking.length - 1 ? "#ddd" : "#666", fontSize: 12
-                  }}>▼</div>
-                </div>
               </div>
             );
           })}
+
+          <div style={{ fontSize: 12, color: "#aaa", textAlign: "center", marginTop: 4 }}>
+            You can change this anytime in Settings
+          </div>
         </div>
         <CTAButton label="Continue" onClick={() => onSelect && onSelect()} />
         <ProgressDots current={2} total={6} />

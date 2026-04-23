@@ -2057,8 +2057,8 @@
     );
   };
 
-  const CTAButton = ({ label, secondary }) => (
-    <div style={{
+  const CTAButton = ({ label, secondary, onClick }) => (
+    <div onClick={onClick} style={{
       margin: "12px 20px", padding: "16px 0", borderRadius: 14,
       background: secondary ? "transparent" : "#1a1a1a",
       color: secondary ? "#1a1a1a" : "#fff",
@@ -2330,12 +2330,12 @@
           </div>
         </div>
       </div>
-      <CTAButton label="Add to Cart — $5.99" />
+      <CTAButton label="Add to Cart — $5.99" onClick={onAdd} />
     </PhoneFrame>
   );
 
   // SCREEN: Item Detail — WasteFree Suggested Replacements (multiple options)
-  const DetailAltScreen = ({ onBack, preference = "money" }) => {
+  const DetailAltScreen = ({ onBack, onAdd, preference = "money" }) => {
     const [selectedAlt, setSelectedAlt] = useState(0);
 
     const ALT_OPTIONS = {
@@ -2522,7 +2522,7 @@
           </div>
         </div>
       </div>
-      <CTAButton label={`Add to Cart — ${selected.price}`} />
+      <CTAButton label={`Add to Cart — ${selected.price}`} onClick={onAdd} />
       <div onClick={onBack} style={{
         textAlign: "center", padding: "0 0 14px", fontSize: 13,
         color: "#888", cursor: "pointer"
@@ -2633,7 +2633,7 @@
           </div>
         </div>
       </div>
-      <CTAButton label={`Checkout — ${cart.subtotal}`} />
+      <CTAButton label={`Checkout — ${cart.subtotal}`} onClick={onCheckout} />
     </PhoneFrame>
     );
   };
@@ -2750,7 +2750,7 @@
           {checkout.nudge}
         </div>
       </div>
-      <CTAButton label={`Place Order — ${checkout.total}`} />
+      <CTAButton label={`Place Order — ${checkout.total}`} onClick={onPlace} />
     </PhoneFrame>
     );
   };
@@ -2868,7 +2868,7 @@
           {checkout.nudge}
         </div>
       </div>
-      <CTAButton label={`Place Order — ${checkout.total}`} />
+      <CTAButton label={`Place Order — ${checkout.total}`} onClick={onPlace} />
     </PhoneFrame>
     );
   };
@@ -2974,7 +2974,7 @@
         />
       ),
       [SCREENS.DETAIL_ALT]: (
-        <DetailAltScreen onBack={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)} preference={preference} />
+        <DetailAltScreen onBack={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)} onAdd={() => setCurrentScreen(SCREENS.CART)} preference={preference} />
       ),
       [SCREENS.CART]: (
         <CartScreen

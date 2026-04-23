@@ -1961,6 +1961,7 @@
     NOTIFICATION: "notification",
     TONIGHT_ITEMS: "tonight_items",
     TONIGHT_EMPTY: "tonight_empty",
+    THIS_MONTH: "this_month",
     DETAIL_SAME: "detail_same",
     DETAIL_ALT: "detail_alt",
     CART: "cart",
@@ -2207,7 +2208,7 @@
         />
 
         {/* Link to previous pick-ups */}
-        <div style={{
+        <div onClick={onViewPrevious} style={{
           margin: "8px 16px 0", padding: "14px 16px", borderRadius: 12,
           background: "#f8f8f8", textAlign: "center", cursor: "pointer"
         }}>
@@ -2249,6 +2250,120 @@
         <div style={{ fontSize: 14, color: "#1D9100", fontWeight: 600, marginTop: 16, cursor: "pointer" }}>
           Browse products →
         </div>
+      </div>
+    </PhoneFrame>
+  );
+
+  // SCREEN: This Month — Previous Pick-ups (30 days)
+  const ThisMonthScreen = ({ onBuyAgain, onBuyWF, onBackToTonight }) => (
+    <PhoneFrame>
+      <Header
+        left=""
+        title="My Items"
+        right={<CartBadge count={0} />}
+      />
+      {/* Tonight / This Month tab bar */}
+      <div style={{
+        display: "flex", gap: 0, padding: "8px 16px",
+        background: "#fafafa", borderBottom: "1px solid #f0f0f0"
+      }}>
+        <div onClick={onBackToTonight} style={{
+          flex: 1, textAlign: "center", padding: "8px 4px", borderRadius: 10,
+          fontSize: 13, fontWeight: 400,
+          background: "transparent", color: "#888", cursor: "pointer"
+        }}>Tonight</div>
+        <div style={{
+          flex: 1, textAlign: "center", padding: "8px 4px", borderRadius: 10,
+          fontSize: 13, fontWeight: 700,
+          background: "#1a1a1a", color: "#fff", cursor: "pointer"
+        }}>This Month</div>
+      </div>
+      <div style={{ padding: "12px 16px 4px", fontSize: 13, fontWeight: 600, color: "#888" }}>
+        April 1–23, 2026 · 14 items from 6 pick-ups
+      </div>
+      <div style={{ flex: 1, overflowY: "auto", paddingTop: 8, paddingBottom: 16 }}>
+        {/* Week 1 label */}
+        <div style={{ padding: "6px 16px 4px", fontSize: 11, fontWeight: 600, color: "#aaa", textTransform: "uppercase", letterSpacing: 0.5 }}>
+          April 14 – 20
+        </div>
+        <ItemCard
+          name="Oat Milk (Oatly)"
+          detail="64 oz, Original"
+          price="$5.49"
+          onBuyAgain={onBuyAgain}
+          onBuyWF={() => onBuyWF("health")}
+        />
+        <ItemCard
+          name="Nature's Own Bread"
+          detail="Whole Wheat, 20 oz"
+          price="$3.29"
+          onBuyAgain={onBuyAgain}
+          onBuyWF={() => onBuyWF("health")}
+        />
+        <ItemCard
+          name="Coca-Cola"
+          detail="12-pack, 12 oz cans"
+          price="$6.49"
+          onBuyAgain={onBuyAgain}
+          onBuyWF={() => onBuyWF("money")}
+        />
+        <ItemCard
+          name="Dawn Dish Soap"
+          detail="16 oz, Original"
+          price="$3.99"
+          onBuyAgain={onBuyAgain}
+          onBuyWF={() => onBuyWF("planet")}
+        />
+        {/* Week 2 label */}
+        <div style={{ padding: "14px 16px 4px", fontSize: 11, fontWeight: 600, color: "#aaa", textTransform: "uppercase", letterSpacing: 0.5 }}>
+          April 7 – 13
+        </div>
+        <ItemCard
+          name="Lay's Potato Chips"
+          detail="Family Size, Classic"
+          price="$4.99"
+          onBuyAgain={onBuyAgain}
+          onBuyWF={() => onBuyWF("money")}
+        />
+        <ItemCard
+          name="Pampers Diapers"
+          detail="Size 3, 28-count"
+          price="$10.99"
+          hasAlt={false}
+          onBuyAgain={onBuyAgain}
+        />
+        <ItemCard
+          name="Windex Glass Cleaner"
+          detail="23 oz, Original"
+          price="$4.49"
+          onBuyAgain={onBuyAgain}
+          onBuyWF={() => onBuyWF("planet")}
+        />
+        {/* Week 3 label */}
+        <div style={{ padding: "14px 16px 4px", fontSize: 11, fontWeight: 600, color: "#aaa", textTransform: "uppercase", letterSpacing: 0.5 }}>
+          April 1 – 6
+        </div>
+        <ItemCard
+          name="Cheerios"
+          detail="18 oz, Original"
+          price="$4.29"
+          onBuyAgain={onBuyAgain}
+          onBuyWF={() => onBuyWF("health")}
+        />
+        <ItemCard
+          name="Ziploc Bags"
+          detail="Gallon, 30-count"
+          price="$3.99"
+          onBuyAgain={onBuyAgain}
+          onBuyWF={() => onBuyWF("planet")}
+        />
+        <ItemCard
+          name="Folgers Coffee"
+          detail="30.5 oz, Classic Roast"
+          price="$8.99"
+          onBuyAgain={onBuyAgain}
+          onBuyWF={() => onBuyWF("money")}
+        />
       </div>
     </PhoneFrame>
   );
@@ -2964,9 +3079,17 @@
         <TonightItemsScreen
           onBuyAgain={() => setCurrentScreen(SCREENS.DETAIL_SAME)}
           onBuyWF={(pref) => { setPreference(pref); setCurrentScreen(SCREENS.DETAIL_ALT); }}
+          onViewPrevious={() => setCurrentScreen(SCREENS.THIS_MONTH)}
         />
       ),
       [SCREENS.TONIGHT_EMPTY]: <TonightEmptyScreen />,
+      [SCREENS.THIS_MONTH]: (
+        <ThisMonthScreen
+          onBuyAgain={() => setCurrentScreen(SCREENS.DETAIL_SAME)}
+          onBuyWF={(pref) => { setPreference(pref); setCurrentScreen(SCREENS.DETAIL_ALT); }}
+          onBackToTonight={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)}
+        />
+      ),
       [SCREENS.DETAIL_SAME]: (
         <DetailSameScreen
           onBack={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)}
@@ -3004,11 +3127,12 @@
       [SCREENS.NOTIFICATION]: "1. Push Notification",
       [SCREENS.TONIGHT_ITEMS]: "2. Tonight's Items",
       [SCREENS.TONIGHT_EMPTY]: "3. Empty State",
-      [SCREENS.DETAIL_SAME]: "4. Buy it Again (Detail)",
-      [SCREENS.DETAIL_ALT]: "5. Suggested Replacements",
-      [SCREENS.CART]: "6. Cart",
-      [SCREENS.CHECKOUT]: "7. Checkout",
-      [SCREENS.CONFIRMATION]: "8. Confirmation",
+      [SCREENS.THIS_MONTH]: "4. This Month",
+      [SCREENS.DETAIL_SAME]: "5. Buy it Again (Detail)",
+      [SCREENS.DETAIL_ALT]: "6. Suggested Replacements",
+      [SCREENS.CART]: "7. Cart",
+      [SCREENS.CHECKOUT]: "8. Checkout",
+      [SCREENS.CONFIRMATION]: "9. Confirmation",
     };
 
     const checkoutNotes = fulfillmentMode === "B"
@@ -3064,8 +3188,9 @@
               </div>
               <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
                 {currentScreen === SCREENS.NOTIFICATION && "The app's front door. Names specific products to drive tap-through. Deep links to Tonight's Items."}
-                {currentScreen === SCREENS.TONIGHT_ITEMS && "Default screen. 3 actions per item with deliberate visual hierarchy. 'Add to Cart' works without opening a detail screen."}
+                {currentScreen === SCREENS.TONIGHT_ITEMS && "Default screen. 2 actions per item with deliberate visual hierarchy. 'View previous pick-ups' link at the bottom leads to the This Month tab — 30 days of collection history with the same Buy it Again / Buy it WasteFree actions."}
                 {currentScreen === SCREENS.TONIGHT_EMPTY && "First launch or no new items. Friendly, not broken-feeling. Sets expectations for what happens next."}
+                {currentScreen === SCREENS.THIS_MONTH && "30-day history view. Tonight/This Month tab bar lets users switch context. Items grouped by week with date labels. Same item cards with Buy it Again and Buy it WasteFree actions — residents can reorder anything from their past collections, not just tonight's items. This is where 'View previous pick-ups' from the Tonight screen lands."}
                 {currentScreen === SCREENS.DETAIL_SAME && "Confirm repurchase with quantity/size/flavor adjustments. Only shown when user actively taps 'Buy it Again.'"}
                 {currentScreen === SCREENS.DETAIL_ALT && `Preference-driven alternative with comparison card. Shows ${preference === "money" ? "Save Money" : preference === "health" ? "Be Healthier" : "Save the Planet"} variant. 'Buy the original instead' escape hatch.`}
                 {currentScreen === SCREENS.CART && "Persistent cart across sessions. WasteFree picks get a badge. Savings line only appears when WasteFree items are present."}

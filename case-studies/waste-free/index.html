@@ -892,7 +892,7 @@
           <tr>
             <td><strong>2</strong></td>
             <td><strong>Repurchase / Buy Again</strong></td>
-            <td>Notification → tonight's items → 4 actions (Buy it Again, Buy WasteFree, Save Money, Healthier Choices) → checkout</td>
+            <td>Notification → tonight's items → 2 actions (Buy it Again, Buy it WasteFree) → suggested replacements → cart → checkout</td>
           </tr>
           <tr>
             <td><strong>3</strong></td>
@@ -903,6 +903,11 @@
             <td><strong>4</strong></td>
             <td><strong>Collection & Service Data</strong></td>
             <td>Added in Phase 2 per WasteFree request — collection transparency, item detail with recycling journey, and pickup history</td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td><strong>Notifications</strong></td>
+            <td>Centralized notification inbox with 3 categories: Collection Training, Resident/Community Messages, Bulk/Capital Improvement Offers</td>
           </tr>
         </tbody>
       </table>
@@ -1006,7 +1011,7 @@
     <!-- ■ PROTOTYPES -------------------------------------------------- -->
     <section id="prototype">
       <h2>Flows & Interactive Prototypes</h2>
-      <h3>Three Flows That Define the Entire Resident Experience</h3>
+      <h3>Five Flows That Define the Entire Resident Experience</h3>
       <p>Click through each prototype to experience the flow. Flow diagrams show the user journey logic above each interactive wireframe.</p>
 
       <!-- FLOW 1: Onboarding -->
@@ -1057,12 +1062,6 @@
           <div class="flow__arrow"></div>
           <div class="flow__step" style="width: 100%; text-align: center; font-size: 12px;">💰 Save Money → cheaper alt<br>🥦 Be Healthier → healthier alt<br>🌍 Save Planet → eco-friendly alt</div>
         </div>
-        <!-- Add to Cart path -->
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; min-width: 140px;">
-          <div class="flow__step" style="width: 100%; text-align: center; font-size: 13px;">+ Add to Cart</div>
-          <div class="flow__arrow"></div>
-          <div class="flow__step" style="width: 100%; text-align: center; font-size: 13px;">Skips detail, goes to cart</div>
-        </div>
       </div>
       <div class="flow" style="justify-content: center;">
         <div class="flow__step">Cart</div>
@@ -1072,7 +1071,7 @@
         <div class="flow__step">Confirmation + Impact</div>
       </div>
 
-      <p>This is 90% of the app's expected activity. A resident gets a push notification after their trash is collected, taps it, and lands directly on their item list. Each item offers three actions — buy the same thing again, buy a WasteFree alternative based on their onboarding preference, or add to cart for later. The "Buy it WasteFree" path is where the preference from onboarding (Flow 1) comes to life — the alternative product changes based on whether the resident chose Save Money, Be Healthier, or Save the Planet. Use the preference toggle in the prototype to see how the experience shifts.</p>
+      <p>This is 90% of the app's expected activity. A resident gets a push notification after their trash is collected, taps it, and lands directly on their item list. Each item offers two actions — buy the same thing again, or buy a WasteFree alternative based on their onboarding preference. The "Buy it WasteFree" path is where the preference from onboarding (Flow 1) comes to life — tapping it opens a Suggested Replacements screen with 2–3 alternative products, each with its own rationale, size/flavor options, and a "Why this option" explanation. A "View previous pick-ups" link at the bottom of tonight's items leads to a 30-day history view where residents can reorder from past collections. Use the preference toggle in the prototype to see how the experience shifts.</p>
       <p><strong>Approach A — Smart Default:</strong> The checkout pre-selects a single fulfillment provider based on the resident's onboarding profile (e.g., Amazon Prime). A "From your profile" badge builds trust, and an expandable "Change" dropdown keeps the UI clean for the majority of users who won't need to switch. This is the fastest path to checkout and the recommended approach for V1.</p>
 
       <div id="flow-2a-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
@@ -1098,18 +1097,16 @@
         <div class="flow__arrow"></div>
         <div class="flow__step">Sees WasteFree Score</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step">Scrolls to community ranking</div>
+        <div class="flow__step">Scrolls to community ranking (with zip code toggle)</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Sees waste breakdown by material</div>
+        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Scrolls through 3-tier waste breakdown</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step">Taps category → sees recycling method</div>
+        <div class="flow__step">Views tangible impact equivalencies</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step">Views tangible impact</div>
-        <div class="flow__arrow"></div>
-        <div class="flow__step">Shares or toggles date range</div>
+        <div class="flow__step">Taps "Share Ashley's Impact" → iOS share sheet</div>
       </div>
 
-      <p>The WasteFree Score works like a FICO score for waste. A sticky date toggle at the top (Last Pickup / This Week / This Month / YTD) controls all four sections at once. Community ranking is the primary engagement hook — residents see how their building compares. The waste-stream breakdown was revised based on WasteFree's feedback to use real material designations (PET, HDPE, OCC, Ferrous, Non-Ferrous, Glass, Organic) with friendly names for resident comprehension. "Non-recyclable" was renamed to "Landfilled" for transparency, and "Composted" was added as its own stream. Tapping any category reveals how that material was recycled (Closed-Loop, Downcycled, Remelted, Composted) with a plain-English explanation — progressive disclosure keeps the default view clean while giving depth on demand. A glossary link explains all recycling terms.</p>
+      <p>The WasteFree Score works like a FICO score for waste. A sticky date toggle at the top (Last Pickup / This Week / This Month / YTD) controls all sections at once. Community ranking includes a 3-way toggle (My community / My zip code / All communities) so residents can see how they compare at different scales. The waste-stream breakdown uses three stacked donut charts, each progressively more detailed: Chart 1 shows the basic split (Recycled / Composted / Landfilled), Chart 2 breaks down recyclable materials by type (PET, HDPE, OCC, Mixed Paper, Ferrous, Non-Ferrous, Glass), and Chart 3 shows how waste was processed (Closed-Loop, Downcycled, Remelted, Composted, Waste-to-Energy, Landfilled). All three charts are visible by scrolling — no hidden tabs or drill-down interactions. The impact section personalizes with the resident's name ("This month, Ashley has: Diverted 23 lbs of waste") and includes tangible equivalencies. Tapping "Share Ashley's Impact" opens a native iOS share sheet with contacts, social media apps, and utility actions.</p>
 
       <div id="flow-3-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
@@ -1125,17 +1122,22 @@
         <div class="flow__step">Can help identify unknown items (3-field form)</div>
       </div>
 
-      <p>Originally scoped as low priority, WasteFree requested this flow be added after reviewing the Phase 2 wireframes. This is the raw data transparency layer — while Flow 2 (Repurchase) only shows identified products the resident can rebuy, Flow 4 shows everything WasteFree collected, including unidentified trash with photos. The lead screen now combines collection history with the item summary: residents first see bag-level metadata (number of bags, collection time, collector name/employee ID, violation status) before scrolling into individual items. Each item displays its waste-stream designation (PET, OCC, Organic, etc.) and how it was processed. Unidentified items get a photo badge — tapping reveals the sorting photo and a simplified 3-field identification form (brand, product category, recycling category) so residents can crowdsource item recognition. This flow builds trust through radical transparency: residents see exactly what happened to every item in their bag.</p>
+      <p>Originally scoped as low priority, WasteFree requested this flow be added after reviewing the Phase 2 wireframes. This is the raw data transparency layer — while Flow 2 (Repurchase) only shows identified products the resident can rebuy, Flow 4 shows everything WasteFree collected, including unidentified trash with photos. The lead screen combines collection history with the item summary: residents first see bag-level metadata (number of bags, collection time, collector name/employee ID, violation status) before scrolling into individual items. The date tabs (This Service / This Week / This Month) are fully interactive — switching between them updates the bag count, item count, weight, date range, and item list to reflect the selected time period. Each item displays its waste-stream designation (PET, OCC, Organic, etc.) and how it was processed. Unidentified items get a photo badge — tapping reveals the sorting photo and a simplified 3-field identification form (brand, product category, recycling category) so residents can crowdsource item recognition. This flow builds trust through radical transparency: residents see exactly what happened to every item in their bag.</p>
 
       <div id="flow-4-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
       <h3>Flow 5 — Notifications</h3>
-      <p class="flow-description">
-        Centralized notification inbox with three categories: <strong>Collection Training</strong> (educational tips on sorting and recycling),
-        <strong>Resident & Community Messages</strong> (schedule changes, milestones, property manager comms), and
-        <strong>Bulk & Capital Improvement Offers</strong> (community group buys, infrastructure upgrades).
-        Gives WasteFree a persistent communication channel with residents beyond push notifications.
-      </p>
+      <div class="flow">
+        <div class="flow__step">User taps "Notifications" tab (badge shows unread count)</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Sees all notifications (filterable by category)</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Taps notification → marks as read</div>
+        <div class="flow__arrow"></div>
+        <div class="flow__step">Taps CTA on offers → views deal or votes</div>
+      </div>
+
+      <p>The notification inbox gives WasteFree a persistent communication channel with residents beyond push notifications. Three categories organize the content: Collection Training delivers educational tips that improve sorting accuracy over time (e.g., "greasy pizza boxes go in compost, not recycling"), Resident & Community Messages handles schedule changes, milestones, and property manager communications, and Bulk & Capital Improvement Offers surfaces group-buy deals and infrastructure upgrades — a revenue opportunity for WasteFree that delivers genuine value to residents. Unread notifications are visually distinct with a green dot and light background. Category tabs include unread count badges so residents can see at a glance where new content is. "Mark all read" clears everything at once.</p>
       <div id="flow-5-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
     </section>
 

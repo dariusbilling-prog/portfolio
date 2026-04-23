@@ -3301,7 +3301,7 @@
     }}>{label}</div>
   );
 
-  const ImpactScreen = () => {
+  const ImpactScreen = ({ onShare }) => {
     const [rankView, setRankView] = useState("community"); // community | zip | network
 
     /* ── CHART 1: Trash / Recycled / Composted (most basic split) ── */
@@ -3561,7 +3561,7 @@
             ))}
           </div>
 
-          <div style={{
+          <div onClick={onShare} style={{
             marginTop: 16, padding: "14px 0", borderRadius: 14,
             border: "1.5px solid #1a1a1a", textAlign: "center",
             fontSize: 15, fontWeight: 600, color: "#1a1a1a", cursor: "pointer"
@@ -3572,7 +3572,143 @@
     );
   };
 
-  function WasteFreeFlow2() {
+  /* ── iOS Share Sheet Component ── */
+  const IOSShareSheet = ({ onClose }) => {
+    const [animating, setAnimating] = useState(true);
+
+    React.useEffect(() => {
+      const t = setTimeout(() => setAnimating(false), 50);
+      return () => clearTimeout(t);
+    }, []);
+
+    const contacts = [
+      { name: "Ben", color: "#4A90D9", initials: "BT" },
+      { name: "Mom", color: "#E85D75", initials: "M" },
+      { name: "Sarah", color: "#5BC0BE", initials: "SK" },
+      { name: "Malik", color: "#F4A261", initials: "MJ" },
+    ];
+
+    const apps = [
+      { name: "Messages", icon: "💬", bg: "#34C759" },
+      { name: "Mail", icon: "✉️", bg: "#007AFF" },
+      { name: "Instagram", icon: "📷", bg: "linear-gradient(45deg, #F58529, #DD2A7B, #8134AF)" },
+      { name: "X", icon: "𝕏", bg: "#000" },
+      { name: "WhatsApp", icon: "📱", bg: "#25D366" },
+      { name: "Facebook", icon: "f", bg: "#1877F2" },
+    ];
+
+    const actions = [
+      { icon: "🔗", label: "Copy Link" },
+      { icon: "🔖", label: "Add to Reading List" },
+      { icon: "📄", label: "Print" },
+      { icon: "🖼️", label: "Save Image" },
+    ];
+
+    return (
+      <div style={{
+        position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
+        zIndex: 100, display: "flex", flexDirection: "column", justifyContent: "flex-end"
+      }}>
+        {/* Backdrop */}
+        <div onClick={onClose} style={{
+          position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
+          background: "rgba(0,0,0,0.4)",
+          opacity: animating ? 0 : 1,
+          transition: "opacity 0.3s ease"
+        }} />
+
+        {/* Share Sheet */}
+        <div style={{
+          position: "relative", zIndex: 101,
+          background: "#f2f2f7", borderRadius: "14px 14px 0 0",
+          transform: animating ? "translateY(100%)" : "translateY(0)",
+          transition: "transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)",
+          maxHeight: "75%", overflowY: "auto"
+        }}>
+          {/* Handle bar */}
+          <div style={{ display: "flex", justifyContent: "center", padding: "8px 0 4px" }}>
+            <div style={{ width: 36, height: 5, borderRadius: 3, background: "#c7c7cc" }} />
+          </div>
+
+          {/* Preview card */}
+          <div style={{
+            margin: "8px 16px 12px", padding: 12, borderRadius: 12,
+            background: "#fff", display: "flex", gap: 12, alignItems: "center"
+          }}>
+            <div style={{
+              width: 44, height: 44, borderRadius: 8, background: "#1D9100",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 20, flexShrink: 0
+            }}>🌍</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a", marginBottom: 2 }}>Ashley's WasteFree Impact</div>
+              <div style={{ fontSize: 11, color: "#8e8e93", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>wastefree.app/impact/ashley-w</div>
+            </div>
+          </div>
+
+          {/* Suggested contacts row */}
+          <div style={{ padding: "0 16px 14px" }}>
+            <div style={{ display: "flex", gap: 16, overflowX: "auto" }}>
+              {contacts.map((c, i) => (
+                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, cursor: "pointer" }}>
+                  <div style={{
+                    width: 52, height: 52, borderRadius: 26, background: c.color,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 16, fontWeight: 600, color: "#fff"
+                  }}>{c.initials}</div>
+                  <span style={{ fontSize: 10, color: "#666", maxWidth: 52, textAlign: "center", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* App row */}
+          <div style={{ padding: "0 16px 14px" }}>
+            <div style={{ display: "flex", gap: 14, overflowX: "auto" }}>
+              {apps.map((app, i) => (
+                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, cursor: "pointer" }}>
+                  <div style={{
+                    width: 52, height: 52, borderRadius: 12, background: app.bg,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: app.icon === "f" || app.icon === "𝕏" ? 22 : 24,
+                    color: "#fff", fontWeight: 700
+                  }}>{app.icon}</div>
+                  <span style={{ fontSize: 10, color: "#666" }}>{app.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Action list */}
+          <div style={{ margin: "0 16px 12px", borderRadius: 12, background: "#fff", overflow: "hidden" }}>
+            {actions.map((action, i) => (
+              <div key={i} style={{
+                display: "flex", alignItems: "center", gap: 12, padding: "13px 16px",
+                borderBottom: i < actions.length - 1 ? "0.5px solid #e5e5ea" : "none",
+                cursor: "pointer", fontSize: 15, color: "#1a1a1a"
+              }}>
+                <span style={{ fontSize: 18, width: 24, textAlign: "center" }}>{action.icon}</span>
+                <span>{action.label}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Cancel button */}
+          <div style={{ margin: "0 16px 20px" }}>
+            <div onClick={onClose} style={{
+              padding: "15px 0", borderRadius: 12, background: "#fff",
+              textAlign: "center", fontSize: 17, fontWeight: 600,
+              color: "#007AFF", cursor: "pointer"
+            }}>Cancel</div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  function WasteFreeFlow3Main() {
+    const [showShare, setShowShare] = useState(false);
+
     return (
       <div style={{
         background: "#f5f5f5", padding: "16px 0",
@@ -3584,18 +3720,53 @@
             display: "flex", justifyContent: "center", alignItems: "flex-start",
             gap: 24
           }}>
-            <ImpactScreen />
+            {/* Phone with share overlay */}
+            <div style={{ position: "relative" }}>
+              <ImpactScreen onShare={() => setShowShare(true)} />
+              {/* Share sheet renders as overlay inside the phone frame area */}
+              {showShare && (
+                <div style={{
+                  position: "absolute", top: 0, left: 0,
+                  width: PHONE_W * PHONE_SCALE, height: PHONE_H * PHONE_SCALE,
+                  overflow: "hidden", borderRadius: 26, zIndex: 200
+                }}>
+                  <div style={{
+                    width: PHONE_W, height: PHONE_H, position: "relative",
+                    transform: `scale(${PHONE_SCALE})`, transformOrigin: "top left"
+                  }}>
+                    <IOSShareSheet onClose={() => setShowShare(false)} />
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="proto-notes-card" style={{
               maxWidth: 320, padding: 16, borderRadius: 12,
               background: "#fff", border: "1px solid #e0e0e0", alignSelf: "flex-start"
             }}>
               <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 6 }}>Design Notes</div>
               <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
-                <strong>Revised per WasteFree feedback.</strong> Waste-stream breakdown now uses real material designations (PET, HDPE, OCC, Ferrous, etc.) with friendly names first for resident comprehension. "Non-recyclable" → "Landfilled" for honesty. "Composted" added as its own positive stream.
-                <br/><br/>
-                <strong>Progressive disclosure:</strong> Tap any category to expand and see <em>how</em> that material was recycled (Closed-Loop, Downcycled, Remelted, Composted). Plain-English explanation below each method. "What do these terms mean?" glossary link at the bottom for full definitions.
-                <br/><br/>
-                The donut chart center now shows "Diverted" percentage (everything except Landfilled) — reframes the metric as positive action. All 4 sections still update on date toggle. Community ranking remains the primary engagement hook.
+                {!showShare ? (
+                  <>
+                    <strong>Revised per WasteFree feedback.</strong> Waste-stream breakdown now uses real material designations (PET, HDPE, OCC, Ferrous, etc.) with friendly names first for resident comprehension. "Non-recyclable" → "Landfilled" for honesty. "Composted" added as its own positive stream.
+                    <br/><br/>
+                    <strong>Progressive disclosure:</strong> Tap any category to expand and see <em>how</em> that material was recycled (Closed-Loop, Downcycled, Remelted, Composted). Plain-English explanation below each method. "What do these terms mean?" glossary link at the bottom for full definitions.
+                    <br/><br/>
+                    The donut chart center now shows "Diverted" percentage (everything except Landfilled) — reframes the metric as positive action. All 4 sections still update on date toggle. Community ranking remains the primary engagement hook.
+                    <br/><br/>
+                    <strong>Try it:</strong> Scroll to the bottom and tap "Share Ashley's Impact" to see the iOS share sheet.
+                  </>
+                ) : (
+                  <>
+                    <strong>iOS Share Sheet.</strong> Standard native share pattern — residents immediately recognize this interaction. No learning curve.
+                    <br/><br/>
+                    <strong>Suggested contacts</strong> appear first for fastest sharing (recent conversations). App row shows the most common share destinations: Messages, Mail, Instagram, X, WhatsApp, Facebook.
+                    <br/><br/>
+                    <strong>Preview card</strong> at the top shows what's being shared — "Ashley's WasteFree Impact" with a link preview. This builds confidence before sharing.
+                    <br/><br/>
+                    <strong>Utility actions</strong> below (Copy Link, Save Image, Print) cover non-social use cases. Tap the backdrop or Cancel to dismiss.
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -3604,7 +3775,7 @@
     );
   }
 
-  ReactDOM.createRoot(document.getElementById('flow-3-root')).render(<WasteFreeFlow2 />);
+  ReactDOM.createRoot(document.getElementById('flow-3-root')).render(<WasteFreeFlow3Main />);
 })()}
 </script>
 

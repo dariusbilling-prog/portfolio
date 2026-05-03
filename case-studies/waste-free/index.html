@@ -1034,7 +1034,9 @@
         <div class="flow__step">Done — app waits for first collection</div>
       </div>
 
-      <p>WasteFree onboarding happens before the user (resident) ever sees WasteFree — leasing agents explain why WasteFree matters during move-in and offer the WasteFree service to tenants as a complimentary service for being a resident at the property. The app collects resident info, a quick survey about their shopping habits (to power fulfillment options), and one critical preference that shapes every product recommendation. Per-category preference refinement (e.g., "Save Money on groceries, Be Healthier on cosmetics") is introduced later in-app through progressive disclosure — keeping onboarding fast while still capturing the data WasteFree needs. Target: under 60 seconds from open to done.</p>
+      <p>WasteFree onboarding happens before the user (resident) ever sees WasteFree — leasing agents explain why WasteFree matters during move-in and offer the WasteFree service to tenants as a complimentary service for being a resident at the property. The app collects resident info, a quick survey about their shopping habits (to power fulfillment options), and three motivations residents rank in order of importance. The #1 choice shapes every recommendation; #2 and #3 act as fallbacks. Per-category refinement (e.g., "Save Money on groceries, Be Healthier on cosmetics") is layered in-app later through progressive disclosure — keeping onboarding fast. Target: under 60 seconds from open to done.</p>
+
+      <p><strong>Round 3 changes:</strong> tagline split onto two lines on the welcome screen ("See your Impact." / "Transform your Footprint."); grocery list expanded with Sam's, Costco, Aldi, and Trader Joe's; delivery membership list now includes GrubHub+, Favor, and GoPuff; preference defaults reordered to lead with Save the Planet, then Be Healthier, then Save Money; Done-screen copy updated from "Just put your bag out tonight" to "Just place your bag(s) out" so it doesn't promise service on a day a resident doesn't have it; "Your Primary Preference" label now matches the wording on the Profile page for consistency.</p>
 
       <div id="flow-1-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
@@ -1072,12 +1074,12 @@
       </div>
 
       <p>This is 90% of the app's expected activity. A resident gets a push notification after their trash is collected, taps it, and lands directly on their item list. Each item offers two actions — buy the same thing again, or buy a WasteFree alternative based on their onboarding preference. The "Buy it WasteFree" path is where the preference from onboarding (Flow 1) comes to life — tapping it opens a Suggested Replacements screen with 2–3 alternative products, each with its own rationale, size/flavor options, and a "Why this option" explanation. A "View previous pick-ups" link at the bottom of tonight's items leads to a 30-day history view where residents can reorder from past collections. Use the preference toggle in the prototype to see how the experience shifts.</p>
-      <p><strong>Approach A — Smart Default:</strong> The checkout pre-selects a single fulfillment provider based on the resident's onboarding profile (e.g., Amazon Prime). A "From your profile" badge builds trust, and an expandable "Change" dropdown keeps the UI clean for the majority of users who won't need to switch. This is the fastest path to checkout and the recommended approach for V1.</p>
+      <p><strong>Approach A — Smart Default (kept as a future option):</strong> Originally explored as the V1 path, this approach pre-selects a single fulfillment provider based on the resident's onboarding profile. <strong>Round 3 update — V1 will ship Approach B (Per-Item) instead.</strong> Ben's reasoning: residents need to be able to break up the retailer and shipper if they actually want to use WasteFree as their primary buying tool. With only a few APIs at launch, orders will naturally cluster anyway — so the per-item flexibility comes at little cost.</p>
 
       <div id="flow-2a-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
       <!-- FLOW 2B: Repurchase — Per-Item Fulfillment -->
-      <h3>Flow 2 — Repurchase (B): Per-Item Fulfillment</h3>
+      <h3>Flow 2 — Repurchase (B): Per-Item Fulfillment <span style="color:#1D9100;font-size:14px;">— V1 path</span></h3>
       <div class="flow" style="justify-content: center;">
         <div class="flow__step">Cart</div>
         <div class="flow__arrow"></div>
@@ -1086,7 +1088,7 @@
         <div class="flow__step">Confirmation + Impact</div>
       </div>
 
-      <p><strong>Approach B — Per-Item Fulfillment:</strong> Same flow as above, but at checkout each cart item gets its own fulfillment selector (Amazon, Instacart, DoorDash, HEB). This gives residents maximum flexibility but adds cognitive load. A yellow warning tells residents items from different stores may arrive separately. Compare the complexity with Approach A above — navigate both to the Checkout screen (step 7) to feel the difference.</p>
+      <p><strong>Approach B — Per-Item Fulfillment (V1):</strong> At checkout each cart item gets its own fulfillment selector (Amazon, Instacart, DoorDash, HEB, parcel carriers). This gives residents the flexibility to mix retailers in a single order — important for a buy-everything-here behaviour Ben wants to encourage. A yellow warning tells residents items from different stores may arrive separately. Future versions will collapse multi-retailer orders onto a Community Delivery Day.</p>
 
       <div id="flow-2b-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
@@ -1122,7 +1124,9 @@
         <div class="flow__step">Can help identify unknown items (3-field form)</div>
       </div>
 
-      <p>Originally scoped as low priority, WasteFree requested this flow be added after reviewing the Phase 2 wireframes. This is the raw data transparency layer — while Flow 2 (Repurchase) only shows identified products the resident can rebuy, Flow 4 shows everything WasteFree collected, including unidentified trash with photos. The lead screen combines collection history with the item summary: residents first see bag-level metadata (number of bags, collection time, collector name/employee ID, violation status) before scrolling into individual items. The date tabs (This Service / This Week / This Month) are fully interactive — switching between them updates the bag count, item count, weight, date range, and item list to reflect the selected time period. Each item displays its waste-stream designation (PET, OCC, Organic, etc.) and how it was processed. Unidentified items get a photo badge — tapping reveals the sorting photo and a simplified 3-field identification form (brand, product category, recycling category) so residents can crowdsource item recognition. This flow builds trust through radical transparency: residents see exactly what happened to every item in their bag.</p>
+      <p>Originally scoped as low priority, WasteFree requested this flow be added after reviewing the Phase 2 wireframes. This is the raw data transparency layer — while Flow 2 (Repurchase) only shows identified products the resident can rebuy, Flow 4 shows everything WasteFree collected, including unidentified trash with photos. The lead screen combines collection history with the item summary: residents first see bag-level metadata (number of bags, collection time, collector employee ID, violation status) before scrolling into individual items. The date tabs (This Service / This Week / This Month) are fully interactive — switching between them updates the bag count, item count, weight, date range, and item list to reflect the selected time period. Each item displays its waste-stream designation (PET, OCC, Organic, etc.). Unidentified items get a photo badge — tapping reveals the sorting photo and a simplified 3-field identification form (brand, product category, recycling category) so residents can crowdsource item recognition.</p>
+
+      <p><strong>Round 3 changes:</strong> dropped the "Landfilled" / "Closed-Loop" processing-method designations everywhere (list, detail, and recycling-journey) — we don't yet have downstream processing data, so claiming it would be dishonest. Material classifications stay (PET, OCC, etc.). Detail-page copy now uses forward-looking language: <em>"We anticipate this material will be recycled back into…"</em> The Identified detail page leads with a <strong>Buy It WasteFree Next Time</strong> CTA; the Unidentified detail page leads with a <strong>See Items that may be Similar</strong> CTA that filters by whatever metadata the resident provides (brand, material, classification). The green diversion-rate trend line under the Vio Assessed row was removed for the same data-honesty reason.</p>
 
       <div id="flow-4-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
@@ -1137,7 +1141,7 @@
         <div class="flow__step">Taps CTA on offers → views deal or votes</div>
       </div>
 
-      <p>The notification inbox gives WasteFree a persistent communication channel with residents beyond push notifications. Three categories organize the content: Collection Training delivers educational tips that improve sorting accuracy over time (e.g., "greasy pizza boxes go in compost, not recycling"), Resident & Community Messages handles schedule changes, milestones, and property manager communications, and Bulk & Capital Improvement Offers surfaces group-buy deals and infrastructure upgrades — a revenue opportunity for WasteFree that delivers genuine value to residents. Unread notifications are visually distinct with a green dot and light background. Category tabs include unread count badges so residents can see at a glance where new content is. "Mark all read" clears everything at once.</p>
+      <p>The notification inbox gives WasteFree a persistent communication channel with residents beyond push notifications. <strong>Round 3 update:</strong> rather than splitting messages across separate Training, Community, and Offers tabs, everything lives in one unified chronological inbox per Ben's request. Classification chips sit above the list so residents can filter the feed by category when they want to — but the default view is everything in one place. Each notification carries its own classification badge inline so the category context never gets lost. Unread notifications are visually distinct with a green dot and light background. "Mark all read" clears everything at once.</p>
       <div id="flow-5-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
     </section>
 
@@ -1317,10 +1321,13 @@
         {/* WasteFree logo — transparent bg version */}
         <img src="logo-green.png" alt="WasteFree" style={{ height: 120, width: "auto", marginBottom: 24 }} />
 
-        <div style={{ fontSize: 20, fontWeight: 600, color: "#1a1a1a", lineHeight: 1.5, marginBottom: 4 }}>
-          See your Impact. Transform your Footprint.
+        <div style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.4 }}>
+          See your Impact.
         </div>
-        <div style={{ fontSize: 15, fontWeight: 500, color: "#666", lineHeight: 1.6, fontStyle: "italic", marginTop: 8 }}>
+        <div style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.4 }}>
+          Transform your Footprint.
+        </div>
+        <div style={{ fontSize: 15, fontWeight: 500, color: "#666", lineHeight: 1.6, fontStyle: "italic", marginTop: 12 }}>
           What we do in the dark, shines in the light.
         </div>
       </div>
@@ -1460,7 +1467,7 @@
           <div style={{ marginBottom: 20 }}>
             <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Where do you usually buy groceries?</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {["HEB", "Walmart", "Target", "Kroger", "Whole Foods", "H Mart", "Fiesta", "Central Market", "Albertson's", "Sprouts", "Tom Thumb", "Other"].map(s => (
+              {["HEB", "Walmart", "Target", "Kroger", "Whole Foods", "H Mart", "Fiesta", "Central Market", "Albertson's", "Sprouts", "Tom Thumb", "Sam's", "Costco", "Aldi", "Trader Joe's", "Other"].map(s => (
                 <Chip key={s} label={s} selected={grocerySelected.has(s)} onClick={() => toggleChip(grocerySelected, setGrocerySelected, s)} />
               ))}
             </div>
@@ -1469,7 +1476,7 @@
           <div style={{ marginBottom: 20 }}>
             <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Are you a member of any delivery services?</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {["Amazon Fresh", "Instacart+", "DoorDash DashPass", "Uber Eats Pass", "Walmart+", "Shipt", "None"].map(s => (
+              {["Amazon Fresh", "Instacart+", "DoorDash DashPass", "Uber Eats Pass", "Walmart+", "Shipt", "GrubHub+", "Favor", "GoPuff", "None"].map(s => (
                 <Chip key={s} label={s} selected={appsSelected.has(s)} onClick={() => toggleChip(appsSelected, setAppsSelected, s)} />
               ))}
             </div>
@@ -1503,7 +1510,7 @@
   };
 
   const PreferenceScreen = ({ onBack, onSelect }) => {
-    const [ranking, setRanking] = useState(["money", "planet", "health"]);
+    const [ranking, setRanking] = useState(["planet", "health", "money"]);
     const [dragging, setDragging] = useState(null);
     const [dragOver, setDragOver] = useState(null);
     const options = {
@@ -1772,15 +1779,18 @@
           You're all set!
         </div>
         <div style={{ fontSize: 15, color: "#888", lineHeight: 1.6, marginBottom: 28 }}>
-          We'll notify you after your next trash collection. Just put your bag out tonight and we'll take care of the rest.
+          We'll notify you after your next trash collection. Just place your bag(s) out and we'll take care of the rest.
         </div>
 
         <div style={{
           width: "100%", padding: 16, borderRadius: 14,
           background: "#f8f8f8", border: "1.5px solid #e8e8e8", marginBottom: 8
         }}>
-          <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a" }}>
-            Your preference: Save Money 💰
+          <div style={{ fontSize: 11, fontWeight: 700, color: "#888", letterSpacing: 1.2, textTransform: "uppercase", marginBottom: 4 }}>
+            Your Primary Preference
+          </div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a" }}>
+            🌍 Save the Planet
           </div>
           <div style={{ fontSize: 13, color: "#888", marginTop: 4 }}>
             Change anytime in Profile
@@ -1823,7 +1833,7 @@
 
         {/* Menu Items */}
         {[
-          { label: "My Preference", detail: "💰 Save Money", highlight: true },
+          { label: "Your Primary Preference", detail: "🌍 Save the Planet", highlight: true },
           { label: "Notification Settings", detail: "" },
           { label: "About WasteFree", detail: "" },
           { label: "Help & Support", detail: "" },
@@ -2150,7 +2160,7 @@
             <span style={{ fontSize: 12, color: "#888" }}>now</span>
           </div>
           <div style={{ fontSize: 15, color: "#1a1a1a", lineHeight: 1.4, marginBottom: 4 }}>
-            Your <strong>Cherry Dr. Pepper</strong>, <strong>Tide Pods</strong>, and 2 other items were collected.
+            Your trash has been collected — see the <strong>4 items</strong> we processed.
           </div>
           <div style={{ fontSize: 14, color: "#666" }}>
             Tap to review and reorder.
@@ -2176,63 +2186,51 @@
     </PhoneFrame>
   );
 
-  // SCREEN: Tonight's Items
-  const TonightItemsScreen = ({ onBuyAgain, onBuyWF, onViewPrevious }) => (
-    <PhoneFrame>
-      <Header
-        left=""
-        title="My Items"
-        right={<CartBadge count={0} />}
-      />
-      <DateToggle selected={0} />
-      <div style={{ padding: "12px 16px 4px", fontSize: 13, fontWeight: 600, color: "#888" }}>
-        Tonight — April 4, 2026
-      </div>
-      <div style={{ flex: 1, overflowY: "auto", paddingTop: 8, paddingBottom: 16 }}>
-        <ItemCard
-          name="Cherry Dr. Pepper"
-          detail="12-pack, 12 oz cans"
-          price="$5.99"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("money")}
-        />
-        <ItemCard
-          name="Tide Pods"
-          detail="42-count, Original"
-          price="$12.99"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("health")}
-        />
-        <ItemCard
-          name="Bounty Paper Towels"
-          detail="8-roll, Select-A-Size"
-          price="$8.49"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("planet")}
-        />
-        <ItemCard
-          name="Crest Toothpaste"
-          detail="2-pack, Whitening"
-          price="$4.99"
-          hasAlt={false}
-          onBuyAgain={onBuyAgain}
-        />
+  // SCREEN: Tonight's Items — continuous scroll into This Week → This Month
+  const TonightItemsScreen = ({ onBuyAgain, onBuyWF, onViewPrevious }) => {
+    const SectionBanner = ({ label }) => (
+      <div style={{
+        position: "sticky", top: 0, zIndex: 5,
+        padding: "10px 16px", background: "#fff",
+        borderTop: "1px solid #f0f0f0", borderBottom: "1px solid #f0f0f0",
+        fontSize: 12, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase",
+        color: "#666"
+      }}>{label}</div>
+    );
 
-        {/* Link to previous pick-ups */}
-        <div onClick={onViewPrevious} style={{
-          margin: "8px 16px 0", padding: "14px 16px", borderRadius: 12,
-          background: "#f8f8f8", textAlign: "center", cursor: "pointer"
-        }}>
-          <div style={{ fontSize: 14, fontWeight: 600, color: "#1D9100" }}>
-            View other items from previous pick-ups →
+    return (
+      <PhoneFrame>
+        <Header
+          left=""
+          title="My Items"
+          right={<CartBadge count={0} />}
+        />
+        <DateToggle selected={0} />
+        <div style={{ flex: 1, overflowY: "auto", paddingBottom: 16 }}>
+          <SectionBanner label="Tonight — April 4, 2026" />
+          <div style={{ paddingTop: 8 }}>
+            <ItemCard name="Cherry Dr. Pepper" detail="12-pack, 12 oz cans" price="$5.99" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("money")} />
+            <ItemCard name="Tide Pods" detail="42-count, Original" price="$12.99" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("health")} />
+            <ItemCard name="Bounty Paper Towels" detail="8-roll, Select-A-Size" price="$8.49" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
+            <ItemCard name="Crest Toothpaste" detail="2-pack, Whitening" price="$4.99" hasAlt={false} onBuyAgain={onBuyAgain} />
           </div>
-          <div style={{ fontSize: 12, color: "#888", marginTop: 4 }}>
-            Browse items from your last 30 days of collections
+
+          {/* Continuous scroll — This Week appears below Tonight */}
+          <SectionBanner label="This Week" />
+          <div style={{ paddingTop: 8 }}>
+            <ItemCard name="Honey Nut Cheerios" detail="18.8 oz box" price="$4.49" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("health")} />
+            <ItemCard name="Charmin Ultra Soft" detail="12 mega rolls" price="$14.99" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
+          </div>
+
+          {/* Continuous scroll — This Month appears below This Week */}
+          <SectionBanner label="This Month" />
+          <div style={{ paddingTop: 8 }}>
+            <ItemCard name="Tropicana Orange Juice" detail="89 oz, Pure Premium" price="$6.49" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
           </div>
         </div>
-      </div>
-    </PhoneFrame>
-  );
+      </PhoneFrame>
+    );
+  };
 
   // SCREEN: Tonight's Items — Empty State
   const TonightEmptyScreen = () => (
@@ -3439,8 +3437,8 @@
           </div>
         </div>
 
-        {/* Community Ranking — now with zip code option */}
-        <SectionDivider label="Community Ranking" />
+        {/* Your Rankings — renamed from Community Ranking per Ben's Round 3 feedback */}
+        <SectionDivider label="Your Rankings" />
         <div style={{ padding: "8px 20px" }}>
           {/* Rank view toggle */}
           <div style={{ display: "flex", gap: 0, marginBottom: 12, borderRadius: 10, overflow: "hidden", border: "1.5px solid #ddd" }}>
@@ -3461,16 +3459,16 @@
             <div style={{ fontSize: 13, color: "#888", marginBottom: 8 }}>
               {rankView === "community" ? "Ashley's rank in Parkside Apartments" :
                rankView === "zip" ? "Ashley's rank in 75214" :
-               "Parkside Apartments vs. other communities"}
+               "Ashley's rank across All Communities"}
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 4 }}>
               <span style={{ fontSize: 32, fontWeight: 800, color: "#1a1a1a" }}>
-                {rankView === "community" ? "#12" : rankView === "zip" ? "#47" : "#3"}
+                {rankView === "community" ? "#12" : rankView === "zip" ? "#47" : "#248"}
               </span>
               <span style={{ fontSize: 15, color: "#666" }}>
                 {rankView === "community" ? "out of 87 residents" :
                  rankView === "zip" ? "out of 312 residents" :
-                 "of 12 communities"}
+                 "out of 1,042 residents"}
               </span>
             </div>
             <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>
@@ -3982,9 +3980,7 @@
               ))}
             </div>
 
-            <div style={{ marginTop: 10, fontSize: 12, color: "#1D9100", fontWeight: 500, textAlign: "center" }}>
-              {summary.trend}
-            </div>
+            {/* Round 3: removed green diversion trend text per Ben's request — we don't have processing data yet */}
           </div>
 
           {/* ── Item counts bar ── */}
@@ -4058,13 +4054,18 @@
 
   /* Screen 2: Item Detail — Identified */
   const DetailIdentifiedScreen = ({ item, onBack }) => {
-    const mc = methodColors[item.method] || methodColors["Landfilled"];
-    const methodDescriptions = {
-      "Closed-Loop": "This material was recycled back into the same product type. Bottle → bottle, box → box.",
-      "Downcycled": "Recycled into a lower-value product like insulation, lumber, or egg cartons.",
-      "Remelted": "Melted down and re-formed into new products. Metals and glass can repeat this indefinitely.",
-      "Composted": "Broken down aerobically into nutrient-rich soil for community gardens and landscaping.",
-      "Landfilled": "Could not be recycled or composted with current infrastructure.",
+    // Round 3: removed Closed-Loop / Landfilled designations — we don't have downstream data yet.
+    // Forward-looking copy by material class (anticipated, not asserted).
+    const materialAnticipations = {
+      "PET": "We anticipate this material will be recycled back into new bottles and food-grade containers.",
+      "HDPE": "We anticipate this material will be recycled back into new jugs, piping, or recycled-content lumber.",
+      "OCC": "We anticipate this cardboard will be recycled back into new corrugated boxes and packaging.",
+      "Mixed Paper": "We anticipate this paper will be recycled back into new paperboard, cartons, or insulation.",
+      "Glass": "We anticipate this glass will be recycled back into new bottles and jars.",
+      "Ferrous": "We anticipate this steel will be melted down and recycled back into new steel products.",
+      "Non-Ferrous": "We anticipate this aluminum will be melted down and recycled back into new cans and parts.",
+      "Organic": "We anticipate this material will be composted back into nutrient-rich soil for community use.",
+      "Mixed": "We anticipate the recyclable portion of this material will re-enter the supply chain once sorted.",
     };
 
     return (
@@ -4084,22 +4085,16 @@
             <div style={{ fontSize: 13, color: "#888" }}>Collected {item.time}</div>
           </div>
 
-          {/* Material classification card */}
+          {/* Material classification card — Round 3: only material class shown, no processing-method tag */}
           <div style={{
             padding: 16, borderRadius: 12, border: "1.5px solid #e8e8e8", marginBottom: 12
           }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: "#888", textTransform: "uppercase", marginBottom: 10 }}>
               Material Classification
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <span style={{ fontSize: 15, fontWeight: 600, color: "#1a1a1a" }}>{item.code}</span>
-              <span style={{
-                fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 6,
-                background: mc.bg, color: mc.text
-              }}>{item.method}</span>
-            </div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: "#1a1a1a", marginBottom: 8 }}>{item.code}</div>
             <div style={{ fontSize: 13, color: "#666", lineHeight: 1.5 }}>
-              {methodDescriptions[item.method]}
+              {materialAnticipations[item.code] || "We anticipate this material will be recycled back into the supply chain after sorting."}
             </div>
           </div>
 
@@ -4112,9 +4107,9 @@
             </div>
             {[
               { step: "Collected", desc: "Picked up from your unit", icon: "📦", done: true },
-              { step: "Sorted", desc: "Identified and categorized", icon: "🔍", done: true },
-              { step: "Processed", desc: item.method === "Composted" ? "Sent to composting facility" : item.method === "Landfilled" ? "Sent to landfill" : "Sent to recycling facility", icon: "🏭", done: true },
-              { step: "New Life", desc: item.method === "Closed-Loop" ? "Became a new " + item.code + " product" : item.method === "Composted" ? "Became nutrient-rich soil" : item.method === "Landfilled" ? "End of lifecycle" : "Transformed into new material", icon: item.method === "Landfilled" ? "⚠️" : "✅", done: item.method !== "Landfilled" },
+              { step: "Sorted", desc: "Identified and categorized as " + item.code, icon: "🔍", done: true },
+              { step: "Sent for Processing", desc: "Routed to a downstream recycling partner", icon: "🏭", done: true },
+              { step: "Anticipated New Life", desc: "Expected to re-enter the supply chain — we'll show actual end-of-life data once partners report it", icon: "✨", done: false },
             ].map((s, i) => (
               <div key={i} style={{ display: "flex", gap: 12, marginBottom: i < 3 ? 16 : 0 }}>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -4149,15 +4144,6 @@
 
   /* Screen 3: Item Detail — Unidentified */
   const DetailUnidentifiedScreen = ({ item, onBack }) => {
-    const mc = methodColors[item.method] || methodColors["Landfilled"];
-    const methodDescriptions = {
-      "Closed-Loop": "This material was recycled back into the same product type.",
-      "Downcycled": "Recycled into a lower-value product.",
-      "Remelted": "Melted down and re-formed into new products.",
-      "Composted": "Broken down into nutrient-rich soil for community use.",
-      "Landfilled": "Could not be recycled or composted with current infrastructure.",
-    };
-
     return (
       <PhoneFrame>
         <div style={{ padding: "8px 20px 0" }}>
@@ -4178,23 +4164,27 @@
           <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>Unidentified Item</div>
           <div style={{ fontSize: 13, color: "#888", marginBottom: 20 }}>Collected {item.time}</div>
 
-          {/* Classification card */}
+          {/* Classification card — Round 3: only material class shown */}
           <div style={{
             padding: 16, borderRadius: 12, border: "1.5px solid #e8e8e8", marginBottom: 12
           }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: "#888", textTransform: "uppercase", marginBottom: 10 }}>
-              How We Processed This
+              Material Classification
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <span style={{ fontSize: 15, fontWeight: 600, color: "#1a1a1a" }}>{item.code}</span>
-              <span style={{
-                fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 6,
-                background: mc.bg, color: mc.text
-              }}>{item.method}</span>
-            </div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: "#1a1a1a", marginBottom: 8 }}>{item.code}</div>
             <div style={{ fontSize: 13, color: "#666", lineHeight: 1.5 }}>
-              {methodDescriptions[item.method]}
+              We anticipate this material will be recycled back into the supply chain after sorting — once we can identify it, we'll be able to recommend better alternatives.
             </div>
+          </div>
+
+          {/* Round 3: See Items that may be Similar — pre-filtered by anything the resident provides */}
+          <div style={{
+            padding: "14px 0", borderRadius: 14, background: "#1D9100",
+            textAlign: "center", fontSize: 15, fontWeight: 600, color: "#fff",
+            cursor: "pointer", marginBottom: 8
+          }}>See Items that may be Similar</div>
+          <div style={{ textAlign: "center", fontSize: 12, color: "#888", marginBottom: 12, lineHeight: 1.4 }}>
+            Filters by brand, material, and classification — we'll match what we know.
           </div>
 
           {/* Help identify — simplified to 3 fields per client request */}

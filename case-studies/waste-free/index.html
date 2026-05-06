@@ -149,23 +149,20 @@
     }
     /* Dark mode: React prototype wrapper areas */
     [data-theme="dark"] #flow-1-root > div > div,
-    [data-theme="dark"] #flow-2a-root > div > div,
-    [data-theme="dark"] #flow-2b-root > div > div,
+    [data-theme="dark"] #flow-2-root > div > div,
     [data-theme="dark"] #flow-3-root > div > div,
     [data-theme="dark"] #flow-4-root > div > div {
       background: var(--surface) !important;
     }
     /* Dark mode: screen nav buttons in prototypes */
     [data-theme="dark"] #flow-1-root button,
-    [data-theme="dark"] #flow-2a-root button,
-    [data-theme="dark"] #flow-2b-root button,
+    [data-theme="dark"] #flow-2-root button,
     [data-theme="dark"] #flow-3-root button,
     [data-theme="dark"] #flow-4-root button {
       border-color: var(--border) !important;
     }
     [data-theme="dark"] #flow-1-root button:not([style*="background: rgb(26, 26, 26)"]),
-    [data-theme="dark"] #flow-2a-root button:not([style*="background: rgb(26, 26, 26)"]),
-    [data-theme="dark"] #flow-2b-root button:not([style*="background: rgb(26, 26, 26)"]),
+    [data-theme="dark"] #flow-2-root button:not([style*="background: rgb(26, 26, 26)"]),
     [data-theme="dark"] #flow-3-root button:not([style*="background: rgb(26, 26, 26)"]),
     [data-theme="dark"] #flow-4-root button:not([style*="background: rgb(26, 26, 26)"]) {
       background: var(--bg) !important;
@@ -173,8 +170,7 @@
     }
     /* Dark mode: notes card next to phone */
     [data-theme="dark"] #flow-1-root div[style*="background: rgb(255, 255, 255)"],
-    [data-theme="dark"] #flow-2a-root div[style*="background: rgb(255, 255, 255)"],
-    [data-theme="dark"] #flow-2b-root div[style*="background: rgb(255, 255, 255)"],
+    [data-theme="dark"] #flow-2-root div[style*="background: rgb(255, 255, 255)"],
     [data-theme="dark"] #flow-3-root div[style*="background: rgb(255, 255, 255)"],
     [data-theme="dark"] #flow-4-root div[style*="background: rgb(255, 255, 255)"] {
       background: var(--surface) !important;
@@ -183,8 +179,7 @@
     }
     /* Dark mode: preference label text */
     [data-theme="dark"] #flow-1-root > div > div > div[style*="color: rgb(102, 102, 102)"],
-    [data-theme="dark"] #flow-2a-root > div > div > div[style*="color: rgb(102, 102, 102)"],
-    [data-theme="dark"] #flow-2b-root > div > div > div[style*="color: rgb(102, 102, 102)"],
+    [data-theme="dark"] #flow-2-root > div > div > div[style*="color: rgb(102, 102, 102)"],
     [data-theme="dark"] #flow-3-root > div > div > div[style*="color: rgb(102, 102, 102)"],
     [data-theme="dark"] #flow-4-root > div > div > div[style*="color: rgb(102, 102, 102)"] {
       color: var(--text-3) !important;
@@ -686,17 +681,17 @@
       .empty-section { padding: 24px 16px; }
 
       /* Prototype wrappers on mobile */
-      #flow-1-root, #flow-2a-root, #flow-2b-root, #flow-3-root, #flow-4-root {
+      #flow-1-root, #flow-2-root, #flow-3-root, #flow-4-root, #flow-5-root {
         margin-left: -20px !important;
         margin-right: -20px !important;
         width: calc(100% + 40px) !important;
         box-sizing: border-box;
       }
       #flow-1-root > div > div,
-      #flow-2a-root > div > div,
-      #flow-2b-root > div > div,
+      #flow-2-root > div > div,
       #flow-3-root > div > div,
-      #flow-4-root > div > div {
+      #flow-4-root > div > div,
+      #flow-5-root > div > div {
         padding: 0 16px !important;
       }
       .proto-phone-notes {
@@ -1040,14 +1035,14 @@
 
       <div id="flow-1-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
-      <!-- FLOW 2A: Repurchase — Smart Default Fulfillment -->
-      <h3>Flow 2 — Repurchase (A): Smart Default Fulfillment</h3>
+      <!-- FLOW 2: Repurchase (Per-Item Fulfillment is the V1 path) -->
+      <h3>Flow 2 — Repurchase</h3>
       <div class="flow">
         <div class="flow__step">Push notification arrives</div>
         <div class="flow__arrow"></div>
         <div class="flow__step">User taps it</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step">Sees tonight's items</div>
+        <div class="flow__step">Lands on My Items — scrolls Tonight → This Week → This Month → YTD continuously</div>
         <div class="flow__arrow"></div>
         <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">User chooses action</div>
       </div>
@@ -1062,35 +1057,22 @@
         <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; min-width: 140px;">
           <div class="flow__step" style="width: 100%; text-align: center; font-size: 13px; border: 2px solid var(--text); background: var(--surface);">Buy it WasteFree</div>
           <div class="flow__arrow"></div>
-          <div class="flow__step" style="width: 100%; text-align: center; font-size: 12px;">💰 Save Money → cheaper alt<br>🥦 Be Healthier → healthier alt<br>🌍 Save Planet → eco-friendly alt</div>
+          <div class="flow__step" style="width: 100%; text-align: center; font-size: 12px;">Top suggestion (preference-driven) + scrollable strip of alternative products with logos and packaging below</div>
         </div>
       </div>
       <div class="flow" style="justify-content: center;">
         <div class="flow__step">Cart</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Checkout (Smart Default)</div>
+        <div class="flow__step">Checkout — per-item fulfillment (Amazon · Instacart · in-store · parcel)</div>
         <div class="flow__arrow"></div>
         <div class="flow__step">Confirmation + Impact</div>
       </div>
 
-      <p>This is 90% of the app's expected activity. A resident gets a push notification after their trash is collected, taps it, and lands directly on their item list. Each item offers two actions — buy the same thing again, or buy a WasteFree alternative based on their onboarding preference. The "Buy it WasteFree" path is where the preference from onboarding (Flow 1) comes to life — tapping it opens a Suggested Replacements screen with 2–3 alternative products, each with its own rationale, size/flavor options, and a "Why this option" explanation. A "View previous pick-ups" link at the bottom of tonight's items leads to a 30-day history view where residents can reorder from past collections. Use the preference toggle in the prototype to see how the experience shifts.</p>
-      <p><strong>Approach A — Smart Default (kept as a future option):</strong> Originally explored as the V1 path, this approach pre-selects a single fulfillment provider based on the resident's onboarding profile. <strong>Round 3 update — V1 will ship Approach B (Per-Item) instead.</strong> Ben's reasoning: residents need to be able to break up the retailer and shipper if they actually want to use WasteFree as their primary buying tool. With only a few APIs at launch, orders will naturally cluster anyway — so the per-item flexibility comes at little cost.</p>
+      <p>This is 90% of the app's expected activity. A resident gets a push notification confirming their trash was collected, taps it, and lands directly on their item list. Tonight's items are the lead, but the list scrolls continuously through This Week, This Month, and Year-to-Date — each section announced by a sticky banner, and the date pill at top stays in sync with whichever section is currently in view. Each item offers two actions: <strong>Buy it Again</strong> (re-order the same product) or <strong>Buy it WasteFree</strong> (open a preference-driven alternative). The Suggested Replacements screen leads with one recommendation and adds a horizontally-scrollable strip of additional brands underneath so residents can compare logos, packaging, and options at a glance.</p>
 
-      <div id="flow-2a-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
+      <p><strong>Round 4 decision:</strong> Smart Default fulfillment (the original Approach A) was removed entirely. V1 ships Per-Item Fulfillment only — at checkout each cart item gets its own retailer/shipper so residents can mix Amazon Prime, Instacart, in-store pickup, and parcel carriers in a single order. Future versions will collapse multi-retailer orders onto a Community Delivery Day.</p>
 
-      <!-- FLOW 2B: Repurchase — Per-Item Fulfillment -->
-      <h3>Flow 2 — Repurchase (B): Per-Item Fulfillment <span style="color:#1D9100;font-size:14px;">— V1 path</span></h3>
-      <div class="flow" style="justify-content: center;">
-        <div class="flow__step">Cart</div>
-        <div class="flow__arrow"></div>
-        <div class="flow__step" style="border: 2px solid var(--text); background: var(--surface);">Checkout (Per-Item)</div>
-        <div class="flow__arrow"></div>
-        <div class="flow__step">Confirmation + Impact</div>
-      </div>
-
-      <p><strong>Approach B — Per-Item Fulfillment (V1):</strong> At checkout each cart item gets its own fulfillment selector (Amazon, Instacart, DoorDash, HEB, parcel carriers). This gives residents the flexibility to mix retailers in a single order — important for a buy-everything-here behaviour Ben wants to encourage. A yellow warning tells residents items from different stores may arrive separately. Future versions will collapse multi-retailer orders onto a Community Delivery Day.</p>
-
-      <div id="flow-2b-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
+      <div id="flow-2-root" style="display:flex; justify-content:center; margin: 24px 0;"></div>
 
       <!-- FLOW 3: Impact & Score -->
       <h3>Flow 3 — Impact & Score</h3>
@@ -1105,7 +1087,7 @@
         <div class="flow__arrow"></div>
         <div class="flow__step">Views tangible impact equivalencies</div>
         <div class="flow__arrow"></div>
-        <div class="flow__step">Taps "Share Ashley's Impact" → iOS share sheet</div>
+        <div class="flow__step">Taps "Share Your Impact" → iOS share sheet</div>
       </div>
 
       <p>The WasteFree Score works like a FICO score for waste. A sticky date toggle at the top (Last Pickup / This Week / This Month / YTD) controls all sections at once. Community ranking includes a 3-way toggle (My community / My zip code / All communities) so residents can see how they compare at different scales. The waste-stream breakdown uses three stacked donut charts, each progressively more detailed: Chart 1 shows the basic split (Recycled / Composted / Landfilled), Chart 2 breaks down recyclable materials by type (PET, HDPE, OCC, Mixed Paper, Ferrous, Non-Ferrous, Glass), and Chart 3 shows how waste was processed (Closed-Loop, Downcycled, Remelted, Composted, Waste-to-Energy, Landfilled). All three charts are visible by scrolling — no hidden tabs or drill-down interactions. The impact section personalizes with the resident's name ("This month, Ashley has: Diverted 23 lbs of waste") and includes tangible equivalencies. Tapping "Share Ashley's Impact" opens a native iOS share sheet with contacts, social media apps, and utility actions.</p>
@@ -1203,6 +1185,24 @@
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+<!-- Round 4: Loop the prototypes — clicking any bottom-nav tab inside a prototype scrolls the case study page to the matching flow's prototype mount. Defined once globally so every prototype can call it. -->
+<script>
+  window.wfNavigateToFlow = function (tabId) {
+    var map = {
+      buy: 'flow-2-root',
+      impact: 'flow-3-root',
+      collection: 'flow-4-root',
+      notifications: 'flow-5-root',
+      profile: 'flow-1-root'
+    };
+    var targetId = map[tabId];
+    if (!targetId) return;
+    var el = document.getElementById(targetId);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+</script>
+
 
 <!-- Flow 1: Onboarding -->
 <script type="text/babel">
@@ -1264,9 +1264,9 @@
             { id: "impact", label: "My Impact", icon: "📊" },
             { id: "profile", label: "Profile", icon: "👤" },
           ].map(tab => (
-            <div key={tab.id} style={{
+            <div key={tab.id} onClick={() => window.wfNavigateToFlow && window.wfNavigateToFlow(tab.id)} style={{
               flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
-              opacity: tab.id === "profile" ? 1 : 0.4
+              opacity: tab.id === "profile" ? 1 : 0.4, cursor: "pointer"
             }}>
               <span style={{ fontSize: 20 }}>{tab.icon}</span>
               <span style={{ fontSize: 10, fontWeight: tab.id === "profile" ? 700 : 400 }}>{tab.label}</span>
@@ -1476,7 +1476,7 @@
           <div style={{ marginBottom: 20 }}>
             <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 10 }}>Are you a member of any delivery services?</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {["Amazon Fresh", "Instacart+", "DoorDash DashPass", "Uber Eats Pass", "Walmart+", "Shipt", "GrubHub+", "Favor", "GoPuff", "None"].map(s => (
+              {["Amazon Fresh", "Instacart+", "DoorDash", "DoorDash Pass", "Uber Eats Pass", "Walmart+", "Shipt", "GrubHub+", "Favor", "GoPuff", "None"].map(s => (
                 <Chip key={s} label={s} selected={appsSelected.has(s)} onClick={() => toggleChip(appsSelected, setAppsSelected, s)} />
               ))}
             </div>
@@ -1825,9 +1825,9 @@
             fontSize: 24
           }}>👤</div>
           <div>
-            <div style={{ fontSize: 18, fontWeight: 700 }}>Darius S.</div>
+            <div style={{ fontSize: 18, fontWeight: 700 }}>Ashley W.</div>
             <div style={{ fontSize: 14, color: "#888" }}>Parkside Apartments, #204</div>
-            <div style={{ fontSize: 13, color: "#aaa" }}>darius@email.com</div>
+            <div style={{ fontSize: 13, color: "#aaa" }}>ashley@email.com</div>
           </div>
         </div>
 
@@ -1976,13 +1976,12 @@
 <!-- Flow 2: Repurchase -->
 <script type="text/babel">
 {(() => {
-  const { useState } = React;
+  const { useState, useRef, useEffect } = React;
 
   const SCREENS = {
     NOTIFICATION: "notification",
     TONIGHT_ITEMS: "tonight_items",
     TONIGHT_EMPTY: "tonight_empty",
-    THIS_MONTH: "this_month",
     DETAIL_SAME: "detail_same",
     DETAIL_ALT: "detail_alt",
     CART: "cart",
@@ -2036,9 +2035,9 @@
         { id: "impact", label: "My Impact", icon: "📊" },
         { id: "profile", label: "Profile", icon: "👤" },
       ].map(tab => (
-        <div key={tab.id} style={{
+        <div key={tab.id} onClick={() => window.wfNavigateToFlow && window.wfNavigateToFlow(tab.id)} style={{
           flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
-          opacity: tab.id === active ? 1 : 0.4
+          opacity: tab.id === active ? 1 : 0.4, cursor: "pointer"
         }}>
           <span style={{ fontSize: 20 }}>{tab.icon}</span>
           <span style={{ fontSize: 10, fontWeight: tab.id === active ? 700 : 400, color: "#1a1a1a" }}>{tab.label}</span>
@@ -2102,8 +2101,8 @@
     </div>
   );
 
-  // Item Card Component
-  const ItemCard = ({ name, detail, price, hasAlt = true, wfLabel, onBuyAgain, onBuyWF }) => (
+  // Item Card Component — Round 4: optional `image` prop for real product photos
+  const ItemCard = ({ name, detail, price, hasAlt = true, wfLabel, image, onBuyAgain, onBuyWF }) => (
     <div style={{
       margin: "0 16px 12px", padding: 16, borderRadius: 14,
       border: "1.5px solid #e8e8e8", background: "#fff"
@@ -2112,8 +2111,12 @@
         <div style={{
           width: 64, height: 64, borderRadius: 10, background: "#f0f0f0",
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 11, color: "#aaa", flexShrink: 0, textAlign: "center"
-        }}>Product<br/>Image</div>
+          fontSize: 11, color: "#aaa", flexShrink: 0, textAlign: "center", overflow: "hidden"
+        }}>
+          {image
+            ? <img src={image} alt={name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+            : <span>Product<br/>Image</span>}
+        </div>
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 16, fontWeight: 600, color: "#1a1a1a", marginBottom: 2 }}>{name}</div>
           <div style={{ fontSize: 13, color: "#888" }}>{detail}</div>
@@ -2186,10 +2189,34 @@
     </PhoneFrame>
   );
 
-  // SCREEN: Tonight's Items — continuous scroll into This Week → This Month
-  const TonightItemsScreen = ({ onBuyAgain, onBuyWF, onViewPrevious }) => {
-    const SectionBanner = ({ label }) => (
-      <div style={{
+  // SCREEN: My Items — continuous scroll into This Week → This Month → YTD
+  // Round 4: date toggle pill at top auto-syncs with whichever section is currently in view
+  const TonightItemsScreen = ({ onBuyAgain, onBuyWF }) => {
+    const [activeIdx, setActiveIdx] = useState(0);
+    const scrollRef = useRef(null);
+    const sectionRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+
+    useEffect(() => {
+      const container = scrollRef.current;
+      if (!container) return;
+      const handleScroll = () => {
+        const containerTop = container.getBoundingClientRect().top;
+        // Pick the section whose top is just above 80px below the toggle
+        let next = 0;
+        for (let i = 0; i < sectionRefs.length; i++) {
+          const ref = sectionRefs[i].current;
+          if (!ref) continue;
+          const offset = ref.getBoundingClientRect().top - containerTop;
+          if (offset <= 60) next = i;
+        }
+        setActiveIdx(next);
+      };
+      container.addEventListener("scroll", handleScroll, { passive: true });
+      return () => container.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const SectionBanner = ({ label, sectionRef }) => (
+      <div ref={sectionRef} style={{
         position: "sticky", top: 0, zIndex: 5,
         padding: "10px 16px", background: "#fff",
         borderTop: "1px solid #f0f0f0", borderBottom: "1px solid #f0f0f0",
@@ -2205,27 +2232,36 @@
           title="My Items"
           right={<CartBadge count={0} />}
         />
-        <DateToggle selected={0} />
-        <div style={{ flex: 1, overflowY: "auto", paddingBottom: 16 }}>
-          <SectionBanner label="Tonight — April 4, 2026" />
+        <DateToggle selected={activeIdx} />
+        <div ref={scrollRef} style={{ flex: 1, overflowY: "auto", paddingBottom: 16 }}>
+          <SectionBanner label="Tonight — April 4, 2026" sectionRef={sectionRefs[0]} />
           <div style={{ paddingTop: 8 }}>
-            <ItemCard name="Cherry Dr. Pepper" detail="12-pack, 12 oz cans" price="$5.99" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("money")} />
-            <ItemCard name="Tide Pods" detail="42-count, Original" price="$12.99" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("health")} />
-            <ItemCard name="Bounty Paper Towels" detail="8-roll, Select-A-Size" price="$8.49" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
-            <ItemCard name="Crest Toothpaste" detail="2-pack, Whitening" price="$4.99" hasAlt={false} onBuyAgain={onBuyAgain} />
+            <ItemCard name="Cherry Dr. Pepper" detail="12-pack, 12 oz cans" price="$5.99" image="images/Cherry Dr. Pepper 12-pack cans.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("money")} />
+            <ItemCard name="Tide Pods" detail="42-count, Original" price="$12.99" image="images/Tide Pods 42-count Original.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("health")} />
+            <ItemCard name="Bounty Paper Towels" detail="8-roll, Select-A-Size" price="$8.49" image="images/Bounty Paper Towels 8-roll Select-A-Size.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
+            <ItemCard name="Crest Toothpaste" detail="2-pack, Whitening" price="$4.99" image="images/Crest Toothpaste 2-pack Whitening.png" hasAlt={false} onBuyAgain={onBuyAgain} />
           </div>
 
           {/* Continuous scroll — This Week appears below Tonight */}
-          <SectionBanner label="This Week" />
+          <SectionBanner label="This Week" sectionRef={sectionRefs[1]} />
           <div style={{ paddingTop: 8 }}>
-            <ItemCard name="Honey Nut Cheerios" detail="18.8 oz box" price="$4.49" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("health")} />
-            <ItemCard name="Charmin Ultra Soft" detail="12 mega rolls" price="$14.99" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
+            <ItemCard name="Honey Nut Cheerios" detail="18.8 oz box" price="$4.49" image="images/Honey Nut Cheerios 18.8 oz box.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("health")} />
+            <ItemCard name="Charmin Ultra Soft" detail="12 mega rolls" price="$14.99" image="images/Charmin Ultra Soft 12 mega rolls.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
           </div>
 
           {/* Continuous scroll — This Month appears below This Week */}
-          <SectionBanner label="This Month" />
+          <SectionBanner label="This Month" sectionRef={sectionRefs[2]} />
           <div style={{ paddingTop: 8 }}>
-            <ItemCard name="Tropicana Orange Juice" detail="89 oz, Pure Premium" price="$6.49" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
+            <ItemCard name="Tropicana Orange Juice" detail="89 oz, Pure Premium" price="$6.49" image="images/Tropicana Orange Juice 89 oz.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
+            <ItemCard name="Coca-Cola" detail="12-pack, 12 oz cans" price="$6.49" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("money")} />
+            <ItemCard name="Dawn Dish Soap" detail="16 oz, Original" price="$3.99" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
+          </div>
+
+          {/* Continuous scroll — YTD appears below This Month */}
+          <SectionBanner label="Year to Date" sectionRef={sectionRefs[3]} />
+          <div style={{ paddingTop: 8 }}>
+            <ItemCard name="Cheerios" detail="18 oz, Original" price="$4.29" image="images/Honey Nut Cheerios 18.8 oz box.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("health")} />
+            <ItemCard name="Folgers Coffee" detail="30.5 oz, Classic Roast" price="$8.99" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("money")} />
           </div>
         </div>
       </PhoneFrame>
@@ -2263,119 +2299,8 @@
     </PhoneFrame>
   );
 
-  // SCREEN: This Month — Previous Pick-ups (30 days)
-  const ThisMonthScreen = ({ onBuyAgain, onBuyWF, onBackToTonight }) => (
-    <PhoneFrame>
-      <Header
-        left=""
-        title="My Items"
-        right={<CartBadge count={0} />}
-      />
-      {/* Tonight / This Month tab bar */}
-      <div style={{
-        display: "flex", gap: 0, padding: "8px 16px",
-        background: "#fafafa", borderBottom: "1px solid #f0f0f0"
-      }}>
-        <div onClick={onBackToTonight} style={{
-          flex: 1, textAlign: "center", padding: "8px 4px", borderRadius: 10,
-          fontSize: 13, fontWeight: 400,
-          background: "transparent", color: "#888", cursor: "pointer"
-        }}>Tonight</div>
-        <div style={{
-          flex: 1, textAlign: "center", padding: "8px 4px", borderRadius: 10,
-          fontSize: 13, fontWeight: 700,
-          background: "#1a1a1a", color: "#fff", cursor: "pointer"
-        }}>This Month</div>
-      </div>
-      <div style={{ padding: "12px 16px 4px", fontSize: 13, fontWeight: 600, color: "#888" }}>
-        April 1–23, 2026 · 14 items from 6 pick-ups
-      </div>
-      <div style={{ flex: 1, overflowY: "auto", paddingTop: 8, paddingBottom: 16 }}>
-        {/* Week 1 label */}
-        <div style={{ padding: "6px 16px 4px", fontSize: 11, fontWeight: 600, color: "#aaa", textTransform: "uppercase", letterSpacing: 0.5 }}>
-          April 14 – 20
-        </div>
-        <ItemCard
-          name="Oat Milk (Oatly)"
-          detail="64 oz, Original"
-          price="$5.49"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("health")}
-        />
-        <ItemCard
-          name="Nature's Own Bread"
-          detail="Whole Wheat, 20 oz"
-          price="$3.29"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("health")}
-        />
-        <ItemCard
-          name="Coca-Cola"
-          detail="12-pack, 12 oz cans"
-          price="$6.49"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("money")}
-        />
-        <ItemCard
-          name="Dawn Dish Soap"
-          detail="16 oz, Original"
-          price="$3.99"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("planet")}
-        />
-        {/* Week 2 label */}
-        <div style={{ padding: "14px 16px 4px", fontSize: 11, fontWeight: 600, color: "#aaa", textTransform: "uppercase", letterSpacing: 0.5 }}>
-          April 7 – 13
-        </div>
-        <ItemCard
-          name="Lay's Potato Chips"
-          detail="Family Size, Classic"
-          price="$4.99"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("money")}
-        />
-        <ItemCard
-          name="Pampers Diapers"
-          detail="Size 3, 28-count"
-          price="$10.99"
-          hasAlt={false}
-          onBuyAgain={onBuyAgain}
-        />
-        <ItemCard
-          name="Windex Glass Cleaner"
-          detail="23 oz, Original"
-          price="$4.49"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("planet")}
-        />
-        {/* Week 3 label */}
-        <div style={{ padding: "14px 16px 4px", fontSize: 11, fontWeight: 600, color: "#aaa", textTransform: "uppercase", letterSpacing: 0.5 }}>
-          April 1 – 6
-        </div>
-        <ItemCard
-          name="Cheerios"
-          detail="18 oz, Original"
-          price="$4.29"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("health")}
-        />
-        <ItemCard
-          name="Ziploc Bags"
-          detail="Gallon, 30-count"
-          price="$3.99"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("planet")}
-        />
-        <ItemCard
-          name="Folgers Coffee"
-          detail="30.5 oz, Classic Roast"
-          price="$8.99"
-          onBuyAgain={onBuyAgain}
-          onBuyWF={() => onBuyWF("money")}
-        />
-      </div>
-    </PhoneFrame>
-  );
+  // Round 4: Standalone "This Month" screen removed — its content is now part of the
+  // continuous-scroll My Items list (Tonight → This Week → This Month → YTD).
 
   // SCREEN: Item Detail — Same Product
   const DetailSameScreen = ({ onBack, onAdd }) => (
@@ -2389,8 +2314,10 @@
         <div style={{
           width: 200, height: 200, margin: "20px auto", borderRadius: 16,
           background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 14, color: "#aaa"
-        }}>Product Image</div>
+          overflow: "hidden"
+        }}>
+          <img src="images/Cherry Dr. Pepper 12-pack cans.png" alt="Cherry Dr. Pepper" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+        </div>
 
         <div style={{ padding: "0 24px" }}>
           <div style={{ fontSize: 24, fontWeight: 700, color: "#1a1a1a" }}>Cherry Dr. Pepper</div>
@@ -2467,21 +2394,24 @@
         {
           product: "RC Cherry Cola", price: "$3.49", sizes: ["12-pack", "24-pack (+$4)", "6-pack (−$1.50)"],
           flavors: ["Cherry", "Original", "Diet Cherry"],
-          emoji: "💰", headline: "You save $2.50 per purchase",
+          emoji: "💰", image: "images/RC Cherry Cola 12-pack.png",
+          headline: "You save $2.50 per purchase",
           detail: "vs. Cherry Dr. Pepper ($5.99)", sub: "That's $130/year if you buy weekly",
           reason: "Lowest price per oz in this flavor category"
         },
         {
           product: "Great Value Cherry Cola", price: "$2.99", sizes: ["12-pack", "24-pack (+$3)"],
           flavors: ["Cherry", "Regular"],
-          emoji: "💰", headline: "You save $3.00 per purchase",
+          emoji: "💰",
+          headline: "You save $3.00 per purchase",
           detail: "vs. Cherry Dr. Pepper ($5.99)", sub: "Store brand, same great taste",
           reason: "Best value — Walmart store brand"
         },
         {
           product: "Zevia Cherry Cola", price: "$5.49", sizes: ["8-pack", "12-pack (+$2.50)"],
           flavors: ["Cherry Cola", "Cola", "Ginger Root Beer"],
-          emoji: "💰", headline: "You save $0.50 and go zero-sugar",
+          emoji: "💰",
+          headline: "You save $0.50 and go zero-sugar",
           detail: "vs. Cherry Dr. Pepper ($5.99)", sub: "Zero sugar, naturally sweetened with stevia",
           reason: "Saves money + healthier — no artificial sweeteners"
         },
@@ -2490,14 +2420,16 @@
         {
           product: "Seventh Generation Free & Clear", price: "$13.49", sizes: ["42-ct pods", "90-ct pods (+$14)", "Liquid 100oz (+$2)"],
           flavors: ["Unscented", "Lavender", "Fresh Citrus"],
-          emoji: "🥦", headline: "Hypoallergenic, no dyes or fragrances",
+          emoji: "🥦", image: "images/Seventh Generation Free & Clear pods.png",
+          headline: "Hypoallergenic, no dyes or fragrances",
           detail: "vs. Tide Pods (synthetic fragrances + dyes)", sub: "Dermatologist recommended for sensitive skin",
           reason: "Top-rated plant-based formula, EPA Safer Choice certified"
         },
         {
           product: "Dropps Stain & Odor Pods", price: "$12.99", sizes: ["42-ct", "64-ct (+$6)", "120-ct (+$16)"],
           flavors: ["Unscented", "Clean Scent"],
-          emoji: "🥦", headline: "Enzyme-powered, no synthetic chemicals",
+          emoji: "🥦",
+          headline: "Enzyme-powered, no synthetic chemicals",
           detail: "vs. Tide Pods (contains 1,4-dioxane traces)", sub: "B-Corp certified, compostable packaging",
           reason: "Plastic-free packaging + effective enzyme cleaning"
         },
@@ -2506,21 +2438,24 @@
         {
           product: "Who Gives a Crap Paper Towels", price: "$9.99", sizes: ["6-roll", "12-roll (+$8)", "24-roll (+$18)"],
           flavors: [],
-          emoji: "🌍", headline: "100% recycled, plastic-free packaging",
+          emoji: "🌍", image: "images/Who Gives a Crap Paper Towels.png",
+          headline: "100% recycled, plastic-free packaging",
           detail: "vs. Bounty (virgin fiber, plastic wrap)", sub: "50% of profits donated to sanitation projects",
           reason: "Zero plastic, 100% recycled fibers, carbon-neutral shipping"
         },
         {
           product: "Bamboo Babe Paper Towels", price: "$8.49", sizes: ["4-roll", "8-roll (+$6)", "12-roll (+$10)"],
           flavors: [],
-          emoji: "🌍", headline: "Bamboo-based, grows back 30x faster than trees",
+          emoji: "🌍",
+          headline: "Bamboo-based, grows back 30x faster than trees",
           detail: "vs. Bounty (old-growth wood pulp)", sub: "Compostable rolls, soy-based inks",
           reason: "Renewable bamboo source — no deforestation"
         },
         {
           product: "Marley's Monsters Reusable Towels", price: "$24.99", sizes: ["12-pack", "24-pack (+$18)"],
           flavors: ["White", "Prints", "Earth Tones"],
-          emoji: "🌍", headline: "Replaces 6+ months of disposable towels",
+          emoji: "🌍",
+          headline: "Replaces 6+ months of disposable towels",
           detail: "vs. Bounty (single-use, goes to landfill)", sub: "Machine washable, lasts 2+ years",
           reason: "Zero-waste long-term — eliminates paper towel purchases entirely"
         },
@@ -2562,9 +2497,20 @@
 
         <div style={{
           width: 140, height: 140, margin: "0 auto 12px", borderRadius: 16,
-          background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 12, color: "#aaa"
-        }}>Product Image</div>
+          background: "#f5f5f5", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+          gap: 6, border: "1px solid #e0e0e0", overflow: "hidden"
+        }}>
+          {selected.image ? (
+            <img src={selected.image} alt={selected.product} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+          ) : (
+            <>
+              <div style={{ fontSize: 56 }}>{selected.emoji}</div>
+              <div style={{ fontSize: 10, color: "#aaa", textTransform: "uppercase", letterSpacing: 1 }}>
+                Product Photo
+              </div>
+            </>
+          )}
+        </div>
 
         <div style={{ padding: "0 20px" }}>
           <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a" }}>{selected.product}</div>
@@ -2589,6 +2535,40 @@
             fontSize: 12, color: "#666", marginBottom: 14, lineHeight: 1.4
           }}>
             <strong style={{ color: "#1D9100" }}>Why this option:</strong> {selected.reason}
+          </div>
+
+          {/* Round 4: scrollable strip of alternative products with logos/packaging */}
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: "#888", textTransform: "uppercase", marginBottom: 8 }}>
+            Compare Options
+          </div>
+          <div style={{
+            display: "flex", gap: 10, overflowX: "auto", paddingBottom: 12,
+            marginBottom: 14, marginLeft: -20, marginRight: -20, paddingLeft: 20, paddingRight: 20
+          }}>
+            {options.map((opt, i) => (
+              <div key={i} onClick={() => setSelectedAlt(i)} style={{
+                flex: "0 0 130px", padding: 8, borderRadius: 12,
+                border: selectedAlt === i ? "2px solid #1D9100" : "1.5px solid #e0e0e0",
+                background: selectedAlt === i ? "#E8F2E3" : "#fff",
+                display: "flex", flexDirection: "column", gap: 4, cursor: "pointer",
+                transition: "all 0.2s"
+              }}>
+                <div style={{
+                  width: "100%", height: 70, borderRadius: 8, background: "#f5f5f5",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 28, marginBottom: 4, overflow: "hidden"
+                }}>
+                  {opt.image
+                    ? <img src={opt.image} alt={opt.product} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                    : <span>{opt.emoji}</span>}
+                </div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: "#1a1a1a", lineHeight: 1.2 }}>
+                  {opt.product}
+                </div>
+                <div style={{ fontSize: 10, color: "#888" }}>{opt.sizes[0]}</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: "#1a1a1a" }}>{opt.price}</div>
+              </div>
+            ))}
           </div>
 
           <div style={{ height: 1, background: "#f0f0f0", marginBottom: 14 }} />
@@ -3088,17 +3068,9 @@
         <TonightItemsScreen
           onBuyAgain={() => setCurrentScreen(SCREENS.DETAIL_SAME)}
           onBuyWF={(pref) => { setPreference(pref); setCurrentScreen(SCREENS.DETAIL_ALT); }}
-          onViewPrevious={() => setCurrentScreen(SCREENS.THIS_MONTH)}
         />
       ),
       [SCREENS.TONIGHT_EMPTY]: <TonightEmptyScreen />,
-      [SCREENS.THIS_MONTH]: (
-        <ThisMonthScreen
-          onBuyAgain={() => setCurrentScreen(SCREENS.DETAIL_SAME)}
-          onBuyWF={(pref) => { setPreference(pref); setCurrentScreen(SCREENS.DETAIL_ALT); }}
-          onBackToTonight={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)}
-        />
-      ),
       [SCREENS.DETAIL_SAME]: (
         <DetailSameScreen
           onBack={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)}
@@ -3134,19 +3106,18 @@
 
     const screenLabels = {
       [SCREENS.NOTIFICATION]: "1. Push Notification",
-      [SCREENS.TONIGHT_ITEMS]: "2. Tonight's Items",
+      [SCREENS.TONIGHT_ITEMS]: "2. My Items (continuous scroll)",
       [SCREENS.TONIGHT_EMPTY]: "3. Empty State",
-      [SCREENS.THIS_MONTH]: "4. This Month",
-      [SCREENS.DETAIL_SAME]: "5. Buy it Again (Detail)",
-      [SCREENS.DETAIL_ALT]: "6. Suggested Replacements",
-      [SCREENS.CART]: "7. Cart",
-      [SCREENS.CHECKOUT]: "8. Checkout",
-      [SCREENS.CONFIRMATION]: "9. Confirmation",
+      [SCREENS.DETAIL_SAME]: "4. Buy it Again (Detail)",
+      [SCREENS.DETAIL_ALT]: "5. Suggested Replacements",
+      [SCREENS.CART]: "6. Cart",
+      [SCREENS.CHECKOUT]: "7. Checkout",
+      [SCREENS.CONFIRMATION]: "8. Confirmation",
     };
 
     const checkoutNotes = fulfillmentMode === "B"
-      ? "Smart Default: Pre-selects fulfillment from the resident's profile (set during onboarding survey). 'From your profile' badge builds trust. Expandable 'Change' dropdown keeps the UI clean — most users won't need it. Fastest path to checkout. Recommended for V1."
-      : "Per-Item: Each cart item gets its own fulfillment selector. Maximum flexibility but more cognitive load. Yellow warning about split deliveries sets expectations. Best for power users who want granular control. Compare complexity with Approach A above.";
+      ? "Smart Default: Pre-selects fulfillment from the resident's profile (set during onboarding survey). 'From your profile' badge builds trust. Expandable 'Change' dropdown keeps the UI clean — most users won't need it."
+      : "Per-Item Fulfillment (V1): Each cart item gets its own retailer/shipper so residents can mix Amazon Prime, Instacart, in-store pickup, and parcel carriers in a single order. A small notice tells residents items from different stores may arrive separately. Future versions will collapse multi-retailer orders onto a Community Delivery Day.";
 
     const confirmationNotes = fulfillmentMode === "B"
       ? "Impact card creates the emotional payoff. 'View Your Impact' cross-links to My Impact tab — closes the engagement loop. Shows single fulfillment provider from profile default."
@@ -3197,9 +3168,8 @@
               </div>
               <div style={{ fontSize: 12, color: "#666", lineHeight: 1.6 }}>
                 {currentScreen === SCREENS.NOTIFICATION && "The app's front door. Names specific products to drive tap-through. Deep links to Tonight's Items."}
-                {currentScreen === SCREENS.TONIGHT_ITEMS && "Default screen. 2 actions per item with deliberate visual hierarchy. 'View previous pick-ups' link at the bottom leads to the This Month tab — 30 days of collection history with the same Buy it Again / Buy it WasteFree actions."}
+                {currentScreen === SCREENS.TONIGHT_ITEMS && "Round 4: continuous scroll. Tonight items load first; This Week and This Month appear in-line as the user scrolls — no 'View more' button. Each section is announced by a sticky banner, and the date pill at top auto-syncs to whichever section the user is currently scrolling through."}
                 {currentScreen === SCREENS.TONIGHT_EMPTY && "First launch or no new items. Friendly, not broken-feeling. Sets expectations for what happens next."}
-                {currentScreen === SCREENS.THIS_MONTH && "30-day history view. Tonight/This Month tab bar lets users switch context. Items grouped by week with date labels. Same item cards with Buy it Again and Buy it WasteFree actions — residents can reorder anything from their past collections, not just tonight's items. This is where 'View previous pick-ups' from the Tonight screen lands."}
                 {currentScreen === SCREENS.DETAIL_SAME && "Confirm repurchase with quantity/size/flavor adjustments. Only shown when user actively taps 'Buy it Again.'"}
                 {currentScreen === SCREENS.DETAIL_ALT && `Preference-driven alternative with comparison card. Shows ${preference === "money" ? "Save Money" : preference === "health" ? "Be Healthier" : "Save the Planet"} variant. 'Buy the original instead' escape hatch.`}
                 {currentScreen === SCREENS.CART && "Persistent cart across sessions. WasteFree picks get a badge. Savings line only appears when WasteFree items are present."}
@@ -3213,9 +3183,8 @@
     );
   }
 
-  // Render Flow 2A (Smart Default) and Flow 2B (Per-Item) as separate prototypes
-  ReactDOM.createRoot(document.getElementById('flow-2a-root')).render(<WasteFreeFlow2 fulfillmentMode="B" />);
-  ReactDOM.createRoot(document.getElementById('flow-2b-root')).render(<WasteFreeFlow2 fulfillmentMode="C" />);
+  // Round 4: Smart Default removed per client request — only Per-Item Fulfillment ships in V1
+  ReactDOM.createRoot(document.getElementById('flow-2-root')).render(<WasteFreeFlow2 fulfillmentMode="C" />);
 })()}
 </script>
 
@@ -3268,9 +3237,9 @@
           { id: "impact", label: "My Impact", icon: "📊" },
           { id: "profile", label: "Profile", icon: "👤" },
         ].map(tab => (
-          <div key={tab.id} style={{
+          <div key={tab.id} onClick={() => window.wfNavigateToFlow && window.wfNavigateToFlow(tab.id)} style={{
             flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
-            opacity: tab.id === activeTab ? 1 : 0.4
+            opacity: tab.id === activeTab ? 1 : 0.4, cursor: "pointer"
           }}>
             <span style={{ fontSize: 20 }}>{tab.icon}</span>
             <span style={{ fontSize: 10, fontWeight: tab.id === activeTab ? 700 : 400 }}>{tab.label}</span>
@@ -3570,11 +3539,12 @@
             ))}
           </div>
 
+          {/* Round 4: Share button now green to match the Confirmation screen + label "Share Your Impact" per Ben's request */}
           <div onClick={onShare} style={{
             marginTop: 16, padding: "14px 0", borderRadius: 14,
-            border: "1.5px solid #1a1a1a", textAlign: "center",
-            fontSize: 15, fontWeight: 600, color: "#1a1a1a", cursor: "pointer"
-          }}>Share Ashley's Impact</div>
+            background: "#1D9100", textAlign: "center",
+            fontSize: 15, fontWeight: 600, color: "#fff", cursor: "pointer"
+          }}>Share Your Impact</div>
         </div>
       </div>
     </PhoneFrame>
@@ -3763,7 +3733,7 @@
                     <br/><br/>
                     The donut chart center now shows "Diverted" percentage (everything except Landfilled) — reframes the metric as positive action. All 4 sections still update on date toggle. Community ranking remains the primary engagement hook.
                     <br/><br/>
-                    <strong>Try it:</strong> Scroll to the bottom and tap "Share Ashley's Impact" to see the iOS share sheet.
+                    <strong>Try it:</strong> Scroll to the bottom and tap "Share Your Impact" to see the iOS share sheet.
                   </>
                 ) : (
                   <>
@@ -3838,9 +3808,9 @@
           { id: "impact", label: "My Impact", icon: "📊" },
           { id: "profile", label: "Profile", icon: "👤" },
         ].map(tab => (
-          <div key={tab.id} style={{
+          <div key={tab.id} onClick={() => window.wfNavigateToFlow && window.wfNavigateToFlow(tab.id)} style={{
             flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
-            opacity: tab.id === activeTab ? 1 : 0.4
+            opacity: tab.id === activeTab ? 1 : 0.4, cursor: "pointer"
           }}>
             <span style={{ fontSize: 18 }}>{tab.icon}</span>
             <span style={{ fontSize: 9, fontWeight: tab.id === activeTab ? 700 : 400 }}>{tab.label}</span>
@@ -3861,32 +3831,32 @@
   /* Sample collection data — per time range */
   const collectionByRange = {
     service: [
-      { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true },
-      { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤" },
+      { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true, image: "images/unidentified-mixed-1.jpg.png" },
+      { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤", image: "images/Cherry Dr. Pepper 12-pack cans.png" },
       { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
     ],
     week: [
-      { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true },
-      { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤" },
+      { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true, image: "images/unidentified-mixed-1.jpg.png" },
+      { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤", image: "images/Cherry Dr. Pepper 12-pack cans.png" },
       { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
-      { id: 4, name: "Unidentified Item", identified: false, code: "Organic", method: "Composted", time: "Yesterday, 4:22 PM", icon: "🗑️", photo: true },
+      { id: 4, name: "Unidentified Item", identified: false, code: "Organic", method: "Composted", time: "Yesterday, 4:22 PM", icon: "🗑️", photo: true, image: "images/unidentified-organic.jpg.png" },
       { id: 5, name: "Mixed Paper Bundle", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Yesterday, 3:15 PM", icon: "📄" },
-      { id: 6, name: "Seventh Generation Dish Soap", identified: true, code: "HDPE", method: "Downcycled", time: "Yesterday, 1:02 PM", icon: "🧴" },
+      { id: 6, name: "Seventh Generation Dish Soap", identified: true, code: "HDPE", method: "Downcycled", time: "Yesterday, 1:02 PM", icon: "🧴", image: "images/Seventh Generation Free & Clear pods.png" },
       { id: 7, name: "Topo Chico 4pk Glass", identified: true, code: "Glass", method: "Remelted", time: "Mon, 9:17 AM", icon: "🍾" },
     ],
     month: [
-      { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true },
-      { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤" },
+      { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true, image: "images/unidentified-mixed-1.jpg.png" },
+      { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤", image: "images/Cherry Dr. Pepper 12-pack cans.png" },
       { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
-      { id: 4, name: "Unidentified Item", identified: false, code: "Organic", method: "Composted", time: "Yesterday, 4:22 PM", icon: "🗑️", photo: true },
+      { id: 4, name: "Unidentified Item", identified: false, code: "Organic", method: "Composted", time: "Yesterday, 4:22 PM", icon: "🗑️", photo: true, image: "images/unidentified-organic.jpg.png" },
       { id: 5, name: "Mixed Paper Bundle", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Yesterday, 3:15 PM", icon: "📄" },
-      { id: 6, name: "Seventh Generation Dish Soap", identified: true, code: "HDPE", method: "Downcycled", time: "Yesterday, 1:02 PM", icon: "🧴" },
+      { id: 6, name: "Seventh Generation Dish Soap", identified: true, code: "HDPE", method: "Downcycled", time: "Yesterday, 1:02 PM", icon: "🧴", image: "images/Seventh Generation Free & Clear pods.png" },
       { id: 7, name: "Topo Chico 4pk Glass", identified: true, code: "Glass", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🍾" },
       { id: 8, name: "Steel Can (Beans)", identified: true, code: "Ferrous", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🥫" },
-      { id: 9, name: "Unidentified Item", identified: false, code: "Non-Ferrous", method: "Remelted", time: "Apr 10, 9:15 AM", icon: "🗑️", photo: true },
+      { id: 9, name: "Unidentified Item", identified: false, code: "Non-Ferrous", method: "Remelted", time: "Apr 10, 9:15 AM", icon: "🗑️", photo: true, image: "images/unidentified-non-ferrous.png" },
       { id: 10, name: "Banana Peels & Scraps", identified: true, code: "Organic", method: "Composted", time: "Apr 9, 6:30 PM", icon: "🍌" },
-      { id: 11, name: "Tide Pods Container", identified: true, code: "HDPE", method: "Downcycled", time: "Apr 7, 3:45 PM", icon: "🧺" },
-      { id: 12, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Apr 5, 11:20 AM", icon: "🗑️", photo: true },
+      { id: 11, name: "Tide Pods Container", identified: true, code: "HDPE", method: "Downcycled", time: "Apr 7, 3:45 PM", icon: "🧺", image: "images/Tide Pods 42-count Original.png" },
+      { id: 12, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Apr 5, 11:20 AM", icon: "🗑️", photo: true, image: "images/unidentified-mixed-2.png" },
       { id: 13, name: "Oatly Carton", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Apr 3, 2:10 PM", icon: "🥛" },
       { id: 14, name: "Wine Bottle", identified: true, code: "Glass", method: "Remelted", time: "Apr 1, 7:55 PM", icon: "🍷" },
     ],
@@ -3896,6 +3866,27 @@
     service: { bags: 1, items: 3, lbs: "1.4", collections: "Today, 2:34 PM", collector: "Marcus T. (EMP-0247)", violation: "No", trend: "↑ Diversion rate: 67% this pickup" },
     week: { bags: 3, items: 7, lbs: "3.1", collections: "Apr 21–23", collector: "Marcus T. (EMP-0247)", violation: "No", trend: "↑ Diversion rate improving — 82% this week vs. 75% avg" },
     month: { bags: 8, items: 14, lbs: "6.8", collections: "Apr 1–23", collector: "Multiple", violation: "No", trend: "↑ Diversion rate improving — 79% this month vs. 72% last month" },
+  };
+
+  /* Round 4: vertical service table — one row per pickup. Replaces the single service-details card. */
+  const servicesByRange = {
+    service: [
+      { date: "4/28/26 (TR)", time: "10:43pm", csId: "1392", items: 3, violation: "NO" },
+    ],
+    week: [
+      { date: "4/28/26 (TR)", time: "10:43pm", csId: "1392", items: 3, violation: "NO" },
+      { date: "4/25/26 (MON)", time: "10:37pm", csId: "1392", items: 1, violation: "NO" },
+      { date: "4/20/26 (WED)", time: "8:22pm",  csId: "4818", items: 1, violation: "NO" },
+    ],
+    month: [
+      { date: "4/28/26 (TR)", time: "10:43pm", csId: "1392", items: 3, violation: "NO" },
+      { date: "4/25/26 (MON)", time: "10:37pm", csId: "1392", items: 1, violation: "NO" },
+      { date: "4/20/26 (WED)", time: "8:22pm",  csId: "4818", items: 1, violation: "NO" },
+      { date: "4/17/26 (SUN)", time: "8:18pm",  csId: "4818", items: 1, violation: "NO" },
+      { date: "4/13/26 (WED)", time: "8:04pm",  csId: "4818", items: 2, violation: "YES" },
+      { date: "4/7/26 (TR)",   time: "8:27pm",  csId: "4818", items: 1, violation: "NO" },
+      { date: "4/5/26 (SUN)",  time: "8:15pm",  csId: "4818", items: 1, violation: "NO" },
+    ],
   };
 
   const methodColors = {
@@ -3963,24 +3954,41 @@
               </div>
             </div>
 
-            {/* Service details */}
-            <div style={{ padding: 12, borderRadius: 10, border: "1.5px solid #e8e8e8", fontSize: 13 }}>
-              {[
-                { label: dateFilter === 0 ? "Collection Time" : "Date Range", value: summary.collections },
-                { label: dateFilter === 2 ? "Collectors" : "Collector", value: summary.collector },
-                { label: "Violation Assessed", value: summary.violation },
-              ].map((row, i) => (
+            {/* Round 4: Vertical service table — one row per pickup (Date · Time · CS ID# · # Items · Vio Assessed) */}
+            <div style={{ borderRadius: 10, border: "1.5px solid #e8e8e8", overflow: "hidden" }}>
+              {/* Table header */}
+              <div style={{
+                display: "grid", gridTemplateColumns: "1.4fr 0.9fr 0.7fr 0.5fr 0.7fr",
+                gap: 4, padding: "8px 10px", background: "#fafafa",
+                borderBottom: "1.5px solid #e8e8e8",
+                fontSize: 9, fontWeight: 700, letterSpacing: 0.5,
+                color: "#666", textTransform: "uppercase"
+              }}>
+                <div>Date</div>
+                <div>Time</div>
+                <div>CS ID#</div>
+                <div style={{ textAlign: "center" }}># Items</div>
+                <div style={{ textAlign: "right" }}>Vio</div>
+              </div>
+              {/* Rows */}
+              {servicesByRange[currentRange].map((s, i) => (
                 <div key={i} style={{
-                  display: "flex", justifyContent: "space-between", padding: "5px 0",
-                  borderTop: i > 0 ? "1px solid #f0f0f0" : "none"
+                  display: "grid", gridTemplateColumns: "1.4fr 0.9fr 0.7fr 0.5fr 0.7fr",
+                  gap: 4, padding: "9px 10px",
+                  borderTop: i > 0 ? "1px solid #f0f0f0" : "none",
+                  fontSize: 11, color: "#1a1a1a", alignItems: "center"
                 }}>
-                  <span style={{ color: "#888" }}>{row.label}</span>
-                  <span style={{ fontWeight: 500, color: row.value === "No" ? "#1D9100" : "#1a1a1a" }}>{row.value}</span>
+                  <div style={{ fontWeight: 500 }}>{s.date}</div>
+                  <div style={{ color: "#666" }}>{s.time}</div>
+                  <div style={{ color: "#666", fontFamily: "ui-monospace, SFMono-Regular, monospace" }}>{s.csId}</div>
+                  <div style={{ textAlign: "center", fontWeight: 600 }}>{s.items}</div>
+                  <div style={{
+                    textAlign: "right", fontWeight: 700,
+                    color: s.violation === "YES" ? "#cc0000" : "#1D9100"
+                  }}>{s.violation}</div>
                 </div>
               ))}
             </div>
-
-            {/* Round 3: removed green diversion trend text per Ben's request — we don't have processing data yet */}
           </div>
 
           {/* ── Item counts bar ── */}
@@ -4013,17 +4021,19 @@
                 <div style={{
                   width: 44, height: 44, borderRadius: 10, flexShrink: 0,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 22, position: "relative",
+                  fontSize: 22, position: "relative", overflow: "hidden",
                   background: !item.identified ? "#E8F2E3" : "#f5f5f5"
                 }}>
-                  {item.icon}
+                  {item.image
+                    ? <img src={item.image} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    : item.icon}
                   {item.photo && (
                     <div style={{
                       position: "absolute", bottom: -2, right: -2,
                       width: 16, height: 16, borderRadius: 8,
                       background: "#1a1a1a", border: "2px solid #fff",
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: 8, color: "#fff"
+                      fontSize: 8, color: "#fff", zIndex: 2
                     }}>📷</div>
                   )}
                 </div>
@@ -4079,8 +4089,12 @@
             <div style={{
               width: 80, height: 80, borderRadius: 16, background: "#f5f5f5",
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 40, margin: "0 auto 12px"
-            }}>{item.icon}</div>
+              fontSize: 40, margin: "0 auto 12px", overflow: "hidden"
+            }}>
+              {item.image
+                ? <img src={item.image} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                : <span>{item.icon}</span>}
+            </div>
             <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>{item.name}</div>
             <div style={{ fontSize: 13, color: "#888" }}>Collected {item.time}</div>
           </div>
@@ -4128,14 +4142,20 @@
             ))}
           </div>
 
-          {/* Buy it WasteFree CTA */}
-          <div style={{
-            padding: "14px 0", borderRadius: 14, background: "#1D9100",
-            textAlign: "center", fontSize: 15, fontWeight: 600, color: "#fff",
-            cursor: "pointer", marginBottom: 12
-          }}>Buy it WasteFree Next Time</div>
-          <div style={{ textAlign: "center", fontSize: 13, color: "#888" }}>
-            We'll suggest a better alternative based on your preference
+          {/* Round 4: dual CTAs — Buy it Again (filled dark) + Buy it WasteFree (outlined green) */}
+          <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
+            <div style={{
+              flex: 1, padding: "14px 0", borderRadius: 14, background: "#1a1a1a",
+              textAlign: "center", fontSize: 14, fontWeight: 600, color: "#fff", cursor: "pointer"
+            }}>Buy it Again</div>
+            <div style={{
+              flex: 1, padding: "14px 0", borderRadius: 14, background: "transparent",
+              border: "2px solid #1D9100",
+              textAlign: "center", fontSize: 14, fontWeight: 600, color: "#1D9100", cursor: "pointer"
+            }}>Buy it WasteFree</div>
+          </div>
+          <div style={{ textAlign: "center", fontSize: 12, color: "#888" }}>
+            Re-order what you bought, or swap to a preference-driven alternative.
           </div>
         </div>
       </PhoneFrame>
@@ -4144,27 +4164,38 @@
 
   /* Screen 3: Item Detail — Unidentified */
   const DetailUnidentifiedScreen = ({ item, onBack }) => {
+    // Round 4: form state — buttons stay greyed until user submits identification
+    const [submitted, setSubmitted] = useState(false);
+
     return (
       <PhoneFrame>
         <div style={{ padding: "8px 20px 0" }}>
           <span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>
         </div>
         <div style={{ flex: 1, padding: "16px 20px", overflowY: "auto" }}>
-          {/* Photo placeholder */}
+          {/* Photo captured during sorting — Round 4: real trash photo */}
           <div style={{
             width: "100%", height: 200, borderRadius: 16, background: "#f0f0f0",
-            display: "flex", flexDirection: "column", alignItems: "center",
-            justifyContent: "center", marginBottom: 16, border: "1.5px dashed #ddd"
+            display: "flex", alignItems: "center", justifyContent: "center",
+            marginBottom: 16, overflow: "hidden", position: "relative"
           }}>
-            <span style={{ fontSize: 48, marginBottom: 8 }}>📷</span>
-            <span style={{ fontSize: 13, color: "#999" }}>Photo captured during sorting</span>
-            <span style={{ fontSize: 11, color: "#bbb", marginTop: 4 }}>Tap to enlarge</span>
+            {item.image ? (
+              <img src={item.image} alt="Photo captured during sorting" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <span style={{ fontSize: 48, marginBottom: 8 }}>📷</span>
+                <span style={{ fontSize: 13, color: "#999" }}>Photo captured during sorting</span>
+                <span style={{ fontSize: 11, color: "#bbb", marginTop: 4 }}>Tap to enlarge</span>
+              </div>
+            )}
           </div>
 
-          <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>Unidentified Item</div>
+          <div style={{ fontSize: 20, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>
+            {submitted ? "Identified by you" : "Unidentified Item"}
+          </div>
           <div style={{ fontSize: 13, color: "#888", marginBottom: 20 }}>Collected {item.time}</div>
 
-          {/* Classification card — Round 3: only material class shown */}
+          {/* Classification card — only material class shown */}
           <div style={{
             padding: 16, borderRadius: 12, border: "1.5px solid #e8e8e8", marginBottom: 12
           }}>
@@ -4177,68 +4208,88 @@
             </div>
           </div>
 
-          {/* Round 3: See Items that may be Similar — pre-filtered by anything the resident provides */}
-          <div style={{
-            padding: "14px 0", borderRadius: 14, background: "#1D9100",
-            textAlign: "center", fontSize: 15, fontWeight: 600, color: "#fff",
-            cursor: "pointer", marginBottom: 8
-          }}>See Items that may be Similar</div>
-          <div style={{ textAlign: "center", fontSize: 12, color: "#888", marginBottom: 12, lineHeight: 1.4 }}>
-            Filters by brand, material, and classification — we'll match what we know.
-          </div>
-
           {/* Help identify — simplified to 3 fields per client request */}
           <div style={{
-            padding: 16, borderRadius: 12, background: "#FFF8E1",
-            border: "1.5px solid #FFE082", marginBottom: 12
+            padding: 16, borderRadius: 12, background: submitted ? "#E8F2E3" : "#FFF8E1",
+            border: submitted ? "1.5px solid #1D9100" : "1.5px solid #FFE082", marginBottom: 12
           }}>
             <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 6 }}>
-              Know what this is?
+              {submitted ? "Thanks — added to your items" : "Know what this is?"}
             </div>
-            <div style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: 14 }}>
-              Help us identify it so we can track and suggest better alternatives.
-            </div>
-
-            {/* Brand Name */}
-            <div style={{ marginBottom: 10 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4 }}>Brand Name</div>
-              <div style={{
-                padding: "10px 12px", borderRadius: 8, border: "1.5px solid #ddd",
-                background: "#fff", fontSize: 13, color: "#aaa"
-              }}>e.g. Tide, Bounty, Dr Pepper...</div>
+            <div style={{ fontSize: 13, color: "#666", lineHeight: 1.5, marginBottom: submitted ? 0 : 14 }}>
+              {submitted
+                ? "This item will now show up in both Collected Items and My Items so you can re-order it next time."
+                : "Help us identify it so we can track and suggest better alternatives."}
             </div>
 
-            {/* Product Category */}
-            <div style={{ marginBottom: 10 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4 }}>Product Category</div>
-              <div style={{
-                padding: "10px 12px", borderRadius: 8, border: "1.5px solid #ddd",
-                background: "#fff", fontSize: 13, color: "#1a1a1a",
-                display: "flex", justifyContent: "space-between", alignItems: "center"
-              }}>
-                <span style={{ color: "#aaa" }}>Select category...</span>
-                <span style={{ color: "#999", fontSize: 11 }}>▾</span>
-              </div>
-            </div>
+            {!submitted && (
+              <>
+                {/* Brand Name */}
+                <div style={{ marginBottom: 10 }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4 }}>Brand Name</div>
+                  <div style={{
+                    padding: "10px 12px", borderRadius: 8, border: "1.5px solid #ddd",
+                    background: "#fff", fontSize: 13, color: "#aaa"
+                  }}>e.g. Tide, Bounty, Dr Pepper...</div>
+                </div>
 
-            {/* Recycling Category */}
-            <div style={{ marginBottom: 14 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4 }}>Recycling Category</div>
-              <div style={{
-                padding: "10px 12px", borderRadius: 8, border: "1.5px solid #ddd",
-                background: "#fff", fontSize: 13, color: "#1a1a1a",
-                display: "flex", justifyContent: "space-between", alignItems: "center"
-              }}>
-                <span style={{ color: "#aaa" }}>PET, HDPE, OCC, Glass...</span>
-                <span style={{ color: "#999", fontSize: 11 }}>▾</span>
-              </div>
-            </div>
+                {/* Product Category */}
+                <div style={{ marginBottom: 10 }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4 }}>Product Category</div>
+                  <div style={{
+                    padding: "10px 12px", borderRadius: 8, border: "1.5px solid #ddd",
+                    background: "#fff", fontSize: 13, color: "#1a1a1a",
+                    display: "flex", justifyContent: "space-between", alignItems: "center"
+                  }}>
+                    <span style={{ color: "#aaa" }}>Select category...</span>
+                    <span style={{ color: "#999", fontSize: 11 }}>▾</span>
+                  </div>
+                </div>
 
+                {/* Recycling Category */}
+                <div style={{ marginBottom: 14 }}>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#1a1a1a", marginBottom: 4 }}>Recycling Category</div>
+                  <div style={{
+                    padding: "10px 12px", borderRadius: 8, border: "1.5px solid #ddd",
+                    background: "#fff", fontSize: 13, color: "#1a1a1a",
+                    display: "flex", justifyContent: "space-between", alignItems: "center"
+                  }}>
+                    <span style={{ color: "#aaa" }}>PET, HDPE, OCC, Glass...</span>
+                    <span style={{ color: "#999", fontSize: 11 }}>▾</span>
+                  </div>
+                </div>
+
+                <div onClick={() => setSubmitted(true)} style={{
+                  padding: "10px 0", borderRadius: 10, background: "#1a1a1a",
+                  textAlign: "center", fontSize: 14, fontWeight: 600, color: "#fff",
+                  cursor: "pointer"
+                }}>Submit Identification</div>
+              </>
+            )}
+          </div>
+
+          {/* Round 4: Both action buttons greyed out until form submitted */}
+          <div style={{ display: "flex", gap: 10, marginBottom: 8 }}>
             <div style={{
-              padding: "10px 0", borderRadius: 10, background: "#1a1a1a",
-              textAlign: "center", fontSize: 14, fontWeight: 600, color: "#fff",
-              cursor: "pointer"
-            }}>Submit Identification</div>
+              flex: 1, padding: "14px 0", borderRadius: 14,
+              background: submitted ? "#1a1a1a" : "#e0e0e0",
+              textAlign: "center", fontSize: 14, fontWeight: 600,
+              color: submitted ? "#fff" : "#999",
+              cursor: submitted ? "pointer" : "not-allowed"
+            }}>Buy it Again</div>
+            <div style={{
+              flex: 1, padding: "14px 0", borderRadius: 14,
+              background: "transparent",
+              border: submitted ? "2px solid #1D9100" : "2px solid #e0e0e0",
+              textAlign: "center", fontSize: 14, fontWeight: 600,
+              color: submitted ? "#1D9100" : "#999",
+              cursor: submitted ? "pointer" : "not-allowed"
+            }}>Buy it WasteFree</div>
+          </div>
+          <div style={{ textAlign: "center", fontSize: 12, color: "#888", lineHeight: 1.4 }}>
+            {submitted
+              ? "Re-order what you found, or swap to a preference-driven alternative."
+              : "Submit identification above to enable these actions."}
           </div>
         </div>
       </PhoneFrame>
@@ -4393,9 +4444,9 @@
           { id: "notifications", label: "Notifications", icon: "🔔" },
           { id: "profile", label: "Profile", icon: "👤" },
         ].map(tab => (
-          <div key={tab.id} style={{
+          <div key={tab.id} onClick={() => window.wfNavigateToFlow && window.wfNavigateToFlow(tab.id)} style={{
             flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
-            opacity: tab.id === activeTab ? 1 : 0.4
+            opacity: tab.id === activeTab ? 1 : 0.4, cursor: "pointer"
           }}>
             <span style={{ fontSize: 18, position: "relative" }}>
               {tab.icon}

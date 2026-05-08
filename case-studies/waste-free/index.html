@@ -1789,8 +1789,9 @@
           <div style={{ fontSize: 11, fontWeight: 700, color: "#888", letterSpacing: 1.2, textTransform: "uppercase", marginBottom: 4 }}>
             Your Primary Preference
           </div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a" }}>
-            🌍 Save the Planet
+          <div style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a", display: "flex", alignItems: "center", gap: 8 }}>
+            <span>🌍</span>
+            <span>Save the Planet</span>
           </div>
           <div style={{ fontSize: 13, color: "#888", marginTop: 4 }}>
             Change anytime in Profile
@@ -2125,7 +2126,7 @@
       </div>
       <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
         <div onClick={onBuyAgain} style={{
-          flex: "1 1 0", minWidth: 0, padding: "10px 8px", borderRadius: 10, background: "#1D9100",
+          flex: "1 1 0", minWidth: 0, padding: "10px 8px", borderRadius: 10, background: "#1a1a1a",
           color: "#fff", textAlign: "center", fontSize: 12, fontWeight: 600, cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "center"
         }}>Buy it Again</div>
@@ -2383,15 +2384,15 @@
         </div>
       </div>
       {/* Round 4 fix: dual CTAs so "Buy it WasteFree" is always one tap away — even from the Buy it Again detail screen */}
-      <div style={{ display: "flex", gap: 8, margin: "12px 20px" }}>
+      <div style={{ display: "flex", gap: 10, margin: "12px 20px" }}>
         <div onClick={onAdd} style={{
           flex: 1, padding: "16px 0", borderRadius: 14, background: "#1a1a1a",
-          textAlign: "center", fontSize: 15, fontWeight: 600, color: "#fff", cursor: "pointer"
+          textAlign: "center", fontSize: 16, fontWeight: 600, color: "#fff", cursor: "pointer"
         }}>Add to Cart — $5.99</div>
         <div onClick={onBuyWF} style={{
           flex: 1, padding: "16px 0", borderRadius: 14, background: "transparent",
           border: "2px solid #1D9100",
-          textAlign: "center", fontSize: 15, fontWeight: 600, color: "#1D9100", cursor: "pointer"
+          textAlign: "center", fontSize: 16, fontWeight: 600, color: "#1D9100", cursor: "pointer"
         }}>Buy it WasteFree</div>
       </div>
     </PhoneFrame>
@@ -2684,15 +2685,15 @@
 
         {[
           preference === "money"
-            ? { name: cart.itemName, detail: "12-pack · Qty: 1", price: cart.itemPrice, wf: true }
-            : { name: "Cherry Dr. Pepper", detail: "12-pack, 12 oz cans · Qty: 1", price: "$5.99", wf: false },
+            ? { name: cart.itemName, detail: "12-pack · Qty: 1", price: cart.itemPrice, wf: true, image: "images/RC Cherry Cola 12-pack.png" }
+            : { name: "Cherry Dr. Pepper", detail: "12-pack, 12 oz cans · Qty: 1", price: "$5.99", wf: false, image: "images/Cherry Dr. Pepper 12-pack cans.png" },
           preference === "health"
-            ? { name: cart.itemName, detail: "Laundry detergent · Qty: 1", price: cart.itemPrice, wf: true }
-            : { name: "Tide Pods", detail: "42-count · Qty: 1", price: "$12.99", wf: false },
+            ? { name: cart.itemName, detail: "Laundry detergent · Qty: 1", price: cart.itemPrice, wf: true, image: "images/Seventh Generation Free & Clear pods.png" }
+            : { name: "Tide Pods", detail: "42-count · Qty: 1", price: "$12.99", wf: false, image: "images/Tide Pods 42-count Original.png" },
           preference === "planet"
-            ? { name: cart.itemName, detail: "8-roll · Qty: 1", price: cart.itemPrice, wf: true }
-            : { name: "Bounty Paper Towels", detail: "8-roll · Qty: 1", price: "$8.49", wf: false },
-          { name: "Crest Toothpaste", detail: "2-pack · Qty: 1", price: "$4.99", wf: false },
+            ? { name: cart.itemName, detail: "8-roll · Qty: 1", price: cart.itemPrice, wf: true, image: "images/Who Gives a Crap Paper Towels.png" }
+            : { name: "Bounty Paper Towels", detail: "8-roll · Qty: 1", price: "$8.49", wf: false, image: "images/Bounty Paper Towels 8-roll Select-A-Size.png" },
+          { name: "Crest Toothpaste", detail: "2-pack · Qty: 1", price: "$4.99", wf: false, image: "images/Crest Toothpaste 2-pack Whitening.png" },
         ].map((item, i) => (
           <div key={i} style={{
             margin: "8px 16px", padding: 14, borderRadius: 14,
@@ -2702,8 +2703,12 @@
               <div style={{
                 width: 52, height: 52, borderRadius: 8, background: "#f0f0f0",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 9, color: "#aaa", flexShrink: 0
-              }}>Image</div>
+                fontSize: 9, color: "#aaa", flexShrink: 0, overflow: "hidden"
+              }}>
+                {item.image
+                  ? <img src={item.image} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                  : <span>Image</span>}
+              </div>
               <div style={{ flex: 1 }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <span style={{ fontSize: 15, fontWeight: 600 }}>{item.name}</span>
@@ -2895,10 +2900,16 @@
 
     const checkout = checkoutData[preference];
     const items = [
-      preference === "money" ? { name: "RC Cherry Cola", price: "$3.49" } : { name: "Cherry Dr. Pepper", price: "$5.99" },
-      preference === "health" ? { name: "Seventh Generation", price: "$13.49" } : { name: "Tide Pods", price: "$12.99" },
-      preference === "planet" ? { name: "Who Gives a Crap", price: "$9.99" } : { name: "Bounty Paper Towels", price: "$8.49" },
-      { name: "Crest Toothpaste", price: "$4.99" },
+      preference === "money"
+        ? { name: "RC Cherry Cola", price: "$3.49", image: "images/RC Cherry Cola 12-pack.png" }
+        : { name: "Cherry Dr. Pepper", price: "$5.99", image: "images/Cherry Dr. Pepper 12-pack cans.png" },
+      preference === "health"
+        ? { name: "Seventh Generation", price: "$13.49", image: "images/Seventh Generation Free & Clear pods.png" }
+        : { name: "Tide Pods", price: "$12.99", image: "images/Tide Pods 42-count Original.png" },
+      preference === "planet"
+        ? { name: "Who Gives a Crap", price: "$9.99", image: "images/Who Gives a Crap Paper Towels.png" }
+        : { name: "Bounty Paper Towels", price: "$8.49", image: "images/Bounty Paper Towels 8-roll Select-A-Size.png" },
+      { name: "Crest Toothpaste", price: "$4.99", image: "images/Crest Toothpaste 2-pack Whitening.png" },
     ];
 
     return (
@@ -2914,14 +2925,18 @@
           return (
             <div key={i} style={{ marginBottom: 10, borderRadius: 12, border: "1.5px solid #e0e0e0", overflow: "hidden" }}>
               <div style={{ padding: "12px 14px", display: "flex", gap: 10, alignItems: "flex-start" }}>
-                <div style={{ width: 44, height: 44, borderRadius: 8, background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, color: "#aaa", flexShrink: 0 }}>Img</div>
+                <div style={{ width: 44, height: 44, borderRadius: 8, background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, color: "#aaa", flexShrink: 0, overflow: "hidden" }}>
+                  {item.image
+                    ? <img src={item.image} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                    : <span>Img</span>}
+                </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <span style={{ fontSize: 14, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.name}</span>
                     <span style={{ fontSize: 14, fontWeight: 600, flexShrink: 0, marginLeft: 8 }}>{item.price}</span>
                   </div>
                   <div onClick={() => setExpandedItem(isExpanded ? null : i)} style={{
-                    marginTop: 6, display: "inline-flex", alignItems: "center", gap: 6,
+                    marginTop: 6, display: "inline-flex", alignItems: "center", gap: 8,
                     padding: "4px 10px", borderRadius: 6, background: "#f7f7f7",
                     border: "1px solid #e0e0e0", cursor: "pointer", fontSize: 12
                   }}>
@@ -2959,9 +2974,11 @@
 
         <div style={{
           margin: "8px 0 12px", padding: 10, borderRadius: 8,
-          background: "#fff8e1", border: "1px solid #ffe082", fontSize: 12, color: "#f57f17", lineHeight: 1.4
+          background: "#fff8e1", border: "1px solid #ffe082", fontSize: 12, color: "#f57f17", lineHeight: 1.4,
+          display: "flex", alignItems: "flex-start", gap: 8
         }}>
-          ⚠️ Items from different stores may arrive separately and incur separate delivery fees.
+          <span style={{ flexShrink: 0 }}>⚠️</span>
+          <span>Items from different stores may arrive separately and incur separate delivery fees.</span>
         </div>
 
         <div style={{ height: 1, background: "#e0e0e0", margin: "8px 0" }} />
@@ -3039,7 +3056,10 @@
           background: "#f8f8f8", border: "1.5px solid #e8e8e8",
           textAlign: "left", marginBottom: 28
         }}>
-          <div style={{ fontSize: 18, marginBottom: 10 }}>🌍 Nice work, Ashley!</div>
+          <div style={{ fontSize: 18, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
+            <span>🌍</span>
+            <span>Nice work, Ashley!</span>
+          </div>
           <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 12 }}>This order:</div>
           {stats.map((stat, i) => (
             <div key={i} style={{
@@ -4155,16 +4175,16 @@
             ))}
           </div>
 
-          {/* Round 4: dual CTAs — Buy it Again (filled dark) + Buy it WasteFree (outlined green) */}
+          {/* Round 4: dual CTAs — Buy it Again (filled dark) + Buy it WasteFree (outlined green) — canonical full-width spec */}
           <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
             <div style={{
-              flex: 1, padding: "14px 0", borderRadius: 14, background: "#1a1a1a",
-              textAlign: "center", fontSize: 14, fontWeight: 600, color: "#fff", cursor: "pointer"
+              flex: 1, padding: "16px 0", borderRadius: 14, background: "#1a1a1a",
+              textAlign: "center", fontSize: 16, fontWeight: 600, color: "#fff", cursor: "pointer"
             }}>Buy it Again</div>
             <div style={{
-              flex: 1, padding: "14px 0", borderRadius: 14, background: "transparent",
+              flex: 1, padding: "16px 0", borderRadius: 14, background: "transparent",
               border: "2px solid #1D9100",
-              textAlign: "center", fontSize: 14, fontWeight: 600, color: "#1D9100", cursor: "pointer"
+              textAlign: "center", fontSize: 16, fontWeight: 600, color: "#1D9100", cursor: "pointer"
             }}>Buy it WasteFree</div>
           </div>
           <div style={{ textAlign: "center", fontSize: 12, color: "#888" }}>
@@ -4281,20 +4301,20 @@
             )}
           </div>
 
-          {/* Round 4: Both action buttons greyed out until form submitted */}
+          {/* Round 4: Both action buttons greyed out until form submitted — canonical full-width spec */}
           <div style={{ display: "flex", gap: 10, marginBottom: 8 }}>
             <div style={{
-              flex: 1, padding: "14px 0", borderRadius: 14,
+              flex: 1, padding: "16px 0", borderRadius: 14,
               background: submitted ? "#1a1a1a" : "#e0e0e0",
-              textAlign: "center", fontSize: 14, fontWeight: 600,
+              textAlign: "center", fontSize: 16, fontWeight: 600,
               color: submitted ? "#fff" : "#999",
               cursor: submitted ? "pointer" : "not-allowed"
             }}>Buy it Again</div>
             <div style={{
-              flex: 1, padding: "14px 0", borderRadius: 14,
+              flex: 1, padding: "16px 0", borderRadius: 14,
               background: "transparent",
               border: submitted ? "2px solid #1D9100" : "2px solid #e0e0e0",
-              textAlign: "center", fontSize: 14, fontWeight: 600,
+              textAlign: "center", fontSize: 16, fontWeight: 600,
               color: submitted ? "#1D9100" : "#999",
               cursor: submitted ? "pointer" : "not-allowed"
             }}>Buy it WasteFree</div>
@@ -4541,23 +4561,13 @@
   ];
 
   const NotificationsScreen = () => {
-    const [activeCategory, setActiveCategory] = useState(CATEGORIES.ALL);
+    // Round 4 final: ALL category tabs removed per Ben's request — single unified list, no filtering.
+    // Inline classification badges remain on each notification card so the category context stays visible.
     const [readState, setReadState] = useState(() => {
       const state = {};
       notifications.forEach(n => { state[n.id] = n.read; });
       return state;
     });
-
-    const categories = [
-      { id: CATEGORIES.ALL, label: "All" },
-      { id: CATEGORIES.TRAINING, label: "Training" },
-      { id: CATEGORIES.COMMUNITY, label: "Community" },
-      { id: CATEGORIES.OFFERS, label: "Offers" },
-    ];
-
-    const filtered = activeCategory === CATEGORIES.ALL
-      ? notifications
-      : notifications.filter(n => n.cat === activeCategory);
 
     const unreadCount = notifications.filter(n => !readState[n.id]).length;
 
@@ -4587,41 +4597,9 @@
           </div>
         </div>
 
-        {/* Category tabs */}
-        <div style={{
-          display: "flex", gap: 6, padding: "10px 16px",
-          background: "#fafafa", borderBottom: "1px solid #f0f0f0"
-        }}>
-          {categories.map(cat => {
-            const catUnread = cat.id === CATEGORIES.ALL
-              ? unreadCount
-              : notifications.filter(n => n.cat === cat.id && !readState[n.id]).length;
-            return (
-              <div key={cat.id} onClick={() => setActiveCategory(cat.id)} style={{
-                flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
-                gap: 4, padding: "8px 12px", borderRadius: 20,
-                fontSize: 11, fontWeight: activeCategory === cat.id ? 700 : 400,
-                background: activeCategory === cat.id ? "#1D9100" : "transparent",
-                color: activeCategory === cat.id ? "#fff" : "#888",
-                cursor: "pointer"
-              }}>
-                <span>{cat.label}</span>
-                {catUnread > 0 && (
-                  <span style={{
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    width: 16, height: 16, borderRadius: 8,
-                    background: "#FF3B30",
-                    color: "#fff", fontSize: 9, fontWeight: 700
-                  }}>{catUnread}</span>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Notification list */}
+        {/* Notification list — all in one place, no tabs */}
         <div style={{ flex: 1, overflowY: "auto" }}>
-          {filtered.map(n => (
+          {notifications.map(n => (
             <div key={n.id} onClick={() => markRead(n.id)} style={{
               display: "flex", gap: 12, padding: "14px 20px",
               borderBottom: "1px solid #f5f5f5", cursor: "pointer",
@@ -4662,13 +4640,10 @@
             </div>
           ))}
 
-          {/* Bottom spacer with empty state hint */}
+          {/* Bottom spacer */}
           <div style={{ padding: "20px 20px 16px", textAlign: "center" }}>
             <div style={{ fontSize: 12, color: "#ccc" }}>
-              {filtered.length === 0
-                ? "No notifications in this category yet."
-                : `Showing ${filtered.length} notification${filtered.length !== 1 ? "s" : ""}`
-              }
+              {`Showing all ${notifications.length} notifications`}
             </div>
           </div>
         </div>

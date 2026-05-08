@@ -2239,7 +2239,7 @@
             <ItemCard name="Cherry Dr. Pepper" detail="12-pack, 12 oz cans" price="$5.99" image="images/Cherry Dr. Pepper 12-pack cans.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("money")} />
             <ItemCard name="Tide Pods" detail="42-count, Original" price="$12.99" image="images/Tide Pods 42-count Original.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("health")} />
             <ItemCard name="Bounty Paper Towels" detail="8-roll, Select-A-Size" price="$8.49" image="images/Bounty Paper Towels 8-roll Select-A-Size.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
-            <ItemCard name="Crest Toothpaste" detail="2-pack, Whitening" price="$4.99" image="images/Crest Toothpaste 2-pack Whitening.png" hasAlt={false} onBuyAgain={onBuyAgain} />
+            <ItemCard name="Crest Toothpaste" detail="2-pack, Whitening" price="$4.99" image="images/Crest Toothpaste 2-pack Whitening.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("health")} />
           </div>
 
           {/* Continuous scroll — This Week appears below Tonight */}
@@ -2303,7 +2303,8 @@
   // continuous-scroll My Items list (Tonight → This Week → This Month → YTD).
 
   // SCREEN: Item Detail — Same Product
-  const DetailSameScreen = ({ onBack, onAdd }) => (
+  // Round 4 fix: every purchase option must always also surface "Buy it WasteFree"
+  const DetailSameScreen = ({ onBack, onAdd, onBuyWF }) => (
     <PhoneFrame>
       <Header
         left={<span onClick={onBack} style={{ fontSize: 14, cursor: "pointer", color: "#1a1a1a" }}>← Back</span>}
@@ -2381,7 +2382,18 @@
           </div>
         </div>
       </div>
-      <CTAButton label="Add to Cart — $5.99" onClick={onAdd} />
+      {/* Round 4 fix: dual CTAs so "Buy it WasteFree" is always one tap away — even from the Buy it Again detail screen */}
+      <div style={{ display: "flex", gap: 8, margin: "12px 20px" }}>
+        <div onClick={onAdd} style={{
+          flex: 1, padding: "16px 0", borderRadius: 14, background: "#1a1a1a",
+          textAlign: "center", fontSize: 15, fontWeight: 600, color: "#fff", cursor: "pointer"
+        }}>Add to Cart — $5.99</div>
+        <div onClick={onBuyWF} style={{
+          flex: 1, padding: "16px 0", borderRadius: 14, background: "transparent",
+          border: "2px solid #1D9100",
+          textAlign: "center", fontSize: 15, fontWeight: 600, color: "#1D9100", cursor: "pointer"
+        }}>Buy it WasteFree</div>
+      </div>
     </PhoneFrame>
   );
 
@@ -3075,6 +3087,7 @@
         <DetailSameScreen
           onBack={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)}
           onAdd={() => setCurrentScreen(SCREENS.CART)}
+          onBuyWF={() => { setPreference("money"); setCurrentScreen(SCREENS.DETAIL_ALT); }}
         />
       ),
       [SCREENS.DETAIL_ALT]: (

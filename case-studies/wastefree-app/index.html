@@ -753,16 +753,19 @@
   .sidebar,
   footer.footer { display: none !important; }
 
-  /* Each flow takes the viewport so users see one prototype at a time */
+  /* SINGLE-APP MODE — only one flow is visible at a time, others stay mounted but hidden.
+     Bottom-nav taps swap which flow is .active. Each flow's React state is preserved
+     when the user navigates away and back, just like a real app. */
   .pwa-flow {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100vh;
-    padding: 16px 0;
+    padding: 0;
     box-sizing: border-box;
   }
+  .pwa-flow.active { display: flex; }
   .pwa-flow > div { width: 100%; }
 
   /* Hide the side-by-side notes layout — center the phone */
@@ -837,12 +840,12 @@
 </script>
 -->
 
-<!-- 5 prototype mount points — one full screen each, navigable via the bottom-nav Loop -->
-<div class="pwa-flow"><div id="flow-1-root"></div></div>
-<div class="pwa-flow"><div id="flow-2-root"></div></div>
-<div class="pwa-flow"><div id="flow-3-root"></div></div>
-<div class="pwa-flow"><div id="flow-4-root"></div></div>
-<div class="pwa-flow"><div id="flow-5-root"></div></div>
+<!-- 5 prototype mount points — only one is visible at a time. Bottom-nav swaps which is `active`. -->
+<div class="pwa-flow active" id="flow-1-mount"><div id="flow-1-root"></div></div>
+<div class="pwa-flow" id="flow-2-mount"><div id="flow-2-root"></div></div>
+<div class="pwa-flow" id="flow-3-mount"><div id="flow-3-root"></div></div>
+<div class="pwa-flow" id="flow-4-mount"><div id="flow-4-root"></div></div>
+<div class="pwa-flow" id="flow-5-mount"><div id="flow-5-root"></div></div>
 
 <!-- Hidden case-study chrome below — kept only because removing the password-gate script could break the sidebar-active-state code below it. Display: none keeps it inert. -->
 <div style="display:none;">
@@ -1315,19 +1318,28 @@
 
 <!-- Round 4: Loop the prototypes — clicking any bottom-nav tab inside a prototype scrolls the case study page to the matching flow's prototype mount. Defined once globally so every prototype can call it. -->
 <script>
+  // PWA single-app mode: switch the active flow in-place instead of scrolling.
+  // Each flow's React state stays mounted in the background, like real native app screens.
   window.wfNavigateToFlow = function (tabId) {
     var map = {
-      buy: 'flow-2-root',
-      impact: 'flow-3-root',
-      collection: 'flow-4-root',
-      notifications: 'flow-5-root',
-      profile: 'flow-1-root'
+      buy: 'flow-2-mount',
+      impact: 'flow-3-mount',
+      collection: 'flow-4-mount',
+      notifications: 'flow-5-mount',
+      profile: 'flow-1-mount'
     };
-    var targetId = map[tabId];
-    if (!targetId) return;
-    var el = document.getElementById(targetId);
-    if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var targetMountId = map[tabId];
+    if (!targetMountId) return;
+    var targetMount = document.getElementById(targetMountId);
+    if (!targetMount) return;
+    // Hide all flows
+    document.querySelectorAll('.pwa-flow').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    // Show the target
+    targetMount.classList.add('active');
+    // Scroll target to top in case React state has it mid-scroll
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 </script>
 

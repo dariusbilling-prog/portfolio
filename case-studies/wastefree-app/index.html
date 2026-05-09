@@ -793,6 +793,32 @@
     opacity: 0.85;
     transition: transform 80ms ease, opacity 80ms ease;
   }
+
+  /* Mobile PWA — make the prototype fill the device screen edge-to-edge.
+     The device itself is the phone "frame," so we hide the inner border + shadow. */
+  @media (max-width: 600px) {
+    .pwa-flow {
+      padding: 0 !important;
+      min-height: 100vh;
+    }
+    /* The outer scaling wrapper inside each PhoneFrame */
+    .pwa-flow > div {
+      padding: 0 !important;
+      background: #fff !important;
+    }
+    /* The inner phone "frame" — strip the border, radius, and shadow
+       so it looks like a native full-bleed app, not a phone-in-a-phone */
+    .pwa-flow div[style*="border: 3px solid"] {
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    /* The .proto-phone-notes flex container — center the phone, no gap */
+    .proto-phone-notes {
+      gap: 0 !important;
+      padding: 0 !important;
+    }
+  }
 </style>
 
 <!-- ===== Microsoft Clarity (free session recording + heatmaps) ===========
@@ -1322,7 +1348,10 @@
     PROFILE: "profile",
   };
 
-  const PHONE_SCALE = 0.65;
+  // PWA mobile fix: scale to fit device viewport instead of fixed 0.65 (which was for desktop case-study display).
+  // On mobile, PHONE_W/H stay at the design dimensions; PHONE_SCALE scales the content to fill the device width.
+  const _isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
+  const PHONE_SCALE = _isMobile ? (window.innerWidth / 390) : 0.65;
   const PHONE_W = 390;
   const PHONE_H = 844;
 
@@ -2093,7 +2122,10 @@
   };
 
   // Shared Components
-  const PHONE_SCALE = 0.65;
+  // PWA mobile fix: scale to fit device viewport instead of fixed 0.65 (which was for desktop case-study display).
+  // On mobile, PHONE_W/H stay at the design dimensions; PHONE_SCALE scales the content to fill the device width.
+  const _isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
+  const PHONE_SCALE = _isMobile ? (window.innerWidth / 390) : 0.65;
   const PHONE_W = 390;
   const PHONE_H = 844;
 
@@ -3329,7 +3361,10 @@
 {(() => {
   const { useState } = React;
 
-  const PHONE_SCALE = 0.65;
+  // PWA mobile fix: scale to fit device viewport instead of fixed 0.65 (which was for desktop case-study display).
+  // On mobile, PHONE_W/H stay at the design dimensions; PHONE_SCALE scales the content to fill the device width.
+  const _isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
+  const PHONE_SCALE = _isMobile ? (window.innerWidth / 390) : 0.65;
   const PHONE_W = 390;
   const PHONE_H = 844;
 
@@ -3899,7 +3934,10 @@
 {(() => {
   const { useState } = React;
 
-  const PHONE_SCALE = 0.65;
+  // PWA mobile fix: scale to fit device viewport instead of fixed 0.65 (which was for desktop case-study display).
+  // On mobile, PHONE_W/H stay at the design dimensions; PHONE_SCALE scales the content to fill the device width.
+  const _isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
+  const PHONE_SCALE = _isMobile ? (window.innerWidth / 390) : 0.65;
   const PHONE_W = 390;
   const PHONE_H = 844;
 
@@ -4534,7 +4572,10 @@
 {(() => {
   const { useState } = React;
 
-  const PHONE_SCALE = 0.65;
+  // PWA mobile fix: scale to fit device viewport instead of fixed 0.65 (which was for desktop case-study display).
+  // On mobile, PHONE_W/H stay at the design dimensions; PHONE_SCALE scales the content to fill the device width.
+  const _isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
+  const PHONE_SCALE = _isMobile ? (window.innerWidth / 390) : 0.65;
   const PHONE_W = 390;
   const PHONE_H = 844;
 

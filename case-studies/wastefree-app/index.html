@@ -826,6 +826,12 @@
       border-radius: 0 !important;
       box-shadow: none !important;
     }
+    /* Hide the fake "9:41 + battery" status bar inside the phone frame —
+       the user's REAL phone status bar is already visible above the app.
+       Status bar is the first direct child of the inner phone frame. */
+    .pwa-flow div[style*="border: 3px solid"] > div:first-child {
+      display: none !important;
+    }
     /* The .proto-phone-notes flex container — center the phone, no gap */
     .proto-phone-notes {
       gap: 0 !important;

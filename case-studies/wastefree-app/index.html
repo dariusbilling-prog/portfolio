@@ -779,11 +779,21 @@
     .pwa-flow { padding: 8px 0; }
   }
 
-  /* Safe-area padding for iPhone notch / home indicator when launched as PWA */
-  @supports (padding: env(safe-area-inset-top)) {
-    body {
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: env(safe-area-inset-bottom);
+  /* Lock the body — the phone frame fills the entire viewport on mobile, no scrolling allowed.
+     If a flow's content overflows (e.g. Tonight's Items list), the scrolling happens INSIDE
+     the phone frame via the React component's overflowY:auto, not on the outer page. */
+  @media (max-width: 600px) {
+    html, body {
+      height: 100vh;
+      height: 100dvh; /* dvh = dynamic viewport height — adjusts when Safari URL bar shrinks */
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+    .pwa-flow.active {
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
     }
   }
 
@@ -1360,12 +1370,14 @@
     PROFILE: "profile",
   };
 
-  // PWA mobile fix: scale to fit device viewport instead of fixed 0.65 (which was for desktop case-study display).
-  // On mobile, PHONE_W/H stay at the design dimensions; PHONE_SCALE scales the content to fill the device width.
+  // PWA mobile fix v2: match phone frame to the actual device viewport so CTA buttons
+  // never fall below the visible screen. On mobile we use the real innerWidth/innerHeight
+  // and skip the transform scale entirely (PHONE_SCALE = 1). Desktop still gets the
+  // case-study 65% scale at 390×844 design dimensions.
   const _isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
-  const PHONE_SCALE = _isMobile ? (window.innerWidth / 390) : 0.65;
-  const PHONE_W = 390;
-  const PHONE_H = 844;
+  const PHONE_SCALE = _isMobile ? 1 : 0.65;
+  const PHONE_W = _isMobile ? window.innerWidth : 390;
+  const PHONE_H = _isMobile ? window.innerHeight : 844;
 
   const PhoneFrame = ({ children, hideNav = true }) => (
     <div style={{
@@ -2134,12 +2146,14 @@
   };
 
   // Shared Components
-  // PWA mobile fix: scale to fit device viewport instead of fixed 0.65 (which was for desktop case-study display).
-  // On mobile, PHONE_W/H stay at the design dimensions; PHONE_SCALE scales the content to fill the device width.
+  // PWA mobile fix v2: match phone frame to the actual device viewport so CTA buttons
+  // never fall below the visible screen. On mobile we use the real innerWidth/innerHeight
+  // and skip the transform scale entirely (PHONE_SCALE = 1). Desktop still gets the
+  // case-study 65% scale at 390×844 design dimensions.
   const _isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
-  const PHONE_SCALE = _isMobile ? (window.innerWidth / 390) : 0.65;
-  const PHONE_W = 390;
-  const PHONE_H = 844;
+  const PHONE_SCALE = _isMobile ? 1 : 0.65;
+  const PHONE_W = _isMobile ? window.innerWidth : 390;
+  const PHONE_H = _isMobile ? window.innerHeight : 844;
 
   const PhoneFrame = ({ children, hideNav, title }) => (
     <div style={{
@@ -3373,12 +3387,14 @@
 {(() => {
   const { useState } = React;
 
-  // PWA mobile fix: scale to fit device viewport instead of fixed 0.65 (which was for desktop case-study display).
-  // On mobile, PHONE_W/H stay at the design dimensions; PHONE_SCALE scales the content to fill the device width.
+  // PWA mobile fix v2: match phone frame to the actual device viewport so CTA buttons
+  // never fall below the visible screen. On mobile we use the real innerWidth/innerHeight
+  // and skip the transform scale entirely (PHONE_SCALE = 1). Desktop still gets the
+  // case-study 65% scale at 390×844 design dimensions.
   const _isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
-  const PHONE_SCALE = _isMobile ? (window.innerWidth / 390) : 0.65;
-  const PHONE_W = 390;
-  const PHONE_H = 844;
+  const PHONE_SCALE = _isMobile ? 1 : 0.65;
+  const PHONE_W = _isMobile ? window.innerWidth : 390;
+  const PHONE_H = _isMobile ? window.innerHeight : 844;
 
   const PhoneFrame = ({ children, activeTab = "impact" }) => (
     <div style={{
@@ -3946,12 +3962,14 @@
 {(() => {
   const { useState } = React;
 
-  // PWA mobile fix: scale to fit device viewport instead of fixed 0.65 (which was for desktop case-study display).
-  // On mobile, PHONE_W/H stay at the design dimensions; PHONE_SCALE scales the content to fill the device width.
+  // PWA mobile fix v2: match phone frame to the actual device viewport so CTA buttons
+  // never fall below the visible screen. On mobile we use the real innerWidth/innerHeight
+  // and skip the transform scale entirely (PHONE_SCALE = 1). Desktop still gets the
+  // case-study 65% scale at 390×844 design dimensions.
   const _isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
-  const PHONE_SCALE = _isMobile ? (window.innerWidth / 390) : 0.65;
-  const PHONE_W = 390;
-  const PHONE_H = 844;
+  const PHONE_SCALE = _isMobile ? 1 : 0.65;
+  const PHONE_W = _isMobile ? window.innerWidth : 390;
+  const PHONE_H = _isMobile ? window.innerHeight : 844;
 
   const PhoneFrame = ({ children, activeTab = "collection" }) => (
     <div style={{
@@ -4584,12 +4602,14 @@
 {(() => {
   const { useState } = React;
 
-  // PWA mobile fix: scale to fit device viewport instead of fixed 0.65 (which was for desktop case-study display).
-  // On mobile, PHONE_W/H stay at the design dimensions; PHONE_SCALE scales the content to fill the device width.
+  // PWA mobile fix v2: match phone frame to the actual device viewport so CTA buttons
+  // never fall below the visible screen. On mobile we use the real innerWidth/innerHeight
+  // and skip the transform scale entirely (PHONE_SCALE = 1). Desktop still gets the
+  // case-study 65% scale at 390×844 design dimensions.
   const _isMobile = typeof window !== 'undefined' && window.innerWidth < 600;
-  const PHONE_SCALE = _isMobile ? (window.innerWidth / 390) : 0.65;
-  const PHONE_W = 390;
-  const PHONE_H = 844;
+  const PHONE_SCALE = _isMobile ? 1 : 0.65;
+  const PHONE_W = _isMobile ? window.innerWidth : 390;
+  const PHONE_H = _isMobile ? window.innerHeight : 844;
 
   const PhoneFrame = ({ children, activeTab = "notifications" }) => (
     <div style={{

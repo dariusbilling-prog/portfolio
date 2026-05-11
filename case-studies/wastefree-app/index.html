@@ -807,6 +807,20 @@
     transition: transform 80ms ease, opacity 80ms ease;
   }
 
+  /* Drag-to-reorder visual states (SortableJS preference cards) */
+  .pref-card-chosen {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18) !important;
+    transform: scale(1.03) !important;
+    z-index: 10;
+  }
+  .pref-card-ghost {
+    opacity: 0.3 !important;
+    background: #f0f0f0 !important;
+  }
+  .pref-card-dragging {
+    cursor: grabbing !important;
+  }
+
   /* Mobile PWA — make the prototype fill the device screen edge-to-edge.
      The device itself is the phone "frame," so we hide the inner border + shadow. */
   @media (max-width: 600px) {
@@ -1333,7 +1347,9 @@
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-
+<!-- SortableJS — touch-friendly drag-and-drop for the preference ranking screen.
+     iOS Safari doesn't support HTML5 drag-and-drop on touch; SortableJS uses touch events instead. -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
 
 <!-- React & Babel for embedded prototypes -->
@@ -1372,7 +1388,7 @@
 <!-- Flow 1: Onboarding -->
 <script type="text/babel">
 {(() => {
-  const { useState } = React;
+  const { useState, useRef, useEffect } = React;
 
   const SCREENS = {
     WELCOME: "welcome",
@@ -1681,41 +1697,47 @@
 
   const PreferenceScreen = ({ onBack, onSelect }) => {
     const [ranking, setRanking] = useState(["planet", "health", "money"]);
-    const [dragging, setDragging] = useState(null);
-    const [dragOver, setDragOver] = useState(null);
+    const listRef = useRef(null);
+    const rankingRef = useRef(ranking);
+    rankingRef.current = ranking;
+
     const options = {
       money: { icon: "💰", title: "Save Money", desc: "Find cheaper brands, bulk deals, and smarter substitutes that do the same job for less." },
       health: { icon: "🥦", title: "Be Healthier", desc: "Fewer dyes, chemicals, and artificial ingredients — not just fewer calories. Cleaner products for your household." },
       planet: { icon: "🌍", title: "Save the Planet", desc: "Buy local, reduce packaging weight, and choose products made from recycled or recyclable materials." },
     };
 
-    const handleDragStart = (idx) => { setDragging(idx); };
-    const handleDragOver = (e, idx) => { e.preventDefault(); setDragOver(idx); };
-    const handleDrop = (idx) => {
-      if (dragging === null || dragging === idx) { setDragging(null); setDragOver(null); return; }
-      const next = [...ranking];
-      const [moved] = next.splice(dragging, 1);
-      next.splice(idx, 0, moved);
-      setRanking(next);
-      setDragging(null);
-      setDragOver(null);
-    };
-    const handleDragEnd = () => { setDragging(null); setDragOver(null); };
-
-    /* Tap-to-swap for click-based interaction (select first, tap second to swap) */
-    const [selected, setSelected] = useState(null);
-    const handleTap = (idx) => {
-      if (selected === null) {
-        setSelected(idx);
-      } else if (selected === idx) {
-        setSelected(null);
-      } else {
-        const next = [...ranking];
-        [next[selected], next[idx]] = [next[idx], next[selected]];
-        setRanking(next);
-        setSelected(null);
-      }
-    };
+    // Initialize SortableJS once on mount — handles iOS touch + Android touch + desktop mouse drag uniformly
+    useEffect(() => {
+      if (!listRef.current || !window.Sortable) return;
+      const sortable = window.Sortable.create(listRef.current, {
+        animation: 200,
+        delay: 120,            // hold for 120ms before drag starts — prevents accidental drags from scroll
+        delayOnTouchOnly: true, // mouse drags start instantly, touch needs hold
+        touchStartThreshold: 4, // small movement before lock-in
+        chosenClass: 'pref-card-chosen',
+        ghostClass: 'pref-card-ghost',
+        dragClass: 'pref-card-dragging',
+        onEnd: (evt) => {
+          const { oldIndex, newIndex } = evt;
+          if (oldIndex === newIndex || oldIndex === undefined || newIndex === undefined) return;
+          // Revert SortableJS's DOM mutation so React state is the single source of truth
+          const parent = evt.item.parentNode;
+          parent.removeChild(evt.item);
+          if (oldIndex >= parent.children.length) {
+            parent.appendChild(evt.item);
+          } else {
+            parent.insertBefore(evt.item, parent.children[oldIndex]);
+          }
+          // Update React state — React re-renders the cards in the new order
+          const next = [...rankingRef.current];
+          const [moved] = next.splice(oldIndex, 1);
+          next.splice(newIndex, 0, moved);
+          setRanking(next);
+        }
+      });
+      return () => sortable.destroy();
+    }, []);
 
     return (
       <PhoneFrame>
@@ -1725,65 +1747,54 @@
         <div style={{ flex: 1, padding: "16px 24px" }}>
           <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Rank your priorities</div>
           <div style={{ fontSize: 14, color: "#666", lineHeight: 1.5, marginBottom: 20 }}>
-            {selected !== null
-              ? "Now tap another to swap positions."
-              : "Tap a card to select it, then tap another to swap. Or drag to reorder."}
+            Press and hold a card, then drag it up or down to reorder.
           </div>
 
-          {ranking.map((id, idx) => {
-            const opt = options[id];
-            const rankColors = ["#1D9100", "#4CAF50", "#999"];
-            const isSelected = selected === idx;
-            const isDragTarget = dragOver === idx && dragging !== idx;
-            return (
-              <div
-                key={id}
-                draggable
-                onDragStart={() => handleDragStart(idx)}
-                onDragOver={(e) => handleDragOver(e, idx)}
-                onDrop={() => handleDrop(idx)}
-                onDragEnd={handleDragEnd}
-                onClick={() => handleTap(idx)}
-                style={{
-                  padding: "14px 16px", borderRadius: 14, marginBottom: 10,
-                  border: isSelected ? "2px solid #1a1a1a"
-                    : isDragTarget ? "2px dashed #1D9100"
-                    : idx === 0 ? "2px solid #1D9100" : "1.5px solid #e0e0e0",
-                  background: isSelected ? "#f0f0f0"
-                    : isDragTarget ? "#E8F2E3"
-                    : idx === 0 ? "#E8F2E3" : "#fff",
-                  display: "flex", alignItems: "center", gap: 12,
-                  cursor: "grab", userSelect: "none",
-                  transform: isSelected ? "scale(1.02)" : dragging === idx ? "scale(0.97)" : "none",
-                  opacity: dragging === idx ? 0.5 : 1,
-                  transition: "all 0.15s ease",
-                  boxShadow: isSelected ? "0 2px 12px rgba(0,0,0,0.1)" : "none"
-                }}
-              >
-                {/* Drag handle */}
-                <div style={{
-                  display: "flex", flexDirection: "column", gap: 2, flexShrink: 0,
-                  color: "#bbb", fontSize: 10, lineHeight: 1, padding: "0 2px"
-                }}>
-                  <span>⠿</span>
-                </div>
-
-                <div style={{
-                  width: 28, height: 28, borderRadius: 14,
-                  background: rankColors[idx], color: "#fff",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 13, fontWeight: 700, flexShrink: 0
-                }}>{idx + 1}</div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
-                    <span style={{ fontSize: 18 }}>{opt.icon}</span>
-                    <span style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a" }}>{opt.title}</span>
+          <div ref={listRef}>
+            {ranking.map((id, idx) => {
+              const opt = options[id];
+              const rankColors = ["#1D9100", "#4CAF50", "#999"];
+              return (
+                <div
+                  key={id}
+                  data-id={id}
+                  className="pref-card"
+                  style={{
+                    padding: "14px 16px", borderRadius: 14, marginBottom: 10,
+                    border: idx === 0 ? "2px solid #1D9100" : "1.5px solid #e0e0e0",
+                    background: idx === 0 ? "#E8F2E3" : "#fff",
+                    display: "flex", alignItems: "center", gap: 12,
+                    cursor: "grab", userSelect: "none",
+                    WebkitUserSelect: "none",
+                    touchAction: "none", // tell the browser this element handles its own touches
+                    transition: "all 0.15s ease"
+                  }}
+                >
+                  {/* Drag handle — visual cue that the card is draggable */}
+                  <div style={{
+                    display: "flex", flexDirection: "column", gap: 2, flexShrink: 0,
+                    color: "#bbb", fontSize: 14, lineHeight: 1, padding: "0 4px"
+                  }}>
+                    <span>⋮⋮</span>
                   </div>
-                  <div style={{ fontSize: 12, color: "#666", lineHeight: 1.4 }}>{opt.desc}</div>
+
+                  <div style={{
+                    width: 28, height: 28, borderRadius: 14,
+                    background: rankColors[idx], color: "#fff",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 13, fontWeight: 700, flexShrink: 0
+                  }}>{idx + 1}</div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
+                      <span style={{ fontSize: 18 }}>{opt.icon}</span>
+                      <span style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a" }}>{opt.title}</span>
+                    </div>
+                    <div style={{ fontSize: 12, color: "#666", lineHeight: 1.4 }}>{opt.desc}</div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
 
           <div style={{ fontSize: 12, color: "#aaa", textAlign: "center", marginTop: 4 }}>
             You can change this anytime in Settings

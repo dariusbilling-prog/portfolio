@@ -808,14 +808,22 @@
   }
 
   /* Drag-to-reorder visual states (SortableJS preference cards) */
+  /* The original card position (placeholder gap where the card came from) — faded so user sees the gap */
+  .pref-card-ghost {
+    opacity: 0.25 !important;
+    background: #f0f0f0 !important;
+  }
+  /* The actively-dragged clone that follows the finger (forceFallback mode) */
+  .pref-card-fallback {
+    opacity: 0.95 !important;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.25) !important;
+    z-index: 9999 !important;
+    cursor: grabbing !important;
+    transform: scale(1.03) !important;
+  }
+  /* The card chosen but not yet moved (before drag is locked in) */
   .pref-card-chosen {
     box-shadow: 0 8px 24px rgba(0,0,0,0.18) !important;
-    transform: scale(1.03) !important;
-    z-index: 10;
-  }
-  .pref-card-ghost {
-    opacity: 0.3 !important;
-    background: #f0f0f0 !important;
   }
   .pref-card-dragging {
     cursor: grabbing !important;
@@ -1707,17 +1715,23 @@
       planet: { icon: "🌍", title: "Save the Planet", desc: "Buy local, reduce packaging weight, and choose products made from recycled or recyclable materials." },
     };
 
-    // Initialize SortableJS once on mount — handles iOS touch + Android touch + desktop mouse drag uniformly
+    // Initialize SortableJS once on mount — handles iOS touch + Android touch + desktop mouse drag uniformly.
+    // KEY: forceFallback: true bypasses HTML5 native drag-and-drop (which is broken on iOS Safari touch)
+    // and uses SortableJS's own touch-event implementation that actually works on phones.
     useEffect(() => {
       if (!listRef.current || !window.Sortable) return;
       const sortable = window.Sortable.create(listRef.current, {
         animation: 200,
-        delay: 120,            // hold for 120ms before drag starts — prevents accidental drags from scroll
-        delayOnTouchOnly: true, // mouse drags start instantly, touch needs hold
-        touchStartThreshold: 4, // small movement before lock-in
+        delay: 120,              // hold for 120ms before drag starts — prevents accidental drags from page scroll
+        delayOnTouchOnly: true,  // mouse drags start instantly, touch needs the hold
+        forceFallback: true,     // critical for iOS Safari — use SortableJS's touch impl instead of HTML5 drag
+        fallbackTolerance: 5,    // pixels of touch movement before locking in drag
+        fallbackOnBody: true,    // append the dragged clone to <body> so it can move freely outside the list bounds
+        scroll: false,           // we're inside a fixed-height phone frame — no scroll-while-dragging needed
         chosenClass: 'pref-card-chosen',
         ghostClass: 'pref-card-ghost',
         dragClass: 'pref-card-dragging',
+        fallbackClass: 'pref-card-fallback', // class on the clone that follows the finger in fallback mode
         onEnd: (evt) => {
           const { oldIndex, newIndex } = evt;
           if (oldIndex === newIndex || oldIndex === undefined || newIndex === undefined) return;
@@ -1765,9 +1779,7 @@
                     background: idx === 0 ? "#E8F2E3" : "#fff",
                     display: "flex", alignItems: "center", gap: 12,
                     cursor: "grab", userSelect: "none",
-                    WebkitUserSelect: "none",
-                    touchAction: "none", // tell the browser this element handles its own touches
-                    transition: "all 0.15s ease"
+                    WebkitUserSelect: "none"
                   }}
                 >
                   {/* Drag handle — visual cue that the card is draggable */}

@@ -807,6 +807,21 @@
     transition: transform 80ms ease, opacity 80ms ease;
   }
 
+  /* Hide horizontal scrollbars on any overflow-x container inside the prototype.
+     Apps don't show scrollbars — content just glides. */
+  .pwa-flow div[style*="overflow-x: auto"]::-webkit-scrollbar,
+  .pwa-flow div[style*="overflowX"]::-webkit-scrollbar,
+  .pwa-flow [style*="overflow-x: auto"]::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .pwa-flow div[style*="overflow-x: auto"],
+  .pwa-flow [style*="overflow-x: auto"] {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
   /* Drag-to-reorder visual states (SortableJS preference cards) */
   /* The original card position (placeholder gap where the card came from) — faded so user sees the gap */
   .pref-card-ghost {
@@ -1367,6 +1382,14 @@
 
 <!-- Round 4: Loop the prototypes — clicking any bottom-nav tab inside a prototype scrolls the case study page to the matching flow's prototype mount. Defined once globally so every prototype can call it. -->
 <script>
+  // Helper: navigate to Flow 2 (My Items) AND ask it to show its Cart screen.
+  // Used by the 🛒 icons that appear in headers across Flow 3, 4, 5 — taps now route to Cart.
+  window.wfShowCart = function () {
+    if (window.wfNavigateToFlow) window.wfNavigateToFlow('buy');
+    // Dispatch event that Flow 2 listens for
+    window.dispatchEvent(new CustomEvent('wf-show-cart'));
+  };
+
   // PWA single-app mode: switch the active flow in-place instead of scrolling.
   // Each flow's React state stays mounted in the background, like real native app screens.
   window.wfNavigateToFlow = function (tabId) {
@@ -1982,7 +2005,7 @@
           <div style={{ fontSize: 11, fontWeight: 700, color: "#666", letterSpacing: 1.2, textTransform: "uppercase", marginBottom: 4 }}>
             Your Primary Preference
           </div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a", display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
             <span>🌍</span>
             <span>Save the Planet</span>
           </div>
@@ -2288,7 +2311,7 @@
   );
 
   const CartBadge = ({ count }) => (
-    <div style={{ position: "relative", fontSize: 20, cursor: "pointer" }}>
+    <div onClick={() => window.wfShowCart && window.wfShowCart()} style={{ position: "relative", fontSize: 20, cursor: "pointer" }}>
       🛒
       {count > 0 && (
         <div style={{
@@ -3288,6 +3311,13 @@
     const [currentScreen, setCurrentScreen] = useState(SCREENS.NOTIFICATION);
     const [preference, setPreference] = useState("money");
 
+    // Listen for cross-flow request to show the Cart (fired from other flows' 🛒 icons)
+    useEffect(() => {
+      const handler = () => setCurrentScreen(SCREENS.CART);
+      window.addEventListener('wf-show-cart', handler);
+      return () => window.removeEventListener('wf-show-cart', handler);
+    }, []);
+
     const CheckoutComponent = fulfillmentMode === "B" ? CheckoutScreenB : CheckoutScreenC;
 
     const screenComponents = {
@@ -3327,7 +3357,11 @@
       ),
       [SCREENS.CONFIRMATION]: (
         <ConfirmationScreen
-          onViewImpact={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)}
+          onViewImpact={() => {
+            // Navigate to Flow 3 (Impact) in the PWA single-app mode
+            if (window.wfNavigateToFlow) window.wfNavigateToFlow('impact');
+            else setCurrentScreen(SCREENS.TONIGHT_ITEMS);
+          }}
           onBackToItems={() => setCurrentScreen(SCREENS.TONIGHT_ITEMS)}
           preference={preference}
           fulfillmentMode={fulfillmentMode}
@@ -3517,6 +3551,8 @@
 
   const ImpactScreen = ({ onShare }) => {
     const [rankView, setRankView] = useState("community"); // community | zip | network
+    const [expandedCard, setExpandedCard] = useState(null);
+    const toggleCard = (id) => setExpandedCard(expandedCard === id ? null : id);
 
     /* ── CHART 1: Trash / Recycled / Composted (most basic split) ── */
     const chart1Data = [
@@ -3602,7 +3638,7 @@
       }}>
         <div style={{ width: 60 }} />
         <span style={{ fontSize: 18, fontWeight: 700 }}>Ashley's Impact</span>
-        <div style={{ width: 60, textAlign: "right", position: "relative", fontSize: 20 }}>🛒</div>
+        <div onClick={() => window.wfShowCart && window.wfShowCart()} style={{ width: 60, textAlign: "right", position: "relative", fontSize: 20, cursor: "pointer" }}>🛒</div>
       </div>
       <DateToggle selected={2} />
 
@@ -3624,21 +3660,81 @@
           </div>
         </div>
         <div style={{ padding: "8px 20px" }}>
-          <div style={{
-            padding: "12px 16px", borderRadius: 12, border: "1.5px solid #e8e8e8",
-            display: "flex", justifyContent: "space-between", alignItems: "center",
-            cursor: "pointer", marginBottom: 8
-          }}>
-            <span style={{ fontSize: 14, color: "#666" }}>What is a WasteFree Score?</span>
-            <span style={{ color: "#ccc" }}>›</span>
+          {/* What is a WasteFree Score? — expand/collapse with placeholder copy */}
+          <div style={{ marginBottom: 8 }}>
+            <div onClick={() => toggleCard('what')} style={{
+              padding: "12px 16px", borderRadius: 12,
+              border: "1.5px solid #e8e8e8",
+              borderBottomLeftRadius: expandedCard === 'what' ? 0 : 12,
+              borderBottomRightRadius: expandedCard === 'what' ? 0 : 12,
+              borderBottom: expandedCard === 'what' ? "none" : "1.5px solid #e8e8e8",
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              cursor: "pointer"
+            }}>
+              <span style={{ fontSize: 14, color: "#666" }}>What is a WasteFree Score?</span>
+              <span style={{ color: "#ccc", transform: expandedCard === 'what' ? "rotate(90deg)" : "rotate(0)", transition: "transform 0.2s" }}>›</span>
+            </div>
+            {expandedCard === 'what' && (
+              <div style={{
+                padding: "0 16px 14px", borderRadius: 12,
+                borderTopLeftRadius: 0, borderTopRightRadius: 0,
+                border: "1.5px solid #e8e8e8", borderTop: "none",
+                background: "#fafafa",
+                fontSize: 13, color: "#444", lineHeight: 1.5
+              }}>
+                <div style={{ paddingTop: 12 }}>
+                  Your WasteFree Score reflects how environmentally efficient your household waste habits are — like a credit score, but for sustainability.
+                  <div style={{ height: 8 }} />
+                  Scores range from <strong>300</strong> (high-waste) to <strong>850</strong> (near-zero-waste). Most apartment residents start around 400–500 and improve over time as they use WasteFree.
+                  <div style={{ height: 8 }} />
+                  Your score is calculated from <strong>four pillars</strong>: materials diverted from landfill, choosing WasteFree alternatives, community participation, and disposal consistency.
+                </div>
+              </div>
+            )}
           </div>
-          <div style={{
-            padding: "12px 16px", borderRadius: 12, border: "1.5px solid #e8e8e8",
-            display: "flex", justifyContent: "space-between", alignItems: "center",
-            cursor: "pointer"
-          }}>
-            <span style={{ fontSize: 14, color: "#666" }}>Score Breakdown</span>
-            <span style={{ color: "#ccc" }}>›</span>
+
+          {/* Score Breakdown — expand/collapse */}
+          <div>
+            <div onClick={() => toggleCard('breakdown')} style={{
+              padding: "12px 16px", borderRadius: 12,
+              border: "1.5px solid #e8e8e8",
+              borderBottomLeftRadius: expandedCard === 'breakdown' ? 0 : 12,
+              borderBottomRightRadius: expandedCard === 'breakdown' ? 0 : 12,
+              borderBottom: expandedCard === 'breakdown' ? "none" : "1.5px solid #e8e8e8",
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              cursor: "pointer"
+            }}>
+              <span style={{ fontSize: 14, color: "#666" }}>Score Breakdown</span>
+              <span style={{ color: "#ccc", transform: expandedCard === 'breakdown' ? "rotate(90deg)" : "rotate(0)", transition: "transform 0.2s" }}>›</span>
+            </div>
+            {expandedCard === 'breakdown' && (
+              <div style={{
+                padding: "12px 16px 14px", borderRadius: 12,
+                borderTopLeftRadius: 0, borderTopRightRadius: 0,
+                border: "1.5px solid #e8e8e8", borderTop: "none",
+                background: "#fafafa"
+              }}>
+                {[
+                  { label: "Materials diverted", pct: 35, score: "+265" },
+                  { label: "WasteFree choices", pct: 25, score: "+185" },
+                  { label: "Community contribution", pct: 20, score: "+145" },
+                  { label: "Disposal consistency", pct: 20, score: "+147" },
+                ].map((row, i) => (
+                  <div key={i} style={{ marginBottom: i < 3 ? 10 : 0 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                      <span style={{ fontSize: 12, color: "#444", fontWeight: 500 }}>{row.label}</span>
+                      <span style={{ fontSize: 12, color: "#1D9100", fontWeight: 700 }}>{row.score} pts</span>
+                    </div>
+                    <div style={{ height: 6, borderRadius: 3, background: "#e8e8e8", overflow: "hidden" }}>
+                      <div style={{ width: row.pct + "%", height: "100%", background: "#1D9100", borderRadius: 3 }} />
+                    </div>
+                  </div>
+                ))}
+                <div style={{ fontSize: 11, color: "#888", marginTop: 12, fontStyle: "italic" }}>
+                  Sample breakdown — your actual mix updates after each collection.
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -3687,12 +3783,50 @@
             </div>
           </div>
 
-          <div style={{
-            padding: "12px 16px", borderRadius: 12, border: "1.5px solid #e8e8e8",
-            display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer"
-          }}>
-            <span style={{ fontSize: 14, color: "#666" }}>What can I do to improve?</span>
-            <span style={{ color: "#ccc" }}>›</span>
+          {/* What can I do to improve? — expand/collapse with actionable placeholder copy */}
+          <div>
+            <div onClick={() => toggleCard('improve')} style={{
+              padding: "12px 16px", borderRadius: 12,
+              border: "1.5px solid #e8e8e8",
+              borderBottomLeftRadius: expandedCard === 'improve' ? 0 : 12,
+              borderBottomRightRadius: expandedCard === 'improve' ? 0 : 12,
+              borderBottom: expandedCard === 'improve' ? "none" : "1.5px solid #e8e8e8",
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              cursor: "pointer"
+            }}>
+              <span style={{ fontSize: 14, color: "#666" }}>What can I do to improve?</span>
+              <span style={{ color: "#ccc", transform: expandedCard === 'improve' ? "rotate(90deg)" : "rotate(0)", transition: "transform 0.2s" }}>›</span>
+            </div>
+            {expandedCard === 'improve' && (
+              <div style={{
+                padding: "12px 16px 14px", borderRadius: 12,
+                borderTopLeftRadius: 0, borderTopRightRadius: 0,
+                border: "1.5px solid #e8e8e8", borderTop: "none",
+                background: "#fafafa"
+              }}>
+                {[
+                  { icon: "🧻", text: "Switch to recycled-fiber paper towels", pts: "+8 pts" },
+                  { icon: "🛒", text: "Try a bulk grocery run (fewer trips, less packaging)", pts: "+5 pts/month" },
+                  { icon: "🤝", text: "Join your apartment's group bulk-buys", pts: "+3 pts each" },
+                  { icon: "♻️", text: "Replace 3 disposables with reusable alternatives", pts: "+15 pts" },
+                  { icon: "📦", text: "Flatten boxes before pickup — improves sorting accuracy", pts: "+2 pts" },
+                ].map((tip, i) => (
+                  <div key={i} style={{
+                    display: "flex", alignItems: "flex-start", gap: 10,
+                    padding: "8px 0", borderTop: i > 0 ? "1px solid #e8e8e8" : "none"
+                  }}>
+                    <span style={{ fontSize: 16, flexShrink: 0 }}>{tip.icon}</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, color: "#1a1a1a", lineHeight: 1.4 }}>{tip.text}</div>
+                      <div style={{ fontSize: 11, color: "#1D9100", fontWeight: 700, marginTop: 2 }}>{tip.pts}</div>
+                    </div>
+                  </div>
+                ))}
+                <div style={{ fontSize: 11, color: "#888", marginTop: 10, fontStyle: "italic", lineHeight: 1.4 }}>
+                  Tips refresh weekly based on your collection patterns.
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

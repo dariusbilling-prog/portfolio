@@ -832,6 +832,15 @@
     .pwa-flow div[style*="border: 3px solid"] > div:first-child {
       display: none !important;
     }
+    /* iOS safe-area handling — standard Apple pattern.
+       Phone-frame background fills edge-to-edge, but content gets padded in
+       so nothing collides with the Dynamic Island (top) or home indicator (bottom).
+       box-sizing: border-box keeps total height = viewport (no overflow). */
+    .pwa-flow div[style*="border: 3px solid"] {
+      padding-top: env(safe-area-inset-top) !important;
+      padding-bottom: env(safe-area-inset-bottom) !important;
+      box-sizing: border-box !important;
+    }
     /* The .proto-phone-notes flex container — center the phone, no gap */
     .proto-phone-notes {
       gap: 0 !important;

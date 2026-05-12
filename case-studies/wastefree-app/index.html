@@ -2475,15 +2475,15 @@
           <SectionBanner label="This Month" sectionRef={sectionRefs[2]} />
           <div style={{ paddingTop: 8 }}>
             <ItemCard name="Tropicana Orange Juice" detail="89 oz, Pure Premium" price="$6.49" image="images/Tropicana Orange Juice 89 oz.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
-            <ItemCard name="Coca-Cola" detail="12-pack, 12 oz cans" price="$6.49" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("money")} />
-            <ItemCard name="Dawn Dish Soap" detail="16 oz, Original" price="$3.99" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
+            <ItemCard name="Coca-Cola" detail="12-pack, 12 oz cans" price="$6.49" image="images/Coca-Cola 12-pack cans.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("money")} />
+            <ItemCard name="Dawn Dish Soap" detail="16 oz, Original" price="$3.99" image="images/Dawn Dish Soap 16oz Original.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("planet")} />
           </div>
 
           {/* Continuous scroll — YTD appears below This Month */}
           <SectionBanner label="Year to Date" sectionRef={sectionRefs[3]} />
           <div style={{ paddingTop: 8 }}>
             <ItemCard name="Cheerios" detail="18 oz, Original" price="$4.29" image="images/Honey Nut Cheerios 18.8 oz box.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("health")} />
-            <ItemCard name="Folgers Coffee" detail="30.5 oz, Classic Roast" price="$8.99" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("money")} />
+            <ItemCard name="Folgers Coffee" detail="30.5 oz, Classic Roast" price="$8.99" image="images/Folgers Coffee 30.5oz Classic Roast.png" onBuyAgain={onBuyAgain} onBuyWF={() => onBuyWF("money")} />
           </div>
         </div>
       </PhoneFrame>
@@ -2636,7 +2636,7 @@
         {
           product: "Great Value Cherry Cola", price: "$2.99", sizes: ["12-pack", "24-pack (+$3)"],
           flavors: ["Cherry", "Regular"],
-          emoji: "💰",
+          emoji: "💰", image: "images/Great Value Cherry Cola 12-pack.png",
           headline: "You save $3.00 per purchase",
           detail: "vs. Cherry Dr. Pepper ($5.99)", sub: "Store brand, same great taste",
           reason: "Best value — Walmart store brand"
@@ -2644,7 +2644,7 @@
         {
           product: "Zevia Cherry Cola", price: "$5.49", sizes: ["8-pack", "12-pack (+$2.50)"],
           flavors: ["Cherry Cola", "Cola", "Ginger Root Beer"],
-          emoji: "💰",
+          emoji: "💰", image: "images/Zevia Cherry Cola 8-pack.png",
           headline: "You save $0.50 and go zero-sugar",
           detail: "vs. Cherry Dr. Pepper ($5.99)", sub: "Zero sugar, naturally sweetened with stevia",
           reason: "Saves money + healthier — no artificial sweeteners"
@@ -2662,7 +2662,7 @@
         {
           product: "Dropps Stain & Odor Pods", price: "$12.99", sizes: ["42-ct", "64-ct (+$6)", "120-ct (+$16)"],
           flavors: ["Unscented", "Clean Scent"],
-          emoji: "🥦",
+          emoji: "🥦", image: "images/Dropps Stain Odor Pods 42ct.png",
           headline: "Enzyme-powered, no synthetic chemicals",
           detail: "vs. Tide Pods (contains 1,4-dioxane traces)", sub: "B-Corp certified, compostable packaging",
           reason: "Plastic-free packaging + effective enzyme cleaning"
@@ -2680,7 +2680,7 @@
         {
           product: "Bamboo Babe Paper Towels", price: "$8.49", sizes: ["4-roll", "8-roll (+$6)", "12-roll (+$10)"],
           flavors: [],
-          emoji: "🌍",
+          emoji: "🌍", image: "images/Bamboo Babe Paper Towels.png",
           headline: "Bamboo-based, grows back 30x faster than trees",
           detail: "vs. Bounty (old-growth wood pulp)", sub: "Compostable rolls, soy-based inks",
           reason: "Renewable bamboo source — no deforestation"
@@ -2688,7 +2688,7 @@
         {
           product: "Marley's Monsters Reusable Towels", price: "$24.99", sizes: ["12-pack", "24-pack (+$18)"],
           flavors: ["White", "Prints", "Earth Tones"],
-          emoji: "🌍",
+          emoji: "🌍", image: "images/Marleys Monsters Reusable Towels.png",
           headline: "Replaces 6+ months of disposable towels",
           detail: "vs. Bounty (single-use, goes to landfill)", sub: "Machine washable, lasts 2+ years",
           reason: "Zero-waste long-term — eliminates paper towel purchases entirely"
@@ -4207,32 +4207,32 @@
     service: [
       { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true, image: "images/unidentified-mixed-1.jpg.png" },
       { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤", image: "images/Cherry Dr. Pepper 12-pack cans.png" },
-      { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
+      { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦", image: "images/Amazon Box Large.png" },
     ],
     week: [
       { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true, image: "images/unidentified-mixed-1.jpg.png" },
       { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤", image: "images/Cherry Dr. Pepper 12-pack cans.png" },
-      { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
+      { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦", image: "images/Amazon Box Large.png" },
       { id: 4, name: "Unidentified Item", identified: false, code: "Organic", method: "Composted", time: "Yesterday, 4:22 PM", icon: "🗑️", photo: true, image: "images/unidentified-organic.jpg.png" },
-      { id: 5, name: "Mixed Paper Bundle", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Yesterday, 3:15 PM", icon: "📄" },
+      { id: 5, name: "Mixed Paper Bundle", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Yesterday, 3:15 PM", icon: "📄", image: "images/Mixed Paper Bundle.png" },
       { id: 6, name: "Seventh Generation Dish Soap", identified: true, code: "HDPE", method: "Downcycled", time: "Yesterday, 1:02 PM", icon: "🧴", image: "images/Seventh Generation Free & Clear pods.png" },
-      { id: 7, name: "Topo Chico 4pk Glass", identified: true, code: "Glass", method: "Remelted", time: "Mon, 9:17 AM", icon: "🍾" },
+      { id: 7, name: "Topo Chico 4pk Glass", identified: true, code: "Glass", method: "Remelted", time: "Mon, 9:17 AM", icon: "🍾", image: "images/Topo Chico 4pk Glass.png" },
     ],
     month: [
       { id: 1, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Today, 2:34 PM", icon: "🗑️", photo: true, image: "images/unidentified-mixed-1.jpg.png" },
       { id: 2, name: "Dr Pepper Cherry 12pk", identified: true, code: "PET", method: "Closed-Loop", time: "Today, 1:08 PM", icon: "🥤", image: "images/Cherry Dr. Pepper 12-pack cans.png" },
-      { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦" },
+      { id: 3, name: "Amazon Box (Large)", identified: true, code: "OCC", method: "Closed-Loop", time: "Today, 12:45 PM", icon: "📦", image: "images/Amazon Box Large.png" },
       { id: 4, name: "Unidentified Item", identified: false, code: "Organic", method: "Composted", time: "Yesterday, 4:22 PM", icon: "🗑️", photo: true, image: "images/unidentified-organic.jpg.png" },
-      { id: 5, name: "Mixed Paper Bundle", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Yesterday, 3:15 PM", icon: "📄" },
+      { id: 5, name: "Mixed Paper Bundle", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Yesterday, 3:15 PM", icon: "📄", image: "images/Mixed Paper Bundle.png" },
       { id: 6, name: "Seventh Generation Dish Soap", identified: true, code: "HDPE", method: "Downcycled", time: "Yesterday, 1:02 PM", icon: "🧴", image: "images/Seventh Generation Free & Clear pods.png" },
-      { id: 7, name: "Topo Chico 4pk Glass", identified: true, code: "Glass", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🍾" },
-      { id: 8, name: "Steel Can (Beans)", identified: true, code: "Ferrous", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🥫" },
+      { id: 7, name: "Topo Chico 4pk Glass", identified: true, code: "Glass", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🍾", image: "images/Topo Chico 4pk Glass.png" },
+      { id: 8, name: "Steel Can (Beans)", identified: true, code: "Ferrous", method: "Remelted", time: "Apr 10, 9:17 AM", icon: "🥫", image: "images/Steel Can Beans.png" },
       { id: 9, name: "Unidentified Item", identified: false, code: "Non-Ferrous", method: "Remelted", time: "Apr 10, 9:15 AM", icon: "🗑️", photo: true, image: "images/unidentified-non-ferrous.png" },
-      { id: 10, name: "Banana Peels & Scraps", identified: true, code: "Organic", method: "Composted", time: "Apr 9, 6:30 PM", icon: "🍌" },
+      { id: 10, name: "Banana Peels & Scraps", identified: true, code: "Organic", method: "Composted", time: "Apr 9, 6:30 PM", icon: "🍌", image: "images/Banana Peels Scraps.png" },
       { id: 11, name: "Tide Pods Container", identified: true, code: "HDPE", method: "Downcycled", time: "Apr 7, 3:45 PM", icon: "🧺", image: "images/Tide Pods 42-count Original.png" },
       { id: 12, name: "Unidentified Item", identified: false, code: "Mixed", method: "Landfilled", time: "Apr 5, 11:20 AM", icon: "🗑️", photo: true, image: "images/unidentified-mixed-2.png" },
-      { id: 13, name: "Oatly Carton", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Apr 3, 2:10 PM", icon: "🥛" },
-      { id: 14, name: "Wine Bottle", identified: true, code: "Glass", method: "Remelted", time: "Apr 1, 7:55 PM", icon: "🍷" },
+      { id: 13, name: "Oatly Carton", identified: true, code: "Mixed Paper", method: "Downcycled", time: "Apr 3, 2:10 PM", icon: "🥛", image: "images/Oatly Carton.png" },
+      { id: 14, name: "Wine Bottle", identified: true, code: "Glass", method: "Remelted", time: "Apr 1, 7:55 PM", icon: "🍷", image: "images/Wine Bottle.png" },
     ],
   };
 

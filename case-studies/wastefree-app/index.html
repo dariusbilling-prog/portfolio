@@ -1419,6 +1419,54 @@
   };
 </script>
 
+<!-- Shared user-profile store. Reads from localStorage, falls back to Ashley defaults
+     so the prototype still works if a tester jumps into Flow 3+ without onboarding.
+     Other flows subscribe to the 'wf-user-update' event to re-render when signup completes. -->
+<script>
+  window.wfGetUser = function() {
+    try {
+      var stored = JSON.parse(localStorage.getItem('wfUser') || 'null');
+      if (stored && stored.firstName) {
+        var first = String(stored.firstName).trim();
+        var last = String(stored.lastName || '').trim();
+        var lastInitial = last.charAt(0).toUpperCase();
+        return {
+          firstName: first,
+          lastName: last,
+          lastInitial: lastInitial,
+          email: stored.email || (first.toLowerCase() + '@email.com'),
+          community: stored.community || 'Parkside Apartments',
+          unit: stored.unit || '204',
+          occupants: stored.occupants || 2,
+          displayName: first + (lastInitial ? ' ' + lastInitial + '.' : ''),
+          possessive: first + (first.slice(-1).toLowerCase() === 's' ? "'" : "'s"),
+          shareSlug: (first + (lastInitial ? '-' + lastInitial : '')).toLowerCase()
+        };
+      }
+    } catch (e) {}
+    return {
+      firstName: 'Ashley',
+      lastName: 'Williams',
+      lastInitial: 'W',
+      email: 'ashley@email.com',
+      community: 'Parkside Apartments',
+      unit: '204',
+      occupants: 2,
+      displayName: 'Ashley W.',
+      possessive: "Ashley's",
+      shareSlug: 'ashley-w'
+    };
+  };
+  window.wfSaveUser = function(user) {
+    try { localStorage.setItem('wfUser', JSON.stringify(user)); } catch (e) {}
+    window.dispatchEvent(new CustomEvent('wf-user-update'));
+  };
+  window.wfClearUser = function() {
+    try { localStorage.removeItem('wfUser'); } catch (e) {}
+    window.dispatchEvent(new CustomEvent('wf-user-update'));
+  };
+</script>
+
 <!-- Shared tab-bar icon set: SF-Symbols-style line icons (outlined inactive, filled active) -->
 <script>
   window.wfTabIconHTML = function(name, active) {
@@ -1541,13 +1589,21 @@
     </div>
   );
 
-  const InputField = ({ label, placeholder }) => (
+  const InputField = ({ label, placeholder, value = "", onChange, type = "text" }) => (
     <div style={{ marginBottom: 14 }}>
       <div style={{ fontSize: 13, fontWeight: 600, color: "#666", marginBottom: 6 }}>{label}</div>
-      <div style={{
-        padding: "14px 16px", borderRadius: 12, border: "1.5px solid #ddd",
-        fontSize: 15, color: "#bbb"
-      }}>{placeholder}</div>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={e => onChange && onChange(e.target.value)}
+        style={{
+          width: "100%", boxSizing: "border-box",
+          padding: "14px 16px", borderRadius: 12, border: "1.5px solid #ddd",
+          fontSize: 15, color: "#1a1a1a", background: "#fff", outline: "none",
+          WebkitAppearance: "none", fontFamily: "inherit"
+        }}
+      />
     </div>
   );
 
@@ -1593,8 +1649,50 @@
   );
 
   const AccountScreen = ({ onBack, onNext }) => {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [community, setCommunity] = useState("");
+    const [unit, setUnit] = useState("");
     const [occupants, setOccupants] = useState(2);
     const [showDropdown, setShowDropdown] = useState(false);
+
+    // Submit handler — validates minimum fields, saves to localStorage, advances.
+    const handleSubmit = () => {
+      const fn = firstName.trim() || "Ashley";
+      const ln = lastName.trim() || "Williams";
+      const em = email.trim() || (fn.toLowerCase() + "@email.com");
+      const cm = community.trim() || "Parkside Apartments";
+      const un = unit.trim() || "204";
+      window.wfSaveUser({
+        firstName: fn, lastName: ln, email: em,
+        community: cm, unit: un, occupants: occupants
+      });
+      onNext();
+    };
+
+    // SSO auto-fill — populates form with fake data and submits.
+    const handleSSO = (preset) => {
+      window.wfSaveUser(preset);
+      // Also reflect in local state in case the user navigates back.
+      setFirstName(preset.firstName);
+      setLastName(preset.lastName);
+      setEmail(preset.email);
+      setCommunity(preset.community);
+      setUnit(preset.unit);
+      setOccupants(preset.occupants);
+      onNext();
+    };
+
+    const APPLE_PRESET = {
+      firstName: "Sarah", lastName: "Chen", email: "sarah.chen@icloud.com",
+      community: "Parkside Apartments", unit: "204", occupants: 2
+    };
+    const GOOGLE_PRESET = {
+      firstName: "Mike", lastName: "Rivera", email: "mike.rivera@gmail.com",
+      community: "Parkside Apartments", unit: "317", occupants: 3
+    };
 
     return (
     <PhoneFrame>
@@ -1604,10 +1702,10 @@
       <div style={{ flex: 1, padding: "16px 24px", overflowY: "auto" }}>
         <div style={{ fontSize: 24, fontWeight: 700, marginBottom: 24 }}>Create your account</div>
 
-        <InputField label="First name" placeholder="Ashley" />
-        <InputField label="Last name" placeholder="Williams" />
-        <InputField label="Email address" placeholder="ashley@email.com" />
-        <InputField label="Password" placeholder="••••••••" />
+        <InputField label="First name" placeholder="Ashley" value={firstName} onChange={setFirstName} />
+        <InputField label="Last name" placeholder="Williams" value={lastName} onChange={setLastName} />
+        <InputField label="Email address" placeholder="ashley@email.com" type="email" value={email} onChange={setEmail} />
+        <InputField label="Password" placeholder="••••••••" type="password" value={password} onChange={setPassword} />
 
         <div style={{
           display: "flex", alignItems: "center", gap: 16, padding: "16px 0",
@@ -1618,25 +1716,27 @@
           <div style={{ flex: 1, height: 1, background: "#e0e0e0" }} />
         </div>
 
-        <div style={{
+        <div onClick={() => handleSSO(APPLE_PRESET)} style={{
           padding: "14px 0", borderRadius: 12, border: "1.5px solid #ddd",
           textAlign: "center", fontSize: 15, fontWeight: 500, marginBottom: 10,
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 10
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
+          cursor: "pointer", background: "#000", color: "#fff", borderColor: "#000"
         }}>
           <span style={{ fontSize: 18 }}>🍎</span> Continue with Apple
         </div>
-        <div style={{
+        <div onClick={() => handleSSO(GOOGLE_PRESET)} style={{
           padding: "14px 0", borderRadius: 12, border: "1.5px solid #ddd",
           textAlign: "center", fontSize: 15, fontWeight: 500, marginBottom: 20,
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 10
+          display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
+          cursor: "pointer", background: "#fff", color: "#1a1a1a"
         }}>
-          <span style={{ fontSize: 16, fontWeight: 700 }}>G</span> Continue with Google
+          <span style={{ fontSize: 16, fontWeight: 700, color: "#4285F4" }}>G</span> Continue with Google
         </div>
 
         <div style={{ height: 1, background: "#f0f0f0", margin: "8px 0 16px" }} />
 
-        <InputField label="Your community" placeholder="Parkside Apartments ▾" />
-        <InputField label="Unit number" placeholder="e.g., 204" />
+        <InputField label="Your community" placeholder="Parkside Apartments" value={community} onChange={setCommunity} />
+        <InputField label="Unit number" placeholder="e.g., 204" value={unit} onChange={setUnit} />
 
         <div style={{ marginBottom: 14, position: "relative" }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: "#666", marginBottom: 8 }}>Number of occupants</div>
@@ -1677,7 +1777,7 @@
           )}
         </div>
       </div>
-      <CTAButton label="Continue" onClick={onNext} />
+      <CTAButton label="Continue" onClick={handleSubmit} />
       <ProgressDots current={0} total={6} />
     </PhoneFrame>
     );
@@ -2053,7 +2153,9 @@
     </PhoneFrame>
   );
 
-  const ProfileScreen = () => (
+  const ProfileScreen = () => {
+    const u = window.wfGetUser();
+    return (
     <PhoneFrame hideNav={false}>
       <div style={{
         display: "flex", justifyContent: "space-between", alignItems: "center",
@@ -2076,9 +2178,9 @@
             fontSize: 24
           }}>👤</div>
           <div>
-            <div style={{ fontSize: 18, fontWeight: 700 }}>Ashley W.</div>
-            <div style={{ fontSize: 14, color: "#666" }}>Parkside Apartments, #204</div>
-            <div style={{ fontSize: 13, color: "#aaa" }}>ashley@email.com</div>
+            <div style={{ fontSize: 18, fontWeight: 700 }}>{u.displayName}</div>
+            <div style={{ fontSize: 14, color: "#666" }}>{u.community}, #{u.unit}</div>
+            <div style={{ fontSize: 13, color: "#aaa" }}>{u.email}</div>
           </div>
         </div>
 
@@ -2103,16 +2205,27 @@
 
         <div style={{
           padding: "18px 24px", cursor: "pointer"
+        }} onClick={() => {
+          if (window.confirm("Reset the prototype to defaults? (For focus-group testing — clears your signup info.)")) {
+            window.wfClearUser();
+          }
         }}>
-          <span style={{ fontSize: 16, color: "#cc0000" }}>Sign Out</span>
+          <span style={{ fontSize: 16, color: "#cc0000" }}>Sign Out · Reset prototype</span>
         </div>
       </div>
     </PhoneFrame>
-  );
+    );
+  };
 
   // MAIN
   function WasteFreeFlow3() {
     const [currentScreen, setCurrentScreen] = useState(SCREENS.WELCOME);
+    const [, setUserVer] = useState(0);
+    useEffect(() => {
+      const h = () => setUserVer(v => v + 1);
+      window.addEventListener('wf-user-update', h);
+      return () => window.removeEventListener('wf-user-update', h);
+    }, []);
 
     const screenComponents = {
       [SCREENS.WELCOME]: <WelcomeScreen onNext={() => setCurrentScreen(SCREENS.ACCOUNT)} />,
@@ -3313,7 +3426,7 @@
         }}>
           <div style={{ fontSize: 18, marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
             <span>🌍</span>
-            <span>Nice work, Ashley!</span>
+            <span>Nice work, {window.wfGetUser().firstName}!</span>
           </div>
           <div style={{ fontSize: 14, fontWeight: 600, color: "#1a1a1a", marginBottom: 12 }}>This order:</div>
           {stats.map((stat, i) => (
@@ -3350,6 +3463,13 @@
       const handler = () => setCurrentScreen(SCREENS.CART);
       window.addEventListener('wf-show-cart', handler);
       return () => window.removeEventListener('wf-show-cart', handler);
+    }, []);
+    // Re-render when user data changes (signup completes in Flow 1)
+    const [, setUserVer] = useState(0);
+    useEffect(() => {
+      const h = () => setUserVer(v => v + 1);
+      window.addEventListener('wf-user-update', h);
+      return () => window.removeEventListener('wf-user-update', h);
     }, []);
 
     const CheckoutComponent = fulfillmentMode === "B" ? CheckoutScreenB : CheckoutScreenC;
@@ -3491,7 +3611,7 @@
 <!-- Flow 3: Impact & Score -->
 <script type="text/babel">
 {(() => {
-  const { useState } = React;
+  const { useState, useEffect } = React;
 
   // PWA mobile fix v2: match phone frame to the actual device viewport so CTA buttons
   // never fall below the visible screen. On mobile we use the real innerWidth/innerHeight
@@ -3671,7 +3791,7 @@
         padding: "8px 20px 12px", borderBottom: "1px solid #f0f0f0"
       }}>
         <div style={{ width: 60 }} />
-        <span style={{ fontSize: 18, fontWeight: 700 }}>Ashley's Impact</span>
+        <span style={{ fontSize: 18, fontWeight: 700 }}>{window.wfGetUser().possessive} Impact</span>
         <div onClick={() => window.wfShowCart && window.wfShowCart()} style={{ width: 60, textAlign: "right", position: "relative", fontSize: 20, cursor: "pointer" }}>🛒</div>
       </div>
 
@@ -3791,9 +3911,9 @@
             padding: 16, borderRadius: 14, border: "1.5px solid #e8e8e8", marginBottom: 10
           }}>
             <div style={{ fontSize: 13, color: "#666", marginBottom: 8 }}>
-              {rankView === "community" ? "Ashley's rank in Parkside Apartments" :
-               rankView === "zip" ? "Ashley's rank in 75214" :
-               "Ashley's rank across All Communities"}
+              {rankView === "community" ? (window.wfGetUser().possessive + " rank in " + window.wfGetUser().community) :
+               rankView === "zip" ? (window.wfGetUser().possessive + " rank in 75214") :
+               (window.wfGetUser().possessive + " rank across All Communities")}
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 4 }}>
               <span style={{ fontSize: 32, fontWeight: 800, color: "#1a1a1a" }}>
@@ -3872,7 +3992,7 @@
             padding: 16, borderRadius: 14, border: "1.5px solid #e8e8e8", marginBottom: 10
           }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: "#1a1a1a", marginBottom: 12 }}>
-              Where did Ashley's waste go?
+              Where did {window.wfGetUser().possessive} waste go?
             </div>
             <MiniDonut size={150} gradient={chart1Gradient} centerLabel="Diverted" centerValue="78%" />
             {chart1Data.map(c => (
@@ -3913,14 +4033,14 @@
           </div>
         </div>
 
-        {/* Ashley's Impact */}
-        <SectionDivider label="Ashley's Impact" />
+        {/* User's Impact */}
+        <SectionDivider label={window.wfGetUser().possessive + " Impact"} />
         <div style={{ padding: "8px 20px 24px" }}>
           <div style={{
             padding: 20, borderRadius: 14, background: "#f8f8f8",
             border: "1.5px solid #e8e8e8"
           }}>
-            <div style={{ fontSize: 18, marginBottom: 12 }}>🌍 This month, Ashley has:</div>
+            <div style={{ fontSize: 18, marginBottom: 12 }}>🌍 This month, {window.wfGetUser().firstName} has:</div>
             <div style={{ fontSize: 22, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>
               Diverted 23 lbs of waste
             </div>
@@ -4023,8 +4143,8 @@
               fontSize: 20, flexShrink: 0
             }}>🌍</div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a", marginBottom: 2 }}>Ashley's WasteFree Impact</div>
-              <div style={{ fontSize: 11, color: "#8e8e93", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>wastefree.app/impact/ashley-w</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a", marginBottom: 2 }}>{window.wfGetUser().possessive} WasteFree Impact</div>
+              <div style={{ fontSize: 11, color: "#8e8e93", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>wastefree.app/impact/{window.wfGetUser().shareSlug}</div>
             </div>
           </div>
 
@@ -4090,6 +4210,12 @@
 
   function WasteFreeFlow3Main() {
     const [showShare, setShowShare] = useState(false);
+    const [, setUserVer] = useState(0);
+    useEffect(() => {
+      const h = () => setUserVer(v => v + 1);
+      window.addEventListener('wf-user-update', h);
+      return () => window.removeEventListener('wf-user-update', h);
+    }, []);
 
     return (
       <div style={{
@@ -4144,7 +4270,7 @@
                     <br/><br/>
                     <strong>Suggested contacts</strong> appear first for fastest sharing (recent conversations). App row shows the most common share destinations: Messages, Mail, Instagram, X, WhatsApp, Facebook.
                     <br/><br/>
-                    <strong>Preview card</strong> at the top shows what's being shared — "Ashley's WasteFree Impact" with a link preview. This builds confidence before sharing.
+                    <strong>Preview card</strong> at the top shows what's being shared — the user's WasteFree Impact with a link preview. This builds confidence before sharing.
                     <br/><br/>
                     <strong>Utility actions</strong> below (Copy Link, Save Image, Print) cover non-social use cases. Tap the backdrop or Cancel to dismiss.
                   </>
@@ -4165,7 +4291,7 @@
 <!-- Flow 4: Collection & Service Data -->
 <script type="text/babel">
 {(() => {
-  const { useState } = React;
+  const { useState, useEffect } = React;
 
   // PWA mobile fix v2: match phone frame to the actual device viewport so CTA buttons
   // never fall below the visible screen. On mobile we use the real innerWidth/innerHeight
@@ -4323,7 +4449,7 @@
           padding: "8px 20px 12px", borderBottom: "1px solid #f0f0f0"
         }}>
           <div style={{ width: 40 }} />
-          <span style={{ fontSize: 18, fontWeight: 700 }}>Ashley's Waste Summary</span>
+          <span style={{ fontSize: 18, fontWeight: 700 }}>{window.wfGetUser().possessive} Waste Summary</span>
           <div style={{ width: 40 }} />
         </div>
 
@@ -4710,6 +4836,12 @@
   function WasteFreeFlow4() {
     const [currentScreen, setCurrentScreen] = useState(SCREENS.COLLECTED);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [, setUserVer] = useState(0);
+    useEffect(() => {
+      const h = () => setUserVer(v => v + 1);
+      window.addEventListener('wf-user-update', h);
+      return () => window.removeEventListener('wf-user-update', h);
+    }, []);
 
     const handleTapItem = (item) => {
       setSelectedItem(item);
@@ -4805,7 +4937,7 @@
 <!-- Flow 5: Notifications -->
 <script type="text/babel">
 {(() => {
-  const { useState } = React;
+  const { useState, useEffect } = React;
 
   // PWA mobile fix v2: match phone frame to the actual device viewport so CTA buttons
   // never fall below the visible screen. On mobile we use the real innerWidth/innerHeight
@@ -4934,7 +5066,7 @@
     },
     {
       id: 8, cat: "community", read: true, time: "1w ago",
-      icon: "👋", title: "Welcome to WasteFree, Ashley!",
+      icon: "👋", title: "Welcome to WasteFree, " + window.wfGetUser().firstName + "!",
       body: "Your account is set up and your first collection is scheduled. Put your waste out tonight and we'll handle the rest.",
       tag: "Community", tagColor: "#007AFF"
     },
@@ -5032,6 +5164,12 @@
   };
 
   function WasteFreeFlow5() {
+    const [, setUserVer] = useState(0);
+    useEffect(() => {
+      const h = () => setUserVer(v => v + 1);
+      window.addEventListener('wf-user-update', h);
+      return () => window.removeEventListener('wf-user-update', h);
+    }, []);
     return (
       <div style={{
         background: "#f5f5f5", padding: "16px 0",

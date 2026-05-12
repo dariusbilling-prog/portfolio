@@ -1415,6 +1415,36 @@
   };
 </script>
 
+<!-- Shared tab-bar icon set: SF-Symbols-style line icons (outlined inactive, filled active) -->
+<script>
+  window.wfTabIconHTML = function(name, active) {
+    var c = active ? '#1D9100' : '#1a1a1a';
+    var ICONS = {
+      buy: {
+        outlined: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>',
+        filled:   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="' + c + '"><path d="M9 6a3 3 0 0 1 6 0v1h-2V6a1 1 0 1 0-2 0v1H9V6z"/><path d="M5.5 7A1.5 1.5 0 0 0 4 8.62l1 11.5A2 2 0 0 0 7 22h10a2 2 0 0 0 1.99-1.88l1-11.5A1.5 1.5 0 0 0 18.5 7h-13z"/></svg>'
+      },
+      impact: {
+        outlined: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="13" width="3.5" height="7" rx="1"/><rect x="10.25" y="9" width="3.5" height="11" rx="1"/><rect x="16.5" y="5" width="3.5" height="15" rx="1"/></svg>',
+        filled:   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="' + c + '"><rect x="4" y="13" width="3.5" height="7" rx="1"/><rect x="10.25" y="9" width="3.5" height="11" rx="1"/><rect x="16.5" y="5" width="3.5" height="15" rx="1"/></svg>'
+      },
+      profile: {
+        outlined: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>',
+        filled:   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="' + c + '"><circle cx="12" cy="8" r="4"/><path d="M4 20.5C4 16.36 7.58 13 12 13s8 3.36 8 7.5V21H4v-.5z"/></svg>'
+      },
+      collection: {
+        outlined: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="5" cy="18" r="1.5"/><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/></svg>',
+        filled:   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="' + c + '"><circle cx="5" cy="6" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="5" cy="18" r="1.5"/><rect x="9" y="5" width="11" height="2" rx="1"/><rect x="9" y="11" width="11" height="2" rx="1"/><rect x="9" y="17" width="11" height="2" rx="1"/></svg>'
+      },
+      notifications: {
+        outlined: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V10a6 6 0 0 1 12 0v6l1.5 1.5a.5.5 0 0 1-.35.85H4.85a.5.5 0 0 1-.35-.85L6 16z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>',
+        filled:   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="' + c + '"><path d="M12 3a6 6 0 0 0-6 6v6l-1.5 1.5a1 1 0 0 0 .7 1.7h13.6a1 1 0 0 0 .7-1.7L18 15V9a6 6 0 0 0-6-6z"/><path d="M10 20.5a2 2 0 0 0 4 0v-.5h-4v.5z"/></svg>'
+      }
+    };
+    var set = ICONS[name] || ICONS.buy;
+    return active ? set.filled : set.outlined;
+  };
+</script>
 
 <!-- Flow 1: Onboarding -->
 <script type="text/babel">
@@ -1477,17 +1507,17 @@
           background: "#fff", flexShrink: 0
         }}>
           {[
-            { id: "buy", label: "My Items", icon: "🔄" },
-            { id: "impact", label: "My Impact", icon: "📊" },
-            { id: "profile", label: "Profile", icon: "👤" },
+            { id: "buy", label: "My Items" },
+            { id: "impact", label: "My Impact" },
+            { id: "profile", label: "Profile" },
           ].map(tab => (
             <div key={tab.id} onClick={() => window.wfNavigateToFlow && window.wfNavigateToFlow(tab.id)} style={{
               flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
               opacity: tab.id === "profile" ? 1 : 0.4, cursor: "pointer"
             }}>
-              <span style={{ fontSize: 20 }}>{tab.icon}</span>
-              <span style={{ fontSize: 10, fontWeight: tab.id === "profile" ? 700 : 400 }}>{tab.label}</span>
-              {tab.id === "profile" && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1a1a1a" }} />}
+              <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === "profile") }} />
+              <span style={{ fontSize: 10, fontWeight: tab.id === "profile" ? 700 : 400, color: tab.id === "profile" ? "#1D9100" : "#1a1a1a" }}>{tab.label}</span>
+              {tab.id === "profile" && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1D9100" }} />}
             </div>
           ))}
         </div>
@@ -2253,17 +2283,17 @@
       background: "#fff", flexShrink: 0
     }}>
       {[
-        { id: "buy", label: "My Items", icon: "🔄" },
-        { id: "impact", label: "My Impact", icon: "📊" },
-        { id: "profile", label: "Profile", icon: "👤" },
+        { id: "buy", label: "My Items" },
+        { id: "impact", label: "My Impact" },
+        { id: "profile", label: "Profile" },
       ].map(tab => (
         <div key={tab.id} onClick={() => window.wfNavigateToFlow && window.wfNavigateToFlow(tab.id)} style={{
           flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
           opacity: tab.id === active ? 1 : 0.4, cursor: "pointer"
         }}>
-          <span style={{ fontSize: 20 }}>{tab.icon}</span>
-          <span style={{ fontSize: 10, fontWeight: tab.id === active ? 700 : 400, color: "#1a1a1a" }}>{tab.label}</span>
-          {tab.id === active && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1a1a1a" }} />}
+          <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === active) }} />
+          <span style={{ fontSize: 10, fontWeight: tab.id === active ? 700 : 400, color: tab.id === active ? "#1D9100" : "#1a1a1a" }}>{tab.label}</span>
+          {tab.id === active && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1D9100" }} />}
         </div>
       ))}
     </div>
@@ -3503,17 +3533,17 @@
         background: "#fff", flexShrink: 0
       }}>
         {[
-          { id: "buy", label: "My Items", icon: "🔄" },
-          { id: "impact", label: "My Impact", icon: "📊" },
-          { id: "profile", label: "Profile", icon: "👤" },
+          { id: "buy", label: "My Items" },
+          { id: "impact", label: "My Impact" },
+          { id: "profile", label: "Profile" },
         ].map(tab => (
           <div key={tab.id} onClick={() => window.wfNavigateToFlow && window.wfNavigateToFlow(tab.id)} style={{
             flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
             opacity: tab.id === activeTab ? 1 : 0.4, cursor: "pointer"
           }}>
-            <span style={{ fontSize: 20 }}>{tab.icon}</span>
-            <span style={{ fontSize: 10, fontWeight: tab.id === activeTab ? 700 : 400 }}>{tab.label}</span>
-            {tab.id === activeTab && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1a1a1a" }} />}
+            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === activeTab) }} />
+            <span style={{ fontSize: 10, fontWeight: tab.id === activeTab ? 700 : 400, color: tab.id === activeTab ? "#1D9100" : "#1a1a1a" }}>{tab.label}</span>
+            {tab.id === activeTab && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1D9100" }} />}
           </div>
         ))}
       </div>
@@ -4177,18 +4207,18 @@
         background: "#fff", flexShrink: 0
       }}>
         {[
-          { id: "buy", label: "My Items", icon: "🔄" },
-          { id: "collection", label: "Collection", icon: "📋" },
-          { id: "impact", label: "My Impact", icon: "📊" },
-          { id: "profile", label: "Profile", icon: "👤" },
+          { id: "buy", label: "My Items" },
+          { id: "collection", label: "Collection" },
+          { id: "impact", label: "My Impact" },
+          { id: "profile", label: "Profile" },
         ].map(tab => (
           <div key={tab.id} onClick={() => window.wfNavigateToFlow && window.wfNavigateToFlow(tab.id)} style={{
             flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
             opacity: tab.id === activeTab ? 1 : 0.4, cursor: "pointer"
           }}>
-            <span style={{ fontSize: 18 }}>{tab.icon}</span>
-            <span style={{ fontSize: 9, fontWeight: tab.id === activeTab ? 700 : 400 }}>{tab.label}</span>
-            {tab.id === activeTab && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1a1a1a" }} />}
+            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === activeTab) }} />
+            <span style={{ fontSize: 9, fontWeight: tab.id === activeTab ? 700 : 400, color: tab.id === activeTab ? "#1D9100" : "#1a1a1a" }}>{tab.label}</span>
+            {tab.id === activeTab && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1D9100" }} />}
           </div>
         ))}
       </div>
@@ -4817,28 +4847,28 @@
         background: "#fff", flexShrink: 0
       }}>
         {[
-          { id: "buy", label: "My Items", icon: "🔄" },
-          { id: "collection", label: "Collection", icon: "📋" },
-          { id: "impact", label: "My Impact", icon: "📊" },
-          { id: "notifications", label: "Notifications", icon: "🔔" },
-          { id: "profile", label: "Profile", icon: "👤" },
+          { id: "buy", label: "My Items" },
+          { id: "collection", label: "Collection" },
+          { id: "impact", label: "My Impact" },
+          { id: "notifications", label: "Notifications" },
+          { id: "profile", label: "Profile" },
         ].map(tab => (
           <div key={tab.id} onClick={() => window.wfNavigateToFlow && window.wfNavigateToFlow(tab.id)} style={{
             flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
             opacity: tab.id === activeTab ? 1 : 0.4, cursor: "pointer"
           }}>
-            <span style={{ fontSize: 18, position: "relative" }}>
-              {tab.icon}
+            <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22 }}>
+              <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === activeTab) }} />
               {tab.id === "notifications" && (
                 <div style={{
-                  position: "absolute", top: -4, right: -8, width: 16, height: 16,
+                  position: "absolute", top: -4, right: -6, minWidth: 16, height: 16, padding: "0 4px",
                   borderRadius: 8, background: "#FF3B30", color: "#fff",
                   fontSize: 9, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center"
                 }}>5</div>
               )}
             </span>
-            <span style={{ fontSize: 9, fontWeight: tab.id === activeTab ? 700 : 400 }}>{tab.label}</span>
-            {tab.id === activeTab && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1a1a1a" }} />}
+            <span style={{ fontSize: 9, fontWeight: tab.id === activeTab ? 700 : 400, color: tab.id === activeTab ? "#1D9100" : "#1a1a1a" }}>{tab.label}</span>
+            {tab.id === activeTab && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1D9100" }} />}
           </div>
         ))}
       </div>

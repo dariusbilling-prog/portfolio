@@ -2206,11 +2206,14 @@
         <div style={{
           padding: "18px 24px", cursor: "pointer"
         }} onClick={() => {
-          if (window.confirm("Reset the prototype to defaults? (For focus-group testing — clears your signup info.)")) {
+          if (window.confirm("Reset for next tester? Clears your signup info and returns to the Welcome screen.")) {
             window.wfClearUser();
+            // Full reload — all 5 React mounts reinitialize to their first screen,
+            // and the Flow 1 mount lands on Welcome. Clean handoff to the next tester.
+            window.location.reload();
           }
         }}>
-          <span style={{ fontSize: 16, color: "#cc0000" }}>Sign Out · Reset prototype</span>
+          <span style={{ fontSize: 16, color: "#cc0000" }}>Sign Out · Reset for next tester</span>
         </div>
       </div>
     </PhoneFrame>

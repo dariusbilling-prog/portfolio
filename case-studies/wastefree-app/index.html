@@ -869,13 +869,17 @@
     .pwa-flow div[style*="border: 3px solid"] > div:first-child {
       display: none !important;
     }
-    /* iOS safe-area handling — standard Apple pattern.
-       Phone-frame background fills edge-to-edge, but content gets padded in
-       so nothing collides with the Dynamic Island (top) or home indicator (bottom).
-       box-sizing: border-box keeps total height = viewport (no overflow). */
+    /* iOS safe-area handling — modern Apple pattern.
+       Phone-frame extends edge-to-edge of the device. Header background reaches
+       under the Dynamic Island; tab bar background reaches to the home indicator.
+       Just enough top padding to clear the Dynamic Island (it's ~35pt high, so
+       we use safe-area-inset minus ~25pt to claw back the extra reserved space).
+       Bottom: zero phone-frame padding — the tab bar's own internal padding
+       provides the home-indicator clearance, matching how Apple-native apps
+       render their TabBar flush with the bottom of the screen. */
     .pwa-flow div[style*="border: 3px solid"] {
-      padding-top: env(safe-area-inset-top) !important;
-      padding-bottom: env(safe-area-inset-bottom) !important;
+      padding-top: max(0px, calc(env(safe-area-inset-top) - 24px)) !important;
+      padding-bottom: 0 !important;
       box-sizing: border-box !important;
     }
     /* The .proto-phone-notes flex container — center the phone, no gap */

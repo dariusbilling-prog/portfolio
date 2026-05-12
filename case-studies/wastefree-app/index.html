@@ -852,9 +852,12 @@
       min-height: 100vh;
     }
     /* The outer scaling wrapper inside each PhoneFrame */
-    .pwa-flow > div {
+    .pwa-flow > div,
+    .pwa-flow > div > div,
+    .pwa-flow > div > div > div {
       padding: 0 !important;
       background: #fff !important;
+      max-width: none !important;
     }
     /* The inner phone "frame" — strip the border, radius, and shadow
        so it looks like a native full-bleed app, not a phone-in-a-phone */

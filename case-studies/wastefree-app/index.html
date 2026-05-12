@@ -5028,7 +5028,7 @@
     },
     {
       id: 2, cat: "community", read: false, time: "5h ago",
-      icon: "🏆", title: "Parkside hit 80% diversion!",
+      icon: "🏆", title: window.wfGetUser().community.split(' ')[0] + " hit 80% diversion!",
       body: "Your community reached an 80% waste diversion rate this month — up from 72% last month. You're in the top 15% of contributors!",
       tag: "Community", tagColor: "#007AFF"
     },
@@ -5054,7 +5054,7 @@
     {
       id: 6, cat: "offers", read: true, time: "4d ago",
       icon: "🏗️", title: "Free recycling station upgrade",
-      body: "Parkside Apartments qualifies for a free 3-bin sorting station in the parking garage. Vote to approve by April 30.",
+      body: window.wfGetUser().community + " qualifies for a free 3-bin sorting station in the parking garage. Vote to approve by April 30.",
       tag: "Capital Improvement", tagColor: "#FF9500",
       cta: "Vote Now"
     },

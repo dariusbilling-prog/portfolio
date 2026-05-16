@@ -1466,7 +1466,23 @@
   };
   window.wfClearUser = function() {
     try { localStorage.removeItem('wfUser'); } catch (e) {}
+    try { localStorage.removeItem('wfNotifUnreadCount'); } catch (e) {}
     window.dispatchEvent(new CustomEvent('wf-user-update'));
+    window.dispatchEvent(new CustomEvent('wf-notif-update'));
+  };
+
+  // Shared notification unread-count, surfaced as the red badge on the
+  // Notifications tab from every flow. Defaults to 5 unread for a fresh tester.
+  // Flow 5 mirrors its local readState here so other tab bars stay in sync.
+  window.wfGetUnreadCount = function() {
+    var v = localStorage.getItem('wfNotifUnreadCount');
+    if (v === null) return 5;
+    var n = parseInt(v, 10);
+    return isNaN(n) ? 0 : Math.max(0, n);
+  };
+  window.wfSetUnreadCount = function(n) {
+    try { localStorage.setItem('wfNotifUnreadCount', String(Math.max(0, n))); } catch (e) {}
+    window.dispatchEvent(new CustomEvent('wf-notif-update'));
   };
 </script>
 
@@ -1572,7 +1588,12 @@
               flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
               opacity: tab.id === "profile" ? 1 : 0.4, cursor: "pointer"
             }}>
-              <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === "profile") }} />
+              <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }}>
+                <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === "profile") }} />
+                {tab.id === "notifications" && window.wfGetUnreadCount() > 0 && (
+                  <div style={{ position: "absolute", top: -4, right: -6, minWidth: 16, height: 16, padding: "0 4px", borderRadius: 8, background: "#FF3B30", color: "#fff", fontSize: 9, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>{window.wfGetUnreadCount()}</div>
+                )}
+              </span>
               <span style={{ fontSize: 10, fontWeight: tab.id === "profile" ? 700 : 400, color: tab.id === "profile" ? "#1D9100" : "#1a1a1a" }}>{tab.label}</span>
               {tab.id === "profile" && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1D9100" }} />}
             </div>
@@ -2232,7 +2253,11 @@
     useEffect(() => {
       const h = () => setUserVer(v => v + 1);
       window.addEventListener('wf-user-update', h);
-      return () => window.removeEventListener('wf-user-update', h);
+      window.addEventListener('wf-notif-update', h);
+      return () => {
+        window.removeEventListener('wf-user-update', h);
+        window.removeEventListener('wf-notif-update', h);
+      };
     }, []);
 
     const screenComponents = {
@@ -2418,7 +2443,12 @@
           flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
           opacity: tab.id === active ? 1 : 0.4, cursor: "pointer"
         }}>
-          <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === active) }} />
+          <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }}>
+            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === active) }} />
+            {tab.id === "notifications" && window.wfGetUnreadCount() > 0 && (
+              <div style={{ position: "absolute", top: -4, right: -6, minWidth: 16, height: 16, padding: "0 4px", borderRadius: 8, background: "#FF3B30", color: "#fff", fontSize: 9, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>{window.wfGetUnreadCount()}</div>
+            )}
+          </span>
           <span style={{ fontSize: 10, fontWeight: tab.id === active ? 700 : 400, color: tab.id === active ? "#1D9100" : "#1a1a1a" }}>{tab.label}</span>
           {tab.id === active && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1D9100" }} />}
         </div>
@@ -3479,7 +3509,11 @@
     useEffect(() => {
       const h = () => setUserVer(v => v + 1);
       window.addEventListener('wf-user-update', h);
-      return () => window.removeEventListener('wf-user-update', h);
+      window.addEventListener('wf-notif-update', h);
+      return () => {
+        window.removeEventListener('wf-user-update', h);
+        window.removeEventListener('wf-notif-update', h);
+      };
     }, []);
 
     const CheckoutComponent = fulfillmentMode === "B" ? CheckoutScreenB : CheckoutScreenC;
@@ -3677,7 +3711,12 @@
             flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
             opacity: tab.id === activeTab ? 1 : 0.4, cursor: "pointer"
           }}>
-            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === activeTab) }} />
+            <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }}>
+              <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === activeTab) }} />
+              {tab.id === "notifications" && window.wfGetUnreadCount() > 0 && (
+                <div style={{ position: "absolute", top: -4, right: -6, minWidth: 16, height: 16, padding: "0 4px", borderRadius: 8, background: "#FF3B30", color: "#fff", fontSize: 9, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>{window.wfGetUnreadCount()}</div>
+              )}
+            </span>
             <span style={{ fontSize: 10, fontWeight: tab.id === activeTab ? 700 : 400, color: tab.id === activeTab ? "#1D9100" : "#1a1a1a" }}>{tab.label}</span>
             {tab.id === activeTab && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1D9100" }} />}
           </div>
@@ -4226,7 +4265,11 @@
     useEffect(() => {
       const h = () => setUserVer(v => v + 1);
       window.addEventListener('wf-user-update', h);
-      return () => window.removeEventListener('wf-user-update', h);
+      window.addEventListener('wf-notif-update', h);
+      return () => {
+        window.removeEventListener('wf-user-update', h);
+        window.removeEventListener('wf-notif-update', h);
+      };
     }, []);
 
     return (
@@ -4359,7 +4402,12 @@
             flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
             opacity: tab.id === activeTab ? 1 : 0.4, cursor: "pointer"
           }}>
-            <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === activeTab) }} />
+            <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22 }}>
+              <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === activeTab) }} />
+              {tab.id === "notifications" && window.wfGetUnreadCount() > 0 && (
+                <div style={{ position: "absolute", top: -4, right: -6, minWidth: 16, height: 16, padding: "0 4px", borderRadius: 8, background: "#FF3B30", color: "#fff", fontSize: 9, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>{window.wfGetUnreadCount()}</div>
+              )}
+            </span>
             <span style={{ fontSize: 9, fontWeight: tab.id === activeTab ? 700 : 400, color: tab.id === activeTab ? "#1D9100" : "#1a1a1a" }}>{tab.label}</span>
             {tab.id === activeTab && <div style={{ width: 4, height: 4, borderRadius: 2, background: "#1D9100" }} />}
           </div>
@@ -4853,7 +4901,11 @@
     useEffect(() => {
       const h = () => setUserVer(v => v + 1);
       window.addEventListener('wf-user-update', h);
-      return () => window.removeEventListener('wf-user-update', h);
+      window.addEventListener('wf-notif-update', h);
+      return () => {
+        window.removeEventListener('wf-user-update', h);
+        window.removeEventListener('wf-notif-update', h);
+      };
     }, []);
 
     const handleTapItem = (item) => {
@@ -5008,12 +5060,12 @@
           }}>
             <span style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22 }}>
               <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22 }} dangerouslySetInnerHTML={{ __html: window.wfTabIconHTML(tab.id, tab.id === activeTab) }} />
-              {tab.id === "notifications" && (
+              {tab.id === "notifications" && window.wfGetUnreadCount() > 0 && (
                 <div style={{
                   position: "absolute", top: -4, right: -6, minWidth: 16, height: 16, padding: "0 4px",
                   borderRadius: 8, background: "#FF3B30", color: "#fff",
                   fontSize: 9, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center"
-                }}>5</div>
+                }}>{window.wfGetUnreadCount()}</div>
               )}
             </span>
             <span style={{ fontSize: 9, fontWeight: tab.id === activeTab ? 700 : 400, color: tab.id === activeTab ? "#1D9100" : "#1a1a1a" }}>{tab.label}</span>
@@ -5095,6 +5147,12 @@
     });
 
     const unreadCount = notifications.filter(n => !readState[n.id]).length;
+
+    // Mirror unread count to the global store so the badge stays in sync
+    // on the Notifications tab across every flow's bottom nav.
+    useEffect(() => {
+      window.wfSetUnreadCount(unreadCount);
+    }, [unreadCount]);
 
     const markRead = (id) => {
       setReadState(prev => ({ ...prev, [id]: true }));
@@ -5181,7 +5239,11 @@
     useEffect(() => {
       const h = () => setUserVer(v => v + 1);
       window.addEventListener('wf-user-update', h);
-      return () => window.removeEventListener('wf-user-update', h);
+      window.addEventListener('wf-notif-update', h);
+      return () => {
+        window.removeEventListener('wf-user-update', h);
+        window.removeEventListener('wf-notif-update', h);
+      };
     }, []);
     return (
       <div style={{

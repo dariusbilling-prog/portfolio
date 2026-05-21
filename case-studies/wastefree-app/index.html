@@ -3759,6 +3759,17 @@
     const [expandedCard, setExpandedCard] = useState(null);
     const toggleCard = (id) => setExpandedCard(expandedCard === id ? null : id);
 
+    /* ── Timeframe toggle — score recalculates per period (default: This Month) ── */
+    const [timeframe, setTimeframe] = useState(2);
+    const timeframeOptions = ["This Service", "This Week", "This Month", "YTD"];
+    const scoreByTimeframe = [
+      { score: 758, delta: "↑ 6 pts since last pickup" },  // This Service
+      { score: 751, delta: "↑ 9 pts this week" },          // This Week
+      { score: 742, delta: "↑ 12 pts this month" },        // This Month
+      { score: 729, delta: "↑ 38 pts this year" },         // YTD
+    ];
+    const tf = scoreByTimeframe[timeframe];
+
     /* ── CHART 1: Trash / Recycled / Composted (most basic split) ── */
     const chart1Data = [
       { label: "Recycled", pct: 64, color: "#1D9100" },
@@ -3846,6 +3857,21 @@
         <div onClick={() => window.wfShowCart && window.wfShowCart()} style={{ width: 60, textAlign: "right", position: "relative", fontSize: 20, cursor: "pointer" }}>🛒</div>
       </div>
 
+      {/* Timeframe toggle — score recalculates per period */}
+      <div style={{
+        display: "flex", gap: 6, padding: "12px 16px",
+        background: "#fafafa", borderBottom: "1px solid #f0f0f0"
+      }}>
+        {timeframeOptions.map((opt, i) => (
+          <div key={i} onClick={() => setTimeframe(i)} style={{
+            flex: 1, textAlign: "center", padding: "6px 2px", borderRadius: 20,
+            fontSize: 11, fontWeight: i === timeframe ? 700 : 400, cursor: "pointer",
+            background: i === timeframe ? "#1a1a1a" : "transparent",
+            color: i === timeframe ? "#fff" : "#888"
+          }}>{opt}</div>
+        ))}
+      </div>
+
       <div style={{ flex: 1, overflowY: "auto" }}>
         {/* WasteFree Score */}
         <SectionDivider label="WasteFree Score" />
@@ -3854,13 +3880,13 @@
             width: 140, height: 140, borderRadius: 70, border: "6px solid #1D9100",
             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"
           }}>
-            <span style={{ fontSize: 48, fontWeight: 800, color: "#1a1a1a" }}>742</span>
+            <span style={{ fontSize: 48, fontWeight: 800, color: "#1a1a1a" }}>{tf.score}</span>
           </div>
           <div style={{
             marginTop: 10, fontSize: 15, fontWeight: 600, color: "#1a1a1a",
             display: "flex", alignItems: "center", gap: 6
           }}>
-            <span style={{ color: "#1a1a1a" }}>↑</span> 12 pts this month
+            {tf.delta}
           </div>
         </div>
         <div style={{ padding: "8px 20px" }}>

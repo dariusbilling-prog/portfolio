@@ -21,11 +21,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Work+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- React 18 + ReactDOM UMD — no bundler needed -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- React 18 + ReactDOM UMD — no bundler needed.
+       Primary CDN: jsDelivr. Fallback: cdnjs (Cloudflare) via document.write if jsDelivr is down. -->
+  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js" crossorigin></script>
+  <script>window.React||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js" crossorigin><\/script>')</script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+  <script>window.ReactDOM||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js" crossorigin><\/script>')</script>
   <!-- Babel Standalone — transpiles <script type="text/babel"> in-browser -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>
+  <script>window.Babel||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.7/babel.min.js"><\/script>')</script>
   <!--
     Recharts v2 has NO UMD/browser build — using it via unpkg causes a
     silent 404 and "Recharts is not defined" at runtime.

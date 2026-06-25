@@ -1173,17 +1173,25 @@
 </script>
 
 <!-- React & Babel for embedded prototypes -->
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Primary CDN: jsDelivr. Fallback: cdnjs (Cloudflare) via document.write if jsDelivr is down. -->
+<script crossorigin src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script>window.React||document.write('<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"><\/script>')</script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script>window.ReactDOM||document.write('<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"><\/script>')</script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>
+<script>window.Babel||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.7/babel.min.js"><\/script>')</script>
 
 
 
 
 <!-- React & Babel for embedded prototypes -->
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Primary CDN: jsDelivr. Fallback: cdnjs (Cloudflare) via document.write if jsDelivr is down. -->
+<script crossorigin src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script>window.React||document.write('<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"><\/script>')</script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script>window.ReactDOM||document.write('<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"><\/script>')</script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>
+<script>window.Babel||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.7/babel.min.js"><\/script>')</script>
 
 <!-- Round 4: Loop the prototypes — clicking any bottom-nav tab inside a prototype scrolls the case study page to the matching flow's prototype mount. Defined once globally so every prototype can call it. -->
 <script>
